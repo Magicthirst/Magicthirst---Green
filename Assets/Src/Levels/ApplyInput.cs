@@ -2,14 +2,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Extensions;
-using Levels.Sync;
 using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 namespace Levels
 {
-    public class ApplyInput : MonoBehaviour, IMovementInputSource
+    public class ApplyInput : MonoBehaviour
     {
         public event Action<Vector3> PositionChanged;
         public event Action<Vector3> VelocityChanged;
