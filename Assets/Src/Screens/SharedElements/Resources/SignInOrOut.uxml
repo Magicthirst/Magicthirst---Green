@@ -1,0 +1,13 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/Src/Markup/Common.uss?fileID=7433441132597879392&amp;guid=332b324fdea68f5498015fe9168f9b5d&amp;type=3#Common" />
+    <ui:VisualElement name="SignedIn" style="flex-grow: 0; flex-direction: row;">
+        <ui:Label text="You signed in as" style="-unity-font-definition: url(&quot;project://database/Assets/Visual/Fonts/Text/LinLibertine_Re-4.1_.8_.ttf?fileID=12800000&amp;guid=60e496bf650c5eb4bbe167c628f2c8b7&amp;type=3#LinLibertine_Re-4.1_.8_&quot;); font-size: 20px; color: rgb(255, 255, 255);" />
+        <ui:Label text="db590ee1-154f-4927-a46b-e0c1a844cda2" name="Username" style="-unity-font-definition: url(&quot;project://database/Assets/Visual/Fonts/Text/LinLibertine_Re-4.1_.8_.ttf?fileID=12800000&amp;guid=60e496bf650c5eb4bbe167c628f2c8b7&amp;type=3#LinLibertine_Re-4.1_.8_&quot;); -unity-font-style: normal; font-size: 20px; color: rgb(255, 255, 255); margin-right: 0; margin-left: 0; padding-left: 0; padding-right: 0;" />
+        <ui:Label text="," class="main-text" />
+        <ui:Button text="[Exit]" name="Exit" class="text-button" />
+    </ui:VisualElement>
+    <ui:VisualElement name="NotSignedIn" style="flex-grow: 0; flex-direction: row;">
+        <ui:Label text="You are not signed in," name="Label" class="main-text" />
+        <ui:Button text="[Enter]" name="Enter" class="text-button" />
+    </ui:VisualElement>
+</ui:UXML>

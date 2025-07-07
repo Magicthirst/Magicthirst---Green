@@ -1,0 +1,30 @@
+:root {
+    --text-accent-color: #90b0ff;
+}
+
+.main-text {
+    font-size: 24px;
+    color: rgb(255, 255, 255);
+    -unity-font-definition: url("project://database/Assets/Visual/Fonts/Text/LinLibertine_Re-4.1_.8_.ttf?fileID=12800000&guid=60e496bf650c5eb4bbe167c628f2c8b7&type=3#LinLibertine_Re-4.1_.8_");
+}
+
+.text-button {
+    background-color: rgba(0, 0, 0, 0);
+    border-width: 0;
+    font-size: 20px;
+    color: rgb(255, 255, 255);
+    -unity-font-definition: url("project://database/Assets/Visual/Fonts/Interactable/LibertinusMono-Regular.ttf?fileID=12800000&guid=15ec1ed49b4a2e24ca68e1a49fb6417a&type=3#LibertinusMono-Regular");
+    margin: 4px 2px;
+    padding: 4px 2px;
+}
+
+.text-button:hover {
+    color: var(--text-accent-color);
+}
+
+.text-button:active {
+    border-width: 1px;
+    border-radius: 4px;
+    border-color: var(--text-accent-color);
+    margin: 3px 1px;
+}

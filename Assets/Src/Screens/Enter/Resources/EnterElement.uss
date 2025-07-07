@@ -1,0 +1,21 @@
+#unity-text-input {
+    background-color: rgba(0, 0, 0, 0);
+    border-radius: 0;
+    border-top-width: 0;
+    border-right-width: 0;
+    border-bottom-width: 2px;
+    border-left-width: 0;
+    margin: 0;
+    padding: 0;
+    font-size: 20px;
+    -unity-font-definition: url("project://database/Assets/Visual/Fonts/Interactable/LibertinusMono-Regular.ttf?fileID=12800000&guid=15ec1ed49b4a2e24ca68e1a49fb6417a&type=3#LibertinusMono-Regular");
+    border-left-color: rgb(255, 255, 255);
+    border-right-color: rgb(255, 255, 255);
+    border-top-color: rgb(255, 255, 255);
+    border-bottom-color: rgb(255, 255, 255);
+    min-width: 360px;
+}
+
+> .unity-base-text-field__input--placeholder {
+    color: rgba(255, 255, 255, 0.6);
+}
