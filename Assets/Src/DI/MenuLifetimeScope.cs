@@ -1,4 +1,5 @@
 using System.Threading.Tasks;
+using Screens.MainMenu;
 using Screens.SharedElements;
 using VContainer;
 using VContainer.Unity;
@@ -11,6 +12,18 @@ namespace DI
         protected override void Configure(IContainerBuilder builder)
         {
             var player = new PlayerStorage();
+
+            builder
+                .Register<MainMenu.HostSession>(_ => () => Task.FromResult(true), Lifetime.Singleton)
+                .AsSelf();
+
+            builder
+                .Register<MainMenu.JoinSession>(_ => () => Task.FromResult(true), Lifetime.Singleton)
+                .AsSelf();
+
+            builder
+                .Register<MainMenuElement.IsAuthenticated>(_ => () => player.Id != null, Lifetime.Singleton)
+                .AsSelf();
 
             builder
                 .Register<SignInOrOutElement.GetSignedInName>(_ => () => player.Id, Lifetime.Singleton)

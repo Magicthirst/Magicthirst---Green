@@ -1,4 +1,3 @@
-using System;
 using System.Threading.Tasks;
 using Screens.SharedElements;
 using UnityEditor;
@@ -14,7 +13,6 @@ namespace Screens.MainMenu
     {
         [SerializeField] private SceneAsset gameScene;
 
-        private UIDocument _document;
         private MainMenuElement _component;
 
         [Inject] private HostSession _hostSession;
@@ -26,8 +24,8 @@ namespace Screens.MainMenu
 
         private void Awake()
         {
-            _document = GetComponent<UIDocument>();
-            _component = _document.rootVisualElement.Q<MainMenuElement>();
+            var document = GetComponent<UIDocument>();
+            _component = document.rootVisualElement.Q<MainMenuElement>();
         }
 
         private void OnEnable()

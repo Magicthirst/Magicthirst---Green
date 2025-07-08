@@ -8,7 +8,17 @@ public class PlayerStorage
     public string Id
     {
         get => PlayerPrefs.GetString("Id").NullIfEmpty();
-        set => PlayerPrefs.SetString("Id", value);
+        set
+        {
+            if (value != null)
+            {
+                PlayerPrefs.SetString("Id", value);
+            }
+            else
+            {
+                PlayerPrefs.DeleteKey("Id");
+            }
+        }
     }
 
     public void Exit() => Id = null;

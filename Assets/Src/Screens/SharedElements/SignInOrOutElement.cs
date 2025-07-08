@@ -52,7 +52,7 @@ namespace Screens.SharedElements
             UpdateUIState();
         }
 
-        private void UpdateUIState()
+        public void UpdateUIState()
         {
             var username = _Username;
             if (username != null)
@@ -63,6 +63,7 @@ namespace Screens.SharedElements
             }
             else
             {
+                _nameLabel.text = "";
                 _signedInGroup.style.display = DisplayStyle.None;
                 _notSignedInGroup.style.display = DisplayStyle.Flex;
             }

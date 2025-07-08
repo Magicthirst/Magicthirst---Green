@@ -11,31 +11,18 @@ namespace Screens.Enter
     {
         [SerializeField] private SceneAsset mainMenuScene;
 
-        private UIDocument _document;
         private EnterElement _component;
 
-        private CheckSignIn _checkSignedIn;
-        private string _signUpUrl;
+        [Inject] private CheckSignIn _checkSignedIn;
+        [Inject] private string _signUpUrl;
 
         public delegate Task<SignInResult> CheckSignIn(string id);
         public delegate string GetSignUpUrl();
 
-        [Inject]
-        public void Construct(CheckSignIn checkSignedIn)
-        {
-            _checkSignedIn = checkSignedIn;
-        }
-
-        [Inject]
-        public void Construct(GetSignUpUrl getSignUpUrl)
-        {
-            _signUpUrl = getSignUpUrl();
-        }
-
         private void Awake()
         {
-            _document = GetComponent<UIDocument>()!;
-            _component = _document.rootVisualElement.Q<EnterElement>()!;
+            var document = GetComponent<UIDocument>()!;
+            _component = document.rootVisualElement.Q<EnterElement>()!;
         }
 
         private void OnEnable()

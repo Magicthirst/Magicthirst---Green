@@ -8,22 +8,18 @@ namespace Screens.SharedElements
 {
     public class SignInOrOut : MonoBehaviour
     {
-        private event Exit OnExit;
-
         [SerializeField] private SceneAsset enterScene;
 
-        private UIDocument _document;
         private SignInOrOutElement _component;
+
+        [Inject] private Exit _exit; 
 
         public delegate void Exit();
 
-        [Inject]
-        public void Construct(Exit exit) => OnExit += exit;
-
         private void Awake()
         {
-            _document = GetComponent<UIDocument>()!;
-            _component = _document.rootVisualElement.Q<SignInOrOutElement>();
+            var document = GetComponent<UIDocument>()!;
+            _component = document.rootVisualElement.Q<SignInOrOutElement>();
         }
 
         private void OnEnable()
@@ -40,6 +36,10 @@ namespace Screens.SharedElements
 
         private void OnSignInRequested() => SceneManager.LoadScene(enterScene.name);
 
-        private void OnSignOutRequested() => OnExit?.Invoke();
+        private void OnSignOutRequested()
+        {
+            _exit();
+            _component.UpdateUIState();
+        }
     }
 }

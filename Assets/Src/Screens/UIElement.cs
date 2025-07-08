@@ -24,7 +24,7 @@ namespace Screens
 
         private VisualElement _instantiatedRootElement;
 
-        private IObjectResolver _resolver;
+        [Inject] private IObjectResolver _resolver;
 
         [MenuItem("GameObject/UI Toolkit Extension/Element Object", false, 10)]
         public static void CreateMenuItem()
@@ -33,9 +33,6 @@ namespace Screens
             newObject.AddComponent<UIElement>();
             Selection.activeGameObject = newObject;
         }
-
-        [Inject]
-        public void Construct(IObjectResolver resolver) => _resolver = resolver;
 
         private void Awake()
         {
