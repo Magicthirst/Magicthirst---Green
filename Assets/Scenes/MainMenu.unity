@@ -584,6 +584,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameScene: {fileID: 102900000, guid: 99c9720ab356a0642a771bea13969a05, type: 3}
+  joinSessionScene: {fileID: 102900000, guid: 4681ab6970ca61048adb730eeb3eedd4, type: 3}
 --- !u!114 &1471201277
 MonoBehaviour:
   m_ObjectHideFlags: 0

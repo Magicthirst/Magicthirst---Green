@@ -12,15 +12,13 @@ namespace Screens.MainMenu
     public class MainMenu : MonoBehaviour
     {
         [SerializeField] private SceneAsset gameScene;
+        [SerializeField] private SceneAsset joinSessionScene;
 
         private MainMenuElement _component;
 
         [Inject] private HostSession _hostSession;
-        [Inject] private JoinSession _joinSession;
 
         public delegate Task<bool> HostSession();
-
-        public delegate Task<bool> JoinSession();
 
         private void Awake()
         {
@@ -58,17 +56,7 @@ namespace Screens.MainMenu
             }
         }
 
-        private async void OnJoinSessionRequested()
-        {
-            if (await _joinSession())
-            {
-                SceneManager.LoadScene(gameScene.name);
-            }
-            else
-            {
-                _component.DisplaySomethingWentWrong();
-            }
-        }
+        private void OnJoinSessionRequested() => SceneManager.LoadScene(joinSessionScene.name);
 
         private void OnExitApplicationRequested() => Application.Quit(0);
     }

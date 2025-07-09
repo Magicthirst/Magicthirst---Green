@@ -1,4 +1,5 @@
 using System.Threading.Tasks;
+using Screens.JoinSession;
 using Screens.MainMenu;
 using Screens.SharedElements;
 using VContainer;
@@ -14,11 +15,11 @@ namespace DI
             var player = new PlayerStorage();
 
             builder
-                .Register<MainMenu.HostSession>(_ => () => Task.FromResult(true), Lifetime.Singleton)
+                .Register<JoinSession.AskToJoinSession>(_ => hostId => Task.FromResult(hostId == "thishostexists"), Lifetime.Singleton)
                 .AsSelf();
 
             builder
-                .Register<MainMenu.JoinSession>(_ => () => Task.FromResult(true), Lifetime.Singleton)
+                .Register<MainMenu.HostSession>(_ => () => Task.FromResult(true), Lifetime.Singleton)
                 .AsSelf();
 
             builder

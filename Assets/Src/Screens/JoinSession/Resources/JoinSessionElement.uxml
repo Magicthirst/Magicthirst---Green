@@ -1,0 +1,18 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/Src/Screens/Common.uss?fileID=7433441132597879392&amp;guid=332b324fdea68f5498015fe9168f9b5d&amp;type=3#Common" />
+    <ui:VisualElement style="flex-grow: 1; background-color: rgb(0, 0, 0); flex-shrink: 0; justify-content: center; align-items: center;">
+        <ui:VisualElement style="flex-grow: 0; align-self: center;">
+            <ui:Label text="Join Session" style="color: rgb(255, 255, 255); -unity-font-definition: url(&quot;project://database/Assets/Visual/Fonts/Title/LinLibertineC_Re-4.0_.1_.ttf?fileID=12800000&amp;guid=dcbc99befa0956b4c8df26435315b73f&amp;type=3#LinLibertineC_Re-4.0_.1_&quot;); font-size: 36px; align-items: stretch; align-self: center; margin-top: 12px; margin-right: 12px; margin-bottom: 12px; margin-left: 12px;" />
+            <ui:VisualElement style="flex-grow: 1; border-top-width: 1px; border-right-width: 1px; border-bottom-width: 1px; border-left-width: 1px; border-top-left-radius: 8px; border-top-right-radius: 8px; border-bottom-right-radius: 8px; border-bottom-left-radius: 8px; padding-top: 8px; padding-right: 8px; padding-bottom: 8px; padding-left: 8px; border-left-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-top-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255);">
+                <ui:TextField name="HostId" placeholder-text="Host ID" style="color: rgb(255, 255, 255); font-size: 24px; margin-top: 8px; margin-right: 8px; margin-bottom: 12px; margin-left: 8px;" />
+                <ui:VisualElement style="flex-grow: 1; flex-direction: row;">
+                    <ui:Button text="[Cancel]" name="Cancel" class="text-button" />
+                    <ui:VisualElement style="flex-grow: 1;" />
+                    <ui:Button text="[Join]" name="Join" class="text-button" />
+                </ui:VisualElement>
+            </ui:VisualElement>
+            <ui:VisualElement style="flex-grow: 0; height: 8px;" />
+            <ui:Label name="ErrorLabel" class="main-text" style="color: rgb(224, 88, 96); display: none; height: 0; padding-top: 0; margin-top: 0; padding-bottom: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; padding-right: 0; padding-left: 0;" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>
