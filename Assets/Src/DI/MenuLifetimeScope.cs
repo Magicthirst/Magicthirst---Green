@@ -23,7 +23,7 @@ namespace DI
                 .AsSelf();
 
             builder
-                .Register<MainMenuElement.IsAuthenticated>(_ => () => player.Id != null, Lifetime.Singleton)
+                .Register<MainMenuElement.IAuthenticatedState>(_ => player, Lifetime.Singleton)
                 .AsSelf();
 
             builder
@@ -31,7 +31,7 @@ namespace DI
                 .AsSelf();
 
             builder
-                .Register<SignInOrOut.Exit>(_ => () => player.Exit(), Lifetime.Singleton)
+                .Register<SignInOrOut.Exit>(_ => player.Exit, Lifetime.Singleton)
                 .AsSelf();
 
             builder
