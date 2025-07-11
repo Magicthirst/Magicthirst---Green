@@ -15,6 +15,7 @@ namespace Screens.JoinSession
         private JoinSessionElement _element;
 
         [Inject] private AskToJoinSession _askToJoinSession;
+        [Inject] private IAssignConnectionRole _assignConnectionRole;
 
         public delegate Task<bool> AskToJoinSession(string hostId);
 
@@ -42,6 +43,7 @@ namespace Screens.JoinSession
         {
             if (await _askToJoinSession(hostId))
             {
+                _assignConnectionRole.Guest();
                 SceneManager.LoadScene(gameScene.name);
             }
             else

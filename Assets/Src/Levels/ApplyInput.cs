@@ -1,7 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using Extensions;
 using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -10,9 +8,6 @@ namespace Levels
 {
     public class ApplyInput : MonoBehaviour
     {
-        public event Action<Vector3> PositionChanged;
-        public event Action<Vector3> VelocityChanged;
-
         [SerializeField] private float gravityPull;
         [SerializeField] private float speed;
 
@@ -24,7 +19,7 @@ namespace Levels
         private Vector2 _relativeMovement = Vector2.zero;
         private Vector3 _previousVelocity = Vector2.zero;
 
-        private readonly List<IDisposable> _disposables = new();
+        private IDisposable _movementObserver;
 
         private void Awake()
         {
@@ -35,15 +30,8 @@ namespace Levels
         private void OnEnable()
         {
             var map = _input.currentActionMap;
-            ToBeDisposed(map.ConsumeAction<Vector2>("Move")).Performed += v => _relativeMovement = v;
+            _movementObserver = map.ConsumeAction<Vector2>("Move").OnPerformed(v => _relativeMovement = v);
             map.Enable();
-            return;
-
-            T ToBeDisposed<T>(T disposable) where T : IDisposable
-            {
-                _disposables.Add(disposable);
-                return disposable;
-            }
         }
 
         private void FixedUpdate()
@@ -64,61 +52,9 @@ namespace Levels
             if ((vector - _previousVelocity).magnitude > 0.05f)
             {
                 _previousVelocity = vector;
-                VelocityChanged?.Invoke(vector); 
-            }
-
-            if (_controller.velocity.magnitude > 0.05f)
-            {
-                PositionChanged?.Invoke(transform.position.HorizontalVector());
             }
         }
 
-        private void OnDisable()
-        {
-            var disposables = _disposables.ToArray();
-            _disposables.Clear();
-            foreach (var disposable in disposables)
-            {
-                disposable.Dispose();
-            }
-        }
-    }
-
-    internal static class PlayerInputExtension
-    {
-        public static GenericAction<T> ConsumeAction<T>(this InputActionMap map, string actionName) where T : struct => new(map, actionName);
-
-        public class GenericAction<T> : IDisposable where T : struct
-        {
-            public event Action<T> Performed;
-
-            private readonly InputAction _action;
-
-            public GenericAction(InputActionMap map, string actionName)
-            {
-                try
-                {
-                    _action = map.FindAction(actionName, true);
-                    _action.Enable();
-                }
-                catch (ArgumentException e)
-                {
-                    throw new ArgumentException
-                    (
-                        "Existing action names: " + string.Join(", ", map.actions.Select(a => a.name).ToArray()),
-                        e
-                    );
-                }
-                _action.performed += OnActionPerformed;
-                _action.canceled += OnActionPerformed;
-            }
-
-            public void Dispose()
-            {
-                _action.performed -= OnActionPerformed;
-            }
-
-            private void OnActionPerformed(InputAction.CallbackContext context) => Performed?.Invoke(context.ReadValue<T>());
-        }
+        private void OnDisable() => _movementObserver.Dispose();
     }
 }

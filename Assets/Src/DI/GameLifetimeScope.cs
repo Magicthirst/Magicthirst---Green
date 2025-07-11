@@ -1,6 +1,4 @@
-using System;
-using JetBrains.Annotations;
-using UnityEngine;
+using Screens;
 using VContainer;
 using VContainer.Unity;
 using Web;
@@ -9,13 +7,7 @@ namespace DI
 {
     public class GameLifetimeScope : LifetimeScope
     {
-        [SerializeField] private double tokenRefreshIntervalSeconds;
-        [SerializeField] private AuthorizedClient.Config authorizedClientConfig;
-
-        private TimeSpan _TokenRefreshInterval => TimeSpan.FromSeconds(tokenRefreshIntervalSeconds);
-
-        // TODO OnlineGameSession or null object which will be injected to syncing components
-        [CanBeNull] public AuthorizedClient AuthorizedClient { get; private set; }
+        private ConnectionRole _connectionRole = ConnectionRole.Offline;
 
         protected override void Awake()
         {
@@ -25,7 +17,29 @@ namespace DI
 
         protected override void Configure(IContainerBuilder builder)
         {
-            // TODO launching here through delegates
+            builder
+                .Register<IAssignConnectionRole>(_ => new AssignConnectionRole(this), Lifetime.Singleton)
+                .AsSelf();
+
+            builder
+                .Register(_ => _connectionRole, Lifetime.Transient)
+                .AsSelf();
+        }
+
+        private class AssignConnectionRole : IAssignConnectionRole
+        {
+            private readonly GameLifetimeScope _scope;
+
+            public AssignConnectionRole(GameLifetimeScope scope)
+            {
+                _scope = scope;
+            }
+
+            public void Offline() => _scope._connectionRole = ConnectionRole.Offline;
+
+            public void Host() => _scope._connectionRole = ConnectionRole.Host;
+
+            public void Guest() => _scope._connectionRole = ConnectionRole.Guest;
         }
     }
 }

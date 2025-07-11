@@ -17,6 +17,7 @@ namespace Screens.MainMenu
         private MainMenuElement _component;
 
         [Inject] private HostSession _hostSession;
+        [Inject] private IAssignConnectionRole _assignConnectionRole;
 
         public delegate Task<bool> HostSession();
 
@@ -42,12 +43,17 @@ namespace Screens.MainMenu
             _component.ExitApplicationRequested -= OnExitApplicationRequested;
         }
 
-        private void OnPlayOfflineRequested() => SceneManager.LoadScene(gameScene.name);
+        private void OnPlayOfflineRequested()
+        {
+            _assignConnectionRole.Offline();
+            SceneManager.LoadScene(gameScene.name);
+        }
 
         private async void OnHostSessionRequested()
         {
             if (await _hostSession())
             {
+                _assignConnectionRole.Host();
                 SceneManager.LoadScene(gameScene.name);
             }
             else

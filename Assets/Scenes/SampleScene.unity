@@ -148,7 +148,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d45ca65fb4142247b5ed7c6816066ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  config: {fileID: 11400000, guid: 136364150f1b5094db9c5f17d4d0d40b, type: 2}
 --- !u!4 &300528228
 Transform:
   m_ObjectHideFlags: 0
@@ -392,7 +391,7 @@ Transform:
   m_GameObject: {fileID: 867259175}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 4.1574774, z: -3.9701846}
+  m_LocalPosition: {x: 0, y: 5.173529, z: -4.7685847}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -638,12 +637,61 @@ Transform:
   m_GameObject: {fileID: 1065869683}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0.07, y: 0, z: 0.15}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1913018983}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1499311475
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1499311476}
+  - component: {fileID: 1499311477}
+  m_Layer: 0
+  m_Name: VContainer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1499311476
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1499311475}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1499311477
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1499311475}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7901966c858c4c2baf3c9ef30183b84c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  parentReference:
+    TypeName: DI.GameLifetimeScope
+  autoRun: 1
+  autoInjectGameObjects:
+  - {fileID: 1711207718}
 --- !u!1 &1711207718
 GameObject:
   m_ObjectHideFlags: 0
@@ -659,6 +707,7 @@ GameObject:
   - component: {fileID: 1711207721}
   - component: {fileID: 1711207724}
   - component: {fileID: 1711207725}
+  - component: {fileID: 1711207726}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -930,6 +979,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   camera: {fileID: 1913018983}
+--- !u!114 &1711207726
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1711207718}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cbae81dc2d3e4132bb31956c3028f5e7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  movementChangeThreshold: 0
 --- !u!1 &1913018982
 GameObject:
   m_ObjectHideFlags: 0
@@ -960,7 +1022,7 @@ Transform:
   m_GameObject: {fileID: 1913018982}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 4.1574774, z: -3.9701846}
+  m_LocalPosition: {x: 0, y: 5.173529, z: -4.7685847}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1145,12 +1207,12 @@ MonoBehaviour:
   TargetOffset: {x: 0, y: 0, z: 0}
   TrackerSettings:
     BindingMode: 4
-    PositionDamping: {x: 1, y: 1, z: 1}
+    PositionDamping: {x: 0.5, y: 0.5, z: 0.5}
     AngularDampingMode: 0
     RotationDamping: {x: 1, y: 1, z: 1}
     QuaternionDamping: 1
   OrbitStyle: 0
-  Radius: 4
+  Radius: 5
   Orbits:
     Top:
       Radius: 2
@@ -1162,7 +1224,7 @@ MonoBehaviour:
       Radius: 2.5
       Height: 0.1
     SplineCurvature: 0.5
-  RecenteringTarget: 3
+  RecenteringTarget: 2
   HorizontalAxis:
     Value: 0
     Center: 0
@@ -1174,7 +1236,7 @@ MonoBehaviour:
       Time: 2
     Restrictions: 0
   VerticalAxis:
-    Value: 7
+    Value: 17.5
     Center: 17.5
     Range: {x: -10, y: 45}
     Wrap: 0
@@ -1204,3 +1266,4 @@ SceneRoots:
   - {fileID: 867259177}
   - {fileID: 1913018983}
   - {fileID: 300528228}
+  - {fileID: 1499311476}
