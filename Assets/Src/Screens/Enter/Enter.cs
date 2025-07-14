@@ -14,10 +14,13 @@ namespace Screens.Enter
         private EnterElement _component;
 
         [Inject] private CheckSignIn _checkSignedIn;
-        [Inject] private string _signUpUrl;
+        private string _signUpUrl;
 
         public delegate Task<SignInResult> CheckSignIn(string id);
         public delegate string GetSignUpUrl();
+
+        [Inject]
+        public void Construct(GetSignUpUrl getSignUpUrl) => _signUpUrl = getSignUpUrl();
 
         private void Awake()
         {
