@@ -1,4 +1,8 @@
-using Screens;
+using Assets;
+using Common;
+using Levels.Sync;
+using Model;
+using UnityEngine;
 using VContainer;
 using VContainer.Unity;
 using Web;
@@ -7,7 +11,9 @@ namespace DI
 {
     public class GameLifetimeScope : LifetimeScope
     {
-        private ConnectionRole _connectionRole = ConnectionRole.Offline;
+        [SerializeField] private ClientConfigAsset clientConfigAsset;
+
+        private readonly ConnectionRoleState _connectionRole = new();
 
         protected override void Awake()
         {
@@ -18,28 +24,29 @@ namespace DI
         protected override void Configure(IContainerBuilder builder)
         {
             builder
-                .Register<IAssignConnectionRole>(_ => new AssignConnectionRole(this), Lifetime.Singleton)
+                .Register(_ => clientConfigAsset.ToRecord(), Lifetime.Singleton)
                 .AsSelf();
 
             builder
-                .Register(_ => _connectionRole, Lifetime.Transient)
+                .Register<IClientAuthenticator>
+                (
+                    resolver => new ClientAuthenticator(resolver.Resolve<ClientConfig>()),
+                    Lifetime.Singleton
+                )
                 .AsSelf();
-        }
 
-        private class AssignConnectionRole : IAssignConnectionRole
-        {
-            private readonly GameLifetimeScope _scope;
+            builder
+                .Register
+                (
+                    resolver => new MenuUserSession(resolver.Resolve<IClientAuthenticator>()),
+                    Lifetime.Singleton
+                )
+                .AsImplementedInterfaces();
 
-            public AssignConnectionRole(GameLifetimeScope scope)
-            {
-                _scope = scope;
-            }
-
-            public void Offline() => _scope._connectionRole = ConnectionRole.Offline;
-
-            public void Host() => _scope._connectionRole = ConnectionRole.Host;
-
-            public void Guest() => _scope._connectionRole = ConnectionRole.Guest;
+            builder.RegisterInstance<IAssignConnectionRole>(_connectionRole).AsSelf();
+            builder.RegisterInstance<IsReceiving>(_connectionRole.IsReceiving).AsSelf();
+            builder.RegisterInstance<IsPublishingInput>(_connectionRole.IsPublishingInput).AsSelf();
+            builder.RegisterInstance<IsPublishingUpdates>(_connectionRole.IsPublishingUpdates).AsSelf();
         }
     }
 }

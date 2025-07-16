@@ -1,7 +1,8 @@
-using System.Threading.Tasks;
+using Common;
 using Screens.JoinSession;
 using Screens.MainMenu;
 using Screens.SharedElements;
+using UnityEngine;
 using VContainer;
 using VContainer.Unity;
 using static Screens.Enter.Enter;
@@ -12,38 +13,40 @@ namespace DI
     {
         protected override void Configure(IContainerBuilder builder)
         {
-            var player = new PlayerStorage();
-
             builder
-                .Register<JoinSession.AskToJoinSession>(_ => hostId => Task.FromResult(hostId == "thishostexists"), Lifetime.Singleton)
+                .Register<CheckSignIn>(resolver => id => resolver.Resolve<IMenuUserSession>().SignIn(id), Lifetime.Singleton)
                 .AsSelf();
 
             builder
-                .Register<MainMenu.HostSession>(_ => () => Task.FromResult(true), Lifetime.Singleton)
+                .Register<SignInOrOut.Exit>(resolver => () => resolver.Resolve<IMenuUserSession>().SignOut(), Lifetime.Singleton)
                 .AsSelf();
 
             builder
-                .Register<MainMenuElement.IAuthenticatedState>(_ => player, Lifetime.Singleton)
+                .Register<JoinSession.AskToJoinSession>
+                (
+                    resolver => hostId => resolver.Resolve<IMenuUserSession>().JoinSession(hostId),
+                    Lifetime.Singleton
+                )
                 .AsSelf();
 
             builder
-                .Register<SignInOrOutElement.GetSignedInName>(_ => () => player.Id, Lifetime.Singleton)
+                .Register<MainMenu.HostSession>(resolver => () => resolver.Resolve<IMenuUserSession>().HostSession(), Lifetime.Singleton)
                 .AsSelf();
 
             builder
-                .Register<SignInOrOut.Exit>(_ => player.Exit, Lifetime.Singleton)
+                .Register<SignInOrOutElement.GetSignedInName>
+                (
+                    resolver => () => resolver.Resolve<IMenuUserSession>().PlayerId,
+                    Lifetime.Singleton
+                )
                 .AsSelf();
 
             builder
-                .Register<CheckSignIn>(_ => id =>
-                {
-                    player.Id = id;
-                    return Task.FromResult<SignInResult>(new SignInResult.Success());
-                }, Lifetime.Singleton)
-                .AsSelf();
-
-            builder
-                .Register<GetSignUpUrl>(_ => () => "https://charliebritton.github.io/website-placeholder/", Lifetime.Singleton)
+                .Register<GetSignUpUrl>
+                (
+                    _ => () => "https://charliebritton.github.io/website-placeholder/",
+                    Lifetime.Singleton
+                )
                 .AsSelf();
         }
     }

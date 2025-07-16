@@ -1,4 +1,5 @@
 using System.Threading.Tasks;
+using Common;
 using Screens.SharedElements;
 using UnityEditor;
 using UnityEngine;
@@ -19,7 +20,7 @@ namespace Screens.MainMenu
         [Inject] private HostSession _hostSession;
         [Inject] private IAssignConnectionRole _assignConnectionRole;
 
-        public delegate Task<bool> HostSession();
+        public delegate Task<HostSessionResult> HostSession();
 
         private void Awake()
         {
@@ -51,19 +52,23 @@ namespace Screens.MainMenu
 
         private async void OnHostSessionRequested()
         {
-            if (await _hostSession())
+            var result = await _hostSession();
+            switch (result)
             {
-                _assignConnectionRole.Host();
-                SceneManager.LoadScene(gameScene.name);
-            }
-            else
-            {
-                _component.DisplaySomethingWentWrong();
+                case HostSessionResult.Success:
+                    _assignConnectionRole.Host();
+                    SceneManager.LoadScene(gameScene.name);
+                    break;
+                case HostSessionResult.UnknownError:
+                default:
+                    _component.DisplaySomethingWentWrong();
+                    break;
             }
         }
 
         private void OnJoinSessionRequested() => SceneManager.LoadScene(joinSessionScene.name);
 
         private void OnExitApplicationRequested() => Application.Quit(0);
+
     }
 }

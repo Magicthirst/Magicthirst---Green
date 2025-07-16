@@ -10,7 +10,7 @@
             <ui:VisualElement style="flex-grow: 1; flex-direction: row;">
                 <ui:Button text="[Enter using ID]" name="SignIn" class="text-button" />
                 <ui:Label text=":" name="Label" class="main-text" style="padding-left: 0; margin-left: 0;" />
-                <ui:TextField max-length="32" name="UserId" placeholder-text="&lt;Your ID here&gt;" class="transparent_field" style="-unity-font-definition: url(&quot;project://database/Assets/Visual/Fonts/Interactable/LibertinusMono-Regular.ttf?fileID=12800000&amp;guid=15ec1ed49b4a2e24ca68e1a49fb6417a&amp;type=3#LibertinusMono-Regular&quot;); opacity: 1; color: rgb(255, 255, 255); font-size: 20px; align-items: center;" />
+                <ui:TextField max-length="36" name="UserId" placeholder-text="&lt;Your ID here&gt;" class="transparent_field" style="-unity-font-definition: url(&quot;project://database/Assets/Visual/Fonts/Interactable/LibertinusMono-Regular.ttf?fileID=12800000&amp;guid=15ec1ed49b4a2e24ca68e1a49fb6417a&amp;type=3#LibertinusMono-Regular&quot;); opacity: 1; color: rgb(255, 255, 255); font-size: 20px; align-items: center;" />
             </ui:VisualElement>
             <ui:Button text="[Enter unanimously]" name="SignAnonymously" class="text-button" />
         </ui:VisualElement>

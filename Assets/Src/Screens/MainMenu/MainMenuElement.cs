@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using Common;
 using UnityEngine;
 using UnityEngine.UIElements;
 using VContainer;
@@ -54,20 +55,16 @@ namespace Screens.MainMenu
 
         private void OnDetachFromPanelEvent(DetachFromPanelEvent _)
         {
-            _authenticated.IsAuthenticatedChanged -= OnAuthenticatedStateChange;
+            if (_authenticated != null)
+            {
+                _authenticated.IsAuthenticatedChanged -= OnAuthenticatedStateChange;
+            }
         }
 
         private void OnAuthenticatedStateChange(bool state)
         {
             this.Q<Button>("HostSession").SetEnabled(state);
             this.Q<Button>("JoinSession").SetEnabled(state);
-        }
-
-        public interface IAuthenticatedState
-        {
-            public event Action<bool> IsAuthenticatedChanged;
-
-            public bool IsAuthenticated { get; }
         }
     }
 }

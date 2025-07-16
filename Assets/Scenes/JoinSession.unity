@@ -149,7 +149,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   parentReference:
-    TypeName: 
+    TypeName: DI.GameLifetimeScope
   autoRun: 1
   autoInjectGameObjects:
   - {fileID: 1527559567}
@@ -177,7 +177,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1527559568}
-  - component: {fileID: 1527559569}
+  - component: {fileID: 1527559572}
   - component: {fileID: 1527559570}
   - component: {fileID: 1527559571}
   m_Layer: 0
@@ -202,20 +202,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 2037255001}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1527559569
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1527559567}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 86b3920fcebc44388d701be620046b02, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  elementTypeName: Screens.JoinSession.JoinSessionElement, Assembly-CSharp, Version=0.0.0.0,
-    Culture=neutral, PublicKeyToken=null
 --- !u!114 &1527559570
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -249,6 +235,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameScene: {fileID: 102900000, guid: 99c9720ab356a0642a771bea13969a05, type: 3}
   mainMenuScene: {fileID: 102900000, guid: cfb06061954f33e49a62de79c3b8fdc5, type: 3}
+--- !u!114 &1527559572
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1527559567}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86b3920fcebc44388d701be620046b02, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  elementTypeName: Screens.JoinSession.JoinSessionElement, Screens, Version=0.0.0.0,
+    Culture=neutral, PublicKeyToken=null
 --- !u!1 &1548623868
 GameObject:
   m_ObjectHideFlags: 0

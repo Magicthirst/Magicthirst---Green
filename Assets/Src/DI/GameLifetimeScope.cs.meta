@@ -1,3 +1,12 @@
 fileFormatVersion: 2
 guid: ebc6769cf1bf43739a4ddce95a8e5dc6
-timeCreated: 1751809621
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - clientConfigAsset: {fileID: 11400000, guid: c5d989f1e98c6124f9eb1ced26623b05, type: 2}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

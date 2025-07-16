@@ -1,4 +1,4 @@
-using Extensions;
+using Levels.Extensions;
 using UnityEngine;
 
 namespace Levels

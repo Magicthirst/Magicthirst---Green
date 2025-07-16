@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -58,7 +57,7 @@ namespace Screens
                 return;
             }
 
-            _instantiatedRootElement = (VisualElement) _elementType.Instantiate()
+            _instantiatedRootElement = (VisualElement) _elementType.GetConstructors()[0].Invoke(new object[]{})
                                        ?? throw new NullReferenceException($"{_elementType}");
             if (Application.isPlaying)
             {
@@ -100,8 +99,8 @@ namespace Screens
                 )
                 .ToList();
 
-            var myTypes = allValidTypes.Where(type => type.Namespace?.StartsWith(typeof(UIElement).Namespace()) == true);
-            var libTypes = allValidTypes.Where(type => type.Namespace?.StartsWith(typeof(UIElement).Namespace()) == false);
+            var myTypes = allValidTypes.Where(type => type.Namespace?.StartsWith(typeof(UIElement).Namespace ?? "") == true);
+            var libTypes = allValidTypes.Where(type => type.Namespace?.StartsWith(typeof(UIElement).Namespace ?? "") == false);
 
             var validTypes = new List<Type>();
             validTypes.AddRange(myTypes);

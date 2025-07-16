@@ -1,4 +1,5 @@
 using System.Threading.Tasks;
+using Common;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -17,7 +18,7 @@ namespace Screens.JoinSession
         [Inject] private AskToJoinSession _askToJoinSession;
         [Inject] private IAssignConnectionRole _assignConnectionRole;
 
-        public delegate Task<bool> AskToJoinSession(string hostId);
+        public delegate Task<JoinSessionResult> AskToJoinSession(string hostId);
 
         private void Awake()
         {
@@ -41,14 +42,19 @@ namespace Screens.JoinSession
 
         private async void OnJoinRequested(string hostId)
         {
-            if (await _askToJoinSession(hostId))
+            var result = await _askToJoinSession(hostId);
+            switch (result)
             {
-                _assignConnectionRole.Guest();
-                SceneManager.LoadScene(gameScene.name);
-            }
-            else
-            {
-                _element.DisplayError("Something went wrong"); // TODO
+                case JoinSessionResult.Success:
+                    _assignConnectionRole.Guest();
+                    SceneManager.LoadScene(gameScene.name);
+                    break;
+                case JoinSessionResult.HostNotFound:
+                case JoinSessionResult.NotWelcome:
+                case JoinSessionResult.SessionDoesNotExists:
+                default:
+                    _element.DisplayError("Something went wrong"); // TODO
+                    break;
             }
         }
     }

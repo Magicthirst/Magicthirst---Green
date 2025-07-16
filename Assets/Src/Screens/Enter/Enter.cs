@@ -1,4 +1,5 @@
 using System.Threading.Tasks;
+using Common;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -45,30 +46,20 @@ namespace Screens.Enter
         private async void OnSignInRequested(string id)
         {
             var result = await _checkSignedIn(id);
-            if (result is SignInResult.Error error)
+            switch (result)
             {
-                _component.DisplaySignInError(error.Message);
-            }
-            else
-            {
-                SceneManager.LoadScene(mainMenuScene.name);
+                case SignInResult.Success:
+                    SceneManager.LoadScene(mainMenuScene.name);
+                    break;
+                case SignInResult.UserNotFound:
+                default:
+                    _component.DisplaySignInError(result.ToString()); // TODO
+                    break;
             }
         }
 
         private void OnEnterUnanimouslyRequested() => SceneManager.LoadScene(mainMenuScene.name);
 
         private void OnSignUpRequested() => Application.OpenURL(_signUpUrl);
-
-        public abstract record SignInResult
-        {
-            private SignInResult() {}
-
-            public sealed record Success : SignInResult;
-
-            public sealed record Error : SignInResult
-            {
-                public string Message;
-            }
-        }
     }
 }

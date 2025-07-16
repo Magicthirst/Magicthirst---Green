@@ -1,9 +1,8 @@
 using System;
-using Unity.Cinemachine;
+using Levels.Extensions;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using VContainer;
-using Web;
 
 namespace Levels.Sync
 {
@@ -21,9 +20,9 @@ namespace Levels.Sync
         public delegate void SendMovement(Vector2 movement);
 
         [Inject]
-        public void AssertProperConnectionRole(ConnectionRole connectionRole)
+        public void AssertProperConnectionRole(IsPublishingInput isPublishingInput)
         {
-            if (!connectionRole.IsPublishingInput())
+            if (!isPublishingInput())
             {
                 Destroy(this);
             }
