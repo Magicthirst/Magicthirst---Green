@@ -18,7 +18,7 @@ namespace Web.Sync
             CancellationToken? cancellationToken = null
         )
         {
-            client.Connect(url);
+            client.Connect(url, useMessageHandlers: false);
 
             while (client.IsConnecting && cancellationToken?.IsCancellationRequested == false)
             {
