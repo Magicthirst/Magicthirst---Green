@@ -45,7 +45,7 @@ namespace Web.Sync
             }
 
             var connection = new SyncConnection(client);
-            _ = connection.RunPublishingLoop(config.SyncLoopInterval);
+            _ = connection.RunSyncLoop(config.SyncLoopInterval);
 
             return connection;
         }

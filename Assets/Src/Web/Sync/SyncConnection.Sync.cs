@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Riptide;
 using UnityEngine;
 using Web.Util;
+using Debug = UnityEngine.Debug;
 
 namespace Web.Sync
 {
@@ -20,25 +21,30 @@ namespace Web.Sync
                 .AddFloat(vector2.y);
 
             Interlocked.Exchange(ref _movementCommand, message);
+            Debug.Log($"saved {vector2} for publishing");
         }
 
-        private async Task RunPublishingLoop(TimeSpan interval)
+        private async Task RunSyncLoop(TimeSpan interval)
         {
             var stopwatch = new Stopwatch();
+            Debug.Log("start sync loop");
             while (!_cancellation.IsCancellationRequested)
             {
                 stopwatch.Restart();
-                var timestamp = Time.time;
 
-                var movementCommand = Interlocked.Exchange(ref _movementCommand, null);
+                var movementCommand = Interlocked.Exchange(ref _movementCommand, null)
+                    ?.AddDouble(_syncWatch.Elapsed.TotalSeconds);
+
                 if (movementCommand != null)
                 {
-                    _client.Send(movementCommand.AddFloat(timestamp));
+                    Debug.Log($"sent {movementCommand}");
+                    _client.Send(movementCommand);
                 }
 
                 _client.Update();
                 await Task.Delay((interval - stopwatch.Elapsed).AtLeast(TimeSpan.Zero), _cancellation.Token);
             }
+            Debug.Log("end sync loop");
         }
     }
 }
