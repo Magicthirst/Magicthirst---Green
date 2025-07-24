@@ -3,6 +3,7 @@ using VContainer;
 
 namespace Levels.Sync
 {
+    [RequireComponent(typeof(ApplyInput))]
     public class SendInput : SyncBehavior
     {
         [Inject] private SendMovement _sendMovement = null!;

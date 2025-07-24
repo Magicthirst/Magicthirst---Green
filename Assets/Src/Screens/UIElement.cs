@@ -12,6 +12,7 @@ namespace Screens
     [ExecuteAlways]
     [DisallowMultipleComponent]
     [DefaultExecutionOrder(-100)]
+    [RequireComponent(typeof(UIDocument))]
     public class UIElement : MonoBehaviour
     {
         [Tooltip("VisualElement which should be instantiated here")]

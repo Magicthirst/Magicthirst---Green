@@ -6,8 +6,8 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/SampleScene.unity
-    guid: 99c9720ab356a0642a771bea13969a05
+    path: Assets/Scenes/Bootstrap.unity
+    guid: 75120a2686253fa4b9dce7ea9f6b74c0
   - enabled: 1
     path: Assets/Scenes/MainMenu.unity
     guid: cfb06061954f33e49a62de79c3b8fdc5
@@ -18,8 +18,8 @@ EditorBuildSettings:
     path: Assets/Scenes/JoinSession.unity
     guid: 4681ab6970ca61048adb730eeb3eedd4
   - enabled: 1
-    path: Assets/Scenes/Bootstrap.unity
-    guid: 75120a2686253fa4b9dce7ea9f6b74c0
+    path: Assets/Scenes/SampleScene.unity
+    guid: 99c9720ab356a0642a771bea13969a05
   m_configObjects:
     com.unity.addressableassets: {fileID: 11400000, guid: c9c9ab460d844144d8c67d1347881234, type: 2}
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}

@@ -6,6 +6,8 @@ using UnityEngine.InputSystem;
 
 namespace Levels
 {
+    [RequireComponent(typeof(CharacterController))]
+    [RequireComponent(typeof(PlayerInput))]
     public class ApplyInput : MonoBehaviour
     {
         private const float MovementChangeThreshold = 0.05f;
