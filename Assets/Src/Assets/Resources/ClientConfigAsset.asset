@@ -12,5 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 84fdd0f9215140bf85f3ca9bb1bb8afb, type: 3}
   m_Name: ClientConfigAsset
   m_EditorClassIdentifier: 
-  gatewayUrl: http://localhost:8000
-  refreshIntervalSeconds: 3600
+  gatewayUrl: http://192.168.0.96:8000
+  tokenRefreshIntervalSeconds: 3600
+  syncLoopIntervalSeconds: 0.05
+  connectionTimeoutSeconds: 60

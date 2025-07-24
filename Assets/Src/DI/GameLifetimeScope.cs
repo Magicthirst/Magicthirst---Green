@@ -1,5 +1,6 @@
 using Assets;
 using Common;
+using JetBrains.Annotations;
 using Levels.Sync;
 using Model;
 using UnityEngine;
@@ -14,6 +15,7 @@ namespace DI
         [SerializeField] private ClientConfigAsset clientConfigAsset;
 
         private readonly ConnectionRoleState _connectionRole = new();
+        [CanBeNull] private IConnector _connector = null;
 
         protected override void Awake()
         {
@@ -38,15 +40,29 @@ namespace DI
             builder
                 .Register
                 (
-                    resolver => new MenuUserSession(resolver.Resolve<IClientAuthenticator>()),
+                    resolver => new MenuUserSession
+                    (
+                        authenticator: resolver.Resolve<IClientAuthenticator>(),
+                        setConnector: connector => _connector = connector
+                    ),
                     Lifetime.Singleton
                 )
                 .AsImplementedInterfaces();
 
+            builder.RegisterDisposeCallback(resolver => resolver.Resolve<IMenuUserSession>().Dispose());
+
+            builder.Register(_ => _connector, Lifetime.Transient).AsSelf();
+
             builder.RegisterInstance<IAssignConnectionRole>(_connectionRole).AsSelf();
-            builder.RegisterInstance<IsReceiving>(_connectionRole.IsReceiving).AsSelf();
-            builder.RegisterInstance<IsPublishingInput>(_connectionRole.IsPublishingInput).AsSelf();
-            builder.RegisterInstance<IsPublishingUpdates>(_connectionRole.IsPublishingUpdates).AsSelf();
+            builder
+                .RegisterInstance<IsReceiving>(() => _connector != null && _connectionRole.IsReceiving())
+                .AsSelf();
+            builder
+                .RegisterInstance<IsPublishingInput>(() => _connector != null && _connectionRole.IsPublishingInput())
+                .AsSelf();
+            builder
+                .RegisterInstance<IsPublishingUpdates>(() => _connector != null && _connectionRole.IsPublishingUpdates())
+                .AsSelf();
         }
     }
 }

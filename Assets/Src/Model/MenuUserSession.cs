@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Common;
 using JetBrains.Annotations;
 using Model.Exception;
+using UnityEngine;
 
 namespace Model
 {
@@ -26,11 +27,13 @@ namespace Model
         }
 
         private readonly IClientAuthenticator _authenticator;
+        private readonly Action<IConnector> _setConnector;
         private IAuthorizedClient _client = null;
 
-        public MenuUserSession(IClientAuthenticator authenticator)
+        public MenuUserSession(IClientAuthenticator authenticator, Action<IConnector> setConnector)
         {
             _authenticator = authenticator;
+            _setConnector = setConnector;
             ConnectionSevered = () => PlayerId = null;
         }
 
@@ -59,12 +62,27 @@ namespace Model
 
         public void SignOut()
         {
+            PlayerId = null;
             _client?.Exit();
         }
 
-        public Task<HostSessionResult> HostSession()
+        public async Task<HostSessionResult> HostSession()
         {
-            throw new NotImplementedException();
+            if (!IsAuthenticated)
+            {
+                throw new InvalidOperationException("User is not authenticated to be able to host a session");
+            }
+
+            try
+            {
+                _setConnector(await _client.Host());
+                return HostSessionResult.Success;
+            }
+            catch (System.Exception e)
+            {
+                Debug.LogError(e);
+                return HostSessionResult.UnknownError;
+            }
         }
 
         public Task<JoinSessionResult> JoinSession(string hostId)

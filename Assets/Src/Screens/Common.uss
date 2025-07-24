@@ -8,6 +8,12 @@
     -unity-font-definition: url("project://database/Assets/Visual/Fonts/Text/LinLibertine_Re-4.1_.8_.ttf?fileID=12800000&guid=60e496bf650c5eb4bbe167c628f2c8b7&type=3#LinLibertine_Re-4.1_.8_");
 }
 
+.override_main-text-error {
+    color: rgb(224, 88, 96);
+    border-color: rgb(224, 88, 96);
+    border-bottom-width: 2px;
+}
+
 .text-button {
     background-color: rgba(0, 0, 0, 0);
     border-width: 0;

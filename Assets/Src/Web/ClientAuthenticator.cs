@@ -6,6 +6,7 @@ using Model;
 using Model.Exception;
 using UnityEngine;
 using Web.Dto;
+using Web.Util;
 
 namespace Web
 {
@@ -22,7 +23,7 @@ namespace Web
 
             var token = await GetToken(http, playerId);
 
-            return AuthorizedClient.Launch(_config, token);
+            return AuthorizedClient.Launch(_config, token, playerId);
         }
 
         private static async Task<string> GetToken
@@ -37,8 +38,7 @@ namespace Web
                 throw new UserNotFound();
             }
 
-            var jsonString = await login.Content.ReadAsStringAsync();
-            var result = JsonUtility.FromJson<TokenResultDto>(jsonString);
+            var result = await login.Content.ReadJsonContentBy(new { token = "" });
 
             return result.token;
         }

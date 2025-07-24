@@ -10,11 +10,14 @@ namespace Screens.MainMenu
     [UxmlElement(nameof(MainMenuElement))]
     public partial class MainMenuElement : VisualElement
     {
-        private IAuthenticatedState _authenticated;
         public event Action PlayOfflineRequested;
         public event Action HostSessionRequested;
         public event Action JoinSessionRequested;
         public event Action ExitApplicationRequested;
+
+        private Label _somethingWentWrong;
+
+        private IAuthenticatedState _authenticated;   
 
         public MainMenuElement()
         {
@@ -29,6 +32,8 @@ namespace Screens.MainMenu
 
             this.Q<Button>("HostSession").SetEnabled(false);
             this.Q<Button>("JoinSession").SetEnabled(false);
+            _somethingWentWrong = this.Q<Label>("SomethingWentWrong");
+            _somethingWentWrong.visible = false;
 
             this.BindButtons(
                 ("PlayOffline", () => PlayOfflineRequested?.Invoke()),
@@ -50,7 +55,7 @@ namespace Screens.MainMenu
 
         public void DisplaySomethingWentWrong()
         {
-            throw new NotImplementedException();
+            _somethingWentWrong.visible = true;
         }
 
         private void OnDetachFromPanelEvent(DetachFromPanelEvent _)

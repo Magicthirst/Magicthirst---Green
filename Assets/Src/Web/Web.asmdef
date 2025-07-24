@@ -3,14 +3,16 @@
     "rootNamespace": "",
     "references": [
         "GUID:039fab59ddccb56459335c9a5085cd43",
-        "GUID:d9bbc61d820433c42883dc4de8b0e42f"
+        "GUID:d9bbc61d820433c42883dc4de8b0e42f",
+        "GUID:a6fc99819141d2a488ebfa7277b4e988",
+        "GUID:ed9a22bd879b8e6499d7bb6f43119274"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
     "overrideReferences": false,
     "precompiledReferences": [],
-    "autoReferenced": true,
+    "autoReferenced": false,
     "defineConstraints": [],
     "versionDefines": [],
     "noEngineReferences": false

@@ -1,16 +1,19 @@
 using System;
 using System.Threading.Tasks;
+using Common;
 
 namespace Model
 {
-    public interface IAuthorizedClient
+    public interface IAuthorizedClient : IDisposable
     {
-        public event Action ConnectionSevered;
+        event Action ConnectionSevered;
 
-        public Task<IConnector> Host();
+        Task<IConnector> Host();
 
-        public Task<IConnector> Join(string hostId);
+        Task<IConnector> Join(string hostId);
 
-        public void Exit();
+        void Exit();
+
+        void IDisposable.Dispose() => Exit();
     }
 }

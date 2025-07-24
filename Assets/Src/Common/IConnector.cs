@@ -1,6 +1,6 @@
 using System.Threading.Tasks;
 
-namespace Model
+namespace Common
 {
     public interface IConnector
     {

@@ -4,7 +4,7 @@ using JetBrains.Annotations;
 
 namespace Common
 {
-    public interface IMenuUserSession : IAuthenticatedState
+    public interface IMenuUserSession : IAuthenticatedState, IDisposable
     {
         event Action ConnectionSevered;
 
@@ -17,6 +17,8 @@ namespace Common
         Task<HostSessionResult> HostSession();
 
         Task<JoinSessionResult> JoinSession(string hostId);
+
+        void IDisposable.Dispose() => SignOut();
     }
 
     public enum SignInResult

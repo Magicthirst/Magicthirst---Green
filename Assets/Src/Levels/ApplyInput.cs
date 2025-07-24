@@ -1,4 +1,5 @@
 using System;
+using Levels.Extensions;
 using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -7,6 +8,10 @@ namespace Levels
 {
     public class ApplyInput : MonoBehaviour
     {
+        private const float MovementChangeThreshold = 0.05f;
+
+        public event Action<Vector2> Moved;
+
         [SerializeField] private float gravityPull;
         [SerializeField] private float speed;
 
@@ -48,9 +53,10 @@ namespace Levels
             _controller.Move(vector.normalized * (speed * Time.fixedDeltaTime));
             _controller.Move(Vector3.down * gravityPull);
 
-            if ((vector - _previousVelocity).magnitude > 0.05f)
+            if ((vector - _previousVelocity).magnitude > MovementChangeThreshold)
             {
                 _previousVelocity = vector;
+                Moved?.Invoke(vector.InFloorCoordinates());
             }
         }
 

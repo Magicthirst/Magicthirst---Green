@@ -9,5 +9,7 @@ namespace Levels.Extensions
             new(x: x ?? vector.x, y: y ?? vector.y, z: z ?? vector.z);
 
         public static Vector2 Abs(this Vector2 vector) => new(Math.Abs(vector.x), Math.Abs(vector.y));
+
+        public static Vector2 InFloorCoordinates(this Vector3 vector) => new(vector.x, vector.z);
     }
 }

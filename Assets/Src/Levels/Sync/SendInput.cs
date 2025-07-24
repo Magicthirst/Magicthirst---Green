@@ -1,21 +1,13 @@
-using System;
-using Levels.Extensions;
 using UnityEngine;
-using UnityEngine.InputSystem;
 using VContainer;
 
 namespace Levels.Sync
 {
-    public class SendInput : MonoBehaviour
+    public class SendInput : SyncBehavior
     {
-        [SerializeField] private float movementChangeThreshold;
-
         [Inject] private SendMovement _sendMovement = null!;
 
-        private PlayerInput _input = null!;
-        private IDisposable _movementObserver = null!;
-
-        private Vector2 _lastSentMovement;
+        private ApplyInput _input = null!;
 
         public delegate void SendMovement(Vector2 movement);
 
@@ -28,27 +20,23 @@ namespace Levels.Sync
             }
         }
 
-        private void Awake()
+        protected override void Awake()
         {
-            _input = GetComponent<PlayerInput>();
+            base.Awake();
+
+            _input = GetComponent<ApplyInput>();
         }
 
-        private void OnEnable()
+        private void OnEnable() => _input.Moved += SendMovementIfChanged;
+
+        private void OnDisable()
         {
-            var map = _input.currentActionMap;
-            _movementObserver = map.ConsumeAction<Vector2>("Move").OnPerformed(SendMovementIfChanged);
-            map.Enable();
+            if (_input != null)
+            {
+                _input.Moved -= SendMovementIfChanged;
+            }
         }
 
-        private void SendMovementIfChanged(Vector2 movement)
-        {
-            var change = (movement.Abs() - _lastSentMovement.Abs()).magnitude;
-            if (change < movementChangeThreshold) return;
-
-            _lastSentMovement = movement;
-            _sendMovement(movement);
-        }
-
-        private void OnDisable() => _movementObserver.Dispose();
+        private void SendMovementIfChanged(Vector2 movement) => _sendMovement(movement);
     }
 }

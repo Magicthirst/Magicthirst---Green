@@ -8,10 +8,16 @@ namespace Assets
     public class ClientConfigAsset : ScriptableObject
     {
         public string gatewayUrl;
-        public float refreshIntervalSeconds;
+        public float tokenRefreshIntervalSeconds;
+        public float syncLoopIntervalSeconds;
+        public float connectionTimeoutSeconds;
 
-        private TimeSpan _RefreshInterval => TimeSpan.FromSeconds(refreshIntervalSeconds);
-
-        public ClientConfig ToRecord() => new(gatewayUrl, _RefreshInterval);
+        public ClientConfig ToRecord() => new
+        (
+            gatewayUrl,
+            TimeSpan.FromSeconds(tokenRefreshIntervalSeconds),
+            TimeSpan.FromSeconds(syncLoopIntervalSeconds),
+            TimeSpan.FromSeconds(connectionTimeoutSeconds)
+        );
     }
 }
