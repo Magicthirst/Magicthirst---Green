@@ -1,14 +1,14 @@
-using UnityEditor;
 using UnityEngine;
-using UnityEngine.SceneManagement;
+using UnityEngine.AddressableAssets;
 using UnityEngine.UIElements;
 using VContainer;
 
 namespace Screens.SharedElements
 {
+    [RequireComponent(typeof(UIElement))]    
     public class SignInOrOut : MonoBehaviour
     {
-        [SerializeField] private SceneAsset enterScene;
+        [SerializeField] private AssetReference enterScene;
 
         private SignInOrOutElement _component;
 
@@ -16,14 +16,16 @@ namespace Screens.SharedElements
 
         public delegate void Exit();
 
-        private void Awake()
+        public void Awake()
+        {
+            GetComponent<IUIReady>().UIReady += OnUIReady;
+        }
+
+        private void OnUIReady()
         {
             var document = GetComponent<UIDocument>()!;
             _component = document.rootVisualElement.Q<SignInOrOutElement>();
-        }
 
-        private void OnEnable()
-        {
             _component.SignInRequested += OnSignInRequested;
             _component.SignOutRequested += OnSignOutRequested;
         }
@@ -34,7 +36,7 @@ namespace Screens.SharedElements
             _component.SignOutRequested -= OnSignOutRequested;
         }
 
-        private void OnSignInRequested() => SceneManager.LoadScene(enterScene.name);
+        private void OnSignInRequested() => enterScene.LoadSceneAsync();
 
         private void OnSignOutRequested()
         {

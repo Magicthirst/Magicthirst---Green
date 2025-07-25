@@ -486,7 +486,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 489a6717c31b4e04bf70904a90fdbf24, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mainMenuScene: {fileID: 102900000, guid: cfb06061954f33e49a62de79c3b8fdc5, type: 3}
+  mainMenuScene:
+    m_AssetGUID: cfb06061954f33e49a62de79c3b8fdc5
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_SubObjectGUID: 
+    m_EditorAssetChanged: 0
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

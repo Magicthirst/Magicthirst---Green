@@ -1,17 +1,17 @@
 using System.Threading.Tasks;
 using Common;
-using UnityEditor;
 using UnityEngine;
-using UnityEngine.SceneManagement;
+using UnityEngine.AddressableAssets;
 using UnityEngine.UIElements;
 using VContainer;
 
 namespace Screens.JoinSession
 {
+    [RequireComponent(typeof(UIElement))]    
     public class JoinSession : MonoBehaviour
     {
-        [SerializeField] private SceneAsset gameScene;
-        [SerializeField] private SceneAsset mainMenuScene;
+        [SerializeField] private AssetReference gameScene;
+        [SerializeField] private AssetReference mainMenuScene;
 
         private JoinSessionElement _element;
 
@@ -20,14 +20,16 @@ namespace Screens.JoinSession
 
         public delegate Task<JoinSessionResult> AskToJoinSession(string hostId);
 
-        private void Awake()
+        public void Awake()
+        {
+            GetComponent<IUIReady>().UIReady += OnUIReady;
+        }
+
+        private void OnUIReady()
         {
             var document = GetComponent<UIDocument>();
             _element = document.rootVisualElement.Q<JoinSessionElement>();
-        }
 
-        private void OnEnable()
-        {
             _element.CancelRequested += OnCancelRequested;
             _element.JoinRequested += OnJoinRequested;
         }
@@ -38,7 +40,7 @@ namespace Screens.JoinSession
             _element.JoinRequested -= OnJoinRequested;
         }
 
-        private void OnCancelRequested() => SceneManager.LoadScene(mainMenuScene.name);
+        private void OnCancelRequested() => mainMenuScene.LoadSceneAsync();
 
         private async void OnJoinRequested(string hostId)
         {
@@ -47,7 +49,7 @@ namespace Screens.JoinSession
             {
                 case JoinSessionResult.Success:
                     _assignConnectionRole.Guest();
-                    SceneManager.LoadScene(gameScene.name);
+                    gameScene.LoadSceneAsync();
                     break;
                 case JoinSessionResult.HostNotFound:
                 case JoinSessionResult.NotWelcome:
