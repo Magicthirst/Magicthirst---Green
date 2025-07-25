@@ -1,16 +1,16 @@
 using System.Threading.Tasks;
 using Common;
-using UnityEditor;
 using UnityEngine;
-using UnityEngine.SceneManagement;
+using UnityEngine.AddressableAssets;
 using UnityEngine.UIElements;
 using VContainer;
 
 namespace Screens.Enter
 {
+    [RequireComponent(typeof(UIElement))]    
     public class Enter : MonoBehaviour
     {
-        [SerializeField] private SceneAsset mainMenuScene;
+        [SerializeField] private AssetReference mainMenuScene;
 
         private EnterElement _component;
 
@@ -23,14 +23,16 @@ namespace Screens.Enter
         [Inject]
         public void Construct(GetSignUpUrl getSignUpUrl) => _signUpUrl = getSignUpUrl();
 
-        private void Awake()
+        public void Awake()
+        {
+            GetComponent<IUIReady>().UIReady += OnUIReady;
+        }
+
+        private void OnUIReady()
         {
             var document = GetComponent<UIDocument>()!;
             _component = document.rootVisualElement.Q<EnterElement>()!;
-        }
 
-        private void OnEnable()
-        {
             _component.SignUpRequested += OnSignUpRequested;
             _component.SignInRequested += OnSignInRequested;
             _component.EnterUnanimouslyRequested += OnEnterUnanimouslyRequested;
@@ -49,7 +51,7 @@ namespace Screens.Enter
             switch (result)
             {
                 case SignInResult.Success:
-                    SceneManager.LoadScene(mainMenuScene.name);
+                    mainMenuScene.LoadSceneAsync();
                     break;
                 case SignInResult.UserNotFound:
                 default:
@@ -58,7 +60,7 @@ namespace Screens.Enter
             }
         }
 
-        private void OnEnterUnanimouslyRequested() => SceneManager.LoadScene(mainMenuScene.name);
+        private void OnEnterUnanimouslyRequested() => mainMenuScene.LoadSceneAsync();
 
         private void OnSignUpRequested() => Application.OpenURL(_signUpUrl);
     }

@@ -1,19 +1,19 @@
 using System.Threading.Tasks;
 using Common;
 using Screens.SharedElements;
-using UnityEditor;
 using UnityEngine;
-using UnityEngine.SceneManagement;
+using UnityEngine.AddressableAssets;
 using UnityEngine.UIElements;
 using VContainer;
 
 namespace Screens.MainMenu
 {
+    [RequireComponent(typeof(UIElement))]    
     [RequireComponent(typeof(SignInOrOut))]    
     public class MainMenu : MonoBehaviour
     {
-        [SerializeField] private SceneAsset gameScene;
-        [SerializeField] private SceneAsset joinSessionScene;
+        [SerializeField] private AssetReference gameScene;
+        [SerializeField] private AssetReference joinSessionScene;
 
         private MainMenuElement _component;
 
@@ -22,14 +22,16 @@ namespace Screens.MainMenu
 
         public delegate Task<HostSessionResult> HostSession();
 
-        private void Awake()
+        public void Awake()
+        {
+            GetComponent<IUIReady>().UIReady += OnUIReady;
+        }
+
+        private void OnUIReady()
         {
             var document = GetComponent<UIDocument>();
             _component = document.rootVisualElement.Q<MainMenuElement>();
-        }
 
-        private void OnEnable()
-        {
             _component.PlayOfflineRequested += OnPlayOfflineRequested;
             _component.HostSessionRequested += OnHostSessionRequested;
             _component.JoinSessionRequested += OnJoinSessionRequested;
@@ -47,7 +49,7 @@ namespace Screens.MainMenu
         private void OnPlayOfflineRequested()
         {
             _assignConnectionRole.Offline();
-            SceneManager.LoadScene(gameScene.name);
+            gameScene.LoadSceneAsync();
         }
 
         private async void OnHostSessionRequested()
@@ -57,7 +59,7 @@ namespace Screens.MainMenu
             {
                 case HostSessionResult.Success:
                     _assignConnectionRole.Host();
-                    SceneManager.LoadScene(gameScene.name);
+                    gameScene.LoadSceneAsync();
                     break;
                 case HostSessionResult.UnknownError:
                 default:
@@ -66,7 +68,7 @@ namespace Screens.MainMenu
             }
         }
 
-        private void OnJoinSessionRequested() => SceneManager.LoadScene(joinSessionScene.name);
+        private void OnJoinSessionRequested() => joinSessionScene.LoadSceneAsync();
 
         private void OnExitApplicationRequested() => Application.Quit(0);
 

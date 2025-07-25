@@ -233,8 +233,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da15ccaeb01641b6a70223f5ce71057d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameScene: {fileID: 102900000, guid: 99c9720ab356a0642a771bea13969a05, type: 3}
-  mainMenuScene: {fileID: 102900000, guid: cfb06061954f33e49a62de79c3b8fdc5, type: 3}
+  gameScene:
+    m_AssetGUID: 99c9720ab356a0642a771bea13969a05
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_SubObjectGUID: 
+    m_EditorAssetChanged: 0
+  mainMenuScene:
+    m_AssetGUID: cfb06061954f33e49a62de79c3b8fdc5
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_SubObjectGUID: 
+    m_EditorAssetChanged: 1
 --- !u!114 &1527559572
 MonoBehaviour:
   m_ObjectHideFlags: 0

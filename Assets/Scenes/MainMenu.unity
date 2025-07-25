@@ -583,8 +583,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f216884590be4fa3a0496f66acaa64d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameScene: {fileID: 102900000, guid: 99c9720ab356a0642a771bea13969a05, type: 3}
-  joinSessionScene: {fileID: 102900000, guid: 4681ab6970ca61048adb730eeb3eedd4, type: 3}
+  gameScene:
+    m_AssetGUID: 99c9720ab356a0642a771bea13969a05
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_SubObjectGUID: 
+    m_EditorAssetChanged: 0
+  joinSessionScene:
+    m_AssetGUID: 4681ab6970ca61048adb730eeb3eedd4
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_SubObjectGUID: 
+    m_EditorAssetChanged: 0
 --- !u!114 &1471201277
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -597,7 +607,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0644ea31fb9d4fc48537cab1cc123dc6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enterScene: {fileID: 102900000, guid: 942fbe52f04b005499916a006ba7b2b6, type: 3}
+  enterScene:
+    m_AssetGUID: 942fbe52f04b005499916a006ba7b2b6
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_SubObjectGUID: 
+    m_EditorAssetChanged: 0
 --- !u!114 &1471201278
 MonoBehaviour:
   m_ObjectHideFlags: 0

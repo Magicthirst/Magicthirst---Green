@@ -14,7 +14,32 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_GroupName: Default Local Group
   m_GUID: c5d2448d34c868246b1a8309e6348498
-  m_SerializeEntries: []
+  m_SerializeEntries:
+  - m_GUID: 4681ab6970ca61048adb730eeb3eedd4
+    m_Address: Assets/Scenes/JoinSession.unity
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 75120a2686253fa4b9dce7ea9f6b74c0
+    m_Address: Assets/Scenes/Bootstrap.unity
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 942fbe52f04b005499916a006ba7b2b6
+    m_Address: Assets/Scenes/Enter.unity
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 99c9720ab356a0642a771bea13969a05
+    m_Address: Assets/Scenes/SampleScene.unity
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: cfb06061954f33e49a62de79c3b8fdc5
+    m_Address: Assets/Scenes/MainMenu.unity
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 560788e538eb6414e8a5110f97072915, type: 2}
   m_SchemaSet:
