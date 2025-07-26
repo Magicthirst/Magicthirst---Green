@@ -85,9 +85,20 @@ namespace Model
             }
         }
 
-        public Task<JoinSessionResult> JoinSession(string hostId)
+        public async Task<JoinSessionResult> JoinSession(string hostId)
         {
-            throw new NotImplementedException();
+            if (!IsAuthenticated)
+            {
+                throw new InvalidOperationException("User is not authenticated to be able to host a session");
+            }
+
+            var (connector, result) = await _client.Join(hostId);
+            if (connector != null)
+            {
+                _setConnector(connector!);
+            }
+
+            return result;
         }
     }
 }

@@ -38,6 +38,7 @@ namespace Common
         Success,
         HostNotFound,
         NotWelcome,
-        SessionDoesNotExists
+        SessionDoesNotExists,
+        UnknownError
     }
 }

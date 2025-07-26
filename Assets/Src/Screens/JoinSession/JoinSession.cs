@@ -1,3 +1,4 @@
+using System;
 using System.Threading.Tasks;
 using Common;
 using UnityEngine;
@@ -45,19 +46,22 @@ namespace Screens.JoinSession
         private async void OnJoinRequested(string hostId)
         {
             var result = await _askToJoinSession(hostId);
-            switch (result)
+
+            if (result == JoinSessionResult.Success)
             {
-                case JoinSessionResult.Success:
-                    _assignConnectionRole.Guest();
-                    gameScene.LoadSceneAsync();
-                    break;
-                case JoinSessionResult.HostNotFound:
-                case JoinSessionResult.NotWelcome:
-                case JoinSessionResult.SessionDoesNotExists:
-                default:
-                    _element.DisplayError("Something went wrong"); // TODO
-                    break;
+                _assignConnectionRole.Guest();
+                gameScene.LoadSceneAsync();
+                return;
             }
+
+            _element.DisplayError(result switch
+            {
+                JoinSessionResult.HostNotFound => "Host were not found",
+                JoinSessionResult.NotWelcome => "Host are not welcomes you",
+                JoinSessionResult.SessionDoesNotExists => "This user is not hosting anything",
+                JoinSessionResult.UnknownError => "Something went wrong",
+                _ => throw new ArgumentOutOfRangeException()
+            });
         }
     }
 }

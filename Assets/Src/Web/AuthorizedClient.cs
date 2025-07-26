@@ -18,25 +18,25 @@ namespace Web
         public event Action ConnectionSevered;
 
         private string _token;
-        private readonly string _hostId;
+        private readonly string _playerId;
         private readonly ClientConfig _config;
 
         private readonly CancellationTokenSource _cancellationSource;
         private readonly HttpClient _http;
 
-        private AuthorizedClient(HttpClient http, string token, string hostId, ClientConfig config)
+        private AuthorizedClient(HttpClient http, string token, string playerId, ClientConfig config)
         {
             _http = http;
             _token = token;
-            _hostId = hostId;
+            _playerId = playerId;
             _config = config;
             _cancellationSource = new CancellationTokenSource();
         }
 
-        internal static AuthorizedClient Launch(ClientConfig config, string token, string hostId)
+        internal static AuthorizedClient Launch(ClientConfig config, string token, string playerId)
         {
             var http = new HttpClient { BaseAddress = new Uri(config.GatewayUrl) };
-            var client = new AuthorizedClient(http, token, hostId, config);
+            var client = new AuthorizedClient(http, token, playerId, config);
             _ = client.LaunchRefresh(config.TokenRefreshInterval);
 
             return client;
@@ -49,7 +49,7 @@ namespace Web
                 Method = HttpMethod.Post,
                 RequestUri = new Uri("/sessions", UriKind.Relative),
                 Headers = { Authorization = new AuthenticationHeaderValue("Bearer", _token) },
-                Content = JsonContent.Create(new { host = _hostId })
+                Content = JsonContent.Create(new { host = _playerId })
             }, _cancellationSource.Token);
 
             if (response.StatusCode == HttpStatusCode.Created)
@@ -60,7 +60,7 @@ namespace Web
                 (
                     serverUrl: response.Headers.GetValues("Location").Single(),
                     sessionId: content.session_id,
-                    playerId: _hostId,
+                    playerId: _playerId,
                     sourceOfTruthKey: content.source_of_truth_key,
                     config: _config
                 );
@@ -70,9 +70,54 @@ namespace Web
             throw new NotImplementedException();
         }
 
-        public Task<IConnector> Join(string hostId)
+        public async Task<(IConnector, JoinSessionResult)> Join(string hostId)
         {
-            throw new NotImplementedException();
+            var response = await _http.SendAsync(new()
+            {
+                Method = HttpMethod.Post,
+                RequestUri = new Uri("/sessions/players", UriKind.Relative),
+                Headers = { Authorization = new AuthenticationHeaderValue("Bearer", _token) },
+                Content = JsonContent.Create(new { host = hostId, guest = _playerId })
+            }, _cancellationSource.Token);
+
+            switch (response.StatusCode)
+            {
+                case HttpStatusCode.OK:
+                {
+                    var content = await response.Content.ReadJsonContentBy(new { session_id = 0 });
+                    var connector = new GuestConnector
+                    (
+                        serverUrl: response.Headers.GetValues("Location").Single(),
+                        sessionId: content.session_id,
+                        playerId: _playerId,
+                        config: _config
+                    );
+
+                    return (connector, JoinSessionResult.Success);
+                }
+                case HttpStatusCode.BadRequest or HttpStatusCode.Unauthorized:
+                {
+                    return (null, JoinSessionResult.UnknownError);
+                }
+                case HttpStatusCode.NotFound when response.Content.GetType().Name == "EmptyContent":
+                {
+                    return (null, JoinSessionResult.HostNotFound);
+                }
+                case HttpStatusCode.NotFound:
+                {
+                    return await response.Content.ReadAsStringAsync() switch
+                    {
+                        "no session" => (null, JoinSessionResult.SessionDoesNotExists),
+                        "not welcome" => (null, JoinSessionResult.NotWelcome),
+                        _ => throw new NotImplementedException()
+                    };
+                }
+                default:
+                {
+                    Debug.LogError(response);
+                    throw new NotImplementedException();
+                }
+            }
         }
 
         public void Exit()
@@ -132,6 +177,25 @@ namespace Web
             _sessionId = sessionId;
             _playerId = playerId;
             _sourceOfTruthKey = sourceOfTruthKey;
+            _config = config;
+        }
+
+        public async Task<ISyncConnection> Connect() =>
+            await SyncConnection.LaunchOrNull(_serverUrl, _sessionId, _playerId, _config, _sourceOfTruthKey);
+    }
+
+    internal class GuestConnector : IConnector
+    {
+        private readonly string _serverUrl;
+        private readonly int _sessionId;
+        private readonly string _playerId;
+        private readonly ClientConfig _config;
+
+        public GuestConnector(string serverUrl, int sessionId, string playerId, ClientConfig config)
+        {
+            _serverUrl = serverUrl;
+            _sessionId = sessionId;
+            _playerId = playerId;
             _config = config;
         }
 

@@ -10,7 +10,7 @@ namespace Model
 
         Task<IConnector> Host();
 
-        Task<IConnector> Join(string hostId);
+        Task<(IConnector, JoinSessionResult)> Join(string hostId);
 
         void Exit();
 
