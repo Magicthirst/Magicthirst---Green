@@ -34,8 +34,8 @@ namespace Screens.SharedElements
 
             asset.CloneTree(this);
             this.BindButtons(
-                ("Enter", () => SignInRequested?.Invoke()),
-                ("Exit", () => SignOutRequested?.Invoke())
+                ("SignIn", () => SignInRequested?.Invoke()),
+                ("SignOut", () => SignOutRequested?.Invoke())
             );
 
             _signedInGroup = this.Q<VisualElement>("SignedIn");
