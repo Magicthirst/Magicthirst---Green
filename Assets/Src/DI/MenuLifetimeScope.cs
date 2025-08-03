@@ -2,7 +2,6 @@ using Common;
 using Screens.JoinSession;
 using Screens.MainMenu;
 using Screens.SharedElements;
-using UnityEngine;
 using VContainer;
 using VContainer.Unity;
 using static Screens.Enter.Enter;

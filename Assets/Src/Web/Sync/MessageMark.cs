@@ -45,7 +45,8 @@ namespace Web.Sync
         Error404 = Error | 2 << MessageMarkSupply.ExtraShift,
 
         // COMMAND SUBTYPES
-        Movement = Command | 0 << MessageMarkSupply.ExtraShift
+        Reinit = Command | 0 << MessageMarkSupply.ExtraShift,
+        Movement = Command | 1 << MessageMarkSupply.ExtraShift
     }
 
     public static class MessageMarkSupply

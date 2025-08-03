@@ -6,11 +6,12 @@ namespace Levels.Sync
     [RequireComponent(typeof(ApplyInput))]
     public class SendInput : SyncBehavior
     {
-        [Inject] private SendMovement _sendMovement = null!;
+        [Inject] private IObjectResolver _resolver;
 
+        private SendMovement _sendMovement = null!;
         private ApplyInput _input = null!;
 
-        public delegate void SendMovement(Vector2 movement);
+        public delegate void SendMovement(Vector2 position, Vector2 vector);
 
         [Inject]
         public void AssertProperConnectionRole(IsPublishingInput isPublishingInput)
@@ -28,7 +29,11 @@ namespace Levels.Sync
             _input = GetComponent<ApplyInput>();
         }
 
-        private void OnEnable() => _input.Moved += SendMovementIfChanged;
+        private void OnEnable()
+        {
+            _sendMovement = _resolver.Resolve<SendMovement>();
+            _input.Moved += SendMovementIfChanged;
+        }
 
         private void OnDisable()
         {
@@ -38,6 +43,6 @@ namespace Levels.Sync
             }
         }
 
-        private void SendMovementIfChanged(Vector2 movement) => _sendMovement(movement);
+        private void SendMovementIfChanged(Vector2 movement) => _sendMovement?.Invoke(transform.position, movement);
     }
 }

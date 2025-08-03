@@ -30,6 +30,9 @@ namespace Web.Sync
                 return null;
             }
 
+            var connection = new SyncConnection(client);
+            _ = connection.RunSyncLoop(config.SyncLoopInterval);
+
             var connectedToSession = await client.SendWithResponse
             (
                 ConnectToSessionMessage(sessionId, playerId, sourceOfTruthKey),
@@ -43,9 +46,6 @@ namespace Web.Sync
                 client.Disconnect();
                 return null;
             }
-
-            var connection = new SyncConnection(client);
-            _ = connection.RunSyncLoop(config.SyncLoopInterval);
 
             return connection;
         }

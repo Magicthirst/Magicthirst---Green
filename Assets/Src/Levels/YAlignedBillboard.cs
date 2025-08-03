@@ -1,15 +1,19 @@
 using Levels.Extensions;
 using UnityEngine;
+using VContainer;
 
 namespace Levels
 {
     public class YAlignedBillboard : MonoBehaviour
     {
-        [SerializeField] private new Transform camera;
+        private Transform _camera;
+
+        [Inject]
+        public void Construct(Camera injectedCamera) => _camera = injectedCamera.transform;
 
         private void Update()
         {
-            transform.LookAt(camera.transform.position.With(y: transform.position.y));
+            transform.LookAt(_camera.position.With(y: transform.position.y));
         }
     }
 }

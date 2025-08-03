@@ -11,12 +11,16 @@ namespace DI
 {
     public class LevelLifetimeScope : LifetimeScope, IConnectionEstablishedEventHolder
     {
-        public event Action ConnectionEstablished;
+        public event Action<ISyncConnection> ConnectionEstablished;
+
+        [SerializeField] private new Camera camera;
 
         [CanBeNull] private ISyncConnection _connection = null;
 
         protected override void Configure(IContainerBuilder builder)
         {
+            builder.RegisterInstance(camera);
+
             builder
                 .Register<IConnectionEstablishedEventHolder>(resolver =>
                 {
@@ -40,7 +44,7 @@ namespace DI
                         if (_connection != null)
                         {
                             Debug.Log("ConnectionEstablished");
-                            ConnectionEstablished?.Invoke();
+                            ConnectionEstablished?.Invoke(_connection);
                         }
                         else
                         {
@@ -52,11 +56,30 @@ namespace DI
                 }, Lifetime.Singleton)
                 .AsSelf();
 
-            builder.RegisterDisposeCallback(resolver => resolver.ResolveOrDefault<ISyncConnection>()?.Dispose());
+            builder
+                .Register<InstantiateJoinedPlayer>(_ => (playerId, prefab) =>
+                {
+                    var consumer = _connection!.GetForIndividual(playerId);
+                    var scope = CreateChild(scopeBuilder =>
+                    {
+                        scopeBuilder.RegisterInstance(consumer).As<IConsumer>();
+                    });
+
+                    Debug.Log($"Instantiating playerId={playerId} prefab={prefab.name}");
+                    var instance = Instantiate(prefab);
+                    instance.GetComponent<ConsumerLifetimeScope>().parentReference.Object = scope;
+                    return instance;
+                }, Lifetime.Singleton)
+                .AsSelf();
 
             builder
-                .Register<SendInput.SendMovement>(_ => vector2 => _connection!.SendMovement(vector2), Lifetime.Singleton)
+                .Register<IReinitSource>(_ => _connection!, Lifetime.Transient)
                 .AsSelf();
+        }
+
+        private void OnDisable()
+        {
+            _connection?.Dispose();
         }
     }
 }

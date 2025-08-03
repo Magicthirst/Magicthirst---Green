@@ -11,8 +11,7 @@ namespace Levels.Sync
         [Inject]
         public void ObserveConnection(IConnectionEstablishedEventHolder eventHolder)
         {
-            enabled = true;
-            eventHolder.ConnectionEstablished += () => _mainThreadContext.Post(_ => enabled = true, null);
+            eventHolder.ConnectionEstablished += _ => _mainThreadContext.Post(_ => enabled = true, null);
         }
 
         protected virtual void Awake()
