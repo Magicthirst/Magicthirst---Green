@@ -1447,6 +1447,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7deecf8d9f8e4ba3ba3461c624bb0932, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  selfPlayer: {fileID: 1711207718}
   playerPrefab: {fileID: 7604778523912042499, guid: f057f03ee3457ba4da06d8d83fbe5ff4, type: 3}
   playersParent: {fileID: 0}
 --- !u!1 &1499311475
@@ -1517,6 +1518,7 @@ GameObject:
   - component: {fileID: 1711207725}
   - component: {fileID: 1711207726}
   - component: {fileID: 1711207727}
+  - component: {fileID: 1711207728}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -1576,9 +1578,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69d527d12ec47c5448f673bb08ae9d6b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  broadcasting: 1
   gravityPull: 0.1
   speed: 10
-  camera: {fileID: 1913018983}
 --- !u!114 &1711207722
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1816,6 +1818,18 @@ MonoBehaviour:
   autoRun: 1
   autoInjectGameObjects:
   - {fileID: 1711207718}
+--- !u!114 &1711207728
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1711207718}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9eed87527169439b8ad0e3abe0d957b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1913018982
 GameObject:
   m_ObjectHideFlags: 0

@@ -16,6 +16,8 @@ namespace Web.Sync
         private readonly Dictionary<int, Consumer> _consumers = new();
         private readonly Producer _self;
 
+        public int SelfId => _client.Id;
+
         public IProducer Self => _self;
 
         private SyncConnection(RiptideClient client)
@@ -37,7 +39,7 @@ namespace Web.Sync
                 return consumer;
             }
 
-            consumer = new Consumer();
+            consumer = new Consumer(_syncWatch);
             _consumers[playerId] = consumer;
             return consumer;
         }

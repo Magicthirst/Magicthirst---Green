@@ -6,25 +6,27 @@ namespace Common
 {
     using IdsPlayers = Dictionary<int, PlayerState>;
 
-    public delegate void MovementCommand(Vector2 position, Vector2 vector, double timestampSeconds);
+    public delegate void MovementCommand(Vector2 position, Vector2 vector, double elapsedSeconds);
 
     public interface ISyncConnection : IDisposable, IReinitSource
     {
-        IProducer Self { get; }
+        public int SelfId { get; }
 
-        IConsumer GetForIndividual(int playerId);
+        public IProducer Self { get; }
+
+        public IConsumer GetForIndividual(int playerId);
     }
 
     public interface IConsumer
     {
-        event MovementCommand MovementCommanded;
+        public event MovementCommand MovementCommanded;
     }
 
     public interface IProducer
     {
-        void SendMovement(Vector2 position, Vector2 vector);
+        public void SendMovement(Vector2 position, Vector2 vector);
 
-        void Exit();
+        public void Exit();
     }
 
     public interface IReinitSource

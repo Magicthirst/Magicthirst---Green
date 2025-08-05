@@ -1,8 +1,10 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using Common;
 using Riptide;
 using UnityEngine;
+using Debug = UnityEngine.Debug;
 
 namespace Web.Sync
 {
@@ -62,10 +64,20 @@ namespace Web.Sync
 
         internal class Consumer : IConsumer
         {
+            private readonly Stopwatch _syncWatch;
+
+            public Consumer(Stopwatch syncWatch)
+            {
+                _syncWatch = syncWatch;
+            }
+
             public event MovementCommand MovementCommanded;
 
-            internal void CommandMovement(Vector2 position, Vector2 vector, double timestampSeconds) =>
-                MovementCommanded?.Invoke(position, vector, timestampSeconds);
+            internal void CommandMovement(Vector2 position, Vector2 vector, double timestampSeconds)
+            {
+                var dt = _syncWatch.Elapsed.TotalSeconds - timestampSeconds;
+                MovementCommanded?.Invoke(position, vector, dt);
+            }
         }
     }
 }

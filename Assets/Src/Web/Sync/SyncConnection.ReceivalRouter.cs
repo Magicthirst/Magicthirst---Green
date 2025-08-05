@@ -1,5 +1,6 @@
 using JetBrains.Annotations;
 using Riptide;
+using UnityEngine;
 
 namespace Web.Sync
 {
@@ -14,6 +15,8 @@ namespace Web.Sync
         {
             var fullMark = (MessageMark)args.MessageId;
             var mark = fullMark & MessageMark.FilterExtras;
+
+            Debug.Log($"received mark: {(ushort)mark}");
 
             switch (mark)
             {
