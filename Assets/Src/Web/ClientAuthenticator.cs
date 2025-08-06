@@ -4,8 +4,6 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using Model;
 using Model.Exception;
-using UnityEngine;
-using Web.Dto;
 using Web.Util;
 
 namespace Web
