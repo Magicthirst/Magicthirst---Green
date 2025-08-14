@@ -1,6 +1,5 @@
 using System;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 namespace Levels
 {
@@ -22,6 +21,8 @@ namespace Levels
         private Vector2? _resetPosition = null;
         private Vector2 _previousVelocity = Vector2.zero;
 
+        private int _leftPhysicalFramesToLog = 0;
+
         private void Awake()
         {
             _controller = GetComponent<CharacterController>();
@@ -35,6 +36,13 @@ namespace Levels
 
         private void FixedUpdate()
         {
+            if (_leftPhysicalFramesToLog == 0)
+            {
+                _leftPhysicalFramesToLog = 25;
+                Debug.Log($"_resetPosition={_resetPosition}");
+                Debug.Log($"_inputSource.Movement={_inputSource.Movement}");
+            }
+
             if (_resetPosition.HasValue)
             {
                 transform.position = _resetPosition.Value;

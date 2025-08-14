@@ -4,6 +4,7 @@ using System.Diagnostics;
 using Common;
 using Riptide;
 using UnityEngine;
+using Web.Util;
 using Debug = UnityEngine.Debug;
 
 namespace Web.Sync
@@ -59,16 +60,19 @@ namespace Web.Sync
                 consumer.CommandMovement(position, vector, timestamp);
             }
 
-            Debug.Log($"received movement: {(position, vector, timestamp)}");
+            Debug.Log($"received movement: {(position, vector, timestamp, sender)}\n" +
+                      $"bits: {message.ToStringOfBits()}");
         }
 
         internal class Consumer : IConsumer
         {
             private readonly Stopwatch _syncWatch;
+            private readonly int _id;
 
-            public Consumer(Stopwatch syncWatch)
+            public Consumer(Stopwatch syncWatch, int id)
             {
                 _syncWatch = syncWatch;
+                _id = id;
             }
 
             public event MovementCommand MovementCommanded;
@@ -78,6 +82,8 @@ namespace Web.Sync
                 var dt = _syncWatch.Elapsed.TotalSeconds - timestampSeconds;
                 MovementCommanded?.Invoke(position, vector, dt);
             }
+
+            public override string ToString() => $"{nameof(Consumer)}(Riptide){{ {nameof(_id)}={_id} }}";
         }
     }
 }

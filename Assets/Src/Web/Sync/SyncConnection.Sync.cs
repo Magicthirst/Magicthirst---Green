@@ -14,6 +14,7 @@ namespace Web.Sync
     {
         private async Task RunSyncLoop(TimeSpan interval)
         {
+            _syncWatch.Start();
             var stopwatch = new Stopwatch();
             Debug.Log("start sync loop");
             while (!_cancellation.IsCancellationRequested)
@@ -25,8 +26,8 @@ namespace Web.Sync
 
                 if (movementCommand != null)
                 {
-                    Debug.Log($"sent {movementCommand}");
                     _client.Send(movementCommand);
+                    Debug.Log($"sent {nameof(movementCommand)} at {_syncWatch.Elapsed.TotalSeconds}");
                 }
 
                 _client.Update();
@@ -49,7 +50,7 @@ namespace Web.Sync
                     .AddVector2(vector);
 
                 Interlocked.Exchange(ref MovementCommand, message);
-                Debug.Log($"saved {vector} for publishing");
+                Debug.Log($"saved {(position, vector)} for publishing");
             }
 
             public void Exit() => Exited?.Invoke();

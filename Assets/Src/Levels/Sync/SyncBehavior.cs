@@ -8,8 +8,7 @@ namespace Levels.Sync
     public abstract class SyncBehavior : MonoBehaviour
     {
         protected ISyncConnection Connection;
-
-        private SynchronizationContext _mainThreadContext;
+        protected SynchronizationContext MainThreadContext;
 
         [Inject]
         public void ObserveConnection(IConnectionEstablishedEventHolder eventHolder)
@@ -17,14 +16,14 @@ namespace Levels.Sync
             eventHolder.ConnectionEstablished += connection =>
             {
                 Connection = connection;
-                _mainThreadContext.Post(_ => enabled = true, null);
+                MainThreadContext.Post(_ => enabled = true, null);
             };
         }
 
         protected virtual void Awake()
         {
             enabled = false;
-            _mainThreadContext = SynchronizationContext.Current;
+            MainThreadContext = SynchronizationContext.Current;
         }
     }
 }

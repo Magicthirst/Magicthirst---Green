@@ -16,6 +16,8 @@ namespace Levels
         private Transform _camera;
         private PlayerInput _input;
 
+        private Vector2 _relativeMovement;
+
         private IDisposable _movementObserver;
 
         [Inject]
@@ -29,18 +31,25 @@ namespace Levels
         private void OnEnable()
         {
             var map = _input.currentActionMap;
-            _movementObserver = map.ConsumeAction<Vector2>("Move").OnPerformed(v =>
-            {
-                var radians = math.radians(-_camera.eulerAngles.y);
-                var cos = math.cos(radians);
-                var sin = math.sin(radians);
-                Movement = new Vector2
-                (
-                    x: v.x * cos - v.y * sin,
-                    y: v.x * sin + v.y * cos
-                ).normalized;
-            });
+            _movementObserver = map.ConsumeAction<Vector2>("Move")
+                .OnPerformed(v => _relativeMovement = v);
             map.Enable();
+        }
+
+        private void FixedUpdate()
+        {
+            if (!_camera.hasChanged) return;
+
+            var radians = math.radians(-_camera.eulerAngles.y);
+            var cos = math.cos(radians);
+            var sin = math.sin(radians);
+            Movement = new Vector2
+            (
+                x: _relativeMovement.x * cos - _relativeMovement.y * sin,
+                y: _relativeMovement.x * sin + _relativeMovement.y * cos
+            ).normalized;
+
+            _camera.hasChanged = false;
         }
 
         private void OnDisable()

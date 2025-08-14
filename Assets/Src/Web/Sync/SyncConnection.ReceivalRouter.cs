@@ -1,3 +1,4 @@
+using System;
 using JetBrains.Annotations;
 using Riptide;
 using UnityEngine;
@@ -18,14 +19,21 @@ namespace Web.Sync
 
             Debug.Log($"received mark: {(ushort)mark}");
 
-            switch (mark)
+            try
             {
-                case MessageMark.Reinit:
-                    ReceiveReinit(args.Message);
-                    break;
-                case MessageMark.Movement:
-                    ReceiveMovement(args.Message);
-                    break;
+                switch (mark)
+                {
+                    case MessageMark.Reinit:
+                        ReceiveReinit(args.Message);
+                        break;
+                    case MessageMark.Movement:
+                        ReceiveMovement(args.Message);
+                        break;
+                }
+            }
+            catch (Exception e)
+            {
+                Debug.LogError(e);
             }
         }
     }

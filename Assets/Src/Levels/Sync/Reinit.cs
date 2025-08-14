@@ -37,13 +37,18 @@ namespace Levels.Sync
                     [Connection.SelfId] = new(selfPlayer)
                 };
 
-                _reinitSource.Reinited += ReinitPlayers;
+                _reinitSource.Reinited += ReinitPlayersOnMainThread;
             }
             else
             {
                 Debug.Log($"Not resolved {nameof(_reinitSource)}");
                 Debug.Log($"Not resolved {nameof(_instantiate)}");
             }
+
+            return;
+
+            void ReinitPlayersOnMainThread(Dictionary<int, PlayerState> players) =>
+                MainThreadContext.Post(_ => ReinitPlayers(players), null);
         }
 
         private void ReinitPlayers(Dictionary<int, PlayerState> players)
@@ -59,8 +64,11 @@ namespace Levels.Sync
                 _players[playerId].Object.SetActive(false);
             }
 
-            foreach (var playerId in keys.Except(_keys))
+            var newPlayers = keys.Except(_keys).ToArray();
+            Debug.Log($"Reinit add players={newPlayers}");
+            foreach (var playerId in newPlayers)
             {
+                Debug.Log($"spawned playerId={playerId}");
                 var player = new ObjectAndReceivers(_instantiate(playerId, playerPrefab));
                 player.Object.transform.SetParent(playersParent);
                 _players[playerId] = player;
@@ -70,12 +78,12 @@ namespace Levels.Sync
             {
                 var player = _players[playerId];
                 player.Object.SetActive(true);
-                Debug.Log($"spawned playerId={playerId}");
 
                 foreach (var receiver in player.Receivers)
                 {
                     receiver.OnPlayerStateUpdated(players[playerId]);
                 }
+
                 Debug.Log($"look for this guy (playerId={playerId}) here: {player.Object.transform.position}");
             }
         }

@@ -39,7 +39,7 @@ namespace Web.Sync
                 return consumer;
             }
 
-            consumer = new Consumer(_syncWatch);
+            consumer = new Consumer(_syncWatch, playerId);
             _consumers[playerId] = consumer;
             return consumer;
         }

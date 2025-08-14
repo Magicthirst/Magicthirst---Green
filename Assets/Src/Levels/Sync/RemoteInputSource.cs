@@ -6,7 +6,7 @@ using VContainer;
 namespace Levels.Sync
 {
     [RequireComponent(typeof(PlayerStateUpdatesReceiver))]
-    public class RemoteInputSource : MonoBehaviour, IInputSource
+    public class RemoteInputSource : SyncBehavior, IInputSource
     {
         public Vector2 Movement { get; private set; }
 
@@ -16,27 +16,40 @@ namespace Levels.Sync
 
         [Inject] private IConsumer _consumer;
 
-        private void Awake()
+        protected override void Awake()
         {
+            base.Awake();
+
             _stateUpdates = GetComponent<PlayerStateUpdatesReceiver>();
         }
 
         private void OnEnable()
         {
             _stateUpdates.MovementUpdated += OnMovementCommanded;
-            _consumer.MovementCommanded += OnMovementCommanded;
+
+            if (_consumer != null)
+            {
+                _consumer.MovementCommanded += OnMovementCommanded;
+            }
         }
 
         private void OnMovementCommanded(Vector2 position, Vector2 vector, double elapsedSeconds)
         {
-            Movement = vector;
-            var estimatedPosition = position + vector * (float)elapsedSeconds;
-            PositionUpdated?.Invoke(estimatedPosition);
+            MainThreadContext.Post(_ =>
+            {
+                Movement = vector;
+                Debug.Log($"{_consumer}");
+                var estimatedPosition = position + vector * (float)elapsedSeconds;
+                PositionUpdated?.Invoke(estimatedPosition);
+            }, null);
         }
 
         private void OnDisable()
         {
-            _stateUpdates.MovementUpdated -= OnMovementCommanded;
+            if (_stateUpdates != null)
+            {
+                _stateUpdates.MovementUpdated -= OnMovementCommanded;
+            }
             _consumer.MovementCommanded -= OnMovementCommanded;
         }
     }
