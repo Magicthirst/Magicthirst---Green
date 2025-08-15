@@ -20,30 +20,22 @@ namespace Levels.Sync
 
         private Dictionary<int, ObjectAndReceivers> _players;
 
-        protected override void Awake()
+        protected override void OnAwake()
         {
-            base.Awake();
-
             playersParent ??= transform.parent;
         }
 
-        private void OnEnable()
+        protected override void OnEnableSync()
         {
-            if (_resolver.TryResolve(out _reinitSource) &&
-                _resolver.TryResolve(out _instantiate))
-            {
-                _players = new Dictionary<int, ObjectAndReceivers>
-                {
-                    [Connection.SelfId] = new(selfPlayer)
-                };
+            _reinitSource = _resolver.Resolve<IReinitSource>();
+            _instantiate = _resolver.Resolve<InstantiateJoinedPlayer>();
 
-                _reinitSource.Reinited += ReinitPlayersOnMainThread;
-            }
-            else
+            _players = new Dictionary<int, ObjectAndReceivers>
             {
-                Debug.Log($"Not resolved {nameof(_reinitSource)}");
-                Debug.Log($"Not resolved {nameof(_instantiate)}");
-            }
+                [Connection.SelfId] = new(selfPlayer)
+            };
+
+            _reinitSource.Reinited += ReinitPlayersOnMainThread;
 
             return;
 
@@ -88,12 +80,9 @@ namespace Levels.Sync
             }
         }
 
-        private void OnDisable()
+        protected override void OnDisableSync()
         {
-            if (_reinitSource != null)
-            {
-                _reinitSource.Reinited -= ReinitPlayers;
-            }
+            _reinitSource.Reinited -= ReinitPlayers;
         }
 
         private struct ObjectAndReceivers

@@ -16,21 +16,15 @@ namespace Levels.Sync
 
         [Inject] private IConsumer _consumer;
 
-        protected override void Awake()
+        protected override void OnAwake()
         {
-            base.Awake();
-
             _stateUpdates = GetComponent<PlayerStateUpdatesReceiver>();
         }
 
-        private void OnEnable()
+        protected override void OnEnableSync()
         {
             _stateUpdates.MovementUpdated += OnMovementCommanded;
-
-            if (_consumer != null)
-            {
-                _consumer.MovementCommanded += OnMovementCommanded;
-            }
+            _consumer.MovementCommanded += OnMovementCommanded;
         }
 
         private void OnMovementCommanded(Vector2 position, Vector2 vector, double elapsedSeconds)
@@ -44,12 +38,9 @@ namespace Levels.Sync
             }, null);
         }
 
-        private void OnDisable()
+        protected override void OnDisableSync()
         {
-            if (_stateUpdates != null)
-            {
-                _stateUpdates.MovementUpdated -= OnMovementCommanded;
-            }
+            _stateUpdates.MovementUpdated -= OnMovementCommanded;
             _consumer.MovementCommanded -= OnMovementCommanded;
         }
     }

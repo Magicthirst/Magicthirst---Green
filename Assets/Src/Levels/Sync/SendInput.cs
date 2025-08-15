@@ -22,25 +22,20 @@ namespace Levels.Sync
             }
         }
 
-        protected override void Awake()
+        protected override void OnAwake()
         {
-            base.Awake();
-
             _input = GetComponent<ApplyInput>();
         }
 
-        private void OnEnable()
+        protected override void OnEnableSync()
         {
             _sendMovement = _resolver.Resolve<SendMovement>();
             _input.Moved += SendMovementIfChanged;
         }
 
-        private void OnDisable()
+        protected override void OnDisableSync()
         {
-            if (_input != null)
-            {
-                _input.Moved -= SendMovementIfChanged;
-            }
+            _input.Moved -= SendMovementIfChanged;
         }
 
         private void SendMovementIfChanged(Vector2 movement) => _sendMovement?.Invoke(transform.position, movement);
