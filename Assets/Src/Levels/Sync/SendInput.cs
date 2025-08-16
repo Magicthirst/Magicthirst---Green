@@ -3,13 +3,13 @@ using VContainer;
 
 namespace Levels.Sync
 {
-    [RequireComponent(typeof(ApplyInput))]
+    [RequireComponent(typeof(CharacterMovement))]
     public class SendInput : SyncBehavior
     {
         [Inject] private IObjectResolver _resolver;
 
         private SendMovement _sendMovement = null!;
-        private ApplyInput _input = null!;
+        private CharacterMovement _input = null!;
 
         public delegate void SendMovement(Vector2 position, Vector2 vector);
 
@@ -24,7 +24,7 @@ namespace Levels.Sync
 
         protected override void OnAwake()
         {
-            _input = GetComponent<ApplyInput>();
+            _input = GetComponent<CharacterMovement>();
         }
 
         protected override void OnEnableSync()

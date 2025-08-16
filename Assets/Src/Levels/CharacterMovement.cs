@@ -4,7 +4,8 @@ using UnityEngine;
 namespace Levels
 {
     [RequireComponent(typeof(CharacterController))]
-    public class ApplyInput : MonoBehaviour
+    [RequireComponent(typeof(IInputSource))]
+    public class CharacterMovement : MonoBehaviour
     {
         private const float MovementChangeThreshold = 0.05f;
 
