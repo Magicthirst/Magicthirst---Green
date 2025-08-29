@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Levels
 {
-    public interface IInputSource
+    public interface IMovementInputSource
     {
         public Vector2 Movement { get; }
 

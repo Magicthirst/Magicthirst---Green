@@ -11,5 +11,7 @@ namespace Levels.Extensions
         public static Vector2 Abs(this Vector2 vector) => new(Math.Abs(vector.x), Math.Abs(vector.y));
 
         public static Vector2 InFloorCoordinates(this Vector3 vector) => new(vector.x, vector.z);
+
+        public static Vector3 ToX0Y(this Vector2 vector) => new(vector.x, 0, vector.y);
     }
 }

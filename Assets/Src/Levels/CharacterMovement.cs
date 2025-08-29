@@ -4,7 +4,7 @@ using UnityEngine;
 namespace Levels
 {
     [RequireComponent(typeof(CharacterController))]
-    [RequireComponent(typeof(IInputSource))]
+    [RequireComponent(typeof(IMovementInputSource))]
     public class CharacterMovement : MonoBehaviour
     {
         private const float MovementChangeThreshold = 0.05f;
@@ -17,7 +17,7 @@ namespace Levels
         [SerializeField] private float speed;
 
         private CharacterController _controller;
-        private IInputSource _inputSource;
+        private IMovementInputSource _inputSource;
 
         private Vector2? _resetPosition = null;
         private Vector2 _previousVelocity = Vector2.zero;
@@ -27,7 +27,7 @@ namespace Levels
         private void Awake()
         {
             _controller = GetComponent<CharacterController>();
-            _inputSource = GetComponent<IInputSource>();
+            _inputSource = GetComponent<IMovementInputSource>();
         }
 
         private void OnEnable()

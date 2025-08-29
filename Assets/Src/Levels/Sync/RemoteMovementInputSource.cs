@@ -6,7 +6,7 @@ using VContainer;
 namespace Levels.Sync
 {
     [RequireComponent(typeof(PlayerStateUpdatesReceiver))]
-    public class RemoteInputSource : SyncBehavior, IInputSource
+    public class RemoteMovementInputSource : SyncBehavior, IMovementInputSource
     {
         public Vector2 Movement { get; private set; }
 

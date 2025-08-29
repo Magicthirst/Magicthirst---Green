@@ -7,7 +7,7 @@ using VContainer;
 namespace Levels
 {
     [RequireComponent(typeof(PlayerInput))]
-    public class PlayerInputSource : MonoBehaviour, IInputSource
+    public class PlayerMovementInputSource : MonoBehaviour, IMovementInputSource
     {
         public Vector2 Movement { get; private set; } = Vector3.zero;
 

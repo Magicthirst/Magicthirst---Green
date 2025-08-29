@@ -6,6 +6,46 @@ namespace Levels
 {
     internal static class PlayerInputExtension
     {
+        public static DisposableAction ConsumeAction(this InputActionMap map, string actionName) => new(map, actionName);
+
+        public class DisposableAction : IDisposable
+        {
+            public event Action Performed;
+
+            private readonly InputAction _action;
+
+            public DisposableAction(InputActionMap map, string actionName)
+            {
+                try
+                {
+                    _action = map.FindAction(actionName, true);
+                    _action.Enable();
+                }
+                catch (ArgumentException e)
+                {
+                    throw new ArgumentException
+                    (
+                        "Existing action names: " + string.Join(", ", map.actions.Select(a => a.name).ToArray()),
+                        e
+                    );
+                }
+                _action.performed += OnActionPerformed;
+            }
+
+            public void Dispose()
+            {
+                _action.performed -= OnActionPerformed;
+            }
+
+            public DisposableAction OnPerformed(Action action)
+            {
+                Performed += action;
+                return this;
+            }
+
+            private void OnActionPerformed(InputAction.CallbackContext _) => Performed?.Invoke();
+        }
+
         public static GenericAction<T> ConsumeAction<T>(this InputActionMap map, string actionName) where T : struct => new(map, actionName);
 
         public class GenericAction<T> : IDisposable where T : struct

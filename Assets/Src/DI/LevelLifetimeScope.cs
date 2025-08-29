@@ -9,7 +9,7 @@ using VContainer.Unity;
 
 namespace DI
 {
-    public class LevelLifetimeScope : LifetimeScope, IConnectionEstablishedEventHolder
+    public partial class LevelLifetimeScope : LifetimeScope, IConnectionEstablishedEventHolder
     {
         public event Action<ISyncConnection> ConnectionEstablished;
 
@@ -24,33 +24,10 @@ namespace DI
             builder
                 .Register<IConnectionEstablishedEventHolder>(resolver =>
                 {
-                    if (!resolver.TryResolve(out IConnector connector))
+                    if (resolver.TryResolve(out IConnector connector))
                     {
-                        return this;
+                        ConnectAsync(connector);
                     }
-
-                    Debug.Log("Launching connection try");
-                    Task.Run(async () =>
-                    {
-                        Debug.Log("Trying to connect");
-                        try
-                        {
-                            _connection = await connector.Connect();
-                        }
-                        catch (Exception e)
-                        {
-                            Debug.Log(e);
-                        }
-                        if (_connection != null)
-                        {
-                            Debug.Log("ConnectionEstablished");
-                            ConnectionEstablished?.Invoke(_connection);
-                        }
-                        else
-                        {
-                            Debug.Log("Connection not Established");
-                        }
-                    });
 
                     return this;
                 }, Lifetime.Singleton)
@@ -75,6 +52,34 @@ namespace DI
             builder
                 .Register<IReinitSource>(_ => _connection!, Lifetime.Transient)
                 .AsSelf();
+
+            ConfigureIntentsImpacts(builder);
+        }
+
+        private void ConnectAsync(IConnector connector)
+        {
+            Debug.Log("Launching connection try");
+            Task.Run(async () =>
+            {
+                Debug.Log("Trying to connect");
+                try
+                {
+                    _connection = await connector.Connect();
+                }
+                catch (Exception e)
+                {
+                    Debug.Log(e);
+                }
+                if (_connection != null)
+                {
+                    Debug.Log("ConnectionEstablished");
+                    ConnectionEstablished?.Invoke(_connection);
+                }
+                else
+                {
+                    Debug.Log("Connection not Established");
+                }
+            });
         }
 
         private void OnDisable()
