@@ -21,7 +21,7 @@ namespace DI
         protected override void Configure(IContainerBuilder builder)
         {
             builder
-                .Register<SendInput.SendMovement>(_ => (position, vector) => _producer?.SendMovement(position, vector), Lifetime.Singleton)
+                .Register<InputSender.SendMovement>(_ => (position, vector) => _producer?.SendMovement(position, vector), Lifetime.Singleton)
                 .AsSelf();
         }
 

@@ -4,7 +4,7 @@ using VContainer;
 namespace Levels.Sync
 {
     [RequireComponent(typeof(CharacterMovement))]
-    public class SendInput : SyncBehavior
+    public class InputSender : SyncBehavior
     {
         [Inject] private IObjectResolver _resolver;
 
