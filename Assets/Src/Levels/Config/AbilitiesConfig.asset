@@ -12,6 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc6e02f5b17f46eca045d9eb58e75e5f, type: 3}
   m_Name: AbilitiesConfig
   m_EditorClassIdentifier: 
-  dashMovementThreshold: 0.1
   dashVelocity: 40
   dashDurationSeconds: 0.1

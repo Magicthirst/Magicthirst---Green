@@ -32,9 +32,9 @@ namespace Levels.Abilities
             var map = _playerInput.currentActionMap;
             _observer = map.ConsumeAction("Dash").OnPerformed(() =>
             {
-                if (_movementInput.Movement.magnitude > _config.dashMovementThreshold)
+                if (_movementInput.Movement.IsMoving())
                 {
-                    _publishDash(new DashIntent(gameObject, _movementInput.Movement.ToX0Y()));
+                    _publishDash(new DashIntent(gameObject, _movementInput.Movement));
                 }
             });
         }

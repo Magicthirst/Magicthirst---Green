@@ -1,4 +1,5 @@
 using System;
+using Levels.Extensions;
 using UnityEngine;
 
 namespace Levels
@@ -53,8 +54,8 @@ namespace Levels
             var movement3d = new Vector3(_inputSource.Movement.x, 0f, _inputSource.Movement.y);
             _controller.Move(movement3d * (speed * Time.fixedDeltaTime));
 
-            var dMagnitude = (_inputSource.Movement - _previousVelocity).magnitude;
-            if (broadcasting && dMagnitude > MovementChangeThreshold)
+            var moving = (_inputSource.Movement - _previousVelocity).IsMoving();
+            if (broadcasting && moving)
             {
                 _previousVelocity = _inputSource.Movement;
                 Moved?.Invoke(_inputSource.Movement);

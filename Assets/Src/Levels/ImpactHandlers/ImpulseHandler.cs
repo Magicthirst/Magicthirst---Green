@@ -1,4 +1,5 @@
-using System.Timers;
+using System.Collections;
+using Levels.Extensions;
 using Levels.IntentsImpacts;
 using Levels.IntentsImpacts.Impacts;
 using UnityEngine;
@@ -14,7 +15,6 @@ namespace Levels.ImpactHandlers
         [Inject] private IImpactConsumer<ImpulseImpact> _consumer;
 
         private Vector3 _velocity = Vector3.zero;
-        private Timer _timer = null;
 
         private void Awake()
         {
@@ -28,28 +28,33 @@ namespace Levels.ImpactHandlers
 
         private void FixedUpdate()
         {
-            if (_velocity == Vector3.zero)
+            if (_velocity.IsNearlyZero())
             {
+                _velocity = Vector3.zero;
                 return;
             }
 
-            // TODO: Tween using DOTween plugin
-            _controller.Move(_velocity * Time.deltaTime);
+            _controller.Move(_velocity * Time.fixedDeltaTime);
         }
 
         private void OnDisable()
         {
             _consumer.Impacted -= HandleImpulse;
+            StopAllCoroutines();
+            _velocity = Vector3.zero;
         }
 
-        private void HandleImpulse(ImpulseImpact impulse)
-        {
-            _timer?.Dispose();
+        private void HandleImpulse(ImpulseImpact impulse) => StartCoroutine(ApplyImpulseRoutine(impulse));
 
-            _velocity = impulse.Velocity;
-            _timer = new Timer(impulse.Duration.TotalMilliseconds);
-            _timer.Start();
-            _timer.Elapsed += (_, _) => _velocity = Vector3.zero;
+        private IEnumerator ApplyImpulseRoutine(ImpulseImpact impulse)
+        {
+            var velocity3D = impulse.Velocity.ToX0Y();
+
+            _velocity += velocity3D;
+
+            yield return new WaitForSeconds((float) impulse.Duration.TotalSeconds);
+
+            _velocity -= velocity3D;
         }
     }
 }

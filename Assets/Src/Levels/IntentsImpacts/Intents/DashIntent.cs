@@ -2,5 +2,5 @@ using UnityEngine;
 
 namespace Levels.IntentsImpacts.Intents
 {
-    public record DashIntent(GameObject Caster, Vector3 Direction) : IIntent;
+    public record DashIntent(GameObject Caster, Vector2 Direction) : IIntent;
 }
