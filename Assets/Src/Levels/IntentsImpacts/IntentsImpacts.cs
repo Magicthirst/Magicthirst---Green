@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 
 namespace Levels.IntentsImpacts
 {
@@ -15,7 +16,7 @@ namespace Levels.IntentsImpacts
 
     public class IntentsImpacts
     {
-        private readonly Dictionary<Type, List<Action<IImpact>>> _receiversByTypes = new();
+        private readonly Dictionary<(int TargetID, Type Type), List<IImpactReceiver>> _receivers = new();
 
         private readonly Dictionary<Type, List<MapIntentToImpacts>> _mappersByTypes = new();
 
@@ -37,9 +38,9 @@ namespace Levels.IntentsImpacts
 
         public PublishIntent<TIntent> GetIntentPublisher<TIntent>() where TIntent : IIntent => TryPublish;
 
-        public IImpactConsumer<TImpact> GetImpactConsumer<TImpact>()
+        public IImpactConsumer<TImpact> GetImpactConsumerFor<TImpact>(GameObject target) where TImpact : IImpact
         {
-            return ImpactConsumer<TImpact>.RegisteredIn(this);
+            return ImpactConsumer<TImpact>.Registered(target, this);
         }
 
         private bool TryPublish<TIntent>(TIntent intent) where TIntent : IIntent
@@ -51,49 +52,58 @@ namespace Levels.IntentsImpacts
 
             var receiversImpacts =
                 from impact in mappers.SelectMany(map => map(intent))
-                where _receiversByTypes.ContainsKey(impact.GetType())
-                from receiver in _receiversByTypes[impact.GetType()]
+                where _receivers.ContainsKey(Key(impact))
+                from receiver in _receivers[Key(impact)]
                 select (Receiver: receiver, Impact: impact);
 
             foreach (var (receiver, impact) in receiversImpacts)
             {
-                receiver.Invoke(impact);
+                receiver.Receive(impact);
             }
 
             return true;
+
+            (int, Type) Key(IImpact impact) => (impact.Target.GetInstanceID(), impact.GetType());
         }
 
-        private class ImpactConsumer<TImpact> : IImpactConsumer<TImpact>
+        private class ImpactConsumer<TImpact> : IImpactConsumer<TImpact>, IImpactReceiver where TImpact : IImpact
         {
+            private readonly int _targetID;
             private readonly IntentsImpacts _manager;
 
             public event Action<TImpact> Impacted;
 
-            private ImpactConsumer(IntentsImpacts manager)
+            private ImpactConsumer(int targetID, IntentsImpacts manager)
             {
+                _targetID = targetID;
                 _manager = manager;
             }
 
-            public static ImpactConsumer<TImpact> RegisteredIn(IntentsImpacts manager)
+            public static ImpactConsumer<TImpact> Registered(GameObject target, IntentsImpacts manager)
             {
-                var self = new ImpactConsumer<TImpact>(manager);
-                var tImpact = typeof(TImpact);
+                var self = new ImpactConsumer<TImpact>(target.GetInstanceID(), manager);
+                var key = (target.GetInstanceID(), typeof(TImpact));
 
-                if (!manager._receiversByTypes.TryGetValue(tImpact, out var list))
+                if (!manager._receivers.TryGetValue(key, out var list))
                 {
-                    list = manager._receiversByTypes[tImpact] = new List<Action<IImpact>>();
+                    list = manager._receivers[key] = new List<IImpactReceiver>();
                 }
 
-                list.Add(self.Receive);
+                list.Add(self);
 
                 return self;
             }
 
-            private void Receive(object impact) => Impacted?.Invoke((TImpact) impact);
+            public void Receive(IImpact impact) => Impacted?.Invoke((TImpact)impact);
 
-            public void Dispose() => _manager._receiversByTypes
-                .GetValueOrDefault(typeof(TImpact))
-                ?.Remove(Receive);
+            public void Dispose() => _manager._receivers
+                .GetValueOrDefault((_targetID, typeof(TImpact)))
+                ?.Remove(this);
+        }
+
+        private interface IImpactReceiver
+        {
+            public void Receive(IImpact impact);
         }
     }
 }

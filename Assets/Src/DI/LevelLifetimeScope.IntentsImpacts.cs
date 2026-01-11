@@ -24,15 +24,21 @@ namespace DI
 
             RegisterPublisher<DashIntent>();
 
-            RegisterConsumer<ImpulseImpact>();
+            RegisterConsumerFactory<ImpulseImpact>();
 
             return;
 
-            void RegisterConsumer<T>() => builder.Register
-            (
-                resolver => resolver.Resolve<IntentsImpacts>().GetImpactConsumer<T>(),
-                Lifetime.Transient
-            ).AsSelf();
+            void RegisterConsumerFactory<T>() where T : IImpact
+            {
+                builder.RegisterFactory<GameObject, IImpactConsumer<T>>
+                (
+                    resolver =>
+                    {
+                        return target => resolver.Resolve<IntentsImpacts>().GetImpactConsumerFor<T>(target);
+                    },
+                    Lifetime.Transient
+                ).AsSelf();
+            }
 
             void RegisterPublisher<T>() where T : IIntent => builder.Register
             (

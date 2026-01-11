@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using Levels.Extensions;
 using Levels.IntentsImpacts;
@@ -12,9 +13,15 @@ namespace Levels.ImpactHandlers
     {
         private CharacterController _controller;
 
-        [Inject] private IImpactConsumer<ImpulseImpact> _consumer;
+        private IImpactConsumer<ImpulseImpact> _consumer;
 
         private Vector3 _velocity = Vector3.zero;
+
+        [Inject]
+        public void Construct(Func<GameObject, IImpactConsumer<ImpulseImpact>> subscribeOnImpulses)
+        {
+            _consumer = subscribeOnImpulses(gameObject);
+        }
 
         private void Awake()
         {
@@ -30,7 +37,6 @@ namespace Levels.ImpactHandlers
         {
             if (_velocity.IsNearlyZero())
             {
-                _velocity = Vector3.zero;
                 return;
             }
 
@@ -40,6 +46,7 @@ namespace Levels.ImpactHandlers
         private void OnDisable()
         {
             _consumer.Impacted -= HandleImpulse;
+            _consumer.Dispose();
             StopAllCoroutines();
             _velocity = Vector3.zero;
         }
@@ -55,6 +62,10 @@ namespace Levels.ImpactHandlers
             yield return new WaitForSeconds((float) impulse.Duration.TotalSeconds);
 
             _velocity -= velocity3D;
+            if (_velocity.IsNearlyZero())
+            {
+                _velocity = Vector3.zero;
+            }
         }
     }
 }
