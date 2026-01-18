@@ -1,8 +1,7 @@
+using Levels.Abilities.Dash;
+using Levels.Abilities.Impacts;
 using Levels.Config;
 using Levels.IntentsImpacts;
-using Levels.IntentsImpacts.Impacts;
-using Levels.IntentsImpacts.Intents;
-using Levels.IntentsImpacts.Mappings;
 using UnityEngine;
 using VContainer;
 
@@ -18,7 +17,7 @@ namespace DI
 
             builder.Register
             (
-                _ => new IntentsImpacts().RegisterTransformation(new DashImpactsMapper(config)),
+                _ => new IntentsImpacts().RegisterTransformation(new DashMapper(config)),
                 Lifetime.Singleton
             ).AsSelf();
 

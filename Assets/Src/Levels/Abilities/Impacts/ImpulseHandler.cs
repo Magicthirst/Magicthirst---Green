@@ -2,11 +2,10 @@ using System;
 using System.Collections;
 using Levels.Extensions;
 using Levels.IntentsImpacts;
-using Levels.IntentsImpacts.Impacts;
 using UnityEngine;
 using VContainer;
 
-namespace Levels.ImpactHandlers
+namespace Levels.Abilities.Impacts
 {
     [RequireComponent(typeof(CharacterController))]
     public class ImpulseHandler : MonoBehaviour

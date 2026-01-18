@@ -1,15 +1,15 @@
 using System.Collections.Generic;
+using Levels.Abilities.Impacts;
 using Levels.Config;
-using Levels.IntentsImpacts.Impacts;
-using Levels.IntentsImpacts.Intents;
+using Levels.IntentsImpacts;
 
-namespace Levels.IntentsImpacts.Mappings
+namespace Levels.Abilities.Dash
 {
-    public class DashImpactsMapper : IIntentToImpactsMapper<DashIntent>
+    public class DashMapper : IIntentToImpactsMapper<DashIntent>
     {
         private readonly AbilitiesConfig _config;
 
-        public DashImpactsMapper(AbilitiesConfig config)
+        public DashMapper(AbilitiesConfig config)
         {
             _config = config;
         }

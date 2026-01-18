@@ -2,12 +2,11 @@ using System;
 using Levels.Config;
 using Levels.Extensions;
 using Levels.IntentsImpacts;
-using Levels.IntentsImpacts.Intents;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using VContainer;
 
-namespace Levels.Abilities
+namespace Levels.Abilities.Dash
 {
     [RequireComponent(typeof(PlayerInput))]
     [RequireComponent(typeof(IMovementInputSource))]
