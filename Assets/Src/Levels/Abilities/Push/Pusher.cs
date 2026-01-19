@@ -5,7 +5,6 @@ using VContainer;
 
 namespace Levels.Abilities.Push
 {
-    [RequireComponent(typeof(IMovementInputSource))]
     public class Pusher : MonoBehaviour, IInHandAbility
     {
         private Transform _camera;
