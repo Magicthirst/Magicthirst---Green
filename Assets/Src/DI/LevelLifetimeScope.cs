@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Common;
 using JetBrains.Annotations;
 using Levels.Sync;
+using Levels.Util.MasksRegistry;
 using UnityEngine;
 using VContainer;
 using VContainer.Unity;
@@ -19,6 +20,8 @@ namespace DI
 
         protected override void Configure(IContainerBuilder builder)
         {
+            builder.RegisterInstance(new MasksRegistry()).AsSelf();
+
             builder.RegisterInstance(camera);
 
             builder
