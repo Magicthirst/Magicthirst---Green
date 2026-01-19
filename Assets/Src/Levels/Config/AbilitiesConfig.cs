@@ -9,6 +9,13 @@ namespace Levels.Config
         public float dashVelocity;
         public float dashDurationSeconds;
 
+        public LayerMask pushLayer;
+        public float pushVelocity;
+        public float pushDurationSeconds;
+        public float pushCircleRadius;
+        public float pushCircleCenterOffset;
+
         public TimeSpan DashDuration => TimeSpan.FromSeconds(dashDurationSeconds);
+        public TimeSpan PushDuration => TimeSpan.FromSeconds(pushDurationSeconds);
     }
 }
