@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Levels.Abilities.Impacts;
 using Levels.Config;
+using Levels.Extensions;
 using Levels.IntentsImpacts;
 
 namespace Levels.Abilities.Dash
@@ -16,7 +17,7 @@ namespace Levels.Abilities.Dash
 
         public IEnumerable<IImpact> Map(DashIntent intent) => new []
         {
-            new ImpulseImpact(intent.Caster, intent.Direction * _config.dashVelocity, _config.DashDuration)
+            new ImpulseImpact(intent.Caster, intent.Direction.ToX0Y() * _config.dashVelocity, _config.DashDuration)
         };
     }
 }

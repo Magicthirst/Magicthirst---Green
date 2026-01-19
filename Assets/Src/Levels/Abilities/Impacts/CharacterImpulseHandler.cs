@@ -8,7 +8,7 @@ using VContainer;
 namespace Levels.Abilities.Impacts
 {
     [RequireComponent(typeof(CharacterController))]
-    public class ImpulseHandler : MonoBehaviour
+    public class CharacterImpulseHandler : MonoBehaviour
     {
         private CharacterController _controller;
 
@@ -54,13 +54,11 @@ namespace Levels.Abilities.Impacts
 
         private IEnumerator ApplyImpulseRoutine(ImpulseImpact impulse)
         {
-            var velocity3D = impulse.Velocity.ToX0Y();
-
-            _velocity += velocity3D;
+            _velocity += impulse.Velocity;
 
             yield return new WaitForSeconds((float) impulse.Duration.TotalSeconds);
 
-            _velocity -= velocity3D;
+            _velocity -= impulse.Velocity;
             if (_velocity.IsNearlyZero())
             {
                 _velocity = Vector3.zero;
