@@ -2456,6 +2456,19 @@ MonoBehaviour:
   - actionName: A_Push
     position: 1
     ability: {fileID: 1711207736}
+--- !u!114 &1711207738
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1711207718}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd737b377fac42bb99bdb0b0a6639f71, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  config: {fileID: 11400000, guid: 2ced871281c5e7e479952ba948548f10, type: 2}
 --- !u!1 &1913018982
 GameObject:
   m_ObjectHideFlags: 0
