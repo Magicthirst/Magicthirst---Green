@@ -2003,7 +2003,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   parentReference:
-    TypeName: DI.GameLifetimeScope
+    TypeName: 
   autoRun: 1
   autoInjectGameObjects:
   - {fileID: 1711207718}

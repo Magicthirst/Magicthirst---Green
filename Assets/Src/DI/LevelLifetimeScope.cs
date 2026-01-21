@@ -18,6 +18,17 @@ namespace DI
 
         [CanBeNull] private ISyncConnection _connection = null;
 
+        protected override void Awake()
+        {
+            var gameScope = FindAnyObjectByType<GameLifetimeScope>();
+            if (gameScope != null)
+            {
+                EnqueueParent(gameScope);
+            }
+
+            Build();
+        }
+
         protected override void Configure(IContainerBuilder builder)
         {
             builder.RegisterInstance(new MasksRegistry()).AsSelf();

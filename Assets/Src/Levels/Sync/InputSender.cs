@@ -13,15 +13,6 @@ namespace Levels.Sync
 
         public delegate void SendMovement(Vector2 position, Vector2 vector);
 
-        [Inject]
-        public void AssertProperConnectionRole(IsPublishingInput isPublishingInput)
-        {
-            if (!isPublishingInput())
-            {
-                Destroy(this);
-            }
-        }
-
         protected override void OnAwake()
         {
             _input = GetComponent<CharacterMovement>();
@@ -29,6 +20,7 @@ namespace Levels.Sync
 
         protected override void OnEnableSync()
         {
+            AssertProperConnectionRole(_resolver.Resolve<IsPublishingInput>());
             _sendMovement = _resolver.Resolve<SendMovement>();
             _input.Moved += SendMovementIfChanged;
         }
@@ -36,6 +28,14 @@ namespace Levels.Sync
         protected override void OnDisableSync()
         {
             _input.Moved -= SendMovementIfChanged;
+        }
+
+        private void AssertProperConnectionRole(IsPublishingInput isPublishingInput)
+        {
+            if (!isPublishingInput())
+            {
+                Destroy(this);
+            }
         }
 
         private void SendMovementIfChanged(Vector2 movement) => _sendMovement?.Invoke(transform.position, movement);
