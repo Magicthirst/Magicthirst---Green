@@ -76,6 +76,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "A_Shoot",
+                    "type": "Button",
+                    "id": "c872261a-9bba-4d34-85c1-cb2797c7694f",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -384,6 +393,17 @@
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
                     "action": "A_Push",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "f49ac266-0ffa-402b-a66f-c86c72a3a75d",
+                    "path": "<Keyboard>/2",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "A_Shoot",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

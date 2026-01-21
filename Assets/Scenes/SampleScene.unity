@@ -134,6 +134,7 @@ GameObject:
   - component: {fileID: 116542688}
   - component: {fileID: 116542687}
   - component: {fileID: 116542686}
+  - component: {fileID: 116542692}
   m_Layer: 0
   m_Name: AKillableBox
   m_TagString: Untagged
@@ -282,6 +283,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mask: 4294967295
+--- !u!114 &116542692
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 116542684}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c9d2b16b3b4466dae1f4642539ac211, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &285333251
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -725,8 +738,16 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: -9078390155489759768, guid: 7c40870776ec8754dac8ee15e065d696, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: -9078390155489759768, guid: 7c40870776ec8754dac8ee15e065d696, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: -8700617353114198275, guid: 7c40870776ec8754dac8ee15e065d696, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: -8700617353114198275, guid: 7c40870776ec8754dac8ee15e065d696, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -1193,12 +1214,24 @@ PrefabInstance:
       value: 75.92
       objectReference: {fileID: 0}
     - target: {fileID: -4612557245286934058, guid: 7c40870776ec8754dac8ee15e065d696, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: -4612557245286934058, guid: 7c40870776ec8754dac8ee15e065d696, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: -3594844054354815640, guid: 7c40870776ec8754dac8ee15e065d696, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: -3594844054354815640, guid: 7c40870776ec8754dac8ee15e065d696, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: -1454458293961627355, guid: 7c40870776ec8754dac8ee15e065d696, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: -1454458293961627355, guid: 7c40870776ec8754dac8ee15e065d696, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -1217,12 +1250,20 @@ PrefabInstance:
       value: -170.2
       objectReference: {fileID: 0}
     - target: {fileID: 539907315833844511, guid: 7c40870776ec8754dac8ee15e065d696, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 539907315833844511, guid: 7c40870776ec8754dac8ee15e065d696, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 7c40870776ec8754dac8ee15e065d696, type: 3}
       propertyPath: m_Name
       value: untitled
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 7c40870776ec8754dac8ee15e065d696, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 7c40870776ec8754dac8ee15e065d696, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -2916,6 +2957,7 @@ GameObject:
   - component: {fileID: 1711207737}
   - component: {fileID: 1711207734}
   - component: {fileID: 1711207736}
+  - component: {fileID: 1711207739}
   - component: {fileID: 1711207730}
   - component: {fileID: 1711207733}
   - component: {fileID: 1711207735}
@@ -3336,9 +3378,9 @@ MonoBehaviour:
   - actionName: A_Push
     position: 0
     ability: {fileID: 1711207736}
-  - actionName: A_Push
+  - actionName: A_Shoot
     position: 1
-    ability: {fileID: 1711207736}
+    ability: {fileID: 1711207739}
 --- !u!114 &1711207738
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3352,6 +3394,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   config: {fileID: 11400000, guid: 2ced871281c5e7e479952ba948548f10, type: 2}
+  drawPush: 0
+  drawShoot: 1
+--- !u!114 &1711207739
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1711207718}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 920761b048f04bc29d761eb053530810, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1913018982
 GameObject:
   m_ObjectHideFlags: 0

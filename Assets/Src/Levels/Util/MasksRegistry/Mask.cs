@@ -6,6 +6,7 @@ namespace Levels.Util.MasksRegistry
     public enum Mask : uint
     {
         Pushable = 1 << 0,
+        Damageable = 1 << 1,
         // To be continued
     }
 }

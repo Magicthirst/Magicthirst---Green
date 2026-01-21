@@ -9,13 +9,20 @@ namespace Levels.Config
         public float dashVelocity;
         public float dashDurationSeconds;
 
-        public LayerMask pushLayer;
         public float pushVelocity;
         public float pushDurationSeconds;
         public float pushCircleRadius;
         public float pushCircleCenterOffset;
 
+        public int shootDamage;
+        public float shootCircleRadius;
+        public float shootDistance;
+        public float shootOffset;
+        public float shootPushVelocity;
+        public float shootPushDurationSeconds;
+
         public TimeSpan DashDuration => TimeSpan.FromSeconds(dashDurationSeconds);
         public TimeSpan PushDuration => TimeSpan.FromSeconds(pushDurationSeconds);
+        public TimeSpan ShootPushDuration => TimeSpan.FromSeconds(shootPushDurationSeconds);
     }
 }

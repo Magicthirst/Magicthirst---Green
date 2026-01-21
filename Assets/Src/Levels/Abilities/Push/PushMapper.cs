@@ -34,6 +34,7 @@ namespace Levels.Abilities.Push
             return Physics
                 .OverlapSphere(circleCenter, _config.pushCircleRadius)
                 .Select(collider => collider.gameObject)
+                .Distinct()
                 .Where(gameObject => gameObject != caster && _registry.Is(gameObject, Mask.Pushable));
         }
     }

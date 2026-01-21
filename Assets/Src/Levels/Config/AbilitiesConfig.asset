@@ -14,10 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dashVelocity: 40
   dashDurationSeconds: 0.1
-  pushLayer:
-    serializedVersion: 2
-    m_Bits: 64
   pushVelocity: 80
   pushDurationSeconds: 0.1
   pushCircleRadius: 3
   pushCircleCenterOffset: 2.5
+  shootDamage: 0
+  shootCircleRadius: 0.1
+  shootDistance: 10
+  shootOffset: 0
+  shootPushVelocity: 100
+  shootPushDurationSeconds: 0.1

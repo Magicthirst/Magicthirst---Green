@@ -1,6 +1,7 @@
 using Levels.Abilities.Dash;
 using Levels.Abilities.Impacts;
 using Levels.Abilities.Push;
+using Levels.Abilities.Shoot;
 using Levels.Config;
 using Levels.IntentsImpacts;
 using Levels.Util.MasksRegistry;
@@ -21,14 +22,17 @@ namespace DI
             (
                 resolver => new IntentsImpacts()
                     .RegisterTransformation(new DashMapper(config))
-                    .RegisterTransformation(new PushMapper(config, resolver.Resolve<MasksRegistry>())),
+                    .RegisterTransformation(new PushMapper(config, resolver.Resolve<MasksRegistry>()))
+                    .RegisterTransformation(new ShootMapper(config, resolver.Resolve<MasksRegistry>())),
                 Lifetime.Singleton
             ).AsSelf();
 
             RegisterPublisher<DashIntent>();
             RegisterPublisher<PushIntent>();
+            RegisterPublisher<ShootIntent>();
 
             RegisterConsumerFactory<ImpulseImpact>();
+            RegisterConsumerFactory<DamageImpact>();
 
             return;
 
