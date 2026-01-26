@@ -1,6 +1,5 @@
 using Levels.Extensions;
 using UnityEngine;
-using UnityEngine.Assertions;
 
 namespace Levels.Visual
 {

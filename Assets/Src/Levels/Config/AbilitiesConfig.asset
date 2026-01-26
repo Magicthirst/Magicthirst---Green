@@ -18,7 +18,7 @@ MonoBehaviour:
   pushDurationSeconds: 0.1
   pushCircleRadius: 3
   pushCircleCenterOffset: 2.5
-  shootDamage: 0
+  shootDamage: 10
   shootCircleRadius: 0.1
   shootDistance: 10
   shootOffset: 0
