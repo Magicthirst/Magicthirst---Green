@@ -10,13 +10,7 @@ namespace Levels.Abilities.Impacts
     {
         private Rigidbody _rigidbody;
 
-        private IImpactConsumer<ImpulseImpact> _consumer;
-
-        [Inject]
-        public void Construct(Func<GameObject, IImpactConsumer<ImpulseImpact>> subscribeOnImpulses)
-        {
-            _consumer = subscribeOnImpulses(gameObject);
-        }
+        [Inject] private IImpactConsumer<ImpulseImpact> _consumer;
 
         private void Awake()
         {

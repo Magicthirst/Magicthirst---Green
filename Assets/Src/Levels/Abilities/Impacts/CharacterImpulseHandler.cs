@@ -12,15 +12,9 @@ namespace Levels.Abilities.Impacts
     {
         private CharacterController _controller;
 
-        private IImpactConsumer<ImpulseImpact> _consumer;
+        [Inject] private IImpactConsumer<ImpulseImpact> _consumer;
 
         private Vector3 _velocity = Vector3.zero;
-
-        [Inject]
-        public void Construct(Func<GameObject, IImpactConsumer<ImpulseImpact>> subscribeOnImpulses)
-        {
-            _consumer = subscribeOnImpulses(gameObject);
-        }
 
         private void Awake()
         {

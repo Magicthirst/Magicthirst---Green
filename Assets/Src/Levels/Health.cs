@@ -25,17 +25,11 @@ namespace Levels
             }
         }
 
-        private IImpactConsumer<DamageImpact> _consumer;
+        [Inject] private IImpactConsumer<DamageImpact> _consumer;
 
         public Health()
         {
             HealthChanged += health => HealthChangedRelative?.Invoke((float) health / maxHealth);
-        }
-
-        [Inject]
-        public void Construct(Func<GameObject, IImpactConsumer<DamageImpact>> subscribeOnDamages)
-        {
-            _consumer = subscribeOnDamages(gameObject);
         }
 
         private void OnEnable()

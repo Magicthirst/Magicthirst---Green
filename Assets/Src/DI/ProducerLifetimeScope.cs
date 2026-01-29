@@ -1,11 +1,10 @@
 using Common;
 using Levels.Sync;
 using VContainer;
-using VContainer.Unity;
 
 namespace DI
 {
-    public class ProducerLifetimeScope : LifetimeScope
+    public class ProducerLifetimeScope : EntityContextScope
     {
         [Inject] private IConnectionEstablishedEventHolder _connectionHolder;
 
@@ -23,6 +22,8 @@ namespace DI
             builder
                 .Register<InputSender.SendMovement>(_ => (position, vector) => _producer?.SendMovement(position, vector), Lifetime.Singleton)
                 .AsSelf();
+
+            base.Configure(builder);
         }
 
         private void OnDisable()

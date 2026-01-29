@@ -33,6 +33,7 @@ namespace DI
 
             RegisterConsumerFactory<ImpulseImpact>();
             RegisterConsumerFactory<DamageImpact>();
+            RegisterConsumerFactory<ShotImpact>();
 
             return;
 

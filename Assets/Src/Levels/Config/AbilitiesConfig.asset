@@ -20,7 +20,7 @@ MonoBehaviour:
   pushCircleCenterOffset: 2.5
   shootDamage: 10
   shootCircleRadius: 0.1
-  shootDistance: 10
+  shootDistance: 500
   shootOffset: 0
-  shootPushVelocity: 100
+  shootPushVelocity: 10
   shootPushDurationSeconds: 0.1
