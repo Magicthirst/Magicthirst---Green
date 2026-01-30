@@ -15,6 +15,6 @@ namespace Levels.Abilities.Shoot
         [Inject]
         public void Construct(Camera injectedCamera) => _camera = injectedCamera.transform;
 
-        public void Invoke() => _publishShoot(new ShootIntent(gameObject, _camera.forward, _config.shootDamage));
+        public void Invoke() => _publishShoot(new ShootIntent(gameObject, _camera.transform.position, _camera.forward, _config.shootDamage));
     }
 }

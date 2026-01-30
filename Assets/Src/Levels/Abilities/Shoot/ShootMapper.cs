@@ -25,7 +25,7 @@ namespace Levels.Abilities.Shoot
         public IEnumerable<IImpact> Map(ShootIntent intent)
         {
             var push = intent.Direction * _config.shootPushVelocity;
-            foreach (var target in GetAffected(intent.Caster, intent.Direction))
+            foreach (var target in GetAffected(intent.Caster, intent.Origin, intent.Direction))
             {
                 yield return new ShotImpact(target);
 
@@ -41,9 +41,9 @@ namespace Levels.Abilities.Shoot
         }       
 
         // ReSharper disable once Unity.PreferNonAllocApi // This will not be called frequently
-        private IEnumerable<GameObject> GetAffected(GameObject caster, Vector3 direction)
+        private IEnumerable<GameObject> GetAffected(GameObject caster, Vector3 origin, Vector3 direction)
         {
-            var start = caster.transform.position + direction * _config.shootOffset;
+            var start = origin + direction * _config.shootOffset;
             var hitCount = Physics.RaycastNonAlloc(start, direction, _hitBuffer, _config.shootDistance);
 
             var sortedHits = _hitBuffer
