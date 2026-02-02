@@ -19,7 +19,7 @@ namespace DI
 
             RegisterConsumerOverride<ImpulseImpact>();
             RegisterConsumerOverride<DamageImpact>();
-            RegisterConsumerOverride<ShotImpact>();
+            RegisterConsumerOverride<ShotTargetEffect>();
 
             return;
 

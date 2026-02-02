@@ -27,7 +27,7 @@ namespace Levels.Abilities.Shoot
             var push = intent.Direction * _config.shootPushVelocity;
             foreach (var target in GetAffected(intent.Caster, intent.Origin, intent.Direction))
             {
-                yield return new ShotImpact(target);
+                yield return new ShotTargetEffect(target);
 
                 if (_registry.Is(target, Mask.Damageable))
                 {
