@@ -3,18 +3,18 @@ using Levels.IntentsImpacts;
 using UnityEngine;
 using VContainer;
 
-namespace Levels.Abilities.Shoot
+namespace Levels.Abilities.PushingShotgun
 {
-    public class Shooter : MonoBehaviour, IInHandAbility
+    public class PushingShotgunShooter : MonoBehaviour, IInHandAbility
     {
         private Transform _camera;
 
-        [Inject] private PublishIntent<ShootIntent> _publishShoot;
+        [Inject] private PublishIntent<PushingShotgunShootIntent> _publishPush;
         [Inject] private AbilitiesConfig _config;
 
         [Inject]
         public void Construct(Camera injectedCamera) => _camera = injectedCamera.transform;
 
-        public void Invoke() => _publishShoot(new ShootIntent(gameObject, _camera.transform.position, _camera.forward, _config.shootDamage));
+        public void Invoke() => _publishPush(new PushingShotgunShootIntent(gameObject, _camera.forward));
     }
 }

@@ -8,5 +8,6 @@ namespace Levels.Util.MasksRegistry
         Pushable = 1 << 0,
         Damageable = 1 << 1,
         // To be continued
+        PlayerCharacter = 1 << 30,
     }
 }

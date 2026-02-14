@@ -6,25 +6,39 @@ using Levels.IntentsImpacts;
 using Levels.Util.MasksRegistry;
 using UnityEngine;
 
-namespace Levels.Abilities.Push
+namespace Levels.Abilities.PushingShotgun
 {
-    public class PushMapper : IIntentToImpactsMapper<PushIntent>
+    public class PushingShotgunShotMapper : IIntentToImpactsMapper<PushingShotgunShootIntent>
     {
         private readonly AbilitiesConfig _config;
         private readonly MasksRegistry _registry;
 
-        public PushMapper(AbilitiesConfig config, MasksRegistry registry)
+        public PushingShotgunShotMapper(AbilitiesConfig config, MasksRegistry registry)
         {
             _config = config;
             _registry = registry;
         }
 
-        public IEnumerable<IImpact> Map(PushIntent intent)
+        public IEnumerable<IImpact> Map(PushingShotgunShootIntent intent)
         {
             var affected = GetAffected(intent.Caster, intent.Direction);
-            return affected.Select(target =>
-                new ImpulseImpact(target, intent.Direction * _config.pushVelocity, _config.PushDuration)
-            );
+
+            yield return new CasterShotShotgunEffect(intent.Caster);
+
+            foreach (var target in affected)
+            {
+                yield return new TargetWasShotEffect(target);
+
+                if (_registry.Is(target, Mask.Damageable))
+                {
+                    // TODO yield return new DamageImpact(target, _config.shotgunDamage);
+                }
+
+                if (_registry.Is(target, Mask.Pushable))
+                {
+                    yield return new ImpulseImpact(target, intent.Direction * _config.pushVelocity, _config.PushDuration);
+                }
+            }
         }
 
         // ReSharper disable once Unity.PreferNonAllocApi // This will not be called frequently
@@ -35,7 +49,7 @@ namespace Levels.Abilities.Push
                 .OverlapSphere(circleCenter, _config.pushCircleRadius)
                 .Select(collider => collider.gameObject)
                 .Distinct()
-                .Where(gameObject => gameObject != caster && _registry.Is(gameObject, Mask.Pushable));
+                .Where(gameObject => gameObject != caster);
         }
     }
 }

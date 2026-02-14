@@ -1,7 +1,6 @@
 using Levels.Abilities.Dash;
-using Levels.Abilities.Impacts;
-using Levels.Abilities.Push;
-using Levels.Abilities.Shoot;
+using Levels.Abilities.HitScanShoot;
+using Levels.Abilities.PushingShotgun;
 using Levels.Config;
 using Levels.IntentsImpacts;
 using Levels.Util.MasksRegistry;
@@ -22,32 +21,16 @@ namespace DI
             (
                 resolver => new IntentsImpacts()
                     .RegisterTransformation(new DashMapper(config))
-                    .RegisterTransformation(new PushMapper(config, resolver.Resolve<MasksRegistry>()))
-                    .RegisterTransformation(new ShootMapper(config, resolver.Resolve<MasksRegistry>())),
+                    .RegisterTransformation(new PushingShotgunShotMapper(config, resolver.Resolve<MasksRegistry>()))
+                    .RegisterTransformation(new HitScanShotMapper(resolver.Resolve<MasksRegistry>())),
                 Lifetime.Singleton
             ).AsSelf();
 
             RegisterPublisher<DashIntent>();
-            RegisterPublisher<PushIntent>();
-            RegisterPublisher<ShootIntent>();
-
-            RegisterConsumerFactory<ImpulseImpact>();
-            RegisterConsumerFactory<DamageImpact>();
-            RegisterConsumerFactory<ShotTargetEffect>();
+            RegisterPublisher<PushingShotgunShootIntent>();
+            RegisterPublisher<HitScanShootIntent>();
 
             return;
-
-            void RegisterConsumerFactory<T>() where T : IImpact
-            {
-                builder.RegisterFactory<GameObject, IImpactConsumer<T>>
-                (
-                    resolver =>
-                    {
-                        return target => resolver.Resolve<IntentsImpacts>().GetImpactConsumerFor<T>(target);
-                    },
-                    Lifetime.Transient
-                ).AsSelf();
-            }
 
             void RegisterPublisher<T>() where T : IIntent => builder.Register
             (

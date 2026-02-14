@@ -3,7 +3,9 @@ using UnityEngine;
 
 namespace Levels.Abilities.Impacts
 {
-    public record ShotTargetEffect(GameObject Target) : IImpact;
+    public record TargetWasShotEffect(GameObject Target) : IImpact;
 
-    public record ShotCasterEffect(GameObject Target) : IImpact;
+    public record CasterShotHitScanEffect(GameObject Target) : IImpact;
+
+    public record CasterShotShotgunEffect(GameObject Target) : IImpact;
 }

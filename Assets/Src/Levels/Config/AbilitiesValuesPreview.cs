@@ -1,3 +1,4 @@
+using Levels.Abilities.HitScanShoot;
 using UnityEngine;
 using Vertx.Debugging;
 
@@ -5,7 +6,7 @@ namespace Levels.Config
 {
     public class AbilitiesValuesPreview : MonoBehaviour
     {
-        [SerializeField] private AbilitiesConfig config;
+        [SerializeField] private AbilitiesConfig config = null!;
         [SerializeField] private bool drawPush;
         [SerializeField] private bool drawShoot;
 
@@ -25,9 +26,11 @@ namespace Levels.Config
 
         private void DrawShoot()
         {
-            var start = transform.position + transform.forward * config.shootOffset;
-            var end = start + transform.forward * config.shootDistance;
-            D.raw(new Shape.Capsule(start, end, config.shootCircleRadius), Color.red);
+            var shoot = (IShootConfig) config;
+            
+            var start = transform.position + transform.forward * shoot.Offset;
+            var end = start + transform.forward * shoot.Distance;
+            D.raw(new Ray(start, end), Color.red);
         }
 
         private void DrawPush()

@@ -43,6 +43,15 @@ namespace Levels.IntentsImpacts
             return ImpactConsumer<TImpact>.Registered(target, this);
         }
 
+        public IImpactConsumer GetImpactConsumerFor(GameObject target, Type impactType)
+        {
+            var genericMethod = typeof(IntentsImpacts)
+                .GetMethod(nameof(GetImpactConsumerFor), new [] { typeof(GameObject) })!
+                .MakeGenericMethod(impactType);
+
+            return (IImpactConsumer) genericMethod.Invoke(this, new object[] { target });
+        }
+
         private bool TryPublish<TIntent>(TIntent intent) where TIntent : IIntent
         {
             if (!_mappersByTypes.TryGetValue(typeof(TIntent), out var mappers))
@@ -72,11 +81,18 @@ namespace Levels.IntentsImpacts
             private readonly IntentsImpacts _manager;
 
             public event Action<TImpact> Impacted;
+            event Action IImpactConsumer.Impacted
+            {
+                add => NonParamImpacted += value;
+                remove => NonParamImpacted -= value;
+            }
+            private event Action NonParamImpacted;
 
             private ImpactConsumer(int targetID, IntentsImpacts manager)
             {
                 _targetID = targetID;
                 _manager = manager;
+                Impacted += _ => NonParamImpacted?.Invoke();
             }
 
             public static ImpactConsumer<TImpact> Registered(GameObject target, IntentsImpacts manager)

@@ -9,17 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fc6e02f5b17f46eca045d9eb58e75e5f, type: 3}
-  m_Name: AbilitiesConfig
-  m_EditorClassIdentifier: 
-  dashVelocity: 40
-  dashDurationSeconds: 0.1
-  pushVelocity: 80
-  pushDurationSeconds: 0.1
-  pushCircleRadius: 3
-  pushCircleCenterOffset: 2.5
+  m_Script: {fileID: 0}
+  m_Name: PlayerShootConfig
+  m_EditorClassIdentifier: Levels:Levels.Config:ShootConfig
   shootDamage: 10
-  shootCircleRadius: 0.1
   shootDistance: 500
   shootOffset: 0
   shootPushVelocity: 10
