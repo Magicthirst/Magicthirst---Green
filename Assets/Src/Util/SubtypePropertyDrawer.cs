@@ -9,6 +9,8 @@ namespace Util
     [CustomPropertyDrawer(typeof(SubtypePropertyAttribute))]
     public class SubtypePropertyDrawer : PropertyDrawer
     {
+        private SubtypePropertyAttribute _Attribute => (SubtypePropertyAttribute) attribute;
+
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
             // Type is serialized as string
@@ -26,7 +28,7 @@ namespace Util
             var currentIndex = classNames.IndexOf(currentAssemblyQualifiedName);
 
             var previousColor = GUI.color;
-            if (string.IsNullOrEmpty(property.stringValue))
+            if (_Attribute.Required && string.IsNullOrEmpty(property.stringValue))
             {
                 GUI.color = Color.red;
             }
@@ -44,8 +46,7 @@ namespace Util
 
         private (List<string> DisplayNames, List<string> ClassNames) GetNames()
         {
-            var attr = (SubtypePropertyAttribute) attribute;
-            var baseType = attr.BaseType;
+            var baseType = _Attribute.BaseType;
 
             var types = TypeCache.GetTypesDerivedFrom(baseType).ToList();
 

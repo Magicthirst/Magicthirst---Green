@@ -7,10 +7,12 @@ namespace Util
     public class SubtypePropertyAttribute : PropertyAttribute
     {
         public readonly Type BaseType;
+        public readonly bool Required;
 
-        public SubtypePropertyAttribute(Type baseType)
+        public SubtypePropertyAttribute(Type baseType, bool required = true)
         {
             BaseType = baseType;
+            Required = required;
         }
     }
 }

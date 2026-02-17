@@ -1,6 +1,7 @@
 #if UNITY_EDITOR
 using System;
 using System.Linq;
+using System.Reflection;
 using UnityEditor;
 using UnityEditor.Build;
 using UnityEditor.Build.Reporting;
@@ -28,32 +29,37 @@ namespace Util
 
         private void ValidateScene(UnityEngine.SceneManagement.Scene scene)
         {
-            var behaviours = scene
+            var anyProblems = false;
+            var problems = scene
                 .GetRootGameObjects()
                 .SelectMany(g => g.GetComponentsInChildren<MonoBehaviour>(true))
-                .WhereNotNull();
-
-            foreach (var behaviour in behaviours)
-            {
-                var fields = behaviour.GetType()
+                .WhereNotNull()
+                .SelectMany(behaviour => behaviour.GetType()
                     .GetFields(Instance | Public | NonPublic)
-                    .Where(f => Attribute.IsDefined(f, typeof(SubtypePropertyAttribute)));
-
-                foreach (var field in fields)
-                {
-                    var value = field.GetValue(behaviour) as string;
-
-                    if (string.IsNullOrEmpty(value) || Type.GetType(value) == null)
+                    .Where(field => GetAttribute(field)?.Required == true)
+                    .Where(field =>
                     {
-                        throw new BuildFailedException(
-                            $"Build blocked.\n" +
-                            $"Scene: {scene.path}\n" +
-                            $"GameObject: {behaviour.gameObject.name}\n" +
-                            $"Component: {behaviour.GetType().Name}\n" +
-                            $"Field: {field.Name}\n\n" +
-                            $"Subtype is not specified or invalid.");
-                    }
-                }
+                        var value = field.GetValue(behaviour) as string;
+                        return string.IsNullOrEmpty(value) || Type.GetType(value) == null;
+                    })
+                    .Select(field => (behaviour, field)))
+                .Select(p =>
+                    $"\tScene: {scene.path}\n" +
+                    $"\tGameObject: {p.behaviour.gameObject.name}\n" +
+                    $"\tComponent: {p.behaviour.GetType().Name}\n" +
+                    $"\tField: {p.field.Name}\n\n" +
+                    $"\tSubtype is not specified or invalid.")
+                .Where(_ => anyProblems = true);
+
+            if (!anyProblems)
+            {
+                var errors = string.Join("\n\n", problems);
+                throw new BuildFailedException($"Build blocked due to SubtypePropertyAttribute validation errors:\n{errors}");
+            }
+
+            SubtypePropertyAttribute GetAttribute(FieldInfo f)
+            {
+                return (SubtypePropertyAttribute) f.GetCustomAttribute(typeof(SubtypePropertyAttribute));
             }
         }
     }
