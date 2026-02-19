@@ -25,7 +25,7 @@ hide empty description
 legend top left
     |= Color |= Form |= Description |
     | <#green> | '⇢' (dashed arrow) | This state can transition \n into the pointed |
-    | <#orange> | 'ⓧ→' (cross then arrow) | This state can override \n the pointed when ready |
+    | <#orange> | 'ⓧ→' (cross then arrow) | Pointed can override \n the state when ready |
     | <#red> | 'ⓧ→' (cross then arrow) | This state will be replaced \n by the pointed when ends |
 endlegend
 ";
@@ -71,7 +71,7 @@ endlegend
 
                 foreach (var ov in state.OverridesStates)
                 {
-                    sb.AppendLine($"{stateName} x-[#orange]-> {ov.GetType().Name}");
+                    sb.AppendLine($"{stateName} <-[#orange]-x {ov.GetType().Name}");
                 }
 
                 var fallback = state.Fallback;
