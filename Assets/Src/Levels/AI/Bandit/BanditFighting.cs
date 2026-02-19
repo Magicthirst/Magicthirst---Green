@@ -1,18 +1,22 @@
-using System.Collections;
 using Levels.Abilities.HitScanShoot;
 using Levels.AI.Shared;
 using Levels.IntentsImpacts;
 using Levels.Util;
 using Levels.Util.MasksRegistry;
 using UnityEngine;
+using UnityEngine.AI;
 using VContainer;
 
-namespace Levels.AI.Turret
+namespace Levels.AI.Bandit
 {
-    public class TurretShootsOnSight : FsmState
+    [RequireComponent(typeof(NavMeshAgent))]
+    public class BanditFighting : FsmState
     {
-        [SerializeField] private PublishContacts contacts;
+        [SerializeField] private PublishContacts startFightArea;
+        [SerializeField] private PublishContacts stopFightArea;
+        [SerializeField] private LayerMask wallLayer;
 
+        [Header("Shooting Settings")]
         [SerializeField] private float shotSpreadDegrees;
         [SerializeField] private int burstCount;
         [SerializeField] private int shotCount;
@@ -20,18 +24,27 @@ namespace Levels.AI.Turret
         [SerializeField] private float betweenBurstDelay;
         [SerializeField] private float betweenShotDelay;
 
+        [Header("Movement Settings")]
+        [SerializeField] private float movementSpeed;
+        [SerializeField] private float maxDistance;
+        [SerializeField] private float tacticUpdatePeriod;
+
         [Inject] private IShootConfig _config = null!;
         [Inject] private MasksRegistry _registry = null!;
         [Inject] private PublishIntent<HitScanShootIntent> _publishShoot;
         private Collider _enemy = null!;
 
         private BurstShooter _shooter;
+        private KitingMovement _movement;
+
+        private Coroutine[] _coroutines;
 
         protected override bool _IsReady => _enemy != null;
 
         protected override void Awake()
         {
             base.Awake();
+
             _shooter = new BurstShooter(
                 shotSpreadDegrees: shotSpreadDegrees,
                 burstCount: burstCount,
@@ -42,19 +55,25 @@ namespace Levels.AI.Turret
                 transform: transform,
                 config: _config,
                 publishShoot: _publishShoot);
-        }
 
+            _movement = new KitingMovement(
+                speed: movementSpeed,
+                maxDistance: maxDistance,
+                tacticUpdatePeriod: tacticUpdatePeriod,
+                self: transform,
+                agent: GetComponent<NavMeshAgent>(),
+                obstacleMask: wallLayer);
+        }
 
         private void OnEnable()
         {
-            contacts.ContactEntered += OnPlayerCameClose;
-            contacts.ContactExited += OnPlayerGotAway;
+            startFightArea.ContactEntered += OnPlayerCameClose;
+            stopFightArea.ContactExited += OnPlayerGotAway;
         }
 
         private void OnPlayerCameClose(Collider other)
         {
-            if (_registry.Is(other.gameObject, Mask.PlayerCharacter) &&
-                Physics.Linecast(transform.position, other.transform.position))
+            if (_registry.Is(other.gameObject, Mask.PlayerCharacter))
             {
                 _enemy = other;
                 Ready();
@@ -64,21 +83,21 @@ namespace Levels.AI.Turret
         public override void Enter()
         {
             base.Enter();
-            StartCoroutine(_shooter.Shoot(_enemy, retryWhenTargetLost: false, continuation: FinishThenMaybeRerun()));
-
-            return;
-
-            IEnumerator FinishThenMaybeRerun()
+            _coroutines = new[]
             {
-                Finish();
+                StartCoroutine(_shooter.Shoot(_enemy, retryWhenTargetLost: true)),
+                StartCoroutine(_movement.Kite(_enemy.transform))
+            };
+        }
 
-                yield return new WaitForSeconds(betweenBurstDelay);
-
-                if (_enemy is not null)
-                {
-                    Ready();
-                }
+        public override void Exit()
+        {
+            base.Exit();
+            foreach (var coroutine in _coroutines)
+            {
+                StopCoroutine(coroutine);
             }
+            _coroutines = null!;
         }
 
         private void OnPlayerGotAway(Collider other)
@@ -86,13 +105,14 @@ namespace Levels.AI.Turret
             if (other == _enemy)
             {
                 _enemy = null;
+                Finish();
             }
         }
 
         private void OnDisable()
         {
-            contacts.ContactEntered -= OnPlayerCameClose;
-            contacts.ContactExited -= OnPlayerGotAway;
+            startFightArea.ContactEntered -= OnPlayerCameClose;
+            stopFightArea.ContactExited -= OnPlayerGotAway;
         }
     }
 }

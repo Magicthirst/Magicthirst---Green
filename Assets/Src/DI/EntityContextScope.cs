@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using Levels;
+using Levels.AI;
 using Levels.IntentsImpacts;
 using UnityEngine;
 using VContainer;
@@ -26,6 +27,11 @@ namespace DI
             if (gameObject.TryGetComponent(out Health health))
             {
                 builder.RegisterInstance(health);
+            }
+
+            if (gameObject.TryGetComponent(out Fsm fsm))
+            {
+                builder.RegisterInstance(fsm);
             }
 
             foreach (var config in configs)

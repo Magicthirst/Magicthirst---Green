@@ -43,7 +43,6 @@ namespace Levels.Abilities.HitScanShoot
 
             yield break;
 
-            // ReSharper disable once Unity.PreferNonAllocApi
             IEnumerable<GameObject> GetAffected(GameObject caster, Vector3 origin, Vector3 direction)
             {
                 var start = origin + direction * config.Offset;

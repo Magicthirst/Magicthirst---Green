@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -9,10 +10,23 @@ namespace Levels.AI
 
     public partial class Fsm : MonoBehaviour
     {
+        public Action<FsmState> OnStateChanged;
+
+        [SerializeField] private FsmState initialState;
         public IReadOnlyList<FsmState> States => GetComponents<FsmState>().ToArray();
 
+        private FsmState _currentBacking;
+        private FsmState _Current
+        {
+            get => _currentBacking;
+            set
+            {
+                _currentBacking = value;
+                OnStateChanged?.Invoke(_currentBacking);
+            }
+        }
+
         private FsmState[] _states;
-        private FsmState _current;
 
         private DisposeAction _disposeObservers = delegate {};
 
@@ -23,9 +37,9 @@ namespace Levels.AI
 
         private void OnEnable()
         {
-            Assert.IsTrue(_states.Length > 0);
+            Assert.IsTrue(_states.Length > 0 && initialState is not null);
 
-            RunState(_states[0]);
+            RunState(initialState);
             
             _disposeObservers = _states
                 .Select(state => RunOnReady(state) + RunNextOnFinish(state))
@@ -34,11 +48,11 @@ namespace Levels.AI
 
         private void RunState(FsmState state)
         {
-            Debug.Log($"FSM exiting {_current?.name}", gameObject);
-            Debug.Log($"FSM entering {state?.name}", gameObject);
-            _current?.Exit();
-            _current = state;
-            state?.Enter();
+            Debug.Log($"FSM exiting {_Current?.GetType().Name ?? "null"}", gameObject);
+            Debug.Log($"FSM entering {state?.GetType().Name ?? "null"}", gameObject);
+            _Current?.Exit();
+            _Current = state;
+            _Current?.Enter();
         }
 
         private DisposeAction RunOnReady(FsmState state)
@@ -48,9 +62,9 @@ namespace Levels.AI
 
             void OnStateReadied()
             {
-                Debug.Log($"FSM ready to run {state.name}", gameObject);
+                Debug.Log($"FSM ready to run {state.GetType().Name}", gameObject);
 
-                if (_current.TransitionsTo(state) && state.Overrides(_current))
+                if (_Current.TransitionsTo(state) && state.Overrides(_Current))
                 {
                     RunState(state);
                 }
