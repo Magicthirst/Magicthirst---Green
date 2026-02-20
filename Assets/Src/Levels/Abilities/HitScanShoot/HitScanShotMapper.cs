@@ -25,7 +25,7 @@ namespace Levels.Abilities.HitScanShoot
             var config = intent.Config;
             var push = intent.Direction * config.PushVelocity;
 
-            yield return new CasterShotHitScanEffect(intent.Caster);
+            yield return new CasterShotHitScanEffect(intent.Caster, intent.Origin, intent.Direction, intent.Config.Distance);
 
             foreach (var target in GetAffected(intent.Caster, intent.Origin, intent.Direction))
             {
