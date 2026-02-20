@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using JetBrains.Annotations;
@@ -9,6 +10,36 @@ namespace Util
         internal static IEnumerable<T> WhereNotNull<T>([ItemCanBeNull] this IEnumerable<T> enumerable)
         {
             return enumerable.Where(element => element != null);
+        }
+
+        public static bool TryGetIndexOfFirst<T>(this T[] array, out int index, Predicate<T> action)
+        {
+            for (index = 0; index < array.Length; index++)
+            {
+                if (action(array[index]))
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        public static int IndexOfMaxBy<T>(this T[] array, Func<T, float> selector)
+        {
+            var index = -1;
+            var max = float.MinValue;
+            for (var i = 0; i < array.Length; i++)
+            {
+                var value = selector(array[i]);
+                if (value > max)
+                {
+                    max = value;
+                    index = i;
+                }
+            }
+
+            return index;
         }
     }
 }
