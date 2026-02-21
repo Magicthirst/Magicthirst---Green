@@ -18506,7 +18506,6 @@ MonoBehaviour:
   autoInjectGameObjects:
   - {fileID: 0}
   camera: {fileID: 1065869686}
-  config: {fileID: 11400000, guid: 2ced871281c5e7e479952ba948548f10, type: 2}
 --- !u!1001 &1515696097
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -20035,7 +20034,9 @@ MonoBehaviour:
   - {fileID: 44379502}
   - {fileID: 1745542785}
   configs:
-  - {fileID: 11400000, guid: 2ced871281c5e7e479952ba948548f10, type: 2}
+  - {fileID: 11400000, guid: c623dcef9bb747c4b981f5531c4cf955, type: 2}
+  - {fileID: 11400000, guid: 3edfb37123c5f8b4bb6d35a171a7b364, type: 2}
+  - {fileID: 11400000, guid: 2e591cee647e6c847a7c3071774d3828, type: 2}
 --- !u!114 &1711207728
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20167,9 +20168,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd737b377fac42bb99bdb0b0a6639f71, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  config: {fileID: 11400000, guid: 2ced871281c5e7e479952ba948548f10, type: 2}
   drawPush: 0
-  drawShoot: 1
+  drawShoot: 0
+  shootConfig: {fileID: 11400000, guid: c623dcef9bb747c4b981f5531c4cf955, type: 2}
+  pushConfig: {fileID: 11400000, guid: 3edfb37123c5f8b4bb6d35a171a7b364, type: 2}
 --- !u!114 &1711207739
 MonoBehaviour:
   m_ObjectHideFlags: 0

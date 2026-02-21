@@ -1,5 +1,4 @@
 using System;
-using Levels.Config;
 using Levels.Extensions;
 using Levels.IntentsImpacts;
 using UnityEngine;
@@ -16,7 +15,7 @@ namespace Levels.Abilities.Dash
         private IMovementInputSource _movementInput;
 
         [Inject] private PublishIntent<DashIntent> _publishDash;
-        [Inject] private AbilitiesConfig _config;
+        [Inject] private IDashConfig _config;
 
         private IDisposable _observer;
 
@@ -33,7 +32,7 @@ namespace Levels.Abilities.Dash
             {
                 if (_movementInput.Movement.IsMoving())
                 {
-                    _publishDash(new DashIntent(gameObject, _movementInput.Movement));
+                    _publishDash(new DashIntent(gameObject, _movementInput.Movement, _config));
                 }
             });
         }
