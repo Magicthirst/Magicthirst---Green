@@ -1,7 +1,7 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Levels.Abilities.Impacts;
-using Levels.Config;
 using Levels.IntentsImpacts;
 using Levels.Util.MasksRegistry;
 using UnityEngine;
@@ -10,18 +10,16 @@ namespace Levels.Abilities.PushingShotgun
 {
     public class PushingShotgunShotMapper : IIntentToImpactsMapper<PushingShotgunShootIntent>
     {
-        private readonly AbilitiesConfig _config;
         private readonly MasksRegistry _registry;
 
-        public PushingShotgunShotMapper(AbilitiesConfig config, MasksRegistry registry)
+        public PushingShotgunShotMapper(MasksRegistry registry)
         {
-            _config = config;
             _registry = registry;
         }
 
         public IEnumerable<IImpact> Map(PushingShotgunShootIntent intent)
         {
-            var affected = GetAffected(intent.Caster, intent.Direction);
+            var affected = GetAffected(intent);
 
             yield return new CasterShotShotgunEffect(intent.Caster);
 
@@ -36,20 +34,30 @@ namespace Levels.Abilities.PushingShotgun
 
                 if (_registry.Is(target, Mask.Pushable))
                 {
-                    yield return new ImpulseImpact(target, intent.Direction * _config.pushVelocity, _config.PushDuration);
+                    yield return new ImpulseImpact(target,
+                        intent.Direction * intent.Config.Velocity,
+                        intent.Config.Duration);
                 }
             }
         }
 
         // ReSharper disable once Unity.PreferNonAllocApi // This will not be called frequently
-        private IEnumerable<GameObject> GetAffected(GameObject caster, Vector3 direction)
+        private IEnumerable<GameObject> GetAffected(PushingShotgunShootIntent intent)
         {
-            var circleCenter = caster.transform.position + direction * _config.pushCircleCenterOffset;
+            var circleCenter = intent.Caster.transform.position + intent.Direction * intent.Config.CircleCenterOffset;
             return Physics
-                .OverlapSphere(circleCenter, _config.pushCircleRadius)
+                .OverlapSphere(circleCenter, intent.Config.CircleRadius)
                 .Select(collider => collider.gameObject)
                 .Distinct()
-                .Where(gameObject => gameObject != caster);
+                .Where(gameObject => gameObject != intent.Caster);
         }
+    }
+
+    public interface IShotgunConfig
+    {
+        float Velocity { get; }
+        TimeSpan Duration { get; }
+        float CircleRadius { get; }
+        float CircleCenterOffset { get; }
     }
 }

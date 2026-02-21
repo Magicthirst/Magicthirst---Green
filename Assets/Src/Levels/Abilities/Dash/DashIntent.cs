@@ -3,5 +3,5 @@ using UnityEngine;
 
 namespace Levels.Abilities.Dash
 {
-    public record DashIntent(GameObject Caster, Vector2 Direction) : IIntent;
+    public record DashIntent(GameObject Caster, Vector2 Direction, IDashConfig Config) : IIntent;
 }

@@ -1,4 +1,5 @@
 using Levels.Abilities.HitScanShoot;
+using Levels.Abilities.PushingShotgun;
 using UnityEngine;
 using Vertx.Debugging;
 
@@ -6,9 +7,11 @@ namespace Levels.Config
 {
     public class AbilitiesValuesPreview : MonoBehaviour
     {
-        [SerializeField] private AbilitiesConfig config = null!;
         [SerializeField] private bool drawPush;
         [SerializeField] private bool drawShoot;
+
+        [SerializeField] private ShootConfig shootConfig;
+        [SerializeField] private ShotgunConfig pushConfig;
 
         private void OnDrawGizmos()
         {
@@ -26,7 +29,7 @@ namespace Levels.Config
 
         private void DrawShoot()
         {
-            var shoot = (IShootConfig) config;
+            var shoot = (IShootConfig) shootConfig;
             
             var start = transform.position + transform.forward * shoot.Offset;
             var end = start + transform.forward * shoot.Distance;
@@ -35,17 +38,19 @@ namespace Levels.Config
 
         private void DrawPush()
         {
-            var center = transform.position + transform.forward * config.pushCircleCenterOffset;
+            var config = (IShotgunConfig) pushConfig;
 
-            D.raw(new Shape.Sphere(center, config.pushCircleRadius), Color.blue);
+            var center = transform.position + transform.forward * config.CircleCenterOffset;
+
+            D.raw(new Shape.Sphere(center, config.CircleRadius), Color.blue);
             Debug.DrawLine(
                 center,
-                center + transform.forward * config.pushVelocity,
+                center + transform.forward * config.Velocity,
                 Color.red
             );
             Debug.DrawLine(
                 center,
-                center + transform.forward * (config.pushVelocity * config.pushDurationSeconds),
+                center + transform.forward * (config.Velocity * (float) config.Duration.TotalSeconds),
                 Color.green
             );
         }
