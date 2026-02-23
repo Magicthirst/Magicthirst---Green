@@ -1,4 +1,4 @@
-using Levels.Abilities.Impacts;
+using Levels.Abilities.CommonImpacts;
 using Levels.IntentsImpacts;
 using UnityEngine;
 using Util;

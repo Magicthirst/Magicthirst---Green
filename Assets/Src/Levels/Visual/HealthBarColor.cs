@@ -1,14 +1,17 @@
+using Levels.Core;
 using UnityEngine;
+using VContainer;
 
 namespace Levels.Visual
 {
     [RequireComponent(typeof(Renderer))]
     public class HealthBarColor : MonoBehaviour
     {
-        [SerializeField] private Health health;
         [SerializeField] private Color fullHealthColor;
         [SerializeField] private Color halfHealthColor;
         [SerializeField] private Color noHealthColor;
+
+        [Inject] private Health _health;
 
         private Material _barMaterial;
 
@@ -19,12 +22,12 @@ namespace Levels.Visual
 
         private void OnEnable()
         {
-            health.HealthChangedRelative += UpdateColor;
+            _health.HealthChangedRelative += UpdateColor;
         }
 
         private void OnDisable()
         {
-            health.HealthChangedRelative -= UpdateColor;
+            _health.HealthChangedRelative -= UpdateColor;
         }
 
         private void UpdateColor(float healthRelative)

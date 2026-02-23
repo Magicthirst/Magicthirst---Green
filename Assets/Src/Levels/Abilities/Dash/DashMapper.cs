@@ -1,6 +1,5 @@
-using System;
 using System.Collections.Generic;
-using Levels.Abilities.Impacts;
+using Levels.Abilities.CommonImpacts;
 using Levels.Extensions;
 using Levels.IntentsImpacts;
 
@@ -12,11 +11,5 @@ namespace Levels.Abilities.Dash
         {
             new ImpulseImpact(intent.Caster, intent.Direction.ToX0Y() * intent.Config.Velocity, intent.Config.Duration)
         };
-    }
-
-    public interface IDashConfig
-    {
-        float Velocity { get; }
-        TimeSpan Duration { get; }
     }
 }

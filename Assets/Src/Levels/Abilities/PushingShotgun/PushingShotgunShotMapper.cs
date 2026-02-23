@@ -1,7 +1,6 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using Levels.Abilities.Impacts;
+using Levels.Abilities.CommonImpacts;
 using Levels.IntentsImpacts;
 using Levels.Util.MasksRegistry;
 using UnityEngine;
@@ -51,13 +50,5 @@ namespace Levels.Abilities.PushingShotgun
                 .Distinct()
                 .Where(gameObject => gameObject != intent.Caster);
         }
-    }
-
-    public interface IShotgunConfig
-    {
-        float Velocity { get; }
-        TimeSpan Duration { get; }
-        float CircleRadius { get; }
-        float CircleCenterOffset { get; }
     }
 }

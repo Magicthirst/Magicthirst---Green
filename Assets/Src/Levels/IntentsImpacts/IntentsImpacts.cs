@@ -38,6 +38,15 @@ namespace Levels.IntentsImpacts
 
         public PublishIntent<TIntent> GetIntentPublisher<TIntent>() where TIntent : IIntent => TryPublish;
 
+        public object GetIntentPublisher(Type tIntent)
+        {
+            var genericMethod = typeof(IntentsImpacts)
+                .GetMethod(nameof(GetIntentPublisher), new Type[] {})!
+                .MakeGenericMethod(tIntent);
+
+            return genericMethod.Invoke(this, new object[] { });
+        }
+
         public IImpactConsumer<TImpact> GetImpactConsumerFor<TImpact>(GameObject target) where TImpact : IImpact
         {
             return ImpactConsumer<TImpact>.Registered(target, this);
@@ -54,16 +63,30 @@ namespace Levels.IntentsImpacts
 
         private bool TryPublish<TIntent>(TIntent intent) where TIntent : IIntent
         {
+#if UNITY_EDITOR
+            Debug.Log($"TryPublish {intent}");
+#endif
+
             if (!_mappersByTypes.TryGetValue(typeof(TIntent), out var mappers))
             {
                 return false;
             }
+
+#if UNITY_EDITOR
+            Debug.Log($"TryPublish {intent} |mappers|={mappers.Count}");
+#endif
 
             var receiversImpacts =
                 from impact in mappers.SelectMany(map => map(intent))
                 where _receivers.ContainsKey(Key(impact))
                 from receiver in _receivers[Key(impact)]
                 select (Receiver: receiver, Impact: impact);
+
+#if UNITY_EDITOR
+            var receivers = receiversImpacts.Select(r => r.Receiver).ToList();
+            Debug.Log($"TryPublish {intent} |receivers|={receivers.Count}");
+            Debug.Log($"TryPublish {intent} receivers=[{string.Join(", ", receivers)}]");
+#endif
 
             foreach (var (receiver, impact) in receiversImpacts)
             {
