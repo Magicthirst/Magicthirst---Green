@@ -1,9 +1,6 @@
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using Levels;
 using Levels.AI;
+using Levels.Core;
 using Levels.IntentsImpacts;
 using UnityEngine;
 using VContainer;
@@ -14,21 +11,18 @@ namespace DI
 {
     public class EntityContextScope : LifetimeScope
     {
-        private static readonly Type[] ImpactTypes = Assembly
-            .GetAssembly(typeof(IImpact))
-            .GetTypes()
-            .Where(t => typeof(IImpact).IsAssignableFrom(t) && !t.IsInterface && !t.IsAbstract)
-            .ToArray();
-
+        [SerializeField] private Entity entity;
         [SerializeField] private List<ScriptableObject> configs;
+
+        protected override void Awake()
+        {
+            Debug.Assert(entity != null, gameObject.name, gameObject);
+            configs ??= new List<ScriptableObject>();
+            base.Awake();
+        }
 
         protected override void Configure(IContainerBuilder builder)
         {
-            if (gameObject.TryGetComponent(out Health health))
-            {
-                builder.RegisterInstance(health);
-            }
-
             if (gameObject.TryGetComponent(out Fsm fsm))
             {
                 builder.RegisterInstance(fsm);
@@ -41,7 +35,19 @@ namespace DI
 
             builder.RegisterInstance(transform);
 
+            RegisterEntityComponents();
             RegisterConsumerOverrides();
+
+            builder.RegisterBuildCallback(resolver =>
+            {
+                foreach (var component in entity.FlattenedComponents)
+                {
+                    resolver.Inject(component);
+                }
+
+                entity.Init();
+            });
+            builder.RegisterDisposeCallback(_ => entity.Dispose());
 
             return;
 
@@ -49,7 +55,7 @@ namespace DI
             // AI, suggest to profile this place if problem with memory usage occurs on entities-heavy scene.
             void RegisterConsumerOverrides()
             {
-                foreach (var tImpact in ImpactTypes)
+                foreach (var tImpact in CachedTypes.Impacts)
                 {
                     var consumerType = typeof(IImpactConsumer<>).MakeGenericType(tImpact);
                     var registration = new FuncRegistrationBuilder(
@@ -61,6 +67,15 @@ namespace DI
                     );
 
                     builder.Register(registration);
+                }
+            }
+
+            void RegisterEntityComponents()
+            {
+                foreach (var component in entity.FlattenedComponents)
+                {
+                    var registration = new InstanceRegistrationBuilder(component);
+                    builder.Register(registration).AsSelf();
                 }
             }
         }

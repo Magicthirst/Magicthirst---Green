@@ -1,15 +1,16 @@
 using System;
+using Levels.Abilities.CommonImpacts;
 using Levels.Extensions;
+using Levels.IntentsImpacts;
 using UnityEngine;
+using VContainer;
 
 namespace Levels
 {
     [RequireComponent(typeof(CharacterController))]
     [RequireComponent(typeof(IMovementInputSource))]
-    public class CharacterMovement : MonoBehaviour
+    public class CharacterMovement : MonoBehaviour, ICharacterControllerDependent
     {
-        private const float MovementChangeThreshold = 0.05f;
-
         public event Action<Vector2> Moved;
 
         [SerializeField] private bool broadcasting;
@@ -19,7 +20,9 @@ namespace Levels
 
         private CharacterController _controller;
         private IMovementInputSource _inputSource;
+        [Inject] private IImpactConsumer<TeleportImpact> _teleportsConsumer;
 
+        private Vector3? _teleportPosition = null;
         private Vector2? _resetPosition = null;
         private Vector2 _previousVelocity = Vector2.zero;
 
@@ -33,7 +36,8 @@ namespace Levels
 
         private void OnEnable()
         {
-            _inputSource.PositionUpdated += OnPositionUpdated; 
+            _inputSource.PositionUpdated += OnPositionUpdated;
+            _teleportsConsumer.Impacted += OnTeleport;
         }
 
         private void FixedUpdate()
@@ -47,8 +51,18 @@ namespace Levels
 
             if (_resetPosition.HasValue)
             {
-                transform.position = _resetPosition.Value;
+                transform.position = _resetPosition.Value.ToX0Y();
                 _resetPosition = null;
+                _controller.enabled = true;
+                return;
+            }
+
+            if (_teleportPosition.HasValue)
+            {
+                transform.position = _teleportPosition.Value;
+                _teleportPosition = null;
+                _controller.enabled = true;
+                return;
             }
 
             var movement3d = new Vector3(_inputSource.Movement.x, 0f, _inputSource.Movement.y);
@@ -64,14 +78,22 @@ namespace Levels
             _controller.Move(Vector3.down * gravityPull);
         }
 
+        private void OnTeleport(TeleportImpact impact)
+        {
+            _controller.enabled = false;
+            _teleportPosition = impact.Position;
+        }
+
         private void OnPositionUpdated(Vector2 position)
         {
+            _controller.enabled = false;
             _resetPosition = position;
         }
 
         private void OnDisable()
         {
             _inputSource.PositionUpdated -= OnPositionUpdated;
+            _teleportsConsumer.Impacted -= OnTeleport;
         }
     }
 }

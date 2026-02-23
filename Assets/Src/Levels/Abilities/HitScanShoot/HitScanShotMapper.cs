@@ -1,7 +1,6 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using Levels.Abilities.Impacts;
+using Levels.Abilities.CommonImpacts;
 using Levels.IntentsImpacts;
 using Levels.Util.MasksRegistry;
 using UnityEngine;
@@ -67,14 +66,5 @@ namespace Levels.Abilities.HitScanShoot
                 }
             }
         }
-    }
-
-    public interface IShootConfig
-    {
-        int Damage { get; }
-        float Offset { get; }
-        float Distance { get; }
-        float PushVelocity { get; }
-        TimeSpan PushDuration { get; }
     }
 }
