@@ -44,15 +44,17 @@ namespace Levels.Visual
         {
             foreach (var tracer in _tracers)
             {
-                if (tracer.IsActive)
+                if (tracer.RemainingDistance <= 0)
                 {
                     continue;
                 }
 
+                Debug.Log(tracer);
                 var delta = Time.deltaTime * speed;
                 if (tracer.RemainingDistance <= delta)
                 {
                     tracer.Trail.emitting = false;
+                    tracer.RemainingDistance = 0;
                     continue;
                 }
 
@@ -63,6 +65,7 @@ namespace Levels.Visual
 
         private void AddTracer(CasterShotHitScanEffect effect)
         {
+            Debug.Log(effect, this);
             if (!_tracers.TryGetIndexOfFirst(out var index, tracer => tracer.IsNotActive))
             {
                 index = _tracers.IndexOfMaxBy(tracer => tracer.DistanceFrom(_camera));
@@ -91,8 +94,7 @@ namespace Levels.Visual
 
         private class Tracer
         {
-            public bool IsActive => Trail.emitting;
-            public bool IsNotActive => !IsActive;
+            public bool IsNotActive => !Trail.emitting;
 
             public readonly TrailRenderer Trail;
             public Vector3 Direction;
@@ -109,6 +111,14 @@ namespace Levels.Visual
             {
                 return Vector3.Distance(Trail.transform.position, transform.position);
             }
+
+            public override string ToString() =>
+                $"{nameof(Tracer)}" +
+                $"(Trail: {Trail}," +
+                $" Direction: {Direction}," +
+                $" RemainingDistance: {RemainingDistance}," +
+                $" IsNotActive => {IsNotActive}" +
+                $")";
         }
     }
 }
