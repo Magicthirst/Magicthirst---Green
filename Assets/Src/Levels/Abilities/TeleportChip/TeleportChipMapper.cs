@@ -12,7 +12,7 @@ namespace Levels.Abilities.TeleportChip
     {
         public IEnumerable<IImpact> Map(TeleportChipThrowIntent intent)
         {
-            var velocity = intent.Direction + intent.Movement.ToX0Y() * intent.Config.ThrowVelocity;
+            var velocity = intent.Direction * intent.Config.ThrowVelocity + intent.Movement.ToX0Y();
             var angularVelocity = Vector3.Cross(intent.Direction, Vector3.up) * intent.Config.FlippingAngularVelocity;
 
             var floorOffset = velocity.normalized * intent.Config.ThrowOriginHorizontalOffset;

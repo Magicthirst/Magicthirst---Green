@@ -22,12 +22,16 @@ namespace Levels.UI.Weaponry
         [SerializeField] private Vector3 activeVortexRotationPerSecond;
 
         [SerializeField] private Vector3 notActiveVortexRotationPerSecond;
+        [SerializeField] private float trailFadeTimeChangePerSecond;
+
+        private float _goalTrailFadeTime;
 
         [Inject] private TeleportChip _teleportChip;
 
         private void Awake()
         {
             _trails = vortex.GetComponentsInChildren<TrailRenderer>();
+            _goalTrailFadeTime = trailNotActiveFadeTime;
         }
 
         private void OnEnable()
@@ -51,6 +55,11 @@ namespace Levels.UI.Weaponry
                 default:
                     throw new ArgumentOutOfRangeException();
             }
+
+            foreach (var trail in _trails)
+            {
+                trail.time = Mathf.MoveTowards(trail.time, _goalTrailFadeTime, trailFadeTimeChangePerSecond * Time.deltaTime);
+            }
         }
 
         private void HandleStateChanged(TeleportChipState state)
@@ -60,18 +69,12 @@ namespace Levels.UI.Weaponry
                 case Ready:
                     chip.eulerAngles = chipBaseRotation;
                     vortex.eulerAngles = vortexBaseRotation;
-                    foreach (var trail in _trails)
-                    {
-                        trail.time = trailNotActiveFadeTime;
-                    }
+                    _goalTrailFadeTime = trailNotActiveFadeTime;
                     break;
                 case Thrown:
                     chip.eulerAngles = chipBaseRotation;
                     vortex.eulerAngles = vortexBaseRotation;
-                    foreach (var trail in _trails)
-                    {
-                        trail.time = trailActiveFadeTime;
-                    }
+                    _goalTrailFadeTime = trailActiveFadeTime;
                     break;
                 case OnGround:
                     chip.eulerAngles = chipBaseRotation;
