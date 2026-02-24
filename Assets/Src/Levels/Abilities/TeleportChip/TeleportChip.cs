@@ -75,8 +75,8 @@ namespace Levels.Abilities.TeleportChip
             _transform.SetParent(null);
             _transform.position = spawn.Origin;
             _transform.LookAt(spawn.Origin + spawn.Velocity);
-            _rigidbody.AddForce(spawn.Velocity, ForceMode.Impulse);
-            _rigidbody.AddTorque(spawn.AngularVelocity, ForceMode.Impulse);
+            _rigidbody.linearVelocity = spawn.Velocity;
+            _rigidbody.angularVelocity = spawn.AngularVelocity;
             _lostInFlyingTimer = spawn.Config.FlyingTimeLostThreshold;
             _justThrown = true;
         }
