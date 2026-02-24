@@ -23,10 +23,11 @@ namespace Levels.Abilities.HitScanShoot
         {
             var config = intent.Config;
             var push = intent.Direction * config.PushVelocity;
+            var origin = intent.Origin + intent.Direction * config.Offset;
 
-            yield return new CasterShotHitScanEffect(intent.Caster, intent.Origin, intent.Direction, intent.Config.Distance);
+            yield return new CasterShotHitScanEffect(intent.Caster, origin, intent.Direction, intent.Config.Distance);
 
-            foreach (var target in GetAffected(intent.Caster, intent.Origin, intent.Direction))
+            foreach (var target in GetAffected(intent.Caster, origin, intent.Direction))
             {
                 yield return new TargetWasShotEffect(target);
 

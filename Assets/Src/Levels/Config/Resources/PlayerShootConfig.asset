@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: PlayerShootConfig
   m_EditorClassIdentifier: Levels:Levels.Config:ShootConfig
   shootDamage: 10
-  shootDistance: 500
+  shootDistance: 200
   shootOffset: 0
   shootPushVelocity: 10
   shootPushDurationSeconds: 0.1
