@@ -19489,8 +19489,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1499311476}
   - component: {fileID: 1499311477}
+  - component: {fileID: 1499311478}
   m_Layer: 0
-  m_Name: VContainer
+  m_Name: LevelGlobal
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -19529,6 +19530,18 @@ MonoBehaviour:
   autoInjectGameObjects:
   - {fileID: 0}
   camera: {fileID: 1065869686}
+--- !u!114 &1499311478
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1499311475}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c51510cfe994b84a99d94eb0c7ba9e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1515696097
 PrefabInstance:
   m_ObjectHideFlags: 0
