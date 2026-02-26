@@ -1,6 +1,7 @@
 using System.Collections;
 using Levels.Extensions;
 using Levels.IntentsImpacts;
+using Levels.Util;
 using UnityEngine;
 using VContainer;
 
@@ -14,6 +15,8 @@ namespace Levels.Abilities.CommonImpacts
         [Inject] private IImpactConsumer<ImpulseImpact> _consumer;
 
         private Vector3 _velocity = Vector3.zero;
+
+        private readonly WaitForFixedUpdate _waitFixedUpdate = new();
 
         private void Awake()
         {
@@ -43,18 +46,23 @@ namespace Levels.Abilities.CommonImpacts
             _velocity = Vector3.zero;
         }
 
-        private void HandleImpulse(ImpulseImpact impulse) => StartCoroutine(ApplyImpulseRoutine(impulse));
+        private void HandleImpulse(ImpulseImpact impulse)
+        {
+            if (!gameObject.TryInterrupt<IMovementReason>(ApplyImpulseRoutine(impulse)))
+            {
+                StartCoroutine(ApplyImpulseRoutine(impulse));
+            }
+        }
 
         private IEnumerator ApplyImpulseRoutine(ImpulseImpact impulse)
         {
-            _velocity += impulse.Velocity;
-
-            yield return new WaitForSeconds((float) impulse.Duration.TotalSeconds);
-
-            _velocity -= impulse.Velocity;
-            if (_velocity.IsNearlyZero())
+            var left = (float) impulse.Duration.TotalSeconds;
+            while (left >= 0)
             {
-                _velocity = Vector3.zero;
+                yield return _waitFixedUpdate;
+                var dt = Time.fixedDeltaTime;
+                _controller.Move(impulse.Velocity * dt);
+                left -= dt;
             }
         }
     }

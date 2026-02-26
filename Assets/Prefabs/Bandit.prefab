@@ -10,9 +10,11 @@ GameObject:
   m_Component:
   - component: {fileID: 6048475864911610465}
   - component: {fileID: 4574909120513741277}
+  - component: {fileID: 1469123842449009299}
   - component: {fileID: 8704299609388282002}
   - component: {fileID: -1416773866408915211}
   - component: {fileID: 6168302136819039001}
+  - component: {fileID: 3875385349882181220}
   - component: {fileID: 5313311891783920016}
   - component: {fileID: 1575280508834368271}
   - component: {fileID: 7085063179026557343}
@@ -68,6 +70,31 @@ CapsuleCollider:
   m_Height: 1.5693817
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!143 &1469123842449009299
+CharacterController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2417240799410663039}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Height: 2
+  m_Radius: 0.5
+  m_SlopeLimit: 45
+  m_StepOffset: 0.3
+  m_SkinWidth: 0.08
+  m_MinMoveDistance: 0.001
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!195 &8704299609388282002
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -116,6 +143,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mask: 3
+--- !u!114 &3875385349882181220
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2417240799410663039}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef74791319184848bab840471eca974d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &5313311891783920016
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -206,7 +245,7 @@ MonoBehaviour:
   betweenBurstDelay: 1
   betweenShotDelay: 0.1
   movementSpeed: 7
-  maxDistance: 20
+  maxDistance: 10
   tacticUpdatePeriod: 0.5
 --- !u!114 &1755954717784887308
 MonoBehaviour:
@@ -529,7 +568,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce16abfda54b4441a55bc9be749d7ab0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: {fileID: 0}
   fullHealthColor: {r: 0, g: 1, b: 0.047753334, a: 1}
   halfHealthColor: {r: 1, g: 1, b: 0, a: 1}
   noHealthColor: {r: 0.8490566, g: 0, b: 0.24632436, a: 1}
@@ -648,7 +686,7 @@ MonoBehaviour:
     stateType: Levels.AI.Bandit.BanditFighting
     sprite: {fileID: 21300000, guid: a609e1edefb14e9a83c49b9633b13e6e, type: 3}
     durationSeconds: Infinity
-  - impactType: Levels.Abilities.Impacts.CasterShotHitScanEffect
+  - impactType: Levels.Abilities.CommonImpacts.CasterShotHitScanEffect
     stateType: Levels.AI.Bandit.BanditFighting
     sprite: {fileID: 21300000, guid: 404f365ed29847ca9b8ef5f0bf62ea37, type: 3}
     durationSeconds: 0.05

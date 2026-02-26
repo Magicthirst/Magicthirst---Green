@@ -12,12 +12,14 @@ namespace Levels.AI.Shared
 
         private readonly float _speed;
         private readonly float _maxDistance;
-        private readonly WaitForSeconds _tacticUpdatePeriod;
-        private readonly WaitForSeconds _updateShift;
+        private readonly float _tacticUpdatePeriod;
+        private readonly float _updateShift;
 
         private readonly Transform _self;
         private readonly NavMeshAgent _agent;
         private readonly LayerMask _obstacleMask;
+
+        private readonly WaitForFixedUpdate _wait;
 
         public KitingMovement(
             float speed,
@@ -29,11 +31,12 @@ namespace Levels.AI.Shared
         {
             _speed = speed;
             _maxDistance = maxDistance;
-            _tacticUpdatePeriod = new WaitForSeconds(tacticUpdatePeriod);
-            _updateShift = new WaitForSeconds(Random.Range(0f, tacticUpdatePeriod));
+            _tacticUpdatePeriod = tacticUpdatePeriod;
+            _updateShift = Random.Range(0f, tacticUpdatePeriod);
             _self = self;
             _agent = agent;
             _obstacleMask = obstacleMask;
+            _wait = new WaitForFixedUpdate();
         }
 
         public IEnumerator Kite(Transform enemy)
@@ -41,11 +44,11 @@ namespace Levels.AI.Shared
             _agent.speed = _speed;
             _agent.updateRotation = true; 
 
-            yield return _updateShift;
+            yield return Wait(_updateShift);
 
             while (true)
             {
-                if (!HasLineOfSight(enemy))
+                if (!HasLineOfSight(enemy.position))
                 {
                     _agent.SetDestination(enemy.position);
                     _agent.isStopped = false;
@@ -64,20 +67,9 @@ namespace Levels.AI.Shared
                     _agent.isStopped = true;
                 }
 
-                yield return _tacticUpdatePeriod;
+                yield return Wait(_tacticUpdatePeriod);
             }
             // ReSharper disable once IteratorNeverReturns
-        }
-
-        private bool HasLineOfSight(Transform enemy) => HasLineOfSight(_self.position, enemy);
-
-        private bool HasLineOfSight(Vector3 origin, Transform enemy)
-        {
-            var target = enemy.position;
-            var direction = target - origin;
-            var distance = direction.magnitude;
-
-            return !Physics.Raycast(origin, direction, distance, _obstacleMask);
         }
 
         private bool TryFindNextDestination(Transform enemy, out Vector3 fleePosition)
@@ -92,17 +84,56 @@ namespace Levels.AI.Shared
                 var testDirection = Quaternion.Euler(0, angle, 0) * awayFromPlayer;
                 var testPosition = _self.position + testDirection * SampleDistance;
 
-                var distance = Vector3.Distance(enemy.position, testPosition);
-                if (NavMesh.SamplePosition(testPosition, out var hit, 2f, NavMesh.AllAreas) &&
-                    HasLineOfSight(hit.position, enemy) &&
-                    distance > bestDistance)
+                if (TryFindNextBestDestination(testPosition, bestDistance, enemy.position, out var next))
                 {
-                    bestDistance = distance;
-                    fleePosition = hit.position;
+                    bestDistance = next.Distance;
+                    fleePosition = next.Position;
                 }
             }
 
             return fleePosition != _self.position;
+
+            bool TryFindNextBestDestination(Vector3 test, float bestDistance, Vector3 enemy, out (Vector3 Position, float Distance) next)
+            {
+                var positionExists = NavMesh.SamplePosition(test, out var hit, SampleDistance, NavMesh.AllAreas);
+                next = (hit.position, Vector3.Distance(hit.position, enemy));
+                if (!positionExists)
+                {
+                    return false;
+                }
+
+                var distanceIsBetter = next.Distance > bestDistance;
+                if (!distanceIsBetter)
+                {
+                    return false;
+                }
+
+                if (!HasLineOfSight(next.Position, enemy))
+                {
+                    return false;
+                }
+
+                return true;
+            }
+        }
+
+        private bool HasLineOfSight(Vector3 enemy) => HasLineOfSight(_self.position, enemy);
+
+        private bool HasLineOfSight(Vector3 origin, Vector3 target)
+        {
+            var direction = target - origin;
+            var distance = direction.magnitude;
+
+            return !Physics.Raycast(origin, direction, distance, _obstacleMask);
+        }
+
+        private IEnumerator Wait(float time)
+        {
+            while (time > 0)
+            {
+                yield return _wait;
+                time -= Time.fixedDeltaTime;
+            }
         }
     }
 }

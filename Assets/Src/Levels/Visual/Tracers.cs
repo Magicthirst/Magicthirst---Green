@@ -49,7 +49,6 @@ namespace Levels.Visual
                     continue;
                 }
 
-                Debug.Log(tracer);
                 var delta = Time.deltaTime * speed;
                 if (tracer.RemainingDistance <= delta)
                 {
@@ -65,7 +64,6 @@ namespace Levels.Visual
 
         private void AddTracer(CasterShotHitScanEffect effect)
         {
-            Debug.Log(effect, this);
             if (!_tracers.TryGetIndexOfFirst(out var index, tracer => tracer.IsNotActive))
             {
                 index = _tracers.IndexOfMaxBy(tracer => tracer.DistanceFrom(_camera));

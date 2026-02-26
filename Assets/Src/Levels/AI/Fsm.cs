@@ -48,8 +48,6 @@ namespace Levels.AI
 
         private void RunState(FsmState state)
         {
-            Debug.Log($"FSM exiting {_Current?.GetType().Name ?? "null"}", gameObject);
-            Debug.Log($"FSM entering {state?.GetType().Name ?? "null"}", gameObject);
             _Current?.Exit();
             _Current = state;
             _Current?.Enter();
@@ -62,8 +60,6 @@ namespace Levels.AI
 
             void OnStateReadied()
             {
-                Debug.Log($"FSM ready to run {state.GetType().Name}", gameObject);
-
                 if (_Current.TransitionsTo(state) && state.Overrides(_Current))
                 {
                     RunState(state);
