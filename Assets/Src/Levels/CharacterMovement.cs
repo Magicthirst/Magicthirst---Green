@@ -1,7 +1,9 @@
 using System;
+using System.Collections;
 using Levels.Abilities.CommonImpacts;
 using Levels.Extensions;
 using Levels.IntentsImpacts;
+using Levels.Util;
 using UnityEngine;
 using VContainer;
 
@@ -9,7 +11,7 @@ namespace Levels
 {
     [RequireComponent(typeof(CharacterController))]
     [RequireComponent(typeof(IMovementInputSource))]
-    public class CharacterMovement : MonoBehaviour, ICharacterControllerDependent
+    public class CharacterMovement : MonoBehaviour, IInterruptable<IMovementReason>
     {
         public event Action<Vector2> Moved;
 
@@ -22,16 +24,16 @@ namespace Levels
         private IMovementInputSource _inputSource;
         [Inject] private IImpactConsumer<TeleportImpact> _teleportsConsumer;
 
-        private Vector3? _teleportPosition = null;
         private Vector2? _resetPosition = null;
         private Vector2 _previousVelocity = Vector2.zero;
 
-        private int _leftPhysicalFramesToLog = 0;
+        private InterruptionQueue _interruptionQueue;
 
         private void Awake()
         {
             _controller = GetComponent<CharacterController>();
             _inputSource = GetComponent<IMovementInputSource>();
+            _interruptionQueue = new InterruptionQueue(this, new WaitForFixedUpdate());
         }
 
         private void OnEnable()
@@ -40,15 +42,10 @@ namespace Levels
             _teleportsConsumer.Impacted += OnTeleport;
         }
 
+        public void Interrupt(IEnumerator routine) => _interruptionQueue.Interrupt(routine);
+
         private void FixedUpdate()
         {
-            if (_leftPhysicalFramesToLog == 0)
-            {
-                _leftPhysicalFramesToLog = 25;
-                Debug.Log($"_resetPosition={_resetPosition}");
-                Debug.Log($"_inputSource.Movement={_inputSource.Movement}");
-            }
-
             if (_resetPosition.HasValue)
             {
                 transform.position = _resetPosition.Value.ToX0Y();
@@ -57,11 +54,8 @@ namespace Levels
                 return;
             }
 
-            if (_teleportPosition.HasValue)
+            if (_interruptionQueue.Running)
             {
-                transform.position = _teleportPosition.Value;
-                _teleportPosition = null;
-                _controller.enabled = true;
                 return;
             }
 
@@ -75,13 +69,20 @@ namespace Levels
                 Moved?.Invoke(_inputSource.Movement);
             }
 
-            _controller.Move(Vector3.down * gravityPull);
+            _controller.Move(Vector3.down * (gravityPull * Time.fixedDeltaTime));
         }
 
         private void OnTeleport(TeleportImpact impact)
         {
-            _controller.enabled = false;
-            _teleportPosition = impact.Position;
+            
+            Interrupt(Interruption());
+            return;
+
+            IEnumerator Interruption()
+            {
+                yield return new WaitForFixedUpdate();
+                transform.position = impact.Position;
+            }
         }
 
         private void OnPositionUpdated(Vector2 position)
@@ -94,6 +95,11 @@ namespace Levels
         {
             _inputSource.PositionUpdated -= OnPositionUpdated;
             _teleportsConsumer.Impacted -= OnTeleport;
+        }
+
+        private void OnDestroy()
+        {
+            _interruptionQueue.Dispose();
         }
     }
 }

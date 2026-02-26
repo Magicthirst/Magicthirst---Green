@@ -1,4 +1,3 @@
-using Levels.Abilities.Dash;
 using Levels.Abilities.HitScanShoot;
 using Levels.Abilities.PushingShotgun;
 using Levels.Abilities.TeleportChip;
@@ -20,7 +19,6 @@ namespace DI
                     var teleportChipMapper = new TeleportChipMapper();
 
                     return new IntentsImpacts()
-                        .RegisterTransformation(new DashMapper())
                         .RegisterTransformation(new PushingShotgunShotMapper(resolver.Resolve<MasksRegistry>()))
                         .RegisterTransformation(new HitScanShotMapper(resolver.Resolve<MasksRegistry>()))
                         .RegisterTransformation<TeleportChipThrowIntent>(teleportChipMapper)

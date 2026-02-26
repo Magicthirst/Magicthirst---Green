@@ -1,3 +1,4 @@
+using System.Collections;
 using Levels.Abilities.HitScanShoot;
 using Levels.AI.Shared;
 using Levels.IntentsImpacts;
@@ -10,7 +11,7 @@ using VContainer;
 namespace Levels.AI.Bandit
 {
     [RequireComponent(typeof(NavMeshAgent))]
-    public class BanditFighting : FsmState
+    public class BanditFighting : FsmState, IInterruptable<IMovementReason>
     {
         [SerializeField] private PublishContacts startFightArea;
         [SerializeField] private PublishContacts stopFightArea;
@@ -37,6 +38,7 @@ namespace Levels.AI.Bandit
         private BurstShooter _shooter;
         private KitingMovement _movement;
 
+        private InterruptionQueue _interruptionQueue;
         private Coroutine[] _coroutines;
 
         protected override bool _IsReady => _enemy != null;
@@ -44,6 +46,8 @@ namespace Levels.AI.Bandit
         protected override void Awake()
         {
             base.Awake();
+
+            _interruptionQueue = new InterruptionQueue(this, new WaitForFixedUpdate());
 
             _shooter = new BurstShooter(
                 shotSpreadDegrees: shotSpreadDegrees,
@@ -86,7 +90,7 @@ namespace Levels.AI.Bandit
             _coroutines = new[]
             {
                 StartCoroutine(_shooter.Shoot(_enemy, retryWhenTargetLost: true)),
-                StartCoroutine(_movement.Kite(_enemy.transform))
+                StartCoroutine(_interruptionQueue.MakeInterruptable(_movement.Kite(_enemy.transform)))
             };
         }
 
@@ -108,6 +112,8 @@ namespace Levels.AI.Bandit
                 Finish();
             }
         }
+
+        public void Interrupt(IEnumerator block) => _interruptionQueue.Interrupt(block);
 
         private void OnDisable()
         {
