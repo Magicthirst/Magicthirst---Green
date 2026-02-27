@@ -1,5 +1,9 @@
 using System.Linq;
+using Levels.Abilities.CommonImpacts;
+using Levels.Core.Passives;
+using Levels.IntentsImpacts;
 using UnityEngine;
+using VContainer;
 
 namespace Levels.Core
 {
@@ -8,13 +12,44 @@ namespace Levels.Core
     {
         public Health Health { get; private set; }
         public TeleportChip TeleportChip { get; private set; }
+        public ProjectilesParrying ProjectilesParrying { get; private set; }
+
+        private bool _inited = false;
+
+        [Inject] private GameObject _gameObject;
+        [Inject] private IObjectResolver _resolver;
+        [Inject] private PublishIntent<ImpactIntent> _publishParry;
 
         public override void Init()
         {
             base.Init();
 
-            Health = (Health) components.First(c => c is Health);
-            TeleportChip = (TeleportChip) components.First(c => c is TeleportChip);
+            if (!_inited)
+            {
+                _inited = true;
+
+                Health = (Health)Components.First(c => c is Health);
+                TeleportChip = (TeleportChip)Components.First(c => c is TeleportChip);
+                ProjectilesParrying = (ProjectilesParrying)Components.First(c => c is ProjectilesParrying);
+
+                _resolver
+                    .Resolve<IntentsImpacts.IntentsImpacts>()
+                    .RegisterBroker(ProjectilesParrying.Handle, _gameObject.GetInstanceID());
+            }
+
+            ProjectilesParrying.AttackParried += OnParried;
+        }
+
+        private void OnParried(object _)
+        {
+            _publishParry(new ImpactIntent(new CasterParriedEffect(_gameObject)));
+        }
+
+        public override void Dispose()
+        {
+            base.Dispose();
+
+            ProjectilesParrying.AttackParried -= OnParried;
         }
     }
 

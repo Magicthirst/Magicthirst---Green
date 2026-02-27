@@ -40,7 +40,6 @@ namespace Levels.Abilities.TeleportChip
                 {
                     case TeleportChipState.Ready:
                         var intent = new TeleportChipThrowIntent(gameObject, _state.Instance.gameObject, _camera.forward, _movementInput.Movement, _config);
-                        Debug.Log($"Throwing {intent}, {nameof(TeleportChip)}==={_state.Instance.gameObject.GetInstanceID()} ");
                         _publishThrow(intent);
                         _state.Throw();
                         break;
@@ -48,7 +47,6 @@ namespace Levels.Abilities.TeleportChip
                         break;
                     case TeleportChipState.OnGround:
                         var activateIntent = new TeleportChipActivateIntent(gameObject, _state.Instance);
-                        Debug.Log($"Activating {activateIntent}");
                         _publishActivate(activateIntent);
                         _state.Restore();
                         break;

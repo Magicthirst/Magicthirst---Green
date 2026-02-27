@@ -17,6 +17,7 @@ namespace Levels.IntentsImpacts
     public class IntentsImpacts
     {
         private readonly Dictionary<(int TargetID, Type Type), List<IImpactReceiver>> _receivers = new();
+        private readonly Dictionary<Type, Dictionary<int, List<DeferredBroker>>> _brokers = new();
 
         private readonly Dictionary<Type, List<MapIntentToImpacts>> _mappersByTypes = new();
 
@@ -33,6 +34,25 @@ namespace Levels.IntentsImpacts
             }
 
             mappers.Add(intent => map((TIntent)intent));
+            return this;
+        }
+
+        public IntentsImpacts RegisterBroker<TIntent>(DeferredBroker<TIntent> broker, int targetId) where TIntent : IIntent
+        {
+            var tIntent = typeof(TIntent);
+
+            if (!_brokers.TryGetValue(tIntent, out var brokersByTargets))
+            {
+                _brokers[tIntent] = brokersByTargets = new();
+            }
+
+            if (!brokersByTargets.TryGetValue(targetId, out var brokers))
+            {
+                brokersByTargets[targetId] = brokers = new List<DeferredBroker>();
+            }
+
+            brokers.Add(broker);
+
             return this;
         }
 
@@ -63,18 +83,59 @@ namespace Levels.IntentsImpacts
 
         private bool TryPublish<TIntent>(TIntent intent) where TIntent : IIntent
         {
-#if UNITY_EDITOR
-            Debug.Log($"TryPublish {intent}");
-#endif
+            var tIntent = typeof(TIntent);
 
-            if (!_mappersByTypes.TryGetValue(typeof(TIntent), out var mappers))
+            if (!_brokers.TryGetValue(tIntent, out var brokersByTypes))
+            {
+                return PlainTryPublish(intent);
+            }
+
+            if (!_mappersByTypes.TryGetValue(tIntent, out var mappers))
             {
                 return false;
             }
 
-#if UNITY_EDITOR
-            Debug.Log($"TryPublish {intent} |mappers|={mappers.Count}");
-#endif
+            var impactsByTargets = mappers
+                .SelectMany(map => map(intent))
+                .GroupBy(impact => impact.Target);
+
+            foreach (var impactsByTarget in impactsByTargets)
+            {
+                var targetId = impactsByTarget.Key.GetInstanceID();
+
+                if (brokersByTypes.TryGetValue(targetId, out var brokers))
+                {
+                    foreach (var broker in brokers)
+                    {
+                        broker.Consume(intent, impactsByTarget.ToArray());
+                    }
+
+                    continue;
+                }
+
+                foreach (var impact in impactsByTarget)
+                {
+                    if (!_receivers.TryGetValue((targetId, impact.GetType()), out var receivers))
+                    {
+                        continue;
+                    }
+
+                    foreach (var receiver in receivers)
+                    {
+                        receiver.Receive(impact);
+                    }
+                }
+            }
+
+            return true;
+        }
+
+        private bool PlainTryPublish<TIntent>(TIntent intent) where TIntent : IIntent
+        {
+            if (!_mappersByTypes.TryGetValue(typeof(TIntent), out var mappers))
+            {
+                return false;
+            }
 
             var receiversImpacts =
                 from impact in mappers.SelectMany(map => map(intent))
@@ -82,11 +143,6 @@ namespace Levels.IntentsImpacts
                 from receiver in _receivers[Key(impact)]
                 select (Receiver: receiver, Impact: impact);
 
-#if UNITY_EDITOR
-            var receivers = receiversImpacts.Select(r => r.Receiver).ToList();
-            Debug.Log($"TryPublish {intent} |receivers|={receivers.Count}");
-            Debug.Log($"TryPublish {intent} receivers=[{string.Join(", ", receivers)}]");
-#endif
 
             foreach (var (receiver, impact) in receiversImpacts)
             {
@@ -144,5 +200,35 @@ namespace Levels.IntentsImpacts
         {
             public void Receive(IImpact impact);
         }
+    }
+
+    public abstract class DeferredBroker
+    {
+        public event Action<IImpact[]> Passed;
+
+        private readonly Dictionary<IIntent, IImpact[]> _storage = new();
+
+        public void Consume(IIntent intent, IImpact[] impacts)
+        {
+            _storage[intent] = impacts;
+            Consume(intent);
+        }
+
+        protected void Pass(IIntent intent)
+        {
+            Passed?.Invoke(_storage[intent]);
+            _storage.Remove(intent);
+        }
+
+        protected void Decline(IIntent intent) => _storage.Remove(intent);
+
+        protected abstract void Consume(IIntent intent);
+    }
+
+    public abstract class DeferredBroker<TIntent> : DeferredBroker where TIntent : IIntent
+    {
+        public abstract void Consume(TIntent intent);
+
+        protected sealed override void Consume(IIntent intent) => Consume((TIntent)intent);
     }
 }

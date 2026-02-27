@@ -17,12 +17,15 @@ namespace DI
         protected override void Awake()
         {
             Debug.Assert(entity != null, gameObject.name, gameObject);
+            entity = Instantiate(entity);
             configs ??= new List<ScriptableObject>();
             base.Awake();
         }
 
         protected override void Configure(IContainerBuilder builder)
         {
+            builder.RegisterInstance(gameObject);
+
             if (gameObject.TryGetComponent(out Fsm fsm))
             {
                 builder.RegisterInstance(fsm);
@@ -40,11 +43,12 @@ namespace DI
 
             builder.RegisterBuildCallback(resolver =>
             {
-                foreach (var component in entity.FlattenedComponents)
+                foreach (var component in entity.LazyComponents)
                 {
                     resolver.Inject(component);
                 }
 
+                resolver.Inject(entity);
                 entity.Init();
             });
             builder.RegisterDisposeCallback(_ => entity.Dispose());
@@ -72,7 +76,7 @@ namespace DI
 
             void RegisterEntityComponents()
             {
-                foreach (var component in entity.FlattenedComponents)
+                foreach (var component in entity.LazyComponents)
                 {
                     var registration = new InstanceRegistrationBuilder(component);
                     builder.Register(registration).AsSelf();

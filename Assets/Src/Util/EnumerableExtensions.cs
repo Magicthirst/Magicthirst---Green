@@ -41,5 +41,31 @@ namespace Util
 
             return index;
         }
+
+        public static (List<T> Truths, List<T> Falses) Fork<T>
+        (
+            this IEnumerable<T> enumerable,
+            Predicate<T> predicate,
+            int reserveTruths = 0,
+            int reserveFalses = 0
+        )
+        {
+            var truths = new List<T>(reserveTruths);
+            var falses = new List<T>(reserveFalses);
+
+            foreach (var item in enumerable)
+            {
+                if (predicate(item))
+                {
+                    truths.Add(item);
+                }
+                else
+                {
+                    falses.Add(item);
+                }
+            }
+
+            return (truths, falses);
+        }
     }
 }

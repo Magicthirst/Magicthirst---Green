@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9507ec0743fa43b28a59c807db33eb83, type: 3}
   m_Name: Bandit
   m_EditorClassIdentifier: 
-  components:
+  serialComponents:
   - {fileID: 11400000, guid: 7356951e65ea96347bb3ce88b44144f1, type: 2}
