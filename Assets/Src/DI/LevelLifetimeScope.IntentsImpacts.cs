@@ -1,4 +1,5 @@
 using Levels.Abilities.HitScanShoot;
+using Levels.Abilities.ParrySabre;
 using Levels.Abilities.PushingShotgun;
 using Levels.Abilities.TeleportChip;
 using Levels.IntentsImpacts;
@@ -16,13 +17,16 @@ namespace DI
             (
                 resolver =>
                 {
+                    var masks = resolver.Resolve<MasksRegistry>();
                     var teleportChipMapper = new TeleportChipMapper();
 
                     return new IntentsImpacts()
-                        .RegisterTransformation(new PushingShotgunShotMapper(resolver.Resolve<MasksRegistry>()))
-                        .RegisterTransformation(new HitScanShotMapper(resolver.Resolve<MasksRegistry>()))
+                        .RegisterTransformation(new ImpactIntentMapper())
+                        .RegisterTransformation(new PushingShotgunShotMapper(masks))
+                        .RegisterTransformation(new HitScanShotMapper(masks))
                         .RegisterTransformation<TeleportChipThrowIntent>(teleportChipMapper)
-                        .RegisterTransformation<TeleportChipActivateIntent>(teleportChipMapper);
+                        .RegisterTransformation<TeleportChipActivateIntent>(teleportChipMapper)
+                        .RegisterTransformation(new ParrySabreSwingMapper(masks));
                 },
                 Lifetime.Singleton
             ).AsSelf();

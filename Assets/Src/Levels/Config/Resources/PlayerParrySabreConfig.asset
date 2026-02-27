@@ -9,11 +9,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 0}
-  m_Name: BanditShootConfig
-  m_EditorClassIdentifier: Levels:Levels.Config:ShootConfig
-  shootDamage: 0
-  shootDistance: 200
-  shootOffset: 0.4
-  shootPushVelocity: 10
-  shootPushDurationSeconds: 0.05
+  m_Script: {fileID: 11500000, guid: 9595ce71cda3484288705359dbc3e538, type: 3}
+  m_Name: PlayerParrySabreConfig
+  m_EditorClassIdentifier: 
+  damage: 10
+  circleRadius: 1.05
+  circleCenterOffset: 1.19
+  leeway: 0.1
+  duration: 0.2
+  angleDegrees: 50

@@ -1,5 +1,3 @@
-using UnityEngine;
-
 namespace Levels.Abilities.TeleportChip
 {
     public interface ITeleportChipConfig

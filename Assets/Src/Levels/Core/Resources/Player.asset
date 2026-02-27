@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 546780502e3341e48b6bf085f34d7d44, type: 3}
   m_Name: Player
   m_EditorClassIdentifier: 
-  components:
+  serialComponents:
   - {fileID: 11400000, guid: c09ce76114d8412469c2abb4d859a745, type: 2}
   - {fileID: 11400000, guid: 9b64d97a10e09e34f853da132b328e3e, type: 2}
+  - {fileID: 11400000, guid: a70610a9b4bb05742b3b29e303ffc882, type: 2}

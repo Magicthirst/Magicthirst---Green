@@ -53,6 +53,11 @@ namespace Levels.AI.Shared
                     _agent.SetDestination(enemy.position);
                     _agent.isStopped = false;
                 }
+                // TODO if (!HasLineOfSight(enemy.position) && !TryStrifeIntoView(enemy.position))
+                // TODO {
+                // TODO     _agent.SetDestination(enemy.position);
+                // TODO     _agent.isStopped = false;
+                // TODO }
                 else if (Vector3.Distance(_self.position, enemy.position) >= _maxDistance)
                 {
                     _agent.isStopped = true;
