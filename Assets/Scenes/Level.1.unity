@@ -8808,7 +8808,7 @@ Camera:
   m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
-  m_FOVAxisMode: 0
+  m_FOVAxisMode: 1
   m_Iso: 200
   m_ShutterSpeed: 0.005
   m_Aperture: 16
@@ -8828,7 +8828,7 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
-  field of view: 60
+  field of view: 88.50715
   orthographic: 0
   orthographic size: 5
   m_Depth: 0
@@ -21134,7 +21134,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   broadcasting: 1
   gravityPull: 9.8
-  speed: 10
+  speed: 12
 --- !u!114 &1711207722
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -21455,8 +21455,8 @@ MonoBehaviour:
   throwingAngle: 9.9
   drawShotgun: 0
   drawShoot: 0
-  drawParrySabre: 0
-  drawTeleportChip: 1
+  drawParrySabre: 1
+  drawTeleportChip: 0
   shootConfig: {fileID: 11400000, guid: c623dcef9bb747c4b981f5531c4cf955, type: 2}
   shotgunConfig: {fileID: 11400000, guid: 3edfb37123c5f8b4bb6d35a171a7b364, type: 2}
   teleportChipConfig: {fileID: 11400000, guid: 96f04a6f0df3b17408afbfdc628e4f2b, type: 2}
@@ -22153,7 +22153,7 @@ MonoBehaviour:
     LookAtTarget: {fileID: 0}
     CustomLookAtTarget: 0
   Lens:
-    FieldOfView: 64.64339
+    FieldOfView: 60
     OrthographicSize: 5
     NearClipPlane: 0.3
     FarClipPlane: 1000
