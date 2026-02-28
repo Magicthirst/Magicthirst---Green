@@ -16,7 +16,6 @@ namespace Levels.Core
 
         private bool _inited = false;
 
-        [Inject] private GameObject _gameObject;
         [Inject] private IObjectResolver _resolver;
         [Inject] private PublishIntent<ImpactIntent> _publishParry;
 
@@ -34,7 +33,7 @@ namespace Levels.Core
 
                 _resolver
                     .Resolve<IntentsImpacts.IntentsImpacts>()
-                    .RegisterBroker(ProjectilesParrying.Handle, _gameObject.GetInstanceID());
+                    .RegisterBroker(ProjectilesParrying.Handle, Owner.GetInstanceID());
             }
 
             ProjectilesParrying.AttackParried += OnParried;
@@ -42,7 +41,7 @@ namespace Levels.Core
 
         private void OnParried(object _)
         {
-            _publishParry(new ImpactIntent(new CasterParriedEffect(_gameObject)));
+            _publishParry(ImpactIntent.SelfCast(new CasterParriedEffect(Owner)));
         }
 
         public override void Dispose()

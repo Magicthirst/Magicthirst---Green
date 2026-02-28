@@ -128,9 +128,15 @@ namespace Levels.Core.Passives
                 _parrying.AttackParried += Decline;
             }
 
-            public override void Consume(HitScanShootIntent intent)
+            public override bool TryConsume(HitScanShootIntent intent)
             {
-                _parrying.Attack(intent, -intent.Direction);
+                if (intent.Caster != _parrying.Owner)
+                {
+                    _parrying.Attack(intent, -intent.Direction);
+                    return true;
+                }
+
+                return false;
             }
 
             public void Dispose()
