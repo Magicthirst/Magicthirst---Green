@@ -21,7 +21,8 @@ namespace Levels.IntentsImpacts
 
         private readonly Dictionary<Type, List<MapIntentToImpacts>> _mappersByTypes = new();
 
-        public IntentsImpacts RegisterTransformation<TIntent>(IIntentToImpactsMapper<TIntent> mapper) where TIntent : IIntent =>
+        public IntentsImpacts RegisterTransformation<TIntent>(IIntentToImpactsMapper<TIntent> mapper)
+            where TIntent : IIntent =>
             RegisterTransformation<TIntent>(map: mapper.Map);
 
         public IntentsImpacts RegisterTransformation<TIntent>(MapIntentToImpacts<TIntent> map) where TIntent : IIntent
@@ -37,7 +38,8 @@ namespace Levels.IntentsImpacts
             return this;
         }
 
-        public IntentsImpacts RegisterBroker<TIntent>(DeferredBroker<TIntent> broker, int targetId) where TIntent : IIntent
+        public IntentsImpacts RegisterBroker<TIntent>(DeferredBroker<TIntent> broker, int targetId)
+            where TIntent : IIntent
         {
             var tIntent = typeof(TIntent);
 
@@ -61,7 +63,7 @@ namespace Levels.IntentsImpacts
         public object GetIntentPublisher(Type tIntent)
         {
             var genericMethod = typeof(IntentsImpacts)
-                .GetMethod(nameof(GetIntentPublisher), new Type[] {})!
+                .GetMethod(nameof(GetIntentPublisher), new Type[] { })!
                 .MakeGenericMethod(tIntent);
 
             return genericMethod.Invoke(this, new object[] { });
@@ -75,83 +77,70 @@ namespace Levels.IntentsImpacts
         public IImpactConsumer GetImpactConsumerFor(GameObject target, Type impactType)
         {
             var genericMethod = typeof(IntentsImpacts)
-                .GetMethod(nameof(GetImpactConsumerFor), new [] { typeof(GameObject) })!
+                .GetMethod(nameof(GetImpactConsumerFor), new[] { typeof(GameObject) })!
                 .MakeGenericMethod(impactType);
 
-            return (IImpactConsumer) genericMethod.Invoke(this, new object[] { target });
+            return (IImpactConsumer)genericMethod.Invoke(this, new object[] { target });
         }
 
         private bool TryPublish<TIntent>(TIntent intent) where TIntent : IIntent
         {
             var tIntent = typeof(TIntent);
 
-            if (!_brokers.TryGetValue(tIntent, out var brokersByTypes))
-            {
-                return PlainTryPublish(intent);
-            }
-
             if (!_mappersByTypes.TryGetValue(tIntent, out var mappers))
             {
                 return false;
             }
 
-            var impactsByTargets = mappers
-                .SelectMany(map => map(intent))
-                .GroupBy(impact => impact.Target);
+            var impacts = mappers.SelectMany(map => map(intent));
+
+            if (!_brokers.TryGetValue(tIntent, out var brokersByTypes))
+            {
+                PublishImpacts(impacts);
+                return true;
+            }
+
+            var impactsByTargets = impacts.GroupBy(impact => impact.Target);
 
             foreach (var impactsByTarget in impactsByTargets)
             {
-                var targetId = impactsByTarget.Key.GetInstanceID();
-
-                if (brokersByTypes.TryGetValue(targetId, out var brokers))
+                if (!TrySendToBrokers(impactsByTarget))
                 {
-                    foreach (var broker in brokers)
-                    {
-                        broker.Consume(intent, impactsByTarget.ToArray());
-                    }
+                    PublishImpacts(impactsByTarget);
+                }
+            }
 
+            return true;
+
+            bool TrySendToBrokers(IGrouping<GameObject, IImpact> group)
+            {
+                var targetId = group.Key.GetInstanceID();
+
+                if (!brokersByTypes.TryGetValue(targetId, out var brokers))
+                {
+                    return false;
+                }
+
+                var usages = brokers.Count(broker => broker.TryConsume(intent, group.ToArray()));
+                return usages > 0;
+            }
+        }
+
+        private void PublishImpacts(IEnumerable<IImpact> impacts)
+        {
+            foreach (var impact in impacts)
+            {
+                var key = (impact.Target.GetInstanceID(), impact.GetType());
+                if (!_receivers.TryGetValue(key, out var receivers))
+                {
                     continue;
                 }
 
-                foreach (var impact in impactsByTarget)
+                foreach (var receiver in receivers)
                 {
-                    if (!_receivers.TryGetValue((targetId, impact.GetType()), out var receivers))
-                    {
-                        continue;
-                    }
-
-                    foreach (var receiver in receivers)
-                    {
-                        receiver.Receive(impact);
-                    }
+                    receiver.Receive(impact);
                 }
             }
-
-            return true;
-        }
-
-        private bool PlainTryPublish<TIntent>(TIntent intent) where TIntent : IIntent
-        {
-            if (!_mappersByTypes.TryGetValue(typeof(TIntent), out var mappers))
-            {
-                return false;
-            }
-
-            var receiversImpacts =
-                from impact in mappers.SelectMany(map => map(intent))
-                where _receivers.ContainsKey(Key(impact))
-                from receiver in _receivers[Key(impact)]
-                select (Receiver: receiver, Impact: impact);
-
-
-            foreach (var (receiver, impact) in receiversImpacts)
-            {
-                receiver.Receive(impact);
-            }
-
-            return true;
-
-            (int, Type) Key(IImpact impact) => (impact.Target.GetInstanceID(), impact.GetType());
         }
 
         private class ImpactConsumer<TImpact> : IImpactConsumer<TImpact>, IImpactReceiver where TImpact : IImpact
@@ -160,11 +149,13 @@ namespace Levels.IntentsImpacts
             private readonly IntentsImpacts _manager;
 
             public event Action<TImpact> Impacted;
+
             event Action IImpactConsumer.Impacted
             {
                 add => NonParamImpacted += value;
                 remove => NonParamImpacted -= value;
             }
+
             private event Action NonParamImpacted;
 
             private ImpactConsumer(int targetID, IntentsImpacts manager)
@@ -208,10 +199,15 @@ namespace Levels.IntentsImpacts
 
         private readonly Dictionary<IIntent, IImpact[]> _storage = new();
 
-        public void Consume(IIntent intent, IImpact[] impacts)
+        public bool TryConsume(IIntent intent, IImpact[] impacts)
         {
-            _storage[intent] = impacts;
-            Consume(intent);
+            if (TryConsume(intent))
+            {
+                _storage[intent] = impacts;
+                return true;
+            }
+
+            return false;
         }
 
         protected void Pass(IIntent intent)
@@ -222,13 +218,13 @@ namespace Levels.IntentsImpacts
 
         protected void Decline(IIntent intent) => _storage.Remove(intent);
 
-        protected abstract void Consume(IIntent intent);
+        protected abstract bool TryConsume(IIntent intent);
     }
 
     public abstract class DeferredBroker<TIntent> : DeferredBroker where TIntent : IIntent
     {
-        public abstract void Consume(TIntent intent);
+        public abstract bool TryConsume(TIntent intent);
 
-        protected sealed override void Consume(IIntent intent) => Consume((TIntent)intent);
+        protected sealed override bool TryConsume(IIntent intent) => TryConsume((TIntent)intent);
     }
 }

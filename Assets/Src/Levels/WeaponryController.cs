@@ -1,51 +1,46 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Levels.Core;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.Serialization;
+using VContainer;
 
 namespace Levels
 {
     [RequireComponent(typeof(PlayerInput))]
     public class WeaponryController : MonoBehaviour
     {
-        [FormerlySerializedAs("_actionMappings")] // To hide this field being a workaround for dictionary
-        [SerializeField]
-        private List<ActionAbilityMappingSerial> actionMappingsSerial;
+        [SerializeField] private InputActionReference primaryKey;
+        [SerializeField] private InputActionReference secondaryKey;
 
         private PlayerInput _playerInput;
 
-        private ActionAbilityMapping[] _actionMappings;
         private IInHandAbility _primaryAbility;
         private IInHandAbility _secondaryAbility;
 
+        [Inject] private Weaponry _weaponry;
+
+        private Dictionary<IAbility, IInHandAbility> _abilities;
         private IEnumerable<IDisposable> _inputObservers;
 
         private void Awake()
         {
             _playerInput = GetComponent<PlayerInput>();
 
-            CheckMappings();
-            _actionMappings = actionMappingsSerial
-                .Select(mapping => new ActionAbilityMapping(mapping.actionName, mapping.position, (IInHandAbility) mapping.ability))
-                .ToArray();
-#if !UNITY_EDITOR
-            _actionMappingsSerial = null;
-#endif
+            _abilities = _weaponry.Abilities.ToDictionary(
+                keySelector: ability => ability,
+                elementSelector: ability => ability.FindIn(gameObject)
+            );
         }
 
-        private void Start()
+        private void OnAbilityInvoked(IAbility ability) => _abilities[ability].Invoke();
+
+        private void OnEnable()
         {
-            _primaryAbility = _actionMappings
-                .First(mapping => mapping.Position == AbilityPosition.Primary)
-                .Ability;
-            _secondaryAbility = _actionMappings
-                .First(mapping => mapping.Position == AbilityPosition.Secondary)
-                .Ability;
+            _inputObservers = ObserveInputs();
+            _weaponry.Invoked += OnAbilityInvoked;
         }
-
-        private void OnEnable() => _inputObservers = ObserveInputs();
 
         private void OnDisable()
         {
@@ -54,64 +49,24 @@ namespace Levels
                 observer.Dispose();
             }
             _inputObservers = null;
-        }
-
-        private void CheckMappings()
-        {
-            if (actionMappingsSerial == null || actionMappingsSerial.Count == 0)
-            {
-                Debug.LogWarning($"No action mappings found");
-                return;
-            }
-            if (actionMappingsSerial.Any(mapping => mapping.ability is not IInHandAbility))
-            {
-                Debug.LogError($"Not all action mappings are [IInHandAbility]ies");
-            }
+            _weaponry.Invoked -= OnAbilityInvoked;
         }
 
         private IEnumerable<IDisposable> ObserveInputs()
         {
             var map = _playerInput.currentActionMap;
 
-            var abilities = _actionMappings
-                .Select(mapping => map.ConsumeAction(mapping.ActionName).OnPerformed(() => OnPerformed(mapping)));
-
-            return abilities
-                .Append(map.ConsumeAction("Primary").OnPerformed(() => _primaryAbility.Invoke()))
-                .Append(map.ConsumeAction("Secondary").OnPerformed(() => _secondaryAbility.Invoke()))
+            return _weaponry.Abilities
+                .Select(ability => map
+                    .ConsumeAction(ability.InputActionName)
+                    .OnPerformed(ability.Invoke))
+                .Append(map
+                    .ConsumeAction(primaryKey.action.name)
+                    .OnPerformed(() => _weaponry.Primary.Invoke()))
+                .Append(map
+                    .ConsumeAction(secondaryKey.action.name)
+                    .OnPerformed(() => _weaponry.Secondary.Invoke()))
                 .ToArray();
-
-            void OnPerformed(ActionAbilityMapping mapping)
-            {
-                switch (mapping.Position)
-                {
-                    case AbilityPosition.Primary:
-                        _primaryAbility = mapping.Ability; break;
-                    case AbilityPosition.Secondary:
-                        _secondaryAbility = mapping.Ability; break;
-                    default:
-                        throw new ArgumentOutOfRangeException(nameof(mapping.Position), mapping.Position, null);
-                }
-
-                mapping.Ability.Invoke();
-            }
         }
-    }
-
-    public enum AbilityPosition { Primary, Secondary }
-
-    [Serializable]
-    public class ActionAbilityMappingSerial
-    {
-        public string actionName;
-        public AbilityPosition position;
-        public MonoBehaviour ability;
-    }
-
-    internal record ActionAbilityMapping(string ActionName, AbilityPosition Position, IInHandAbility Ability);
-
-    public interface IInHandAbility
-    {
-        public void Invoke();
     }
 }

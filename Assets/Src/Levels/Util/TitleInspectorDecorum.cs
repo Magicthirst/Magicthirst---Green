@@ -27,16 +27,17 @@ namespace Levels.Util
         private void OnEnable()
         {
             _title = (TitleInspectorDecorum)target;
-            _style = new GUIStyle(EditorStyles.boldLabel)
-            {
-                alignment = TextAnchor.MiddleCenter,
-                fontSize = 18
-            };
         }
 
         public override void OnInspectorGUI()
         {
             if (!_title) return;
+
+            _style ??= new GUIStyle(EditorStyles.boldLabel)
+            {
+                alignment = TextAnchor.MiddleCenter,
+                fontSize = 18
+            };
 
             try
             {

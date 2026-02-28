@@ -2,5 +2,8 @@ using UnityEngine;
 
 namespace Levels.IntentsImpacts
 {
-    public interface IIntent {}
+    public interface IIntent
+    {
+        GameObject Caster { get; }
+    }
 }

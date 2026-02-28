@@ -21430,16 +21430,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eef2f0aadce841be9ecc620d8ab11202, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  actionMappingsSerial:
-  - actionName: A_Push
-    position: 0
-    ability: {fileID: 1711207736}
-  - actionName: A_Shoot
-    position: 0
-    ability: {fileID: 1711207739}
-  - actionName: A_Swing
-    position: 1
-    ability: {fileID: 1711207744}
+  primaryKey: {fileID: 1120369429361536294, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+  secondaryKey: {fileID: 5103981462584330329, guid: 052faaac586de48259a63d0c4782560b, type: 3}
 --- !u!114 &1711207738
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -21455,7 +21447,7 @@ MonoBehaviour:
   throwingAngle: 9.9
   drawShotgun: 0
   drawShoot: 0
-  drawParrySabre: 1
+  drawParrySabre: 0
   drawTeleportChip: 0
   shootConfig: {fileID: 11400000, guid: c623dcef9bb747c4b981f5531c4cf955, type: 2}
   shotgunConfig: {fileID: 11400000, guid: 3edfb37123c5f8b4bb6d35a171a7b364, type: 2}

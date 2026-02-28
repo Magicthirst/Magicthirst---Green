@@ -17,14 +17,14 @@ namespace Levels.Abilities.TeleportChip
 
             var floorOffset = velocity.normalized * intent.Config.ThrowOriginHorizontalOffset;
             var offset = floorOffset.With(y: intent.Config.ThrowOriginVerticalOffset);
-            var origin = intent.Thrower.transform.position + offset;
+            var origin = intent.Caster.transform.position + offset;
 
             yield return new TeleportChipSpawnImpact(intent.Chip, origin, velocity, angularVelocity, intent.Config);
         }
 
         public IEnumerable<IImpact> Map(TeleportChipActivateIntent intent) => new[]
         {
-            new TeleportImpact(intent.Player, intent.Chip.transform.position)
+            new TeleportImpact(intent.Caster, intent.Chip.transform.position)
         };
     }
 }
