@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   viewBox="0 0 512 512"
+   style="height: 512px; width: 512px;"
+   version="1.1"
+   id="svg26"
+   sodipodi:docname="game-icons.net - spinning-sword - spinning-sabre.svg"
+   inkscape:version="0.92.4 (5da689c313, 2019-01-14)">
+  <metadata
+     id="metadata32">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs30" />
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="2560"
+     inkscape:window-height="1387"
+     id="namedview28"
+     showgrid="true"
+     inkscape:pagecheckerboard="true"
+     inkscape:zoom="1.6821407"
+     inkscape:cx="218.74479"
+     inkscape:cy="286.25229"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="g24" />
+  <g
+     class=""
+     transform="translate(0,0)"
+     style=""
+     id="g24">
+    <path
+       d="m 256.438,19.375 c -47.71,0 -95.422,14.41 -136.094,43.22 13.022,15.09 26.314,30.127 39.156,44.468 99.35666,-98.3077319 197.49548,22.91462 212.13384,155.89913 10.20877,73.86347 124.05477,151.078 124.05477,151.078 C 497.2902,253.10675 501.497,166.778 423.282,88.564 377.17,42.45 316.806,19.376 256.44,19.376 Z M 66.5,27.063 c 0,0 -20.40947,17.434067 -23.806501,40.364032 46.44258,23.464565 61.468331,53.591758 96.316331,84.530758 l 13.68978,11.42701 c -7.89771,7.33244 -16.6311,14.56474 -23.48325,22.8453 l 11.38823,11.74543 c 16.13261,-22.16223 19.81348,-21.13316 36.11984,-5.32231 74.06573,71.97681 229.27671,270.2016 316.07239,229.72388 -104.6759,-53.47929 -253.58004,-214.62588 -302.34859,-268.69365 0,0 9.13827,-10.76512 23.04487,-18.62076 l -10.70107,-11.55787 c -10.57624,7.52792 -18.67661,13.90483 -26.93954,20.96374 l -12.864,-11.26688 C 126.70594,101.23845 100.04103,52.947388 66.5,27.062 Z m 4.452491,81.56942 c -66.9549997,92.285 -73.9143287,211.7189 9.298671,294.9339 C 164.6037,476.02926 235.57299,492.39639 333.68585,494.07861 181.84747,472.62904 12.407655,289.96536 113.83546,151.01551 98.541676,137.65276 86.511265,121.68367 70.952491,108.63042 Z"
+       transform="matrix(0.7,0,0,0.7,76.8,76.8)"
+       id="path22"
+       inkscape:connector-curvature="0"
+       style="fill:#ffffff;fill-opacity:1"
+       sodipodi:nodetypes="ccccccccccccccccccccccccccccc" />
+  </g>
+</svg>
