@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5566f4b17baf4d589a63a2927167617e, type: 3}
   m_Name: PlayerWeaponry
   m_EditorClassIdentifier: 
+  Owner: {fileID: 0}
   abilities:
   - action: {fileID: -1611897325276469079, guid: 052faaac586de48259a63d0c4782560b, type: 3}
     position: 0
@@ -23,5 +24,5 @@ MonoBehaviour:
     abilityType: Levels.Abilities.PushingShotgun.PushingShotgunShooter
   - action: {fileID: 8349888245700260607, guid: 052faaac586de48259a63d0c4782560b, type: 3}
     position: 1
-    cooldown: 0
+    cooldown: 0.2
     abilityType: Levels.Abilities.ParrySabre.ParrySabreSwinger

@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: PlayerParrySabreConfig
   m_EditorClassIdentifier: 
   damage: 10
-  circleRadius: 1.8
-  circleCenterOffset: 1.5
+  circleRadius: 2.6
+  circleCenterOffset: 2.5
   leeway: 0.1
   duration: 0.2
-  angleDegrees: 50
+  angleDegrees: 80

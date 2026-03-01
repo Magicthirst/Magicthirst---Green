@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Levels.Util;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Serialization;
@@ -15,8 +16,12 @@ namespace Levels.Core
         public event Action<IAbility> Invoked;
 
         public IReadOnlyList<IAbility> Abilities => abilities;
-        public IAbility Primary { get; private set; }
-        public IAbility Secondary { get; private set; }
+
+        public IPropertyHandle<IAbility> Primary => _primary;
+        public IPropertyHandle<IAbility> Secondary => _secondary;
+
+        private PropertyHandle<Ability> _primary;
+        private PropertyHandle<Ability> _secondary;
 
         [FormerlySerializedAs("_actionMappings")] // To hide this field being a workaround for dictionary
         [SerializeField]
@@ -24,13 +29,24 @@ namespace Levels.Core
 
         public override void Init()
         {
-            Primary = abilities.First(ability => ability.Position == AbilityPosition.Primary);
-            Secondary = abilities.First(ability => ability.Position == AbilityPosition.Secondary);
+            _primary ??= new PropertyHandle<Ability>
+            {
+                Value = abilities.First(ability => ability.Position == AbilityPosition.Primary)
+            };
+            _secondary ??= new PropertyHandle<Ability>
+            {
+                Value = abilities.First(ability => ability.Position == AbilityPosition.Secondary)
+            };
+
             foreach (var ability in abilities)
             {
                 ability.Invoked += () => InvokeAbility(ability);
             }
         }
+
+        public void InvokePrimary() => _primary.Value.Invoke();
+
+        public void InvokeSecondary() => _secondary.Value.Invoke();
 
         private void InvokeAbility(Ability ability)
         {
@@ -49,10 +65,10 @@ namespace Levels.Core
             switch (ability.Position)
             {
                 case AbilityPosition.Primary:
-                    Primary = ability;
+                    _primary.Value = ability;
                     break;
                 case AbilityPosition.Secondary:
-                    Secondary = ability;
+                    _secondary.Value = ability;
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
@@ -75,9 +91,14 @@ namespace Levels.Core
 
         public string InputActionName => action.action.name;
         public AbilityPosition Position => position;
+        public float CooldownProgress => Mathf.InverseLerp(LastUse, LastUse + cooldown, Time.time);
+        public Type Type => _type ??= Type.GetType(abilityType);
+
         public float Cooldown => cooldown;
 
         public float LastUse { get; set; } = float.MinValue;
+
+        private Type _type = null;
 
         [SerializeField] private InputActionReference action;
         [SerializeField] private AbilityPosition position;
@@ -88,7 +109,7 @@ namespace Levels.Core
 
         public IInHandAbility FindIn(GameObject gameObject)
         {
-            return (IInHandAbility)gameObject.GetComponent(Type.GetType(abilityType));
+            return (IInHandAbility)gameObject.GetComponent(Type);
         }
 
         public void Invoke() => Invoked?.Invoke();
@@ -99,7 +120,8 @@ namespace Levels.Core
     public interface IAbility
     {
         public string InputActionName { get; }
-        public float Cooldown { get; }
+        public float CooldownProgress { get; }
+        public Type Type { get; }
 
         IInHandAbility FindIn(GameObject gameObject);
 

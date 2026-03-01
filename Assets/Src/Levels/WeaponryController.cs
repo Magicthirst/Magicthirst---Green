@@ -52,7 +52,7 @@ namespace Levels
             _weaponry.Invoked -= OnAbilityInvoked;
         }
 
-        private IEnumerable<IDisposable> ObserveInputs()
+        private ICollection<IDisposable> ObserveInputs()
         {
             var map = _playerInput.currentActionMap;
 
@@ -62,10 +62,10 @@ namespace Levels
                     .OnPerformed(ability.Invoke))
                 .Append(map
                     .ConsumeAction(primaryKey.action.name)
-                    .OnPerformed(() => _weaponry.Primary.Invoke()))
+                    .OnPerformed(_weaponry.InvokePrimary))
                 .Append(map
                     .ConsumeAction(secondaryKey.action.name)
-                    .OnPerformed(() => _weaponry.Secondary.Invoke()))
+                    .OnPerformed(_weaponry.InvokeSecondary))
                 .ToArray();
         }
     }
