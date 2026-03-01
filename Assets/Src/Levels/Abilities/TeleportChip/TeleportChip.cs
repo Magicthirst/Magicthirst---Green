@@ -16,6 +16,8 @@ namespace Levels.Abilities.TeleportChip
         private Rigidbody _rigidbody;
         private Renderer[] _renderers;
 
+        private Transform _parent;
+        private Vector3 _startPosition;
         [Inject] private Core.TeleportChip _state;
         private IImpactConsumer<TeleportChipSpawnImpact> _spawnConsumer;
 
@@ -30,18 +32,20 @@ namespace Levels.Abilities.TeleportChip
 
         private void Awake()
         {
-            _transform = GetComponent<Transform>();
+            _parent = transform.parent;
+            _startPosition = transform.localPosition;
+            _transform = transform;
             _rigidbody = GetComponent<Rigidbody>();
             _renderers = GetComponentsInChildren<Renderer>();
         }
-
-        private void Start() => StopAndHide();
 
         private void OnEnable()
         {
             _spawnConsumer.Impacted += HandleSpawn;
             _state.StateChanged += HandleStateChanged;
             _state.Register(this);
+
+            HandleStateChanged(_state.State);
         }
 
         private void FixedUpdate()
@@ -71,8 +75,7 @@ namespace Levels.Abilities.TeleportChip
 
         private void HandleSpawn(TeleportChipSpawnImpact spawn)
         {
-            RunAndShow();
-            _transform.SetParent(null);
+            RunAndDetach();
             _transform.position = spawn.Origin;
             _transform.LookAt(spawn.Origin + spawn.Velocity);
             _rigidbody.linearVelocity = spawn.Velocity;
@@ -86,8 +89,7 @@ namespace Levels.Abilities.TeleportChip
             switch (state)
             {
                 case TeleportChipState.Ready:
-                    StopAndHide();
-                    highlight.enabled = false;
+                    StopAndReattach();
                     break;
                 case TeleportChipState.Thrown:
                     highlight.enabled = false;
@@ -106,18 +108,22 @@ namespace Levels.Abilities.TeleportChip
             _state.StateChanged -= HandleStateChanged;
         }
 
-        private void StopAndHide()
+        private void StopAndReattach()
         {
+            highlight.enabled = false;
             _rigidbody.isKinematic = true;
+            _transform.parent = _parent;
+            _transform.localPosition = _startPosition;
             foreach (var renderer in _renderers)
             {
                 renderer.enabled = false;
             }
         }
 
-        private void RunAndShow()
+        private void RunAndDetach()
         {
             _rigidbody.isKinematic = false;
+            _transform.parent = null;
             foreach (var renderer in _renderers)
             {
                 renderer.enabled = true;
