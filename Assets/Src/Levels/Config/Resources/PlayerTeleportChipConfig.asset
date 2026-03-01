@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 210a127fcafa4219b8433e266133bc6d, type: 3}
   m_Name: PlayerTeleportChipConfig
   m_EditorClassIdentifier: 
-  throwVelocity: 40
-  flippingAngularVelocity: 200
+  throwVelocity: 20
+  flippingAngularVelocity: 100
   throwOriginVerticalOffset: 1.125
   throwOriginHorizontalOffset: 0.3
   flyingTimeLostThreshold: 5
