@@ -35,24 +35,30 @@ namespace Levels.Visual
 
         private void Update()
         {
-            if (_progress > durationSeconds)
+            if (_progress > durationSeconds && trail.emitting)
             {
+                if (trail.emitting)
+                {
+                    trail.emitting = false;
+                }
                 return;
             }
 
+            UpdateRotation();
+            _progress += Time.deltaTime;
+        }
+
+        private void UpdateRotation()
+        {
             var angle = Mathf.LerpAngle(_startYawAngle, _endYawAngle, _progress / durationSeconds);
             pivot.localEulerAngles = new Vector3(_pitch, 0f, angle);
-            _progress += Time.deltaTime;
-
-            if (_progress > durationSeconds)
-            {
-                trail.emitting = false;
-            }
         }
 
         private void HandleSwing(CasterSwingedEffect effect)
         {
             _progress = 0f;
+            UpdateRotation();
+            trail.Clear();
             trail.emitting = true;
         }
 
