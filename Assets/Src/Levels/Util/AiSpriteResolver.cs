@@ -77,7 +77,7 @@ namespace Levels.Util
 
             if (_playData.TryGetValue(key, out var value))
             {
-                _currentImpact = impactType?.GetType();
+                _currentImpact = impactType;
                 _spriteRenderer.sprite = value.Sprite;
                 _playStopTime = Time.time + value.DurationSeconds;
             }
@@ -132,21 +132,14 @@ namespace Levels.Util
     [Serializable]
     public class SpriteResolutionMapping
     {
-        [SubtypeProperty(typeof(IImpact), false)]
-        [SerializeField] [CanBeNull] private string impactType;
-        [SubtypeProperty(typeof(FsmState))]
-        [SerializeField] private string stateType;
-        [SerializeField] private Sprite sprite;
-        [SerializeField] private float durationSeconds = float.PositiveInfinity;
-
-        public Type ImpactTypeOrNull => string.IsNullOrEmpty(impactType) ? null : typeof(IImpact).Assembly.GetType(impactType);
-        public Type StateType => typeof(FsmState).Assembly.GetType(stateType);
+        public Type ImpactTypeOrNull => _impactTypeOrNull ??= string.IsNullOrEmpty(impactType) ? null : typeof(IImpact).Assembly.GetType(impactType);
+        public Type StateType => _stateType ??= typeof(FsmState).Assembly.GetType(stateType);
         public Type ImpactConsumerType
         {
             get
             {
                 Debug.Assert(ImpactTypeOrNull != null, "ImpactType is null");
-                return typeof(IImpactConsumer<>).MakeGenericType(ImpactTypeOrNull);
+                return _impactConsumerType ??= typeof(IImpactConsumer<>).MakeGenericType(ImpactTypeOrNull);
             }
         }
 
@@ -154,5 +147,16 @@ namespace Levels.Util
         public float DurationSeconds => durationSeconds;
 
         public bool IsImpactDependent => ImpactTypeOrNull != null;
+
+        [SubtypeProperty(typeof(IImpact), false)]
+        [SerializeField] [CanBeNull] private string impactType;
+        [SubtypeProperty(typeof(FsmState))]
+        [SerializeField] private string stateType;
+        [SerializeField] private Sprite sprite;
+        [SerializeField] private float durationSeconds = float.PositiveInfinity;
+
+        private Type _impactTypeOrNull = null;
+        private Type _stateType = null;
+        private Type _impactConsumerType = null;
     }
 }
