@@ -6,7 +6,8 @@ namespace Levels.Core
 {
     public abstract class CoreObject : ScriptableObject, IDisposable
     {
-        [Inject] public GameObject Owner;
+        [NonSerialized] [Inject] public GameObject Owner;
+        [NonSerialized] [Inject] public MonoBehaviour Runner;
 
         public abstract void Init();
 

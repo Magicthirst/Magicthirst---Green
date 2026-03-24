@@ -19,7 +19,7 @@ namespace Levels.Util
 
 #if UNITY_EDITOR
     [CustomEditor(typeof(TitleInspectorDecorum))]
-    public class TitleInspectorDecorumEditor : Editor
+    public class TitleInspectorDecorumEditor1 : Editor
     {
         private TitleInspectorDecorum _title;
         private GUIStyle _style;

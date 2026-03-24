@@ -16,9 +16,6 @@ namespace Levels
 
         private PlayerInput _playerInput;
 
-        private IInHandAbility _primaryAbility;
-        private IInHandAbility _secondaryAbility;
-
         [Inject] private Weaponry _weaponry;
 
         private Dictionary<IAbility, IInHandAbility> _abilities;
@@ -59,7 +56,7 @@ namespace Levels
             return _weaponry.Abilities
                 .Select(ability => map
                     .ConsumeAction(ability.InputActionName)
-                    .OnPerformed(ability.Invoke))
+                    .OnPerformed(ability.Equip))
                 .Append(map
                     .ConsumeAction(primaryKey.action.name)
                     .OnPerformed(_weaponry.InvokePrimary))

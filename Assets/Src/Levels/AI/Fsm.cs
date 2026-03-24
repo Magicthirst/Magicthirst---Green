@@ -6,7 +6,7 @@ using UnityEngine.Assertions;
 
 namespace Levels.AI
 {
-    public delegate void DisposeAction();
+    using DisposeAction = Action;
 
     public partial class Fsm : MonoBehaviour
     {

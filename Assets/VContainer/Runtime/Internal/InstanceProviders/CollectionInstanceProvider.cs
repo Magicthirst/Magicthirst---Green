@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using UnityEngine;
 
 namespace VContainer.Internal
 {
@@ -42,14 +43,23 @@ namespace VContainer.Internal
 
         public void Add(Registration registration)
         {
-            foreach (var x in registrations)
+            try
             {
-                if (x.Lifetime == Lifetime.Singleton && x.ImplementationType == registration.ImplementationType)
+                foreach (var x in registrations)
                 {
-                    throw new VContainerException(registration.ImplementationType, $"Conflict implementation type : {registration} conflicts with already registered {x}");
+                    if (x.Lifetime == Lifetime.Singleton && x.ImplementationType == registration.ImplementationType)
+                    {
+                        throw new VContainerException(registration.ImplementationType, $"Conflict implementation type : {registration} conflicts with already registered {x}");
+                    }
                 }
+                registrations.Add(registration);
             }
-            registrations.Add(registration);
+            catch (Exception e)
+            {
+                Debug.LogError($"Error while adding: {registration}");
+                Debug.LogError(e);
+                throw;
+            }
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

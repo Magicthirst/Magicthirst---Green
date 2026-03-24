@@ -14,6 +14,7 @@ namespace Levels.Core
     public class Weaponry : CoreObject
     {
         public event Action<IAbility> Invoked;
+        public event Action<IAbility> Equipped;
 
         public IReadOnlyList<IAbility> Abilities => abilities;
 
@@ -40,27 +41,15 @@ namespace Levels.Core
 
             foreach (var ability in abilities)
             {
-                ability.Invoked += () => InvokeAbility(ability);
+                ability.Equipped += () => Equip(ability);
             }
         }
 
-        public void InvokePrimary() => _primary.Value.Invoke();
+        public void InvokePrimary() => Use(_primary.Value);
 
-        public void InvokeSecondary() => _secondary.Value.Invoke();
+        public void InvokeSecondary() => Use(_secondary.Value);
 
-        private void InvokeAbility(Ability ability)
-        {
-            if (ability.LastUse > Time.time - ability.Cooldown)
-            {
-                return;
-            }
-
-            ability.LastUse = Time.time;
-            Appoint(ability);
-            Invoked?.Invoke(ability);
-        }
-
-        private void Appoint(Ability ability)
+        private void Equip(Ability ability)
         {
             switch (ability.Position)
             {
@@ -72,6 +61,21 @@ namespace Levels.Core
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
+            }
+
+            Equipped?.Invoke(ability);
+            if (ability.InvokeOnEquip)
+            {
+                Use(ability);
+            }
+        }
+
+        private void Use(Ability ability)
+        {
+            if (ability.LastUse <= Time.time - ability.Cooldown)
+            {
+                ability.LastUse = Time.time;
+                Invoked?.Invoke(ability);
             }
         }
 
@@ -87,11 +91,12 @@ namespace Levels.Core
     [Serializable]
     public class Ability : IAbility, IDisposable
     {
-        public event Action Invoked;
+        public event Action Equipped;
 
         public string InputActionName => action.action.name;
         public AbilityPosition Position => position;
         public float CooldownProgress => Mathf.InverseLerp(LastUse, LastUse + cooldown, Time.time);
+        public bool InvokeOnEquip => invokeOnEquip;
         public Type Type => _type ??= Type.GetType(abilityType);
 
         public float Cooldown => cooldown;
@@ -103,6 +108,7 @@ namespace Levels.Core
         [SerializeField] private InputActionReference action;
         [SerializeField] private AbilityPosition position;
         [SerializeField] private float cooldown;
+        [SerializeField] private bool invokeOnEquip;
 
         [SubtypeProperty(typeof(IInHandAbility))]
         [SerializeField] private string abilityType;
@@ -112,9 +118,9 @@ namespace Levels.Core
             return (IInHandAbility)gameObject.GetComponent(Type);
         }
 
-        public void Invoke() => Invoked?.Invoke();
+        public void Equip() => Equipped?.Invoke();
 
-        public void Dispose() => Invoked = null;
+        public void Dispose() => Equipped = null;
     }
 
     public interface IAbility
@@ -125,7 +131,7 @@ namespace Levels.Core
 
         IInHandAbility FindIn(GameObject gameObject);
 
-        void Invoke();
+        void Equip();
     }
 
     public enum AbilityPosition
@@ -138,4 +144,6 @@ namespace Levels.Core
     {
         public void Invoke();
     }
+
+    public interface ISpell {}
 }

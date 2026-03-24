@@ -74,6 +74,12 @@ namespace Levels.IntentsImpacts
             return ImpactConsumer<TImpact>.Registered(target, this);
         }
 
+        public IImpactConsumer<TImpact> GetImpactConsumerFor<TImpact>(GameObject target, IModifyingImpacts affectable) where TImpact : IImpact
+        {
+            var consumer = ImpactConsumer<TImpact>.Registered(target, this);
+            return new AffectableImpactConsumer<TImpact>(consumer, affectable);
+        }
+
         public IImpactConsumer GetImpactConsumerFor(GameObject target, Type impactType)
         {
             var genericMethod = typeof(IntentsImpacts)
@@ -81,6 +87,15 @@ namespace Levels.IntentsImpacts
                 .MakeGenericMethod(impactType);
 
             return (IImpactConsumer)genericMethod.Invoke(this, new object[] { target });
+        }
+
+        public IImpactConsumer GetImpactConsumerFor(GameObject target, Type impactType, IModifyingImpacts affectable)
+        {
+            var genericMethod = typeof(IntentsImpacts)
+                .GetMethod(nameof(GetImpactConsumerFor), new[] { typeof(GameObject), typeof(IModifyingImpacts) })!
+                .MakeGenericMethod(impactType);
+
+            return (IImpactConsumer)genericMethod.Invoke(this, new object[] { target, affectable });
         }
 
         private bool TryPublish<TIntent>(TIntent intent) where TIntent : IIntent
@@ -187,44 +202,45 @@ namespace Levels.IntentsImpacts
                 ?.Remove(this);
         }
 
+        private class AffectableImpactConsumer<TImpact> : IImpactConsumer<TImpact>, IImpactReceiver where TImpact : IImpact
+        {
+            event Action IImpactConsumer.Impacted
+            {
+                add => _ImpactConsumer.Impacted += value;
+                remove => _ImpactConsumer.Impacted -= value;
+            }
+
+            event Action<TImpact> IImpactConsumer<TImpact>.Impacted
+            {
+                add => _baseConsumer.Impacted += value;
+                remove => _baseConsumer.Impacted -= value;
+            }
+            
+            private readonly ImpactConsumer<TImpact> _baseConsumer;
+            private readonly IModifyingImpacts _affector;
+
+            private IImpactConsumer _ImpactConsumer => _baseConsumer;
+
+            public AffectableImpactConsumer(ImpactConsumer<TImpact> baseConsumer, IModifyingImpacts affector)
+            {
+                _baseConsumer = baseConsumer;
+                _affector = affector;
+            }
+
+            public void Receive(IImpact impact)
+            {
+                if ((impact = _affector.ApplyModifiers(impact)) != null)
+                {
+                    _baseConsumer.Receive(impact);
+                }
+            }
+
+            public void Dispose() => _baseConsumer.Dispose();
+        }
+
         private interface IImpactReceiver
         {
             public void Receive(IImpact impact);
         }
-    }
-
-    public abstract class DeferredBroker
-    {
-        public event Action<IImpact[]> Passed;
-
-        private readonly Dictionary<IIntent, IImpact[]> _storage = new();
-
-        public bool TryConsume(IIntent intent, IImpact[] impacts)
-        {
-            if (TryConsume(intent))
-            {
-                _storage[intent] = impacts;
-                return true;
-            }
-
-            return false;
-        }
-
-        protected void Pass(IIntent intent)
-        {
-            Passed?.Invoke(_storage[intent]);
-            _storage.Remove(intent);
-        }
-
-        protected void Decline(IIntent intent) => _storage.Remove(intent);
-
-        protected abstract bool TryConsume(IIntent intent);
-    }
-
-    public abstract class DeferredBroker<TIntent> : DeferredBroker where TIntent : IIntent
-    {
-        public abstract bool TryConsume(TIntent intent);
-
-        protected sealed override bool TryConsume(IIntent intent) => TryConsume((TIntent)intent);
     }
 }
