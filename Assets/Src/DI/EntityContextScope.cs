@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Levels.AI;
 using Levels.Core;
@@ -25,6 +26,7 @@ namespace DI
         protected override void Configure(IContainerBuilder builder)
         {
             builder.RegisterInstance(gameObject);
+            builder.Register<MonoBehaviour>(_ => this, Lifetime.Scoped);
 
             if (gameObject.TryGetComponent(out Fsm fsm))
             {
@@ -59,16 +61,24 @@ namespace DI
             // AI, suggest to profile this place if problem with memory usage occurs on entities-heavy scene.
             void RegisterConsumerOverrides()
             {
+                Func<Type, Func<IObjectResolver, object>> impactConsumerProvider;
+                if (entity.TryGetComponent<IModifyingImpacts>(out var affectable))
+                {
+                    impactConsumerProvider = tImpact => resolver => resolver
+                        .Resolve<IntentsImpacts>()
+                        .GetImpactConsumerFor(gameObject, tImpact, affectable);
+                }
+                else
+                {
+                    impactConsumerProvider = tImpact => resolver => resolver
+                        .Resolve<IntentsImpacts>()
+                        .GetImpactConsumerFor(gameObject, tImpact);
+                }
+
                 foreach (var tImpact in CachedTypes.Impacts)
                 {
                     var consumerType = typeof(IImpactConsumer<>).MakeGenericType(tImpact);
-                    var registration = new FuncRegistrationBuilder(
-                        resolver => resolver
-                            .Resolve<IntentsImpacts>()
-                            .GetImpactConsumerFor(gameObject, tImpact),
-                        consumerType,
-                        Lifetime.Scoped
-                    );
+                    var registration = new FuncRegistrationBuilder(impactConsumerProvider(tImpact), consumerType, Lifetime.Scoped);
 
                     builder.Register(registration);
                 }
