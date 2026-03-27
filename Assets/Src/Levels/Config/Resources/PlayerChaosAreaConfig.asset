@@ -12,11 +12,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf1f6b02cc76452dabf6feac2cc415e8, type: 3}
   m_Name: PlayerChaosAreaConfig
   m_EditorClassIdentifier: 
-  circleRadius: 0
-  damageScale:
-    rid: -2
+  circleRadius: 3
+  status:
+    rid: 2175470139749957898
   references:
     version: 2
     RefIds:
-    - rid: -2
-      type: {class: , ns: , asm: }
+    - rid: 2175470139749957898
+      type: {class: ScaleReceivedDamage, ns: Levels.Abilities.CommonModifiers, asm: Levels}
+      data:
+        scale:
+          rid: 2175470139749957899
+        duration: 3
+    - rid: 2175470139749957899
+      type: {class: ScaleReceivedDamage/Plus, ns: Levels.Abilities.CommonModifiers, asm: Levels}
+      data:
+        value: 0.5

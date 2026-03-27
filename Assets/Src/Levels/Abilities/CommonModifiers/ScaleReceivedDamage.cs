@@ -4,7 +4,6 @@ using Levels.Abilities.CommonImpacts;
 using Levels.Core;
 using Levels.IntentsImpacts;
 using UnityEngine;
-using static System.Single;
 
 namespace Levels.Abilities.CommonModifiers
 {
@@ -12,37 +11,52 @@ namespace Levels.Abilities.CommonModifiers
     public class ScaleReceivedDamage : IModifierStatus
     {
         [SerializeReference]
-        private readonly float _scale;
-        [SerializeReference]
-        private readonly float _duration;
-
-        private ScaleReceivedDamage(float scale, float duration)
-        {
-            _scale = scale;
-            _duration = duration;
-        }
-
-        public static ScaleReceivedDamage Plus(float addition, float duration = PositiveInfinity) => new(1 + Mathf.Abs(addition), duration);
-
-        public static ScaleReceivedDamage Minus(float subtraction, float duration = PositiveInfinity) => new(1 - Mathf.Abs(subtraction), duration);
-
-        public static ScaleReceivedDamage Times(float full, float duration = PositiveInfinity) => new(full, duration);
+        [SubclassSelector]
+        private IScale scale;
+        [SerializeField]
+        private float duration;
 
         public IEnumerator Run(Entity _)
         {
-            yield return new WaitForSeconds(_duration);
+            yield return new WaitForSeconds(duration);
         }
 
         public bool TryMap(IImpact impact, out IImpact result)
         {
             if (impact is DamageImpact damage)
             {
-                result = damage with { Damage = (int)(damage.Damage * _scale) };
+                result = damage with { Damage = (int)(damage.Damage * scale.Scale) };
                 return true;
             }
 
             result = impact;
             return false;
+        }
+
+        public interface IScale
+        {
+            float Scale { get; }
+        }
+
+        [Serializable]
+        public class Plus : IScale
+        {
+            public float Scale => 1 + Mathf.Abs(value);
+            [SerializeField] private float value;
+        }
+
+        [Serializable]
+        public class Minus : IScale
+        {
+            public float Scale => 1 - Mathf.Abs(value);
+            [SerializeField] private float value;
+        }
+
+        [Serializable]
+        public class Absolute : IScale
+        {
+            public float Scale => value;
+            [SerializeField] private float value;            
         }
     }
 }
