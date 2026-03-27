@@ -70,7 +70,8 @@ namespace Levels.Abilities.Shared
     {
         [SerializeField] private Transform previewObject;
 
-        [SerializeField] [SubtypeProperty(typeof(ISpell))]
+        [SerializeField]
+        [SubtypeProperty(typeof(ISpell))]
         private string spellType;
 
         public Transform PreviewObject => previewObject;

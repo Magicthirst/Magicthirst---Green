@@ -101,7 +101,7 @@ namespace Levels.Core
 
         public float Cooldown => cooldown;
 
-        public float LastUse { get; set; } = float.MinValue;
+        public float LastUse { get; set; } = 0f;
 
         private Type _type = null;
 
@@ -126,6 +126,7 @@ namespace Levels.Core
     public interface IAbility
     {
         public string InputActionName { get; }
+        public AbilityPosition Position { get; }
         public float CooldownProgress { get; }
         public Type Type { get; }
 

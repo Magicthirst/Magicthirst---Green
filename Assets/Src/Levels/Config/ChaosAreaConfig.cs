@@ -8,9 +8,13 @@ namespace Levels.Config
     public class ChaosAreaConfig : ScriptableObject, IChaosAreaConfig
     {
         public float CircleRadius => circleRadius;
-        public IStatus DamageScale => damageScale;
+        public IStatus Status => status;
 
-        [SerializeField] private float circleRadius;
-        [SerializeReference] private IStatus damageScale; // TODO plugin for subtypes
+        [SerializeField]
+        private float circleRadius;
+
+        [SerializeReference]
+        [SubclassSelector]
+        private IStatus status; // TODO plugin for subtypes
     }
 }

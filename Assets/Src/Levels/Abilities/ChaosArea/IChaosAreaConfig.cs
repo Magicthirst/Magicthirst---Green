@@ -6,6 +6,6 @@ namespace Levels.Abilities.ChaosArea
     {
         float CircleRadius { get; }
 
-        IStatus DamageScale { get; }
+        IStatus Status { get; }
     }
 }

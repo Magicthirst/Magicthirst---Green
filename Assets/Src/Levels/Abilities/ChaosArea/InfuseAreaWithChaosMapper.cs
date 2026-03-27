@@ -11,7 +11,7 @@ namespace Levels.Abilities.ChaosArea
         public IEnumerable<IImpact> Map(InfuseAreaWithChaosIntent intent)
         {
             return GetAffected(intent)
-                .Select(target => new ReceivedStatusImpact(target, intent.Config.DamageScale));
+                .Select(target => new ReceivedStatusImpact(target, intent.Config.Status));
         }
 
         // ReSharper disable once Unity.PreferNonAllocApi // This will not be called frequently
