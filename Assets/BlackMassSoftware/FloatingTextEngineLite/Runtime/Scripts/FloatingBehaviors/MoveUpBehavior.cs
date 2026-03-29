@@ -61,7 +61,7 @@ namespace BlackMassSoftware.FloatingTextEngine.Lite.Behaviors
             if (owner != null && !IsFinished) {
                 elapsed += dt;
                 float t = Mathf.Clamp01(elapsed / duration);
-                owner.transform.position = Vector2.Lerp(startPosition, endPosition, t);
+                owner.transform.position = Vector3.Lerp(startPosition, endPosition, t);
                 if (t >= 1f) {
                     IsFinished = true;
                 }

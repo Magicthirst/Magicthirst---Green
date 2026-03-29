@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -73,22 +74,5 @@ namespace BlackMassSoftware.FloatingTextEngine.Lite.Behaviors
             }
             return this;
         }
-
-        /// <summary>
-        /// Adds a new preset from the FloatingPresets class.
-        /// </summary>
-        /// <param name="preset">The preset.</param>
-        /// <returns></returns>
-        public FloatingBehaviorEngine WithPreset(List<IFloatingBehavior> preset)
-        {
-            if (preset != null) {
-                foreach (IFloatingBehavior behavior in preset) {
-                    behavior.InitializeBehavior(gameObject);
-                }
-                behaviors.AddRange(preset);
-            }
-            return this;
-        }
-
     }
 }
