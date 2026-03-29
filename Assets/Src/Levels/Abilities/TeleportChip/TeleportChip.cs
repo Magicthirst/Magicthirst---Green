@@ -27,7 +27,7 @@ namespace Levels.Abilities.TeleportChip
         [Inject]
         private void Construct(IntentsImpacts.IntentsImpacts intentsImpacts)
         {
-            _spawnConsumer = intentsImpacts.GetImpactConsumerFor<TeleportChipSpawnImpact>(gameObject);
+            _spawnConsumer = intentsImpacts.GetImpactConsumerFor<TeleportChipSpawnImpact>(gameObject, null);
         }
 
         private void Awake()

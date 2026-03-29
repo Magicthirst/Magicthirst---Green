@@ -16,6 +16,14 @@ namespace Levels.Abilities.CommonModifiers
         [SerializeField]
         private float duration;
 
+        public ScaleReceivedDamage() {}
+
+        public ScaleReceivedDamage(IScale scale, float duration)
+        {
+            this.scale = scale;
+            this.duration = duration;
+        }
+
         public IEnumerator Run(Entity _)
         {
             yield return new WaitForSeconds(duration);
@@ -25,7 +33,7 @@ namespace Levels.Abilities.CommonModifiers
         {
             if (impact is DamageImpact damage)
             {
-                result = damage with { Damage = (int)(damage.Damage * scale.Scale) };
+                result = damage with { Damage = (int)(damage.Damage * scale.Multiplier) };
                 return true;
             }
 
@@ -35,27 +43,27 @@ namespace Levels.Abilities.CommonModifiers
 
         public interface IScale
         {
-            float Scale { get; }
+            float Multiplier { get; }
         }
 
         [Serializable]
         public class Plus : IScale
         {
-            public float Scale => 1 + Mathf.Abs(value);
+            public float Multiplier => 1 + Mathf.Abs(value);
             [SerializeField] private float value;
         }
 
         [Serializable]
         public class Minus : IScale
         {
-            public float Scale => 1 - Mathf.Abs(value);
+            public float Multiplier => 1 - Mathf.Abs(value);
             [SerializeField] private float value;
         }
 
         [Serializable]
         public class Absolute : IScale
         {
-            public float Scale => value;
+            public float Multiplier => value;
             [SerializeField] private float value;            
         }
     }

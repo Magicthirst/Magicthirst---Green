@@ -9,9 +9,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9507ec0743fa43b28a59c807db33eb83, type: 3}
-  m_Name: Bandit
+  m_Script: {fileID: 11500000, guid: a0291dda54bf4e85a940afef0d62bf25, type: 3}
+  m_Name: BanditStatusesRepository
   m_EditorClassIdentifier: 
-  serialComponents:
-  - {fileID: 11400000, guid: 7356951e65ea96347bb3ce88b44144f1, type: 2}
-  - {fileID: 11400000, guid: 3ad5a5c6c91405747aea250453215700, type: 2}

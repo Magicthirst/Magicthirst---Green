@@ -1,3 +1,4 @@
+using Levels.Abilities.ChaosArea;
 using Levels.Abilities.HitScanShoot;
 using Levels.Abilities.ParrySabre;
 using Levels.Abilities.PushingShotgun;
@@ -26,7 +27,8 @@ namespace DI
                         .RegisterTransformation(new HitScanShotMapper(masks))
                         .RegisterTransformation<TeleportChipThrowIntent>(teleportChipMapper)
                         .RegisterTransformation<TeleportChipActivateIntent>(teleportChipMapper)
-                        .RegisterTransformation(new ParrySabreSwingMapper(masks));
+                        .RegisterTransformation(new ParrySabreSwingMapper(masks))
+                        .RegisterTransformation(new InfuseAreaWithChaosMapper(masks));
                 },
                 Lifetime.Singleton
             ).AsSelf();

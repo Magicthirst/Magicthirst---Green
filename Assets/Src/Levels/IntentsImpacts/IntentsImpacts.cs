@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using JetBrains.Annotations;
 using UnityEngine;
 
 namespace Levels.IntentsImpacts
@@ -69,27 +70,12 @@ namespace Levels.IntentsImpacts
             return genericMethod.Invoke(this, new object[] { });
         }
 
-        public IImpactConsumer<TImpact> GetImpactConsumerFor<TImpact>(GameObject target) where TImpact : IImpact
+        public IImpactConsumer<TImpact> GetImpactConsumerFor<TImpact>(GameObject target, [CanBeNull] IModifyingImpacts affectable) where TImpact : IImpact
         {
-            return ImpactConsumer<TImpact>.Registered(target, this);
+            return ImpactConsumer<TImpact>.Registered(target, this, affectable);
         }
 
-        public IImpactConsumer<TImpact> GetImpactConsumerFor<TImpact>(GameObject target, IModifyingImpacts affectable) where TImpact : IImpact
-        {
-            var consumer = ImpactConsumer<TImpact>.Registered(target, this);
-            return new AffectableImpactConsumer<TImpact>(consumer, affectable);
-        }
-
-        public IImpactConsumer GetImpactConsumerFor(GameObject target, Type impactType)
-        {
-            var genericMethod = typeof(IntentsImpacts)
-                .GetMethod(nameof(GetImpactConsumerFor), new[] { typeof(GameObject) })!
-                .MakeGenericMethod(impactType);
-
-            return (IImpactConsumer)genericMethod.Invoke(this, new object[] { target });
-        }
-
-        public IImpactConsumer GetImpactConsumerFor(GameObject target, Type impactType, IModifyingImpacts affectable)
+        public IImpactConsumer GetImpactConsumerFor(GameObject target, Type impactType, [CanBeNull] IModifyingImpacts affectable)
         {
             var genericMethod = typeof(IntentsImpacts)
                 .GetMethod(nameof(GetImpactConsumerFor), new[] { typeof(GameObject), typeof(IModifyingImpacts) })!
@@ -162,6 +148,7 @@ namespace Levels.IntentsImpacts
         {
             private readonly int _targetID;
             private readonly IntentsImpacts _manager;
+            [CanBeNull] private readonly IModifyingImpacts _affector;
 
             public event Action<TImpact> Impacted;
 
@@ -173,16 +160,17 @@ namespace Levels.IntentsImpacts
 
             private event Action NonParamImpacted;
 
-            private ImpactConsumer(int targetID, IntentsImpacts manager)
+            private ImpactConsumer(int targetID, IntentsImpacts manager, [CanBeNull] IModifyingImpacts affector)
             {
                 _targetID = targetID;
                 _manager = manager;
+                _affector = affector;
                 Impacted += _ => NonParamImpacted?.Invoke();
             }
 
-            public static ImpactConsumer<TImpact> Registered(GameObject target, IntentsImpacts manager)
+            public static ImpactConsumer<TImpact> Registered(GameObject target, IntentsImpacts manager, [CanBeNull] IModifyingImpacts affector)
             {
-                var self = new ImpactConsumer<TImpact>(target.GetInstanceID(), manager);
+                var self = new ImpactConsumer<TImpact>(target.GetInstanceID(), manager, affector);
                 var key = (target.GetInstanceID(), typeof(TImpact));
 
                 if (!manager._receivers.TryGetValue(key, out var list))
@@ -195,47 +183,14 @@ namespace Levels.IntentsImpacts
                 return self;
             }
 
-            public void Receive(IImpact impact) => Impacted?.Invoke((TImpact)impact);
+            public void Receive(IImpact impact)
+            {
+                Impacted?.Invoke((TImpact)(_affector?.ApplyModifiers(impact) ?? impact));
+            }
 
             public void Dispose() => _manager._receivers
                 .GetValueOrDefault((_targetID, typeof(TImpact)))
                 ?.Remove(this);
-        }
-
-        private class AffectableImpactConsumer<TImpact> : IImpactConsumer<TImpact>, IImpactReceiver where TImpact : IImpact
-        {
-            event Action IImpactConsumer.Impacted
-            {
-                add => _ImpactConsumer.Impacted += value;
-                remove => _ImpactConsumer.Impacted -= value;
-            }
-
-            event Action<TImpact> IImpactConsumer<TImpact>.Impacted
-            {
-                add => _baseConsumer.Impacted += value;
-                remove => _baseConsumer.Impacted -= value;
-            }
-            
-            private readonly ImpactConsumer<TImpact> _baseConsumer;
-            private readonly IModifyingImpacts _affector;
-
-            private IImpactConsumer _ImpactConsumer => _baseConsumer;
-
-            public AffectableImpactConsumer(ImpactConsumer<TImpact> baseConsumer, IModifyingImpacts affector)
-            {
-                _baseConsumer = baseConsumer;
-                _affector = affector;
-            }
-
-            public void Receive(IImpact impact)
-            {
-                if ((impact = _affector.ApplyModifiers(impact)) != null)
-                {
-                    _baseConsumer.Receive(impact);
-                }
-            }
-
-            public void Dispose() => _baseConsumer.Dispose();
         }
 
         private interface IImpactReceiver

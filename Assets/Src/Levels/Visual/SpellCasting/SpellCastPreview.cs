@@ -1,19 +1,18 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Levels.Config;
 using Levels.Core;
 using UnityEngine;
 using Util;
 using VContainer;
 
-namespace Levels.Abilities.Shared
+namespace Levels.Visual.SpellCasting
 {
     public partial class SpellCastPreview : MonoBehaviour
     {
         [SerializeField] private PreviewableSpell[] previews;
 
-        private Transform _activePreview;
+        private Active _active = new() { Ability = null, Preview = null };
         private Dictionary<Type, Transform> _previews;
 
         [Inject] private ISharedSpellConfig _config;
@@ -30,18 +29,37 @@ namespace Levels.Abilities.Shared
                 keySelector: spell => spell.Spell,
                 elementSelector: spell => spell.PreviewObject
             );
+
+            foreach (var (_, preview) in _previews)
+            {
+                preview.gameObject.SetActive(false);
+            }
         }
 
         private void OnEnable() => _weaponry.Equipped += OnEquipped;
 
         private void Update()
         {
-            if (_activePreview is null)
+            if (!_active.Exists)
             {
                 return;
             }
 
-            _activePreview.position = SpellCastAnchor.GetAnchorPosition
+            if (_active.Ability.CooldownProgress < 1f)
+            {
+                if (_active.Preview.gameObject.activeSelf)
+                {
+                    _active.Preview.gameObject.SetActive(false);
+                }
+                return;
+            }
+
+            if (!_active.Preview.gameObject.activeSelf)
+            {
+                _active.Preview.gameObject.SetActive(true);
+            }
+
+            _active.Preview.position = SpellCastAnchor.GetAnchorPosition
             (
                 origin: transform.position,
                 direction: _camera.forward,
@@ -51,18 +69,28 @@ namespace Levels.Abilities.Shared
 
         private void OnEquipped(IAbility ability)
         {
-            if (!_previews.ContainsKey(ability.Type))
+            _active.Preview?.gameObject.SetActive(false);
+
+            if (_previews.TryGetValue(ability.Type, out var preview))
             {
-                return;
+                _active = new Active
+                {
+                    Ability = ability,
+                    Preview = preview
+                };
+                _active.Preview.gameObject.SetActive(true);
             }
-
-            _activePreview.gameObject.SetActive(false);
-
-            _activePreview = _previews[ability.Type];
-            _activePreview.gameObject.SetActive(true);
         }
 
         private void OnDisable() => _weaponry.Equipped -= OnEquipped;
+
+        private struct Active
+        {
+            public IAbility Ability;
+            public Transform Preview;
+
+            public bool Exists => Ability != null && Preview != null;
+        }
     }
 
     [Serializable]

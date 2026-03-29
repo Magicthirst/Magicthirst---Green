@@ -1,12 +1,12 @@
-using Levels.Abilities.Shared;
 using Levels.Core;
 using Levels.IntentsImpacts;
+using Levels.Visual.SpellCasting;
 using UnityEngine;
 using VContainer;
 
 namespace Levels.Abilities.ChaosArea
 {
-    public class InfuseAreaWithChaosCaster : MonoBehaviour, IInHandAbility
+    public class InfuseAreaWithChaosCaster : MonoBehaviour, IInHandAbility, ISpell
     {
         private Transform _camera;
 

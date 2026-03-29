@@ -72,7 +72,7 @@ namespace DI
                 {
                     impactConsumerProvider = tImpact => resolver => resolver
                         .Resolve<IntentsImpacts>()
-                        .GetImpactConsumerFor(gameObject, tImpact);
+                        .GetImpactConsumerFor(gameObject, tImpact, null);
                 }
 
                 foreach (var tImpact in CachedTypes.Impacts)

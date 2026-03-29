@@ -19,3 +19,5 @@ MonoBehaviour:
     sprite: {fileID: 3286163911610860551, guid: cac74945425e2094e878d45f27ed32dc, type: 3}
   - abilityType: Levels.Abilities.ParrySabre.ParrySabreSwinger
     sprite: {fileID: 3286163911610860551, guid: 42b871ee25994ea2b577a4e998ed9a7a, type: 3}
+  - abilityType: Levels.Abilities.ChaosArea.InfuseAreaWithChaosCaster
+    sprite: {fileID: 3286163911610860551, guid: 19f005fc3ac64caeafd8e5d8764a50e9, type: 3}

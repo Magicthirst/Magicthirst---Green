@@ -1,4 +1,4 @@
-using Levels.Abilities.Shared;
+using Levels.Visual.SpellCasting;
 using UnityEngine;
 
 namespace Levels.Config
