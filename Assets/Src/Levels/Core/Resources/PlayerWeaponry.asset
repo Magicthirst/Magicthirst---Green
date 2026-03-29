@@ -15,7 +15,7 @@ MonoBehaviour:
   abilities:
   - action: {fileID: -1611897325276469079, guid: 052faaac586de48259a63d0c4782560b, type: 3}
     position: 0
-    cooldown: 1
+    cooldown: 0.3
     invokeOnEquip: 1
     abilityType: Levels.Abilities.HitScanShoot.HitScanShooter
   - action: {fileID: 8967437285313295072, guid: 052faaac586de48259a63d0c4782560b, type: 3}
@@ -28,3 +28,8 @@ MonoBehaviour:
     cooldown: 0.2
     invokeOnEquip: 1
     abilityType: Levels.Abilities.ParrySabre.ParrySabreSwinger
+  - action: {fileID: -6754980703880146366, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+    position: 1
+    cooldown: 1
+    invokeOnEquip: 0
+    abilityType: Levels.Abilities.ChaosArea.InfuseAreaWithChaosCaster

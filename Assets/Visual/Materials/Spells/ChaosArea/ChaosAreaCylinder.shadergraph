@@ -1235,10 +1235,10 @@
     "hlslDeclarationOverride": 0,
     "m_Hidden": false,
     "m_Value": {
-        "r": 1.0,
+        "r": 0.7830188870429993,
         "g": 0.0,
-        "b": 0.4333333969116211,
-        "a": 0.16862745583057404
+        "b": 0.34084352850914,
+        "a": 0.772549033164978
     },
     "isMainColor": false,
     "m_ColorMode": 0
@@ -2022,7 +2022,7 @@
     "m_ZTestMode": 4,
     "m_ZWriteControl": 0,
     "m_AlphaMode": 0,
-    "m_RenderFace": 2,
+    "m_RenderFace": 0,
     "m_AlphaClip": false,
     "m_CastShadows": true,
     "m_ReceiveShadows": true,
@@ -2777,8 +2777,8 @@
     "m_ObjectId": "91587fae41e6421b86e196c64d60b429",
     "m_Title": "RenderOnlySides",
     "m_Position": {
-        "x": -236.0001220703125,
-        "y": 1005.9998168945313
+        "x": -236.0,
+        "y": 1006.0000610351563
     }
 }
 
@@ -2970,8 +2970,8 @@
     "m_ObjectId": "9b92d85bd3a34f5c87aad11738c3810a",
     "m_Title": "HorizontalDistortion",
     "m_Position": {
-        "x": -1785.9998779296875,
-        "y": -936.9998779296875
+        "x": -1786.0001220703125,
+        "y": -937.0001220703125
     }
 }
 
@@ -3044,8 +3044,8 @@
     "m_ObjectId": "9ed6e23bfce84821821aa851e4118e8f",
     "m_Title": "VerticalGradient",
     "m_Position": {
-        "x": -383.0,
-        "y": 467.99993896484377
+        "x": -383.0001525878906,
+        "y": 467.9999694824219
     }
 }
 

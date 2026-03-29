@@ -69,7 +69,9 @@ namespace Levels.Core
 
             Components = serialComponents.Select(Instantiate).ToArray();
 
-            return Components.SelectMany(c => c is Entity e ? e.LazyComponents.Append(c) : new[] { c });
+            return Components
+                .SelectMany(c => c is Entity e ? e.LazyComponents.Append(c) : new[] { c })
+                .Append(this);
         }
     }
 }

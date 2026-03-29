@@ -13,18 +13,15 @@ MonoBehaviour:
   m_Name: PlayerChaosAreaConfig
   m_EditorClassIdentifier: 
   circleRadius: 3
-  status:
-    rid: 2175470139749957898
+  damagePerTick: 10
+  damageInterval: 1
+  duration: 5
+  damageScale:
+    rid: 2175470183039107297
   references:
     version: 2
     RefIds:
-    - rid: 2175470139749957898
-      type: {class: ScaleReceivedDamage, ns: Levels.Abilities.CommonModifiers, asm: Levels}
-      data:
-        scale:
-          rid: 2175470139749957899
-        duration: 3
-    - rid: 2175470139749957899
+    - rid: 2175470183039107297
       type: {class: ScaleReceivedDamage/Plus, ns: Levels.Abilities.CommonModifiers, asm: Levels}
       data:
         value: 0.5

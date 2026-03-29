@@ -1,4 +1,4 @@
-namespace Levels.Abilities.Shared
+namespace Levels.Visual.SpellCasting
 {
     public interface ISharedSpellConfig
     {

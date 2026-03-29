@@ -1,5 +1,5 @@
 using Levels.Abilities.ChaosArea;
-using Levels.Core.Statuses;
+using Levels.Abilities.CommonModifiers;
 using UnityEngine;
 
 namespace Levels.Config
@@ -8,13 +8,18 @@ namespace Levels.Config
     public class ChaosAreaConfig : ScriptableObject, IChaosAreaConfig
     {
         public float CircleRadius => circleRadius;
-        public IStatus Status => status;
+        public int DamagePerTick => damagePerTick;
+        public float DamageInterval => damageInterval;
+        public ScaleReceivedDamage.IScale DamageScale => damageScale;
+        public float Duration => duration;
 
-        [SerializeField]
-        private float circleRadius;
+        [SerializeField] private float circleRadius;
+        [SerializeField] private int damagePerTick;
+        [SerializeField] private float damageInterval;
+        [SerializeField] private float duration;
 
         [SerializeReference]
         [SubclassSelector]
-        private IStatus status; // TODO plugin for subtypes
+        private ScaleReceivedDamage.IScale damageScale;
     }
 }

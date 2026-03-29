@@ -4,5 +4,5 @@ using UnityEngine;
 
 namespace Levels.Abilities.ChaosArea
 {
-    public record InfuseAreaWithChaosIntent(GameObject Caster, Vector3 Center, IChaosAreaConfig Config) : IIntent, ISpell;
+    public record InfuseAreaWithChaosIntent(GameObject Caster, Vector3 Center, IChaosAreaConfig Config) : IIntent;
 }

@@ -94,6 +94,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "A_CastChaos",
+                    "type": "Button",
+                    "id": "9ccd2375-2bf7-468a-a30c-c537d103b736",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -424,6 +433,17 @@
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
                     "action": "A_Swing",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "c643b700-f38e-4b35-886f-e16ea86fae80",
+                    "path": "<Keyboard>/4",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "A_CastChaos",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
