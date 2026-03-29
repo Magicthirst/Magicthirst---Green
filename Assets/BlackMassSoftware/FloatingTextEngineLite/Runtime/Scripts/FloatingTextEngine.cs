@@ -133,9 +133,11 @@ namespace BlackMassSoftware.FloatingTextEngine.Lite
             GameObject newFloatingText = instance.floatingTextPool.Get();
             instance.CheckAndApplySpatialVariance(ref newFloatingText, position);
 
-            newFloatingText.GetComponent<TextMeshPro>().text = damageValue.ToString();
-            newFloatingText.GetComponent<TextMeshPro>().color = color;
-            newFloatingText.GetComponent<TextMeshPro>().fontSize = instance.floatingTextFontSize;
+            var textMesh = newFloatingText.GetComponent<TextMeshPro>();
+            textMesh.text = damageValue.ToString();
+            textMesh.alpha = 1f;
+            textMesh.color = color;
+            textMesh.fontSize = instance.floatingTextFontSize;
             
             newFloatingText.TryGetComponent(out FloatingBehaviorEngine behaviorEngine);
             return behaviorEngine;

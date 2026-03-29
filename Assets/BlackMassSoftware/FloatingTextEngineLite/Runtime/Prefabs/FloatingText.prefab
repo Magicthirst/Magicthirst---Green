@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 3790161630586198950}
   - component: {fileID: 5604060021798327824}
   - component: {fileID: -6402911171742732083}
+  - component: {fileID: 8635030425794227330}
   m_Layer: 0
   m_Name: FloatingText
   m_TagString: damagetext
@@ -56,10 +57,13 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 5703826615564428432, guid: 4b2831785b56ce549ad79d82b854843a, type: 2}
+  - {fileID: 5279843080006117454, guid: a427c7989cacfeb4b9a32db3d409e453, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -104,7 +108,7 @@ MonoBehaviour:
   m_text: 1
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: a427c7989cacfeb4b9a32db3d409e453, type: 2}
-  m_sharedMaterial: {fileID: 5703826615564428432, guid: 4b2831785b56ce549ad79d82b854843a, type: 2}
+  m_sharedMaterial: {fileID: 5279843080006117454, guid: a427c7989cacfeb4b9a32db3d409e453, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -144,15 +148,17 @@ MonoBehaviour:
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0
-  m_enableWordWrapping: 0
+  m_TextWrappingMode: 0
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
   m_linkedTextComponent: {fileID: 0}
   parentLinkedComponent: {fileID: 0}
   m_enableKerning: 1
+  m_ActiveFontFeatures: 6e72656b
   m_enableExtraPadding: 0
   checkPaddingRequired: 0
   m_isRichText: 1
+  m_EmojiFallbackSupport: 1
   m_parseCtrlCharacters: 1
   m_isOrthographic: 0
   m_isCullingEnabled: 0
@@ -170,7 +176,7 @@ MonoBehaviour:
   _SortingLayer: 0
   _SortingLayerID: 0
   _SortingOrder: 0
-  m_hasFontAssetChanged: 1
+  m_hasFontAssetChanged: 0
   m_renderer: {fileID: 3664511220304182984}
   m_maskType: 0
 --- !u!225 &5604060021798327824
@@ -197,3 +203,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d02433b3cbf01847bf0ca80710de8f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &8635030425794227330
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8115535723529381340}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a2f6359b8df74188be4eba5ab4ae80ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  flipped: 1

@@ -39,6 +39,7 @@ namespace BlackMassSoftware.FloatingTextEngine.Lite.Behaviors
         public override void InitializeBehavior(GameObject owner)
         {
             base.InitializeBehavior(owner);
+            elapsed = 0f;
             if (owner.TryGetComponent(out TextMeshPro textMesh)) {
                 textMeshPro = textMesh;
             }
