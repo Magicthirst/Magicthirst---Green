@@ -4,6 +4,8 @@ itch here: https://yojick.itch.io/magicthirst
 
 📁: _Code is in `Assets/Src/`_
 
+![screenshot.png](DevAssets/Visual/Images/screenshot.png)
+
 ## Gameplay
 
 - Player fights groups of enemies in arenas
