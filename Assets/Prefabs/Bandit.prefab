@@ -782,7 +782,7 @@ Transform:
   m_GameObject: {fileID: 8657619493681010999}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: -1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -832,7 +832,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 8fc48d2d471c4cfd97f3b8e2d681ed23, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 87babee71a06c8c4692b059292086acc, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -842,7 +842,7 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
-  m_SpriteSortPoint: 0
+  m_SpriteSortPoint: 1
 --- !u!114 &543761541697711240
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -863,11 +863,11 @@ MonoBehaviour:
     durationSeconds: Infinity
   - impactType: 
     stateType: Levels.AI.Bandit.BanditAlerted
-    sprite: {fileID: 21300000, guid: a609e1edefb14e9a83c49b9633b13e6e, type: 3}
+    sprite: {fileID: 21300000, guid: 87babee71a06c8c4692b059292086acc, type: 3}
     durationSeconds: Infinity
   - impactType: 
     stateType: Levels.AI.Bandit.BanditFighting
-    sprite: {fileID: 21300000, guid: a609e1edefb14e9a83c49b9633b13e6e, type: 3}
+    sprite: {fileID: 21300000, guid: 87babee71a06c8c4692b059292086acc, type: 3}
     durationSeconds: Infinity
   - impactType: Levels.Abilities.CommonImpacts.CasterShotHitScanEffect
     stateType: Levels.AI.Bandit.BanditFighting
