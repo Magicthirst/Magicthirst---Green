@@ -1,21 +1,21 @@
-using UnityEngine;
+ using UnityEngine;
 using VContainer;
 
 namespace Levels.Sync
 {
-    [RequireComponent(typeof(CharacterMovement))]
+    [RequireComponent(typeof(IObservableMovement))]
     public class InputSender : SyncBehavior
     {
         [Inject] private IObjectResolver _resolver;
 
         private SendMovement _sendMovement = null!;
-        private CharacterMovement _input = null!;
+        private IObservableMovement _input = null!;
 
         public delegate void SendMovement(Vector2 position, Vector2 vector);
 
         protected override void OnAwake()
         {
-            _input = GetComponent<CharacterMovement>();
+            _input = GetComponent<IObservableMovement>();
         }
 
         protected override void OnEnableSync()
