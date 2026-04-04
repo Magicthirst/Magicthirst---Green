@@ -764,8 +764,8 @@ GameObject:
   m_Component:
   - component: {fileID: 2245377228924355190}
   - component: {fileID: 4359345434037134346}
-  - component: {fileID: 543761541697711240}
   - component: {fileID: 9176737280463936378}
+  - component: {fileID: 2940898210495112335}
   m_Layer: 0
   m_Name: Sprite
   m_TagString: Untagged
@@ -843,36 +843,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 1
---- !u!114 &543761541697711240
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8657619493681010999}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a536b9afb4fb45b9a8ec2e8b8db2e2c4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  defaultSprite: {fileID: 21300000, guid: 8fc48d2d471c4cfd97f3b8e2d681ed23, type: 3}
-  mappings:
-  - impactType: 
-    stateType: Levels.AI.Bandit.BanditIdle
-    sprite: {fileID: 21300000, guid: 8fc48d2d471c4cfd97f3b8e2d681ed23, type: 3}
-    durationSeconds: Infinity
-  - impactType: 
-    stateType: Levels.AI.Bandit.BanditAlerted
-    sprite: {fileID: 21300000, guid: 87babee71a06c8c4692b059292086acc, type: 3}
-    durationSeconds: Infinity
-  - impactType: 
-    stateType: Levels.AI.Bandit.BanditFighting
-    sprite: {fileID: 21300000, guid: 87babee71a06c8c4692b059292086acc, type: 3}
-    durationSeconds: Infinity
-  - impactType: Levels.Abilities.CommonImpacts.CasterShotHitScanEffect
-    stateType: Levels.AI.Bandit.BanditFighting
-    sprite: {fileID: 21300000, guid: 404f365ed29847ca9b8ef5f0bf62ea37, type: 3}
-    durationSeconds: 0.05
 --- !u!114 &9176737280463936378
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -886,6 +856,57 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   flipped: 0
+--- !u!114 &2940898210495112335
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8657619493681010999}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d3b7523916cf4068ad824b7e7b4e8625, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  defaultSprite: {fileID: 21300000, guid: 8fc48d2d471c4cfd97f3b8e2d681ed23, type: 3}
+  mappings:
+  - rid: 411244937954984024
+  - rid: 411244937954984025
+  - rid: 411244937954984026
+  - rid: 411244937954984027
+  references:
+    version: 2
+    RefIds:
+    - rid: 411244937954984024
+      type: {class: BaseStateSpriteResolutionMapping, ns: Levels.Visual.SpriteResolution, asm: Levels}
+      data:
+        stateType: Levels.AI.Bandit.BanditIdle
+        sprites:
+        - {fileID: 21300000, guid: 8fc48d2d471c4cfd97f3b8e2d681ed23, type: 3}
+        intervalSeconds: 0.0625
+    - rid: 411244937954984025
+      type: {class: BaseStateSpriteResolutionMapping, ns: Levels.Visual.SpriteResolution, asm: Levels}
+      data:
+        stateType: Levels.AI.Bandit.BanditAlerted
+        sprites:
+        - {fileID: 21300000, guid: a609e1edefb14e9a83c49b9633b13e6e, type: 3}
+        intervalSeconds: 0.0625
+    - rid: 411244937954984026
+      type: {class: BaseStateSpriteResolutionMapping, ns: Levels.Visual.SpriteResolution, asm: Levels}
+      data:
+        stateType: Levels.AI.Bandit.BanditFighting
+        sprites:
+        - {fileID: 21300000, guid: 87babee71a06c8c4692b059292086acc, type: 3}
+        intervalSeconds: 0.0625
+    - rid: 411244937954984027
+      type: {class: ImpactedSpriteResolutionMapping, ns: Levels.Visual.SpriteResolution, asm: Levels}
+      data:
+        impactType: Levels.Abilities.CommonImpacts.CasterShotHitScanEffect
+        stateType: Levels.AI.Bandit.BanditFighting
+        sprites:
+        - {fileID: 21300000, guid: 404f365ed29847ca9b8ef5f0bf62ea37, type: 3}
+        durationSeconds: 0.05
+        intervalSeconds: 0.0625
 --- !u!1 &8800768721026408215
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Levels;
 using Levels.AI;
 using Levels.Core;
 using Levels.IntentsImpacts;
@@ -31,6 +32,11 @@ namespace DI
             if (gameObject.TryGetComponent(out Fsm fsm))
             {
                 builder.RegisterInstance(fsm);
+            }
+
+            if (gameObject.TryGetComponent(out IMovementInputSource movement))
+            {
+                builder.RegisterInstance(movement);
             }
 
             foreach (var config in configs)
