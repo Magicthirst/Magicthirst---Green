@@ -11,7 +11,7 @@ namespace Levels
 {
     [RequireComponent(typeof(CharacterController))]
     [RequireComponent(typeof(IMovementInputSource))]
-    public class CharacterMovement : MonoBehaviour, IInterruptable<IMovementReason>
+    public class CharacterMovement : MonoBehaviour, IObservableMovement, IInterruptable<IMovementReason>
     {
         public event Action<Vector2> Moved;
 
