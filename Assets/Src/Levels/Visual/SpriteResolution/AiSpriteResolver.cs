@@ -4,6 +4,7 @@ using System.Linq;
 using JetBrains.Annotations;
 using Levels.AI;
 using Levels.IntentsImpacts;
+using Levels.Util;
 using UnityEngine;
 using Util;
 using VContainer;
@@ -20,7 +21,7 @@ namespace Levels.Visual.SpriteResolution
 
         private SpriteRenderer _spriteRenderer;
 
-        private SpriteResolver<PlayKey> _resolver;
+        private SpriteResolver<PlayKey, BasePlaySequence> _resolver;
         private ImpactObserver[] _observers;
 
         [Inject] private Fsm _fsm;
@@ -33,7 +34,7 @@ namespace Levels.Visual.SpriteResolution
             _spriteRenderer = GetComponent<SpriteRenderer>();
             _spriteRenderer.sprite = defaultSprite;
 
-            _resolver = new SpriteResolver<PlayKey>(GetMappingsAsDictionary());
+            _resolver = new SpriteResolver<PlayKey, BasePlaySequence>(GetMappingsAsDictionary(), restarts: true);
         }
 
         private void OnEnable()
@@ -90,12 +91,12 @@ namespace Levels.Visual.SpriteResolution
                 .ToArray();
         }
 
-        private Dictionary<PlayKey, PlaySequence> GetMappingsAsDictionary()
+        private Dictionary<PlayKey, BasePlaySequence> GetMappingsAsDictionary()
         {
             return mappings.ToDictionary
             (
                 keySelector: mapping => new PlayKey(mapping.StateType, mapping.ImpactTypeOrNull),
-                elementSelector: mapping => new PlaySequence
+                elementSelector: mapping => new BasePlaySequence
                 {
                     Sprites = mapping.Sprites,
                     DurationSeconds = mapping.DurationSeconds,
@@ -104,10 +105,10 @@ namespace Levels.Visual.SpriteResolution
             );
         }
 
-        private struct PlayKey : SpriteResolver<PlayKey>.IPlayKey, IEquatable<PlayKey>
+        private readonly struct PlayKey : IPlayKey<PlayKey>
         {
-            private Type _state;
-            [CanBeNull] private Type _impact;
+            private readonly Type _state;
+            [CanBeNull] private readonly Type _impact;
 
             public PlayKey(Type state, [CanBeNull] Type impact)
             {
@@ -123,7 +124,7 @@ namespace Levels.Visual.SpriteResolution
                     return false;
                 }
 
-                fallbackKey = new PlayKey { _state = _state, _impact = null };
+                fallbackKey = WithImpact(null);
                 return true;
             }
 
@@ -136,23 +137,13 @@ namespace Levels.Visual.SpriteResolution
 
             public PlayKey WithState(Type state)
             {
-                return new PlayKey { _state = state, _impact = _impact };
+                return new PlayKey(state, _impact);
             }
 
             public PlayKey WithImpact(Type impact)
             {
-                return new PlayKey { _state = _state, _impact = impact };
+                return new PlayKey(_state, impact);
             }
-        }
-
-        private struct ImpactObserver
-        {
-            public IImpactConsumer Consumer;
-            public Action Subscription;
-
-            public void Subscribe() => Consumer.Impacted += Subscription;
-
-            public void Unsubscribe() => Consumer.Impacted -= Subscription;
         }
     }
 

@@ -13,13 +13,13 @@ namespace Levels.Visual.SpriteResolution
         [SerializeField] private MovementSpriteResolutionMapping moving;
 
         private SpriteRenderer _spriteRenderer;
-        private SpriteResolver<MovementKey> _resolver;
+        private SpriteResolver<MovementKey, BasePlaySequence> _resolver;
         [Inject] private IMovementInputSource _movement;
 
         private void Awake()
         {
             _spriteRenderer = GetComponent<SpriteRenderer>();
-            _resolver = new SpriteResolver<MovementKey>(GetResolutionDictionary());
+            _resolver = new SpriteResolver<MovementKey, BasePlaySequence>(GetResolutionDictionary(), restarts: false);
         }
 
         private void Update()
@@ -34,9 +34,9 @@ namespace Levels.Visual.SpriteResolution
             }
         }
 
-        private Dictionary<MovementKey, PlaySequence> GetResolutionDictionary()
+        private Dictionary<MovementKey, BasePlaySequence> GetResolutionDictionary()
         {
-            return new Dictionary<MovementKey, PlaySequence>
+            return new Dictionary<MovementKey, BasePlaySequence>
             {
                 [MovementKey.Moving] = new()
                 {
@@ -53,13 +53,18 @@ namespace Levels.Visual.SpriteResolution
             };
         }
 
-        private struct MovementKey : SpriteResolver<MovementKey>.IPlayKey, IEquatable<MovementKey>
+        private readonly struct MovementKey : IPlayKey<MovementKey>
         {
-            public static readonly MovementKey Moving = new() { _moving = true };
+            public static readonly MovementKey Moving = new(true);
 
-            public static readonly MovementKey Standing = new() { _moving = false };
+            public static readonly MovementKey Standing = new(false);
 
-            private bool _moving;
+            private readonly bool _moving;
+
+            private MovementKey(bool moving)
+            {
+                _moving = moving;
+            }
 
             public bool Equals(MovementKey other) => _moving == other._moving;
 

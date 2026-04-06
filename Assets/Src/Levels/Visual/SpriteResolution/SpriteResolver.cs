@@ -5,16 +5,19 @@ using UnityEngine.Assertions;
 
 namespace Levels.Visual.SpriteResolution
 {
-    public class SpriteResolver<TPlayKey> where TPlayKey : struct, SpriteResolver<TPlayKey>.IPlayKey, IEquatable<TPlayKey>
+    public class SpriteResolver<TPlayKey, TPlaySequence>
+        where TPlayKey : struct, IPlayKey<TPlayKey>
+        where TPlaySequence : struct, IPlaySequence
     {
         private const string OnlyTailMustBeInfinite = "Tail state must be infinite and only tail state can be, check key {0}";
 
         public TPlayKey CurrentKey => _currentlyPlaying.Key;
 
-        private readonly Dictionary<TPlayKey, PlaySequence> _playData;
+        private readonly Dictionary<TPlayKey, TPlaySequence> _playData;
         private (TPlayKey Key, ActivePlaySequence Sequence) _currentlyPlaying;
+        private readonly bool _restarts;
 
-        public SpriteResolver(Dictionary<TPlayKey, PlaySequence> playData)
+        public SpriteResolver(Dictionary<TPlayKey, TPlaySequence> playData, bool restarts)
         {
             foreach (var (key, sequence) in playData)
             {
@@ -25,6 +28,7 @@ namespace Levels.Visual.SpriteResolution
             }
 
             _playData = playData;
+            _restarts = restarts;
         }
 
         public bool TryPlay(float now, TPlayKey key, out Sprite firstSprite)
@@ -32,7 +36,15 @@ namespace Levels.Visual.SpriteResolution
             firstSprite = null;
             if (_currentlyPlaying.Key.Equals(key))
             {
-                return false;
+                if (!_restarts)
+                {
+                    return false;
+                }
+
+                var sequence = _playData[key];
+                _currentlyPlaying = (key, ActivePlaySequence.Start(now, sequence, out firstSprite));
+
+                return true;
             }
 
             do
@@ -64,15 +76,6 @@ namespace Levels.Visual.SpriteResolution
             return updated;
         }
 
-        public interface IPlayKey
-        {
-            bool TryGetFallbackKey(out TPlayKey fallbackKey)
-            {
-                fallbackKey = default;
-                return false;
-            }
-        }
-
         private struct ActivePlaySequence
         {
             private Sprite[] _sprites;
@@ -83,8 +86,9 @@ namespace Levels.Visual.SpriteResolution
 
             private Sprite _Current => _sprites[Mathf.FloorToInt(Time.time / _intervalSeconds) % _sprites.Length];
 
-            public static ActivePlaySequence Start(float now, PlaySequence sequence, out Sprite firstFrame)
+            public static ActivePlaySequence Start(float now, TPlaySequence sequence, out Sprite firstFrame)
             {
+                sequence.NotifyBeforePicked();
                 var activeSequence = new ActivePlaySequence
                 {
                     _sprites = sequence.Sprites,
@@ -92,6 +96,7 @@ namespace Levels.Visual.SpriteResolution
                     _stopTimePoint = now + sequence.DurationSeconds,
                     _updateTimePoint = now + sequence.IntervalSeconds
                 };
+                sequence.NotifyAfterPicked();
                 firstFrame = activeSequence._Current;
                 return activeSequence;
             }
@@ -114,10 +119,31 @@ namespace Levels.Visual.SpriteResolution
         }
     }
 
-    public struct PlaySequence
+    public interface IPlayKey<TPlayKey> : IEquatable<TPlayKey>
+        where TPlayKey : struct, IPlayKey<TPlayKey>
     {
-        public Sprite[] Sprites;
-        public float DurationSeconds;
-        public float IntervalSeconds;
+        bool TryGetFallbackKey(out TPlayKey fallbackKey)
+        {
+            fallbackKey = default;
+            return false;
+        }
+    }
+
+    public interface IPlaySequence
+    {
+        public Sprite[] Sprites { get; }
+        public float DurationSeconds { get; }
+        public float IntervalSeconds { get; }
+
+        public void NotifyBeforePicked() {}
+
+        public void NotifyAfterPicked() {}
+    }
+
+    public readonly struct BasePlaySequence : IPlaySequence
+    {
+        public Sprite[] Sprites { get; init; }
+        public float DurationSeconds { get; init; }
+        public float IntervalSeconds { get; init; }
     }
 }
