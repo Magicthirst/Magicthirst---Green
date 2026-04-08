@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace VContainer.Internal
 {
-    public class OpenGenericInstanceProvider : IInstanceProvider, IClosedRegistrationProvider
+    public sealed class OpenGenericFuncInstanceProvider : IInstanceProvider, IClosedRegistrationProvider
     {
         class TypeParametersEqualityComparer : IEqualityComparer<Type[]>
         {
@@ -31,18 +31,18 @@ namespace VContainer.Internal
             }
         }
 
-        readonly Lifetime lifetime;
         readonly Type implementationType;
-        readonly IReadOnlyList<IInjectParameter> customParameters;
+        readonly Lifetime lifetime;
+        readonly Func<IObjectResolver, Type[], object> factory;
 
         readonly ConcurrentDictionary<Type[], Registration> constructedRegistrations = new ConcurrentDictionary<Type[], Registration>(new TypeParametersEqualityComparer());
         readonly Func<Type[], Registration> createRegistrationFunc;
 
-        public OpenGenericInstanceProvider(Type implementationType, Lifetime lifetime, List<IInjectParameter> injectParameters)
+        public OpenGenericFuncInstanceProvider(Type implementationType, Lifetime lifetime, Func<IObjectResolver, Type[], object> factory)
         {
             this.implementationType = implementationType;
             this.lifetime = lifetime;
-            customParameters = injectParameters;
+            this.factory = factory;
             createRegistrationFunc = CreateRegistration;
         }
 
@@ -54,8 +54,8 @@ namespace VContainer.Internal
         Registration CreateRegistration(Type[] typeParameters)
         {
             var newType = implementationType.MakeGenericType(typeParameters);
-            var injector = InjectorCache.GetOrBuild(newType);
-            var spawner = new InstanceProvider(injector, customParameters);
+            var spawner = new FuncInstanceProvider(resolver => factory(resolver, typeParameters));
+
             return new Registration(newType, lifetime, new List<Type>(1) { newType }, spawner);
         }
 
@@ -63,5 +63,5 @@ namespace VContainer.Internal
         {
             throw new InvalidOperationException();
         }
-   }
+    }
 }

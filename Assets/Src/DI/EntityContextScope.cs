@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using Levels;
 using Levels.AI;
@@ -67,20 +66,17 @@ namespace DI
             // AI, suggest to profile this place if problem with memory usage occurs on entities-heavy scene.
             void RegisterConsumerOverrides()
             {
-                Func<Type, Func<IObjectResolver, object>> impactConsumerProvider = tImpact => resolver =>
-                {
-                    var intentsImpacts = resolver.Resolve<IntentsImpacts>();
-                    var affectable = resolver.ResolveOrDefault<IModifyingImpacts>();
-                    return intentsImpacts.GetImpactConsumerFor(gameObject, tImpact, affectable);
-                };
-
-                foreach (var tImpact in CachedTypes.Impacts)
-                {
-                    var consumerType = typeof(IImpactConsumer<>).MakeGenericType(tImpact);
-                    var registration = new FuncRegistrationBuilder(impactConsumerProvider(tImpact), consumerType, Lifetime.Scoped);
-
-                    builder.Register(registration);
-                }
+                builder.Register
+                (
+                    interfaceType: typeof(IImpactConsumer<>),
+                    implementationFactory: (resolver, tImpact) =>
+                    {
+                        var intentsImpacts = resolver.Resolve<IntentsImpacts>();
+                        var affectable = resolver.ResolveOrDefault<IModifyingImpacts>();
+                        return intentsImpacts.GetImpactConsumerFor(gameObject, tImpact, affectable);
+                    },
+                    lifetime: Lifetime.Scoped
+                );
             }
 
             void RegisterEntityComponents()
