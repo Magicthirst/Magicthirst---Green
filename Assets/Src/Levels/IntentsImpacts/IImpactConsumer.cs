@@ -2,7 +2,7 @@ using System;
 
 namespace Levels.IntentsImpacts
 {
-    public interface IImpactConsumer : IDisposable
+    public interface IImpactConsumer : IDisposable // TODO remove IDisposable
     {
         event Action Impacted;
     }

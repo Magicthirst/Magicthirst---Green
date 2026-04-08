@@ -6,7 +6,6 @@ using Levels.Abilities.TeleportChip;
 using Levels.IntentsImpacts;
 using Levels.Util.MasksRegistry;
 using VContainer;
-using VContainer.Internal;
 
 namespace DI
 {
@@ -33,25 +32,16 @@ namespace DI
                 Lifetime.Singleton
             ).AsSelf();
 
-            RegisterPublishers();
-
-            return;
-
-            void RegisterPublishers()
-            {
-                foreach (var tIntent in CachedTypes.Intents)
+            builder.Register
+            (
+                interfaceType: typeof(PublishIntent<>),
+                implementationFactory: (resolver, tIntent) =>
                 {
-                    var publisherType = typeof(PublishIntent<>).MakeGenericType(tIntent);
-                    var registration = new FuncRegistrationBuilder(
-                        resolver => resolver
-                            .Resolve<IntentsImpacts>()
-                            .GetIntentPublisher(tIntent),
-                        publisherType,
-                        Lifetime.Transient
-                    );
-                    builder.Register(registration);
-                }
-            }
+                    var intentsImpacts = resolver.Resolve<IntentsImpacts>();
+                    return intentsImpacts.GetIntentPublisher(tIntent);
+                },
+                lifetime: Lifetime.Scoped
+            );
         }
     }
 }
