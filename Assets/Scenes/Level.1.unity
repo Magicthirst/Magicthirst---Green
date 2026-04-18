@@ -22394,6 +22394,7 @@ MonoBehaviour:
   trail: {fileID: 1488126661}
   durationSeconds: 0.05
   coveredAngle: 120
+  directionsLoop: 01000000
 --- !u!1 &1823467181
 GameObject:
   m_ObjectHideFlags: 0

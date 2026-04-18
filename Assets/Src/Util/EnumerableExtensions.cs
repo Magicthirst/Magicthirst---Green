@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using JetBrains.Annotations;
 
@@ -42,30 +43,25 @@ namespace Util
             return index;
         }
 
-        public static (List<T> Truths, List<T> Falses) Fork<T>
-        (
-            this IEnumerable<T> enumerable,
-            Predicate<T> predicate,
-            int reserveTruths = 0,
-            int reserveFalses = 0
-        )
+        public static IEnumerator<T> InfinitelyLooping<T>(this IEnumerable<T> enumerable)
         {
-            var truths = new List<T>(reserveTruths);
-            var falses = new List<T>(reserveFalses);
-
-            foreach (var item in enumerable)
+            using var enumerator = enumerable.GetEnumerator();
+            while (true)
             {
-                if (predicate(item))
+                while (enumerator.MoveNext())
                 {
-                    truths.Add(item);
+                    yield return enumerator.Current;
                 }
-                else
-                {
-                    falses.Add(item);
-                }
+                enumerator.Reset();
             }
+            // ReSharper disable once IteratorNeverReturns
+        }
 
-            return (truths, falses);
+        public static T Dequeue<T>(this IEnumerator<T> enumerable)
+        {
+            var result = enumerable.Current;
+            enumerable.MoveNext();
+            return result;
         }
     }
 }
