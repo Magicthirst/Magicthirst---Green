@@ -1,6 +1,9 @@
+using System;
+using System.Collections.Generic;
 using Levels.Abilities.CommonImpacts;
 using Levels.IntentsImpacts;
 using UnityEngine;
+using Util;
 using VContainer;
 
 namespace Levels.Visual
@@ -11,6 +14,8 @@ namespace Levels.Visual
         [SerializeField] private TrailRenderer trail;
         [SerializeField] private float durationSeconds;
         [SerializeField] private float coveredAngle;
+
+        [SerializeField] private SwingDirection[] directionsLoop = { SwingDirection.RightToLeft };
         
         [Inject] private IImpactConsumer<CasterSwingedEffect> _consumer;
 
@@ -19,13 +24,15 @@ namespace Levels.Visual
         private float _pitch;
         private float _progress;
 
+        private IEnumerator<SwingDirection> _directionsQueue;
+
         private void Awake()
         {
             _pitch = pivot.localEulerAngles.x;
-            _startYawAngle = 360f - coveredAngle / 2;
-            _endYawAngle = 0f + coveredAngle / 2;
+            
             _progress = durationSeconds + 1f; // disabled value
             trail.emitting = false;
+            _directionsQueue = directionsLoop.InfinitelyLooping();
         }
 
         private void OnEnable()
@@ -56,6 +63,8 @@ namespace Levels.Visual
 
         private void HandleSwing(CasterSwingedEffect effect)
         {
+            InitAngles(_directionsQueue.Dequeue());
+
             _progress = 0f;
             UpdateRotation();
             trail.Clear();
@@ -66,5 +75,28 @@ namespace Levels.Visual
         {
             _consumer.Impacted -= HandleSwing;
         }
+
+        private void InitAngles(SwingDirection direction)
+        {
+            switch (direction)
+            {
+                case SwingDirection.LeftToRight:
+                    _startYawAngle = 0f + coveredAngle / 2;
+                    _endYawAngle = 360f - coveredAngle / 2;
+                    break;
+                case SwingDirection.RightToLeft:
+                    _startYawAngle = 360f - coveredAngle / 2;
+                    _endYawAngle = 0f + coveredAngle / 2;
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(direction), direction, null);
+            }
+        }
+    }
+
+    public enum SwingDirection
+    {
+        LeftToRight,
+        RightToLeft
     }
 }
