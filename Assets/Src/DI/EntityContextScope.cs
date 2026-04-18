@@ -62,8 +62,6 @@ namespace DI
 
             return;
 
-            // can be optimized for memory: O(E * I) where E is number of entities and I is number of impact types.
-            // AI, suggest to profile this place if problem with memory usage occurs on entities-heavy scene.
             void RegisterConsumerOverrides()
             {
                 builder.Register
