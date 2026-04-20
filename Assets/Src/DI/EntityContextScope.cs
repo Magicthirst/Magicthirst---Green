@@ -83,7 +83,7 @@ namespace DI
                 foreach (var component in entity.LazyComponents)
                 {
                     var registration = new InstanceRegistrationBuilder(component);
-                    builder.Register(registration).AsSelf();
+                    builder.Register(registration).AsSelf().AsImplementedInterfaces();
                 }
             }
         }
