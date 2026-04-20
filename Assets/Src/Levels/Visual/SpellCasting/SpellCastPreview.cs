@@ -80,6 +80,14 @@ namespace Levels.Visual.SpellCasting
                 };
                 _active.Preview.gameObject.SetActive(true);
             }
+            else
+            {
+                _active = new Active
+                {
+                    Ability = null,
+                    Preview = null
+                };
+            }
         }
 
         private void OnDisable() => _weaponry.Equipped -= OnEquipped;

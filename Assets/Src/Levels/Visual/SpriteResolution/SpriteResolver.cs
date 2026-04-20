@@ -76,6 +76,12 @@ namespace Levels.Visual.SpriteResolution
             return updated;
         }
 
+        public bool Replay(float now, out Sprite firstSprite)
+        {
+            TryPlay(now, CurrentKey, out firstSprite);
+            return true;
+        }
+
         private struct ActivePlaySequence
         {
             private Sprite[] _sprites;

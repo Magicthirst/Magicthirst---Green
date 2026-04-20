@@ -68,7 +68,18 @@ namespace Levels.Visual.SpriteResolution
         private void OnWeaponChange(IAbility ability)
         {
             var key = PlayKey.Idle(ability.Type);
-            if (_resolver.TryPlay(now: Time.time, key, out var firstSprite))
+
+            if (_resolver.CurrentKey.AbilityIs(ability.Type) && _resolver.Replay(now: Time.time, out var firstSprite))
+            {
+                _spriteRenderer.sprite = firstSprite;
+                return;
+            }
+
+            if
+            (
+                _resolver.TryPlay(now: Time.time, key, out firstSprite) ||
+                _resolver.TryPlay(now: Time.time, PlayKey.Default(), out firstSprite)
+            )
             {
                 _spriteRenderer.sprite = firstSprite;
             }
@@ -85,7 +96,15 @@ namespace Levels.Visual.SpriteResolution
 
         private Dictionary<PlayKey, VariantsQueuePlaySequence> GetMappingsAsDictionary()
         {
-            var dictionary = new Dictionary<PlayKey, VariantsQueuePlaySequence>();
+            var dictionary = new Dictionary<PlayKey, VariantsQueuePlaySequence>
+            {
+                [PlayKey.Default()] = VariantsQueuePlaySequence.Idle(new BasePlaySequence
+                {
+                    Sprites = new[] {defaultSprite},
+                    DurationSeconds = float.PositiveInfinity,
+                    IntervalSeconds = float.PositiveInfinity
+                })
+            };
 
             foreach (var ability in abilities)
             {
@@ -131,18 +150,20 @@ namespace Levels.Visual.SpriteResolution
 
         public readonly struct PlayKey : IPlayKey<PlayKey>
         {
-            private readonly Type _ability;
+            [CanBeNull] private readonly Type _ability;
             [CanBeNull] private readonly Type _impact;
 
-            private PlayKey(Type ability, [CanBeNull] Type impact)
+            private PlayKey([CanBeNull] Type ability, [CanBeNull] Type impact)
             {
                 _ability = ability;
                 _impact = impact;
             }
 
+            public static PlayKey Default() => new(null, null);
+
             public static PlayKey Idle(Type ability) => new(ability, null);
 
-            public static PlayKey Casted(Type ability, [CanBeNull] Type impact) => new(ability, impact);
+            public static PlayKey Casted(Type ability, Type impact) => new(ability, impact);
 
             public bool TryGetFallbackKey(out PlayKey fallbackKey)
             {
@@ -160,6 +181,8 @@ namespace Levels.Visual.SpriteResolution
             {
                 return _ability == other._ability && _impact == other._impact;
             }
+
+            public bool AbilityIs(Type ability) => _ability == ability;
 
             public override int GetHashCode() => HashCode.Combine(_ability, _impact);
         }
@@ -179,6 +202,11 @@ namespace Levels.Visual.SpriteResolution
                 _variants = variants;
                 _variant = variant;
                 _isIdle = isIdle;
+            }
+
+            public static VariantsQueuePlaySequence Idle(BasePlaySequence idle)
+            {
+                return new VariantsQueuePlaySequence(new[] {idle}, new V<int>(0), isIdle: true);
             }
 
             public static
