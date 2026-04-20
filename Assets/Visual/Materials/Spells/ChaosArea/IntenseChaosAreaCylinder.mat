@@ -39,6 +39,7 @@ Material:
     m_TexEnvs: []
     m_Ints: []
     m_Floats:
+    - _Contrast: 1.2
     - _Intencity: 8
     - _QueueControl: 0
     m_Colors: []

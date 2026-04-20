@@ -20,6 +20,8 @@ namespace Levels.Abilities.ChaosArea
 
         public IEnumerable<IImpact> Map(InfuseAreaWithChaosIntent intent)
         {
+            yield return new CasterCastedSpellEffect(intent.Caster);
+
             foreach (var victim in GetAffected(intent))
             {
                 yield return new ReceivedStatusImpact(victim, new InfusedWithChaosDecorativeStatus(intent.Config.Duration));
