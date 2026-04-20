@@ -55,6 +55,7 @@ namespace Levels.IntentsImpacts
             }
 
             brokers.Add(broker);
+            broker.Passed += PublishImpacts;
 
             return this;
         }

@@ -22,5 +22,15 @@ namespace Levels.Util.MasksRegistry
 
             return _masks.TryGetValue(gameObject.GetInstanceID(), out var mask) && (mask & flags) == flags;
         }
+
+        public bool AreEnemies(GameObject a, GameObject b)
+        {
+            return Is(a, Mask.PlayerCharacter) != Is(b, Mask.PlayerCharacter);
+        }
+
+        public bool AreAlies(GameObject a, GameObject b)
+        {
+            return !AreEnemies(a, b);
+        }
     }
 }

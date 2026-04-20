@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Levels;
 using Levels.AI;
@@ -86,5 +87,7 @@ namespace DI
                 }
             }
         }
+
+        private void FixedUpdate() => entity.FixedUpdate();
     }
 }
