@@ -3,5 +3,5 @@ using UnityEngine;
 
 namespace Levels.Abilities.CommonImpacts
 {
-    public record DamageImpact(GameObject Target, int Damage) : IImpact;
+    public record DamageImpact(GameObject Target, GameObject Attacker, int Damage) : IImpact;
 }

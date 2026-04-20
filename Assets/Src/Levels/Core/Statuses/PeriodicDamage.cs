@@ -37,7 +37,7 @@ namespace Levels.Core.Statuses
             while (time > 0)
             {
                 time -= interval;
-                _publish(ImpactIntent.SelfCast(new DamageImpact(entity.Owner, damage)));
+                _publish(ImpactIntent.SelfCast(new DamageImpact(entity.Owner, entity.Owner, damage)));
                 yield return _waitForSeconds;
             }
         }
