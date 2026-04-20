@@ -1,3 +1,5 @@
+using System.Linq;
+using UnityEngine;
 using VContainer;
 using VContainer.Unity;
 
@@ -5,13 +7,17 @@ namespace DI
 {
     public partial class LevelLifetimeScope : LifetimeScope
     {
+        [SerializeField] private GameLifetimeScope debugFallbackGameScope;
 
         protected override void Awake()
         {
-            var gameScope = FindAnyObjectByType<GameLifetimeScope>();
-            if (gameScope != null)
+            var gameScopes = FindObjectsByType<GameLifetimeScope>(FindObjectsInactive.Exclude, FindObjectsSortMode.InstanceID);
+
+            var trueScope = gameScopes.FirstOrDefault(s => s != debugFallbackGameScope);
+            var scope = trueScope ?? debugFallbackGameScope;
+            if (scope != null)
             {
-                EnqueueParent(gameScope);
+                EnqueueParent(scope);
             }
 
             Build();

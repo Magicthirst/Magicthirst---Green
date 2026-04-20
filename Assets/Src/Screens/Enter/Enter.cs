@@ -1,7 +1,6 @@
 using System.Threading.Tasks;
 using Common;
 using UnityEngine;
-using UnityEngine.AddressableAssets;
 using UnityEngine.UIElements;
 using VContainer;
 
@@ -10,10 +9,9 @@ namespace Screens.Enter
     [RequireComponent(typeof(UIElement))]    
     public class Enter : MonoBehaviour
     {
-        [SerializeField] private AssetReference mainMenuScene;
-
         private EnterElement _component;
 
+        [Inject] private IGameNavigation _navigation;
         [Inject] private CheckSignIn _checkSignedIn;
         private string _signUpUrl;
 
@@ -51,7 +49,7 @@ namespace Screens.Enter
             switch (result)
             {
                 case SignInResult.Success:
-                    mainMenuScene.LoadSceneAsync();
+                    _navigation.GoMainMenu();
                     break;
                 case SignInResult.UserNotFound:
                 default:
@@ -60,7 +58,7 @@ namespace Screens.Enter
             }
         }
 
-        private void OnEnterUnanimouslyRequested() => mainMenuScene.LoadSceneAsync();
+        private void OnEnterUnanimouslyRequested() => _navigation.GoMainMenu();
 
         private void OnSignUpRequested() => Application.OpenURL(_signUpUrl);
     }

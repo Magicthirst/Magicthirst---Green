@@ -2,7 +2,6 @@ using System.Threading.Tasks;
 using Common;
 using Screens.SharedElements;
 using UnityEngine;
-using UnityEngine.AddressableAssets;
 using UnityEngine.UIElements;
 using VContainer;
 
@@ -12,13 +11,11 @@ namespace Screens.MainMenu
     [RequireComponent(typeof(SignInOrOut))]    
     public class MainMenu : MonoBehaviour
     {
-        [SerializeField] private AssetReference gameScene;
-        [SerializeField] private AssetReference joinSessionScene;
-
         private MainMenuElement _component;
 
         [Inject] private HostSession _hostSession;
         [Inject] private IAssignConnectionRole _assignConnectionRole;
+        [Inject] private IGameNavigation _navigation;
 
         public delegate Task<HostSessionResult> HostSession();
 
@@ -49,7 +46,7 @@ namespace Screens.MainMenu
         private void OnPlayOfflineRequested()
         {
             _assignConnectionRole.Offline();
-            gameScene.LoadSceneAsync();
+            _navigation.GoGame();
         }
 
         private async void OnHostSessionRequested()
@@ -59,7 +56,7 @@ namespace Screens.MainMenu
             {
                 case HostSessionResult.Success:
                     _assignConnectionRole.Host();
-                    gameScene.LoadSceneAsync();
+                    _navigation.GoGame();
                     break;
                 case HostSessionResult.UnknownError:
                 default:
@@ -68,9 +65,9 @@ namespace Screens.MainMenu
             }
         }
 
-        private void OnJoinSessionRequested() => joinSessionScene.LoadSceneAsync();
+        private void OnJoinSessionRequested() => _navigation.GoJoinSession();
 
-        private void OnExitApplicationRequested() => Application.Quit(0);
+        private void OnExitApplicationRequested() => _navigation.QuitGame();
 
     }
 }
