@@ -7834,7 +7834,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: c1c80bb64134cb940994fd8f727e1dda, type: 3}
+  m_Sprite: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -7842,7 +7842,7 @@ SpriteRenderer:
   m_Size: {x: 0.16, y: 0.16}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 1
 --- !u!1 &646475906
@@ -14799,6 +14799,80 @@ TrailRenderer:
   m_Autodestruct: 0
   m_Emitting: 0
   m_ApplyActiveColorSpace: 1
+--- !u!1 &1324790132
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1324790134}
+  - component: {fileID: 1324790133}
+  m_Layer: 0
+  m_Name: FallbackGameGlobalScope
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1324790133
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1324790132}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ebc6769cf1bf43739a4ddce95a8e5dc6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  parentReference:
+    TypeName: 
+  autoRun: 1
+  autoInjectGameObjects: []
+  clientConfigAsset: {fileID: 11400000, guid: c5d989f1e98c6124f9eb1ced26623b05, type: 2}
+  gameNavigation:
+    mainMenu:
+      m_AssetGUID: cfb06061954f33e49a62de79c3b8fdc5
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_SubObjectGUID: 
+      m_EditorAssetChanged: 0
+    onlyGameplayLevel:
+      m_AssetGUID: 
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_SubObjectGUID: 
+      m_EditorAssetChanged: 0
+    joinSession:
+      m_AssetGUID: 
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_SubObjectGUID: 
+      m_EditorAssetChanged: 0
+    signIn:
+      m_AssetGUID: 
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_SubObjectGUID: 
+      m_EditorAssetChanged: 0
+--- !u!4 &1324790134
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1324790132}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1499311476}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1347828516
 GameObject:
   m_ObjectHideFlags: 0
@@ -20220,7 +20294,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1499311476}
   - component: {fileID: 1499311477}
-  - component: {fileID: 1499311480}
+  - component: {fileID: 1499311481}
   - component: {fileID: 1499311478}
   - component: {fileID: 1499311479}
   m_Layer: 0
@@ -20242,7 +20316,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1324790134}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1499311477
@@ -20261,9 +20336,9 @@ MonoBehaviour:
     TypeName: 
   autoRun: 1
   autoInjectGameObjects:
-  - {fileID: 0}
+  - {fileID: 1499311475}
   camera: {fileID: 1065869686}
-  debugFallbackGameScope: {fileID: 1499311480}
+  debugFallbackGameScope: {fileID: 1324790133}
 --- !u!114 &1499311478
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20294,7 +20369,7 @@ MonoBehaviour:
   floatingTextFontSize: 6
   xSpatialVariance: 1
   xSpatialVarianceValue: 0.3
---- !u!114 &1499311480
+--- !u!114 &1499311481
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -20303,39 +20378,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1499311475}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ebc6769cf1bf43739a4ddce95a8e5dc6, type: 3}
+  m_Script: {fileID: 11500000, guid: cdd43ca2dd66423298e11478c01ed189, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  parentReference:
-    TypeName: 
-  autoRun: 1
-  autoInjectGameObjects: []
-  clientConfigAsset: {fileID: 11400000, guid: c5d989f1e98c6124f9eb1ced26623b05, type: 2}
-  gameNavigation:
-    mainMenu:
-      m_AssetGUID: cfb06061954f33e49a62de79c3b8fdc5
-      m_SubObjectName: 
-      m_SubObjectType: 
-      m_SubObjectGUID: 
-      m_EditorAssetChanged: 0
-    onlyGameplayLevel:
-      m_AssetGUID: 
-      m_SubObjectName: 
-      m_SubObjectType: 
-      m_SubObjectGUID: 
-      m_EditorAssetChanged: 0
-    joinSession:
-      m_AssetGUID: 
-      m_SubObjectName: 
-      m_SubObjectType: 
-      m_SubObjectGUID: 
-      m_EditorAssetChanged: 0
-    signIn:
-      m_AssetGUID: 
-      m_SubObjectName: 
-      m_SubObjectType: 
-      m_SubObjectGUID: 
-      m_EditorAssetChanged: 0
+  player: {fileID: 1711207718}
 --- !u!1001 &1515696097
 PrefabInstance:
   m_ObjectHideFlags: 0
