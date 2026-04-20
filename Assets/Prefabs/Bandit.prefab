@@ -70,6 +70,7 @@ GameObject:
   - component: {fileID: 7085063179026557343}
   - component: {fileID: 4329265247647134832}
   - component: {fileID: 6035081067739590327}
+  - component: {fileID: 8646692905782134384}
   - component: {fileID: 1755954717784887308}
   - component: {fileID: 9222006205364241558}
   m_Layer: 0
@@ -245,6 +246,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nextStates:
   - {fileID: 6035081067739590327}
+  - {fileID: 8646692905782134384}
   overridesStates: []
   fallback: {fileID: 7085063179026557343}
 --- !u!114 &4329265247647134832
@@ -261,6 +263,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nextStates:
   - {fileID: 6035081067739590327}
+  - {fileID: 8646692905782134384}
   overridesStates: []
   fallback: {fileID: 4329265247647134832}
   alertSeat: {fileID: 0}
@@ -279,6 +282,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nextStates:
   - {fileID: 4329265247647134832}
+  - {fileID: 8646692905782134384}
   overridesStates:
   - {fileID: 7085063179026557343}
   - {fileID: 4329265247647134832}
@@ -297,6 +301,24 @@ MonoBehaviour:
   movementSpeed: 7
   maxDistance: 10
   tacticUpdatePeriod: 0.5
+--- !u!114 &8646692905782134384
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2417240799410663039}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c24e1646d5e145948781d87de6a0e376, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nextStates:
+  - {fileID: 8646692905782134384}
+  overridesStates:
+  - {fileID: 6035081067739590327}
+  - {fileID: 4329265247647134832}
+  fallback: {fileID: 8646692905782134384}
 --- !u!114 &1755954717784887308
 MonoBehaviour:
   m_ObjectHideFlags: 0
