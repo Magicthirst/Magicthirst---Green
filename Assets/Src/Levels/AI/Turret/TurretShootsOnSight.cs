@@ -23,7 +23,7 @@ namespace Levels.AI.Turret
         [Inject] private IShootConfig _config = null!;
         [Inject] private MasksRegistry _registry = null!;
         [Inject] private PublishIntent<HitScanShootIntent> _publishShoot;
-        private Collider _enemy = null!;
+        private Transform _enemy = null!;
 
         private BurstShooter _shooter;
 
@@ -56,7 +56,7 @@ namespace Levels.AI.Turret
             if (_registry.Is(other.gameObject, Mask.PlayerCharacter) &&
                 Physics.Linecast(transform.position, other.transform.position))
             {
-                _enemy = other;
+                _enemy = other.transform;
                 Ready();
             }
         }
@@ -83,7 +83,7 @@ namespace Levels.AI.Turret
 
         private void OnPlayerGotAway(Collider other)
         {
-            if (other == _enemy)
+            if (other.transform == _enemy)
             {
                 _enemy = null;
             }

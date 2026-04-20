@@ -1,4 +1,5 @@
 using System.Collections;
+using Levels.Abilities.CommonImpacts;
 using Levels.Abilities.HitScanShoot;
 using Levels.AI.Shared;
 using Levels.IntentsImpacts;
@@ -33,7 +34,8 @@ namespace Levels.AI.Bandit
         [Inject] private IShootConfig _config = null!;
         [Inject] private MasksRegistry _registry = null!;
         [Inject] private PublishIntent<HitScanShootIntent> _publishShoot;
-        private Collider _enemy = null!;
+        [Inject] private IImpactConsumer<DamageImpact> _wasDamaged;
+        private Transform _enemy = null!;
 
         private BurstShooter _shooter;
         private KitingMovement _movement;
@@ -73,13 +75,25 @@ namespace Levels.AI.Bandit
         {
             startFightArea.ContactEntered += OnPlayerCameClose;
             stopFightArea.ContactExited += OnPlayerGotAway;
+            _wasDamaged.Impacted += OnWasDamaged;
+        }
+
+        private void OnWasDamaged(DamageImpact impact)
+        {
+            if (_enemy is not null)
+            {
+                return;
+            }
+
+            _enemy = impact.Attacker.transform;
+            Ready();
         }
 
         private void OnPlayerCameClose(Collider other)
         {
             if (_registry.Is(other.gameObject, Mask.PlayerCharacter))
             {
-                _enemy = other;
+                _enemy = other.transform;
                 Ready();
             }
         }
@@ -106,7 +120,7 @@ namespace Levels.AI.Bandit
 
         private void OnPlayerGotAway(Collider other)
         {
-            if (other == _enemy)
+            if (other.transform == _enemy)
             {
                 _enemy = null;
                 Finish();
@@ -119,6 +133,7 @@ namespace Levels.AI.Bandit
         {
             startFightArea.ContactEntered -= OnPlayerCameClose;
             stopFightArea.ContactExited -= OnPlayerGotAway;
+            _wasDamaged.Impacted -= OnWasDamaged;
         }
     }
 }
