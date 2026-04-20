@@ -39,7 +39,7 @@ namespace Levels.Abilities.HitScanShoot
 
                 if (_registry.Is(victim, Mask.Damageable))
                 {
-                    yield return new DamageImpact(victim, config.Damage);
+                    yield return new DamageImpact(victim, caster, config.Damage);
                 }
                 if (_registry.Is(victim, Mask.Pushable))
                 {

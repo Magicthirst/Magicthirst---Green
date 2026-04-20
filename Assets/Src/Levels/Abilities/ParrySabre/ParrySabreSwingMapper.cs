@@ -29,7 +29,7 @@ namespace Levels.Abilities.ParrySabre
 
                 if (_registry.Is(target, Mask.Damageable))
                 {
-                    yield return new DamageImpact(target, intent.Config.Damage);
+                    yield return new DamageImpact(target, intent.Caster, intent.Config.Damage);
                 }
             }
         }
