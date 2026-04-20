@@ -9,5 +9,6 @@ namespace Levels.Abilities.HitScanShoot
         float Distance { get; }
         float PushVelocity { get; }
         TimeSpan PushDuration { get; }
+        bool CanHitAllies { get; }
     }
 }

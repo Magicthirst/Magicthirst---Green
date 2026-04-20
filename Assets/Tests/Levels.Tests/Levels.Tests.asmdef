@@ -1,0 +1,7 @@
+{
+    "name": "Levels.Tests",
+    "optionalUnityReferences": [
+        "TestAssemblies"
+    ],
+    "references":[ "GUID:cea26fd12e4a8cb40bd51e94438f5237", "GUID:b0214a6008ed146ff8f122a6a9c2f6cc" ]
+}

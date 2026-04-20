@@ -17,3 +17,4 @@ MonoBehaviour:
   shootOffset: 0
   shootPushVelocity: 10
   shootPushDurationSeconds: 0.1
+  shootHitsAllies: 1

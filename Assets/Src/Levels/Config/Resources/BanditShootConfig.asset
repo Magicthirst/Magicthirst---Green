@@ -12,8 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 0}
   m_Name: BanditShootConfig
   m_EditorClassIdentifier: Levels:Levels.Config:ShootConfig
-  shootDamage: 0
+  shootDamage: 1
   shootDistance: 200
   shootOffset: 0.4
   shootPushVelocity: 10
   shootPushDurationSeconds: 0.05
+  shootHitsAllies: 0

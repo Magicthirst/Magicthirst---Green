@@ -18,7 +18,6 @@ namespace Levels.Core.Passives
 
         public DeferredBroker<HitScanShootIntent> Handle => _handle;
 
-        private float _ParryWindowStart => _lastParryTimePoint - _config.Leeway;
         private float _ParryWindowEnd => _lastParryTimePoint + _config.Duration;
 
         [Inject] private IParryConfig _config;
@@ -57,7 +56,6 @@ namespace Levels.Core.Passives
 
         private void Parry(ParryImpact impact)
         {
-            Debug.Log($"Parried {impact}");
             _lastParryTimePoint = Time.fixedTime;
             _lastParryDirection = impact.Direction;
 
@@ -71,18 +69,18 @@ namespace Levels.Core.Passives
         /// <param name="incomingDirection">Direction relative to the victim</param>
         private void Attack(IIntent intent, Vector3 incomingDirection)
         {
-            Debug.Log($"Attacked {intent}");
             var now = Time.fixedTime;
-
             _suspendedAttacks.Enqueue(new AttackInstance(intent, incomingDirection, now));
         }
 
         private void CheckSuspendedAttacksStatus()
         {
-            var parryWindowStart = _ParryWindowStart;
             var parryWindowEnd = _ParryWindowEnd;
-
-            while (_suspendedAttacks.TryPeek(out var attack) && attack.TimePoint < parryWindowStart)
+            while
+            (
+                _suspendedAttacks.TryPeek(out var attack) &&
+                attack.TimePoint + _config.Leeway < Time.time
+            )
             {
                 Debug.Log($"Passed {attack.Intent}");
                 AttackPassed?.Invoke(attack.Intent);

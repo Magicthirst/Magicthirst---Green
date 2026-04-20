@@ -63,5 +63,19 @@ namespace Util
             enumerable.MoveNext();
             return result;
         }
+
+        public static bool TryRemoveBy<T>(this List<T> list, out T item, Predicate<T> predicate)
+        {
+            var i = list.FindIndex(predicate);
+            if (i == -1)
+            {
+                item = default;
+                return false;
+            }
+
+            item = list[i];
+            list.RemoveAt(i);
+            return true;
+        }
     }
 }

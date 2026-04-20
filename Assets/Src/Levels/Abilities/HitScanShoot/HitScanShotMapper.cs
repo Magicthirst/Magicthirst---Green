@@ -21,23 +21,29 @@ namespace Levels.Abilities.HitScanShoot
 
         public IEnumerable<IImpact> Map(HitScanShootIntent intent)
         {
+            var caster = intent.Caster;
             var config = intent.Config;
             var push = intent.Direction * config.PushVelocity;
             var origin = intent.Origin + intent.Direction * config.Offset;
 
-            yield return new CasterShotHitScanEffect(intent.Caster, origin, intent.Direction, intent.Config.Distance);
+            yield return new CasterShotHitScanEffect(caster, origin, intent.Direction, intent.Config.Distance);
 
-            foreach (var target in GetAffected(intent.Caster, origin, intent.Direction))
+            foreach (var victim in GetAffected(caster, origin, intent.Direction))
             {
-                yield return new TargetWasShotEffect(target);
-
-                if (_registry.Is(target, Mask.Damageable))
+                if (_registry.AreAlies(caster, victim) && !config.CanHitAllies)
                 {
-                    yield return new DamageImpact(target, config.Damage);
+                    continue;
                 }
-                if (_registry.Is(target, Mask.Pushable))
+
+                yield return new TargetWasShotEffect(victim);
+
+                if (_registry.Is(victim, Mask.Damageable))
                 {
-                    yield return new ImpulseImpact(target, push, config.PushDuration);
+                    yield return new DamageImpact(victim, config.Damage);
+                }
+                if (_registry.Is(victim, Mask.Pushable))
+                {
+                    yield return new ImpulseImpact(victim, push, config.PushDuration);
                 }
             }
 

@@ -12,11 +12,13 @@ namespace Levels.Config
         public float shootOffset;
         public float shootPushVelocity;
         public float shootPushDurationSeconds;
+        public bool shootCanHitAllies;
 
         float    IShootConfig.PushVelocity => shootPushVelocity;
         TimeSpan IShootConfig.PushDuration => TimeSpan.FromSeconds(shootPushDurationSeconds);
         int      IShootConfig.Damage => shootDamage;
         float    IShootConfig.Offset => shootOffset;
         float    IShootConfig.Distance => shootDistance;
+        bool     IShootConfig.CanHitAllies => shootCanHitAllies;
     }
 }
