@@ -287,7 +287,7 @@ VideoPlayer:
   m_TargetCameraAlpha: 1
   m_TargetCamera3DLayout: 0
   m_TargetCamera: {fileID: 0}
-  m_TargetTexture: {fileID: 8400000, guid: 4eb421154eb94934fa626208c33f216b, type: 2}
+  m_TargetTexture: {fileID: 8400000, guid: 1628ec1ea2d5189429de71904beda60e, type: 2}
   m_TimeReference: 0
   m_TargetMaterialRenderer: {fileID: 0}
   m_TargetMaterialProperty: <noninit>
@@ -350,7 +350,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Texture: {fileID: 8400000, guid: 4eb421154eb94934fa626208c33f216b, type: 2}
+  m_Texture: {fileID: 8400000, guid: 1628ec1ea2d5189429de71904beda60e, type: 2}
   m_UVRect:
     serializedVersion: 2
     x: 0
@@ -583,18 +583,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f216884590be4fa3a0496f66acaa64d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameScene:
-    m_AssetGUID: 99c9720ab356a0642a771bea13969a05
-    m_SubObjectName: 
-    m_SubObjectType: 
-    m_SubObjectGUID: 
-    m_EditorAssetChanged: 0
-  joinSessionScene:
-    m_AssetGUID: 4681ab6970ca61048adb730eeb3eedd4
-    m_SubObjectName: 
-    m_SubObjectType: 
-    m_SubObjectGUID: 
-    m_EditorAssetChanged: 0
 --- !u!114 &1471201277
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -607,12 +595,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0644ea31fb9d4fc48537cab1cc123dc6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enterScene:
-    m_AssetGUID: 942fbe52f04b005499916a006ba7b2b6
-    m_SubObjectName: 
-    m_SubObjectType: 
-    m_SubObjectGUID: 
-    m_EditorAssetChanged: 0
 --- !u!114 &1471201278
 MonoBehaviour:
   m_ObjectHideFlags: 0
