@@ -13,6 +13,7 @@ namespace DI
     public class GameLifetimeScope : LifetimeScope
     {
         [SerializeField] private ClientConfigAsset clientConfigAsset;
+        [SerializeField] private GameNavigation gameNavigation;
 
         private readonly ConnectionRoleState _connectionRole = new();
         [CanBeNull] private IConnector _connector = null;
@@ -63,6 +64,8 @@ namespace DI
             builder
                 .RegisterInstance<IsPublishingUpdates>(() => _connector != null && _connectionRole.IsPublishingUpdates())
                 .AsSelf();
+
+            builder.RegisterInstance<IGameNavigation>(gameNavigation);
         }
     }
 }

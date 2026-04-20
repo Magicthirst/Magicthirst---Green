@@ -168,6 +168,31 @@ MonoBehaviour:
   autoRun: 1
   autoInjectGameObjects: []
   clientConfigAsset: {fileID: 11400000, guid: c5d989f1e98c6124f9eb1ced26623b05, type: 2}
+  gameNavigation:
+    mainMenu:
+      m_AssetGUID: cfb06061954f33e49a62de79c3b8fdc5
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_SubObjectGUID: 
+      m_EditorAssetChanged: 0
+    onlyGameplayLevel:
+      m_AssetGUID: 1457b548de9798f47ab09941599c97da
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_SubObjectGUID: 
+      m_EditorAssetChanged: 0
+    joinSession:
+      m_AssetGUID: 4681ab6970ca61048adb730eeb3eedd4
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_SubObjectGUID: 
+      m_EditorAssetChanged: 0
+    signIn:
+      m_AssetGUID: 942fbe52f04b005499916a006ba7b2b6
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_SubObjectGUID: 
+      m_EditorAssetChanged: 0
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

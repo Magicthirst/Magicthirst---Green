@@ -20220,6 +20220,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1499311476}
   - component: {fileID: 1499311477}
+  - component: {fileID: 1499311480}
   - component: {fileID: 1499311478}
   - component: {fileID: 1499311479}
   m_Layer: 0
@@ -20262,6 +20263,7 @@ MonoBehaviour:
   autoInjectGameObjects:
   - {fileID: 0}
   camera: {fileID: 1065869686}
+  debugFallbackGameScope: {fileID: 1499311480}
 --- !u!114 &1499311478
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20292,6 +20294,48 @@ MonoBehaviour:
   floatingTextFontSize: 6
   xSpatialVariance: 1
   xSpatialVarianceValue: 0.3
+--- !u!114 &1499311480
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1499311475}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ebc6769cf1bf43739a4ddce95a8e5dc6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  parentReference:
+    TypeName: 
+  autoRun: 1
+  autoInjectGameObjects: []
+  clientConfigAsset: {fileID: 11400000, guid: c5d989f1e98c6124f9eb1ced26623b05, type: 2}
+  gameNavigation:
+    mainMenu:
+      m_AssetGUID: cfb06061954f33e49a62de79c3b8fdc5
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_SubObjectGUID: 
+      m_EditorAssetChanged: 0
+    onlyGameplayLevel:
+      m_AssetGUID: 
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_SubObjectGUID: 
+      m_EditorAssetChanged: 0
+    joinSession:
+      m_AssetGUID: 
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_SubObjectGUID: 
+      m_EditorAssetChanged: 0
+    signIn:
+      m_AssetGUID: 
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_SubObjectGUID: 
+      m_EditorAssetChanged: 0
 --- !u!1001 &1515696097
 PrefabInstance:
   m_ObjectHideFlags: 0

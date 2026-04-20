@@ -2,7 +2,6 @@ using System;
 using System.Threading.Tasks;
 using Common;
 using UnityEngine;
-using UnityEngine.AddressableAssets;
 using UnityEngine.UIElements;
 using VContainer;
 
@@ -11,13 +10,11 @@ namespace Screens.JoinSession
     [RequireComponent(typeof(UIElement))]    
     public class JoinSession : MonoBehaviour
     {
-        [SerializeField] private AssetReference gameScene;
-        [SerializeField] private AssetReference mainMenuScene;
-
         private JoinSessionElement _element;
 
         [Inject] private AskToJoinSession _askToJoinSession;
         [Inject] private IAssignConnectionRole _assignConnectionRole;
+        [Inject] private IGameNavigation _navigation;
 
         public delegate Task<JoinSessionResult> AskToJoinSession(string hostId);
 
@@ -41,7 +38,7 @@ namespace Screens.JoinSession
             _element.JoinRequested -= OnJoinRequested;
         }
 
-        private void OnCancelRequested() => mainMenuScene.LoadSceneAsync();
+        private void OnCancelRequested() => _navigation.GoMainMenu();
 
         private async void OnJoinRequested(string hostId)
         {
@@ -50,7 +47,7 @@ namespace Screens.JoinSession
             if (result == JoinSessionResult.Success)
             {
                 _assignConnectionRole.Guest();
-                gameScene.LoadSceneAsync();
+                _navigation.GoGame();
                 return;
             }
 
