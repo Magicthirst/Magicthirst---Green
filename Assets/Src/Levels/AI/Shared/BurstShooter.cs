@@ -43,7 +43,7 @@ namespace Levels.AI.Shared
             _publishShoot = publishShoot;
         } 
 
-        public IEnumerator Shoot(Collider enemy, bool retryWhenTargetLost = false, IEnumerator continuation = null)
+        public IEnumerator Shoot(Transform enemy, bool retryWhenTargetLost = false, IEnumerator continuation = null)
         {
             var betweenShootDelayWaiter = new WaitForSeconds(_betweenShotPeriod);
             var betweenBurstDelayWaiter = new WaitForSeconds(_betweenBurstPeriod - _betweenShotPeriod);
@@ -56,7 +56,7 @@ namespace Levels.AI.Shared
                 Vector3 targetPosition;
                 var iBurst = 0;
 
-                while ((targetPosition = enemy?.transform.position ?? InvalidPosition) != InvalidPosition &&
+                while ((targetPosition = enemy?.position ?? InvalidPosition) != InvalidPosition &&
                        iBurst++ < _burstCount)
                 {
                     yield return betweenBurstDelayWaiter;

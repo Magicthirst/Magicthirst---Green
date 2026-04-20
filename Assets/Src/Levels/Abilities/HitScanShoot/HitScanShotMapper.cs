@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Levels.Abilities.CommonImpacts;
@@ -54,14 +55,14 @@ namespace Levels.Abilities.HitScanShoot
                 var start = origin + direction * config.Offset;
                 var hitCount = Physics.RaycastNonAlloc(start, direction, _hitBuffer, config.Distance);
 
-                var sortedHits = _hitBuffer
+                var victims = _hitBuffer
                     .Take(hitCount)
-                    .OrderBy(h => h.distance);
+                    .OrderBy(h => h.distance)
+                    .Select(hit => hit.collider.gameObject)
+                    .Distinct();
 
-                foreach (var hit in sortedHits)
+                foreach (var victim in victims)
                 {
-                    var victim = hit.collider.gameObject;
-
                     if (victim.layer == WallLayer)
                     {
                         break;
