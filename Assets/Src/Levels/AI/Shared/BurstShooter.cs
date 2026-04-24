@@ -1,5 +1,6 @@
 using System.Collections;
 using Levels.Abilities.HitScanShoot;
+using Levels.AI.Util;
 using Levels.IntentsImpacts;
 using Levels.Util;
 using UnityEngine;
@@ -17,7 +18,7 @@ namespace Levels.AI.Shared
         private readonly float _betweenBurstPeriod;
         private readonly float _betweenShotPeriod;
 
-        private readonly Transform _transform;
+        private readonly Transform _self;
         private readonly IShootConfig _config;
         private readonly PublishIntent<HitScanShootIntent> _publishShoot;
 
@@ -28,7 +29,7 @@ namespace Levels.AI.Shared
             float initialDelay,
             float betweenBurstPeriod,
             float betweenShotPeriod,
-            Transform transform,
+            Transform self,
             IShootConfig config,
             PublishIntent<HitScanShootIntent> publishShoot)
         {
@@ -38,39 +39,39 @@ namespace Levels.AI.Shared
             _initialDelay = initialDelay;
             _betweenBurstPeriod = betweenBurstPeriod;
             _betweenShotPeriod = betweenShotPeriod;
-            _transform = transform;
+            _self = self;
             _config = config;
             _publishShoot = publishShoot;
         } 
 
         public IEnumerator Shoot(Transform enemy, bool retryWhenTargetLost = false, IEnumerator continuation = null)
         {
-            var betweenShootDelayWaiter = new WaitForSeconds(_betweenShotPeriod);
-            var betweenBurstDelayWaiter = new WaitForSeconds(_betweenBurstPeriod - _betweenShotPeriod);
-            var initialDelayWaiter = new WaitForSeconds(_initialDelay - _betweenBurstPeriod + _betweenShotPeriod);
+            var betweenShootDelay = _betweenShotPeriod;
+            var betweenBurstDelay = _betweenBurstPeriod - _betweenShotPeriod;
+            var initialDelay = _initialDelay - _betweenBurstPeriod + _betweenShotPeriod;
 
             do
             {
-                yield return initialDelayWaiter;
+                yield return InterruptableWait.ForSeconds(initialDelay);
 
                 Vector3 targetPosition;
                 var iBurst = 0;
 
-                while ((targetPosition = enemy?.position ?? InvalidPosition) != InvalidPosition &&
+                while ((targetPosition = enemy?.position ?? InvalidPosition) != InvalidPosition && // TODO investigate
                        iBurst++ < _burstCount)
                 {
-                    yield return betweenBurstDelayWaiter;
+                    yield return InterruptableWait.ForSeconds(betweenBurstDelay);
 
-                    var direction = (targetPosition - _transform.position).normalized;
+                    var direction = (targetPosition - _self.position).normalized;
 
                     for (var iShot = 0; iShot < _shotCount; iShot++)
                     {
                         var spreadDirection = MathExt.SpreadDirection(direction, _shotSpreadDegrees);
 
-                        var intent = HitScanShootIntent.FromCenter(_transform.gameObject, spreadDirection, _config);
+                        var intent = HitScanShootIntent.FromCenter(_self.gameObject, spreadDirection, _config);
                         _publishShoot(intent);
 
-                        yield return betweenShootDelayWaiter;
+                        yield return InterruptableWait.ForSeconds(betweenShootDelay);
                     }
                 }
                 // ReSharper disable once LoopVariableIsNeverChangedInsideLoop

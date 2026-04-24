@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9c694c41e0814937b546b6b503f3d600, type: 3}
-  m_Name: PlayerShotgunConfig
-  m_EditorClassIdentifier: Levels:Levels.Config:ShotgunConfig
-  shotgunDamage: 35
-  shotgunVelocity: 80
-  shotgunDurationSeconds: 0.1
-  shotgunCircleRadius: 3
+  m_Name: ScreeningBanditShotgunConfig
+  m_EditorClassIdentifier: 
+  shotgunDamage: 0
+  shotgunVelocity: 20
+  shotgunDurationSeconds: 0.05
+  shotgunCircleRadius: 1
   shotgunCircleCenterOffset: 2.5

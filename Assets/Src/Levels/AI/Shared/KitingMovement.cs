@@ -1,4 +1,5 @@
 using System.Collections;
+using Levels.AI.Util;
 using Levels.Extensions;
 using UnityEngine;
 using UnityEngine.AI;
@@ -19,8 +20,6 @@ namespace Levels.AI.Shared
         private readonly NavMeshAgent _agent;
         private readonly LayerMask _obstacleMask;
 
-        private readonly WaitForFixedUpdate _wait;
-
         public KitingMovement(
             float speed,
             float maxDistance,
@@ -36,7 +35,6 @@ namespace Levels.AI.Shared
             _self = self;
             _agent = agent;
             _obstacleMask = obstacleMask;
-            _wait = new WaitForFixedUpdate();
         }
 
         public IEnumerator Kite(Transform enemy)
@@ -44,7 +42,7 @@ namespace Levels.AI.Shared
             _agent.speed = _speed;
             _agent.updateRotation = true; 
 
-            yield return Wait(_updateShift);
+            yield return InterruptableWait.ForSeconds(_updateShift);
 
             while (true)
             {
@@ -72,7 +70,7 @@ namespace Levels.AI.Shared
                     _agent.isStopped = true;
                 }
 
-                yield return Wait(_tacticUpdatePeriod);
+                yield return InterruptableWait.ForSeconds(_tacticUpdatePeriod);
             }
             // ReSharper disable once IteratorNeverReturns
         }
@@ -130,15 +128,6 @@ namespace Levels.AI.Shared
             var distance = direction.magnitude;
 
             return !Physics.Raycast(origin, direction, distance, _obstacleMask);
-        }
-
-        private IEnumerator Wait(float time)
-        {
-            while (time > 0)
-            {
-                yield return _wait;
-                time -= Time.fixedDeltaTime;
-            }
         }
     }
 }

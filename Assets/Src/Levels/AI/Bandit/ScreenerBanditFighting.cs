@@ -1,7 +1,8 @@
 using System.Collections;
 using Levels.Abilities.CommonImpacts;
-using Levels.Abilities.HitScanShoot;
+using Levels.Abilities.PushingShotgun;
 using Levels.AI.Shared;
+using Levels.Extensions;
 using Levels.IntentsImpacts;
 using Levels.Util;
 using Levels.Util.MasksRegistry;
@@ -12,35 +13,28 @@ using VContainer;
 namespace Levels.AI.Bandit
 {
     [RequireComponent(typeof(NavMeshAgent))]
-    public class BanditFighting : FsmState, IInterruptable<IMovementReason>
+    public class ScreenerBanditFighting : FsmState, IInterruptable<IMovementReason>
     {
         [SerializeField] private PublishContacts startFightArea;
         [SerializeField] private PublishContacts stopFightArea;
-        [SerializeField] private LayerMask wallLayer;
+        [SerializeField] private ScreenerSquadBrain brain;
 
         [Header("Shooting Settings")]
+        [SerializeField] private float minDistance;
         [SerializeField] private float shotSpreadDegrees;
-        [SerializeField] private int burstCount;
-        [SerializeField] private int shotCount;
-        [SerializeField] private float initialDelay;
-        [SerializeField] private float betweenBurstDelay;
         [SerializeField] private float betweenShotDelay;
 
-        [Header("Movement Settings")]
-        [SerializeField] private float movementSpeed;
-        [SerializeField] private float maxDistance;
-        [SerializeField] private float tacticUpdatePeriod;
-
-        [Inject] private IShootConfig _config = null!;
+        [Inject] private IShotgunConfig _config = null!;
         [Inject] private MasksRegistry _registry = null!;
-        [Inject] private PublishIntent<HitScanShootIntent> _publishShoot;
+        [Inject] private PublishIntent<PushingShotgunShootIntent> _publishShoot;
         [Inject] private IImpactConsumer<DamageImpact> _wasDamaged;
         private Transform _enemy = null!;
 
-        private BurstShooter _shooter;
-        private KitingMovement _movement;
+        private ShotgunShooter _shooter;
+        private ScreenerSquadMemberMovement _movement;
 
-        private InterruptionQueue _interruptionQueue;
+        private InterruptionQueue _squadShootingCooldown;
+        private InterruptionQueue _movementInterruptionQueue;
         private Coroutine[] _coroutines;
 
         protected override bool _IsReady => _enemy != null;
@@ -49,26 +43,19 @@ namespace Levels.AI.Bandit
         {
             base.Awake();
 
-            _interruptionQueue = new InterruptionQueue(this, new WaitForFixedUpdate());
+            _movementInterruptionQueue = new InterruptionQueue(this, new WaitForFixedUpdate());
 
-            _shooter = new BurstShooter(
-                shotSpreadDegrees: shotSpreadDegrees,
-                burstCount: burstCount,
-                shotCount: shotCount,
-                initialDelay: initialDelay,
-                betweenBurstPeriod: betweenBurstDelay,
-                betweenShotPeriod: betweenShotDelay,
+            _shooter = new ShotgunShooter
+            (
                 self: transform,
                 config: _config,
-                publishShoot: _publishShoot);
+                publishShoot: _publishShoot.WithSideeffect(_ => brain.NotifyShot()),
+                minDistance: minDistance,
+                shotSpreadDegrees: shotSpreadDegrees,
+                betweenShootPeriod: betweenShotDelay
+            );
 
-            _movement = new KitingMovement(
-                speed: movementSpeed,
-                maxDistance: maxDistance,
-                tacticUpdatePeriod: tacticUpdatePeriod,
-                self: transform,
-                agent: GetComponent<NavMeshAgent>(),
-                obstacleMask: wallLayer);
+            (_movement, _squadShootingCooldown) = brain.RegisterMember(GetComponent<NavMeshAgent>());
         }
 
         private void OnEnable()
@@ -103,9 +90,11 @@ namespace Levels.AI.Bandit
             base.Enter();
             _coroutines = new[]
             {
-                StartCoroutine(_shooter.Shoot(_enemy, retryWhenTargetLost: true)),
-                StartCoroutine(_movement.Kite(_enemy.transform)
-                    .WithInterruptions(_interruptionQueue))
+                StartCoroutine(_shooter.Shoot(_enemy)
+                    .WithInterruptions(_squadShootingCooldown)),
+
+                StartCoroutine(_movement.Screen()
+                    .WithInterruptions(_movementInterruptionQueue))
             };
         }
 
@@ -128,7 +117,7 @@ namespace Levels.AI.Bandit
             }
         }
 
-        public void Interrupt(IEnumerator block) => _interruptionQueue.Interrupt(block);
+        public void Interrupt(IEnumerator block) => _movementInterruptionQueue.Interrupt(block);
 
         private void OnDisable()
         {

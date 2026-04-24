@@ -88,11 +88,19 @@ namespace Levels.Util
 
     public static class InterruptionsExtensions
     {
+        public static IEnumerator WithInterruptions(this IEnumerator routine, InterruptionQueue interruptionQueue)
+        {
+            return interruptionQueue.MakeInterruptable(routine);
+        }
+
         public static bool TryInterrupt<TReason>(this GameObject gameObject, IEnumerator routine)
         {
-            if (gameObject.TryGetComponent<IInterruptable<TReason>>(out var behaviour))
+            if (gameObject.GetComponents<IInterruptable<TReason>>() is var behaviours && behaviours.Length != 0)
             {
-                behaviour.Interrupt(routine);
+                foreach (var behaviour in behaviours)
+                {
+                    behaviour.Interrupt(routine);
+                }
                 return true;
             }
 
