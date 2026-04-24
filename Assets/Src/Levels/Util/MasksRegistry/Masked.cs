@@ -1,6 +1,5 @@
 using UnityEngine;
 using VContainer;
-using VContainer.Unity;
 
 namespace Levels.Util.MasksRegistry
 {
@@ -8,11 +7,8 @@ namespace Levels.Util.MasksRegistry
     {
         [SerializeField] private Mask mask;
 
-        private void Start()
-        {
-            LifetimeScope.Find<LifetimeScope>().Container
-                .Resolve<MasksRegistry>()
-                .Register(gameObject, mask);
-        }
+        [Inject] private MasksRegistry _registry;
+
+        private void Start() => _registry.Register(gameObject, mask);
     }
 }

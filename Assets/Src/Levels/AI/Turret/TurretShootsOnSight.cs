@@ -39,7 +39,7 @@ namespace Levels.AI.Turret
                 initialDelay: initialDelay,
                 betweenBurstPeriod: betweenBurstDelay,
                 betweenShotPeriod: betweenShotDelay,
-                transform: transform,
+                self: transform,
                 config: _config,
                 publishShoot: _publishShoot);
         }

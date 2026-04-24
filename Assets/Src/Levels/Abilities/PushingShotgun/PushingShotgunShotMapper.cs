@@ -11,6 +11,8 @@ namespace Levels.Abilities.PushingShotgun
     {
         private readonly MasksRegistry _registry;
 
+        private static readonly int WallLayer = LayerMask.NameToLayer("Wall");
+
         public PushingShotgunShotMapper(MasksRegistry registry)
         {
             _registry = registry;
@@ -26,16 +28,19 @@ namespace Levels.Abilities.PushingShotgun
             {
                 yield return new TargetWasShotEffect(target);
 
-                if (_registry.Is(target, Mask.Damageable))
+                if (_registry.AreEnemies(intent.Caster, target))
                 {
-                    // TODO yield return new DamageImpact(target, _config.shotgunDamage);
-                }
+                    if (_registry.Is(target, Mask.Damageable))
+                    {
+                        yield return new DamageImpact(target, intent.Caster, intent.Config.Damage);
+                    }
 
-                if (_registry.Is(target, Mask.Pushable))
-                {
-                    yield return new ImpulseImpact(target,
-                        intent.Direction * intent.Config.Velocity,
-                        intent.Config.Duration);
+                    if (_registry.Is(target, Mask.Pushable))
+                    {
+                        yield return new ImpulseImpact(target,
+                            intent.Direction * intent.Config.Velocity,
+                            intent.Config.Duration);
+                    }
                 }
             }
         }
@@ -48,7 +53,8 @@ namespace Levels.Abilities.PushingShotgun
                 .OverlapSphere(circleCenter, intent.Config.CircleRadius)
                 .Select(collider => collider.gameObject)
                 .Distinct()
-                .Where(gameObject => gameObject != intent.Caster);
+                .Where(gameObject => gameObject != intent.Caster)
+                .Where(victim => victim.layer != WallLayer);
         }
     }
 }
