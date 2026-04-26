@@ -7670,10 +7670,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a15249d9987469fb1339b21977c323a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fallback: {fileID: 543028949}
   nextStates:
   - {fileID: 543028952}
   overridesStates: []
-  fallback: {fileID: 543028949}
   rotationSpeed: 20
   pauseSeconds: 2
 --- !u!114 &543028950
@@ -7714,10 +7714,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8bd4a6b80cdf4931b57e47092cef9c7a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fallback: {fileID: 543028949}
   nextStates: []
   overridesStates:
   - {fileID: 543028949}
-  fallback: {fileID: 543028949}
   contacts: {fileID: 411826882}
   shotSpreadDegrees: 15
   burstCount: 3
@@ -22684,7 +22684,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   throwingAngle: 9.9
-  drawShotgun: 1
+  drawShotgun: 0
   drawShoot: 0
   drawParrySabre: 0
   drawTeleportChip: 0

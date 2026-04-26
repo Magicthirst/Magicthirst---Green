@@ -34,6 +34,7 @@ namespace Levels.AI.Bandit
 
         public IEnumerator Screen()
         {
+            _agent.isStopped = false;
             _agent.speed = _speed;
 
             while (true)

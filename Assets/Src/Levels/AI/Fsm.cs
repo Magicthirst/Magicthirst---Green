@@ -12,7 +12,13 @@ namespace Levels.AI
     {
         public Action<FsmState> OnStateChanged;
 
-        [SerializeField] private FsmState initialState;
+        /// <summary>
+        /// Starting state
+        /// <code>[*] --> Fsm.initialState</code>
+        /// </summary>
+        [Tooltip("Starting state")]
+        [SerializeField]
+        private FsmState initialState;
         public IReadOnlyList<FsmState> States => GetComponents<FsmState>().ToArray();
 
         private FsmState _currentBacking;
@@ -46,6 +52,8 @@ namespace Levels.AI
                 .Aggregate((acc, state) => acc + state);
         }
 
+        private void Update() => _Current?.OnFrame();
+
         private void RunState(FsmState state)
         {
             _Current?.Exit();
@@ -60,7 +68,7 @@ namespace Levels.AI
 
             void OnStateReadied()
             {
-                if (_Current.TransitionsTo(state) && state.Overrides(_Current))
+                if (state.Overrides(_Current))
                 {
                     RunState(state);
                 }

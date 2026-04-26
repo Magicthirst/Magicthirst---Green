@@ -8,7 +8,7 @@ namespace Levels.AI.Util
         public static IEnumerator ForSeconds(float seconds)
         {
             var start = Time.time;
-            for (var t = start; t < start + seconds; t = Time.time)
+            while (Time.time < start + seconds)
             {
                 yield return null;
             }

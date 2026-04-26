@@ -1,5 +1,5 @@
 using Common;
-using Levels.Abilities.Kill;
+using Levels.Abilities.KillAndDown;
 using Levels.IntentsImpacts;
 using UnityEngine;
 using VContainer;
@@ -10,7 +10,7 @@ namespace Levels
     {
         [SerializeField] private GameObject player;
 
-        private IImpactConsumer<DiedImpact> _playerDied;
+        private IImpactConsumer<DownedImpact> _playerDied;
         private bool _playerIsDead = false;
 
         [Inject] private IGameNavigation _navigation;
@@ -18,7 +18,7 @@ namespace Levels
         [Inject]
         public void Construct(IntentsImpacts.IntentsImpacts intentsImpacts)
         {
-            _playerDied = intentsImpacts.GetImpactConsumerFor<DiedImpact>(player, null);
+            _playerDied = intentsImpacts.GetImpactConsumerFor<DownedImpact>(player, null);
         }
 
         private void OnEnable()
@@ -31,7 +31,7 @@ namespace Levels
             _playerDied.Impacted -= OnDead;
         }
 
-        private void OnDead(DiedImpact _)
+        private void OnDead(DownedImpact _)
         {
             if (_playerIsDead)
             {
