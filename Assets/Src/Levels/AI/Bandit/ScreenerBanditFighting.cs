@@ -37,11 +37,14 @@ namespace Levels.AI.Bandit
         private InterruptionQueue _movementInterruptionQueue;
         private Coroutine[] _coroutines;
 
+        private NavMeshAgent _agent;
+
         protected override bool _IsReady => _enemy != null;
 
         protected override void Awake()
         {
             base.Awake();
+            _agent = GetComponent<NavMeshAgent>();
 
             _movementInterruptionQueue = new InterruptionQueue(this, new WaitForFixedUpdate());
 
@@ -55,7 +58,7 @@ namespace Levels.AI.Bandit
                 betweenShootPeriod: betweenShotDelay
             );
 
-            (_movement, _squadShootingCooldown) = brain.RegisterMember(GetComponent<NavMeshAgent>());
+            (_movement, _squadShootingCooldown) = brain.RegisterMember(_agent);
         }
 
         private void OnEnable()
@@ -101,6 +104,7 @@ namespace Levels.AI.Bandit
         public override void Exit()
         {
             base.Exit();
+            _agent.isStopped = true;
             foreach (var coroutine in _coroutines)
             {
                 StopCoroutine(coroutine);

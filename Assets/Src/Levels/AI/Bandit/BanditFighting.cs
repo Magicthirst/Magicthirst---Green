@@ -42,12 +42,15 @@ namespace Levels.AI.Bandit
 
         private InterruptionQueue _interruptionQueue;
         private Coroutine[] _coroutines;
+        private NavMeshAgent _agent;
 
         protected override bool _IsReady => _enemy != null;
 
         protected override void Awake()
         {
             base.Awake();
+
+            _agent = GetComponent<NavMeshAgent>();
 
             _interruptionQueue = new InterruptionQueue(this, new WaitForFixedUpdate());
 
@@ -67,7 +70,7 @@ namespace Levels.AI.Bandit
                 maxDistance: maxDistance,
                 tacticUpdatePeriod: tacticUpdatePeriod,
                 self: transform,
-                agent: GetComponent<NavMeshAgent>(),
+                agent: _agent,
                 obstacleMask: wallLayer);
         }
 
@@ -112,6 +115,7 @@ namespace Levels.AI.Bandit
         public override void Exit()
         {
             base.Exit();
+            _agent.isStopped = true;
             foreach (var coroutine in _coroutines)
             {
                 StopCoroutine(coroutine);

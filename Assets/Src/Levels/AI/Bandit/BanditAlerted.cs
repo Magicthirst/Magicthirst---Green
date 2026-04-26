@@ -41,6 +41,7 @@ namespace Levels.AI.Bandit
         public override void Exit()
         {
             base.Exit();
+            _agent.isStopped = true;
             if (_runningCoroutine != null)
             {
                 StopCoroutine(_runningCoroutine);

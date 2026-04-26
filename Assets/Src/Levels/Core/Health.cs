@@ -1,6 +1,6 @@
 using System;
 using Levels.Abilities.CommonImpacts;
-using Levels.Abilities.Kill;
+using Levels.Abilities.KillAndDown;
 using Levels.IntentsImpacts;
 using UnityEngine;
 using VContainer;
@@ -19,8 +19,9 @@ namespace Levels.Core
         [SerializeField] private int value;
 
         [Inject] private IImpactConsumer<DamageImpact> _consumer;
-        [Inject] private PublishIntent<KilledIntent> _publishKill;
+        [Inject] private PublishIntent<DownedIntent> _publishKill;
 
+        public bool IsDown => Value == 0;
         public int MaxHealth => maxHealth;
         public int Value
         {
@@ -53,7 +54,7 @@ namespace Levels.Core
             Value = Math.Max(0, Value - damage.Damage);
             if (Value == 0)
             {
-                _publishKill(new KilledIntent(Caster: damage.Attacker, Victim: Owner));
+                _publishKill(new DownedIntent(Caster: damage.Attacker, Victim: Owner));
             }
         }
     }

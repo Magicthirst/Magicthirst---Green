@@ -70,6 +70,7 @@ GameObject:
   - component: {fileID: 7085063179026557343}
   - component: {fileID: 4329265247647134832}
   - component: {fileID: 4200989473936554806}
+  - component: {fileID: 3266548798043383474}
   - component: {fileID: 8646692905782134384}
   - component: {fileID: 1755954717784887308}
   - component: {fileID: 9222006205364241558}
@@ -244,11 +245,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ac14eadfddc49e5afbf542a743922aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fallback: {fileID: 0}
   nextStates:
   - {fileID: 4200989473936554806}
-  - {fileID: 8646692905782134384}
+  - {fileID: 3266548798043383474}
   overridesStates: []
-  fallback: {fileID: 7085063179026557343}
 --- !u!114 &4329265247647134832
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -261,11 +262,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b684ba7729542749da08512f1b9457d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nextStates:
-  - {fileID: 4200989473936554806}
-  - {fileID: 8646692905782134384}
+  fallback: {fileID: 0}
+  nextStates: []
   overridesStates: []
-  fallback: {fileID: 4329265247647134832}
   alertSeat: {fileID: 0}
   beforeReturnDelay: 3
 --- !u!114 &4200989473936554806
@@ -280,19 +279,41 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f7ce425ed5e4799ad7bc615ac9dd592, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fallback: {fileID: 4329265247647134832}
   nextStates:
   - {fileID: 4329265247647134832}
-  - {fileID: 8646692905782134384}
   overridesStates:
   - {fileID: 7085063179026557343}
   - {fileID: 4329265247647134832}
-  fallback: {fileID: 4329265247647134832}
   startFightArea: {fileID: 0}
   stopFightArea: {fileID: 0}
   brain: {fileID: 0}
   minDistance: 2
   shotSpreadDegrees: 30
   betweenShotDelay: 0.5
+--- !u!114 &3266548798043383474
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2417240799410663039}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b0ba778c50c144efba06668c3ae0af32, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fallback: {fileID: 4329265247647134832}
+  nextStates:
+  - {fileID: 8646692905782134384}
+  - {fileID: 4200989473936554806}
+  - {fileID: 4329265247647134832}
+  overridesStates:
+  - {fileID: 4200989473936554806}
+  - {fileID: 4329265247647134832}
+  - {fileID: 7085063179026557343}
+  bleedingOutDelay: 10
+  invulnerabilityDelay: 0.1
 --- !u!114 &8646692905782134384
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -305,13 +326,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c24e1646d5e145948781d87de6a0e376, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nextStates:
-  - {fileID: 8646692905782134384}
-  overridesStates:
-  - {fileID: 4200989473936554806}
-  - {fileID: 4329265247647134832}
-  - {fileID: 7085063179026557343}
-  fallback: {fileID: 8646692905782134384}
+  fallback: {fileID: 0}
+  nextStates: []
+  overridesStates: []
 --- !u!114 &1755954717784887308
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -889,6 +906,7 @@ MonoBehaviour:
   - rid: 411244937954984025
   - rid: 411244937954984026
   - rid: 411244937954984027
+  - rid: 411245415820951644
   references:
     version: 2
     RefIds:
@@ -921,6 +939,13 @@ MonoBehaviour:
         sprites:
         - {fileID: 21300000, guid: 404f365ed29847ca9b8ef5f0bf62ea37, type: 3}
         durationSeconds: 0.05
+        intervalSeconds: 0.0625
+    - rid: 411245415820951644
+      type: {class: BaseStateSpriteResolutionMapping, ns: Levels.Visual.SpriteResolution, asm: Levels}
+      data:
+        stateType: Levels.AI.Shared.DownedDyingState
+        sprites:
+        - {fileID: 21300000, guid: ff072394e374d924d83f02f56baa2340, type: 3}
         intervalSeconds: 0.0625
 --- !u!1 &8800768721026408215
 GameObject:
