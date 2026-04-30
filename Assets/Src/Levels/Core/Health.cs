@@ -1,6 +1,7 @@
 using System;
 using Levels.Abilities.CommonImpacts;
 using Levels.Abilities.KillAndDown;
+using Levels.Abilities.Revival;
 using Levels.IntentsImpacts;
 using UnityEngine;
 using VContainer;
@@ -18,8 +19,10 @@ namespace Levels.Core
         [SerializeField] private int maxHealth;
         [SerializeField] private int value;
 
-        [Inject] private IImpactConsumer<DamageImpact> _consumer;
+        [Inject] private IImpactConsumer<HealImpact> _healConsumer;
+        [Inject] private IImpactConsumer<DamageImpact> _damageConsumer;
         [Inject] private PublishIntent<DownedIntent> _publishKill;
+        [Inject] private PublishIntent<ImpactIntent> _publishRecovery;
 
         public bool IsDown => Value == 0;
         public int MaxHealth => maxHealth;
@@ -40,13 +43,16 @@ namespace Levels.Core
 
         public override void Init()
         {
-            _consumer.Impacted += HandleDamage;
+            _healConsumer.Impacted += HandleHeal;
+            _damageConsumer.Impacted += HandleDamage;
         }
 
         public override void Dispose()
         {
-            _consumer.Impacted -= HandleDamage;
-            _consumer.Dispose();
+            _damageConsumer.Impacted -= HandleDamage;
+            _damageConsumer.Dispose();
+            _healConsumer.Impacted -= HandleHeal;
+            _healConsumer.Dispose();
         }
 
         private void HandleDamage(DamageImpact damage)
@@ -55,6 +61,18 @@ namespace Levels.Core
             if (Value == 0)
             {
                 _publishKill(new DownedIntent(Caster: damage.Attacker, Victim: Owner));
+            }
+        }
+
+        private void HandleHeal(HealImpact heal)
+        {
+            var wasDown = Value == 0;
+            Value = Math.Min(MaxHealth, Value + heal.Amount);
+            var isNotDown = Value > 0;
+
+            if (wasDown && isNotDown)
+            {
+                _publishRecovery(ImpactIntent.SelfCast(new RecoveredImpact(Owner)));
             }
         }
     }

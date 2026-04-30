@@ -3,6 +3,7 @@ using Levels.Abilities.HitScanShoot;
 using Levels.Abilities.KillAndDown;
 using Levels.Abilities.ParrySabre;
 using Levels.Abilities.PushingShotgun;
+using Levels.Abilities.Revival;
 using Levels.Abilities.TeleportChip;
 using Levels.IntentsImpacts;
 using Levels.Util.MasksRegistry;
@@ -30,7 +31,8 @@ namespace DI
                         .RegisterTransformation(new ParrySabreSwingMapper(masks))
                         .RegisterTransformation(new InfuseAreaWithChaosMapper(masks))
                         .RegisterTransformation(new KillMapper())
-                        .RegisterTransformation(new DownedMapper());
+                        .RegisterTransformation(new DownedMapper())
+                        .RegisterTransformation(new RevivalMapper());
                 },
                 Lifetime.Singleton
             ).AsSelf();

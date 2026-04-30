@@ -10,6 +10,8 @@ namespace Levels.Core
     [Serializable]
     public class Entity : PassiveCoreObject
     {
+        public bool IsInWorld => Owner != null;
+
         public IEnumerable<CoreObject> LazyComponents => GetLazyObjects();
 
         [SerializeField] protected CoreObject[] serialComponents;
@@ -73,5 +75,7 @@ namespace Levels.Core
                 .SelectMany(c => c is Entity e ? e.LazyComponents.Append(c) : new[] { c })
                 .Append(this);
         }
+
+        public override string ToString() => Owner?.name;
     }
 }

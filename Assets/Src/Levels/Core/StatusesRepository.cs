@@ -44,7 +44,7 @@ namespace Levels.Core
             }
 
             StatusApplied?.Invoke(status);
-            _entity.Runner.StartCoroutine(Run(status));
+            _entity.Runner?.StartCoroutine(Run(status));
         }
 
         private IEnumerator Run(IStatus status)
@@ -64,7 +64,7 @@ namespace Levels.Core
 
             foreach (var routine in _routines)
             {
-                _entity.Runner.StopCoroutine(routine);
+                _entity.Runner?.StopCoroutine(routine);
             }
             _routines.Clear();
         }

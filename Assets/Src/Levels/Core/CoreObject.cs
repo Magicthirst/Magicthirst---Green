@@ -13,4 +13,14 @@ namespace Levels.Core
 
         public abstract void Dispose();
     }
+
+    public abstract class SCoreObject : IDisposable
+    {
+        [NonSerialized] [Inject] public GameObject Owner;
+        [NonSerialized] [Inject] public MonoBehaviour Runner;
+
+        public abstract void Init();
+
+        public abstract void Dispose();
+    }
 }

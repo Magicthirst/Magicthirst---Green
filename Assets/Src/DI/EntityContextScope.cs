@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Levels;
 using Levels.AI;
 using Levels.Core;
+using Levels.Core.Room;
 using Levels.IntentsImpacts;
 using UnityEngine;
 using VContainer;
@@ -28,6 +29,17 @@ namespace DI
         {
             builder.RegisterInstance(gameObject);
             builder.Register<MonoBehaviour>(_ => this, Lifetime.Scoped);
+
+            if (TryGetComponent(out RoomMemberTag roomMemberTag))
+            {
+                builder.Register
+                (
+                    resolver => resolver.Resolve<Func<int, Room>>().Invoke(roomMemberTag.RoomId),
+                    Lifetime.Singleton
+                );
+                builder.Register(resolver => resolver.Resolve<Room>().Units, Lifetime.Singleton);
+                builder.Register(resolver => resolver.Resolve<Room>().Healing, Lifetime.Singleton);
+            }
 
             if (gameObject.TryGetComponent(out Fsm fsm))
             {
@@ -58,6 +70,8 @@ namespace DI
 
                 resolver.Inject(entity);
                 entity.Init();
+
+                resolver.ResolveOrDefault<RoomUnits>()?.Register(entity);
             });
             builder.RegisterDisposeCallback(_ => entity.Dispose());
 

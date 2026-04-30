@@ -75,7 +75,7 @@ namespace DI
             });
         }
 
-        private void OnDisable()
+        private void OnDisableSync()
         {
             _connection?.Dispose();
         }

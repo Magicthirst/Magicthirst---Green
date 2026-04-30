@@ -1,4 +1,5 @@
 using Levels.Abilities.KillAndDown;
+using Levels.Abilities.Revival;
 using Levels.IntentsImpacts;
 using UnityEngine;
 using VContainer;
@@ -16,11 +17,13 @@ namespace Levels.AI.Shared
         private float _invulnerabilityEndTimePoint = 0f;
         private bool _downed = false;
 
-        [Inject] private IImpactConsumer<DownedImpact> _consumer;
+        [Inject] private IImpactConsumer<DownedImpact> _downedConsumer;
+        [Inject] private IImpactConsumer<RecoveredImpact> _recoveredConsumer;
 
         private void OnEnable()
         {
-            _consumer.Impacted += OnDowned;
+            _downedConsumer.Impacted += OnDowned;
+            _recoveredConsumer.Impacted += OnRecovered;
         }
 
         public override void Enter()
@@ -49,7 +52,8 @@ namespace Levels.AI.Shared
 
         private void OnDisable()
         {
-            _consumer.Impacted -= OnDowned;
+            _downedConsumer.Impacted -= OnDowned;
+            _recoveredConsumer.Impacted -= OnRecovered;
         }
 
         private void OnDowned(DownedImpact _)
@@ -59,6 +63,14 @@ namespace Levels.AI.Shared
                 Ready();
             }
             else if (Time.time > _invulnerabilityEndTimePoint)
+            {
+                Finish();
+            }
+        }
+
+        private void OnRecovered(RecoveredImpact _)
+        {
+            if (_downed)
             {
                 Finish();
             }

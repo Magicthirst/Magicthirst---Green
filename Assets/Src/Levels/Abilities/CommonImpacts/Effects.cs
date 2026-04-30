@@ -16,4 +16,6 @@ namespace Levels.Abilities.CommonImpacts
     public record CasterParriedEffect(GameObject Target) : IImpact;
 
     public record CasterCastedSpellEffect(GameObject Target) : IImpact;
+
+    public record CasterStartedSpellCastingEffect(GameObject Target) : IImpact;
 }
