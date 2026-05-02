@@ -61,7 +61,7 @@ namespace Levels.AI.Bandit
 
             _roomHealing.ReleaseHealerClaims(_entity);
 
-            _agent.isStopped = true;
+            _agent.ResetPath();
         }
 
         private void OnDisable()
@@ -72,23 +72,24 @@ namespace Levels.AI.Bandit
 
         private IEnumerator HealRoutine()
         {
-            Transform downedTransform;
+            _agent.isStopped = false;
 
+            Transform downedTransform;
             foreach (var downed in _roomHealing.AttendDowned(_entity))
             {
-                downedTransform = downed.Owner?.transform;
+                downedTransform = downed.Owner.transform;
 
-                while (_roomHealing.IsDowned(downed) && downedTransform)
+                while (_roomHealing.IsDowned(downed) && downed.IsInWorld)
                 {
                     if (!CloseToTarget())
                     {
-                        _agent.isStopped = false;
                         _agent.SetDestination(downedTransform.position);
                         yield return InterruptableWait.ForSeconds(tacticUpdatePeriod);
                     }
                     else
                     {
-                        _agent.isStopped = true;
+                        _agent.ResetPath();
+                        
                         _publishImpact(ImpactIntent.SelfCast(new CasterStartedSpellCastingEffect(_entity.Owner)));
                         yield return InterruptableWait.ForSeconds(healDelay);
 

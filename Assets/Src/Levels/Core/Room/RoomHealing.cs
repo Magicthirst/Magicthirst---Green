@@ -38,8 +38,14 @@ namespace Levels.Core.Room
         {
             while (TryClaimDowned(healer, out var downed))
             {
-                yield return downed;
-                ReleaseClaim(healer, downed);
+                if (downed.IsInWorld)
+                {
+                    yield return downed;
+                }
+                else
+                {
+                    ResolveHeal(downed); // discard
+                }
             }
         }
 
@@ -76,14 +82,6 @@ namespace Levels.Core.Room
         {
             target = _downedUnits.FirstOrDefault(unit => unit != healer && _downedToHealersMap.TryAdd(unit, healer));
             return target is not null;
-        }
-
-        private void ReleaseClaim(Entity healer, Entity downed)
-        {
-            if (_downedToHealersMap.TryGetValue(downed, out var assignedHealer) && assignedHealer == healer)
-            {
-                _downedToHealersMap.Remove(downed);
-            }
         }
 
         private void OnUnitDowned(DownedImpact impact)
