@@ -1,10 +1,12 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Levels.Abilities.CommonImpacts;
 using Levels.IntentsImpacts;
 using Levels.Util.MasksRegistry;
 using UnityEngine;
+using Util;
 
 namespace Levels.Abilities.HitScanShoot
 {
@@ -27,9 +29,9 @@ namespace Levels.Abilities.HitScanShoot
             var push = intent.Direction * config.PushVelocity;
             var origin = intent.Origin + intent.Direction * config.Offset;
 
-            yield return new CasterShotHitScanEffect(caster, origin, intent.Direction, intent.Config.Distance);
+            var maxShotDistance = intent.Config.Distance;
 
-            foreach (var victim in GetAffected(caster, origin, intent.Direction))
+            foreach (var (hit, victim) in GetAffected(caster, origin, intent.Direction))
             {
                 if (_registry.AreAlies(caster, victim) && !config.CanHitAllies)
                 {
@@ -46,11 +48,19 @@ namespace Levels.Abilities.HitScanShoot
                 {
                     yield return new ImpulseImpact(victim, push, TimeSpan.FromSeconds(config.PushDuration));
                 }
+
+                if (_registry.Is(victim, Mask.StopsProjectiles))
+                {
+                    maxShotDistance = Mathf.Min(hit.distance, maxShotDistance);
+                    break;
+                }
             }
+
+            yield return new CasterShotHitScanEffect(caster, origin, intent.Direction, maxShotDistance);
 
             yield break;
 
-            IEnumerable<GameObject> GetAffected(GameObject caster, Vector3 origin, Vector3 direction)
+            IEnumerable<(RaycastHit Hit, GameObject Victim)> GetAffected(GameObject caster, Vector3 origin, Vector3 direction)
             {
                 var start = origin + direction * config.Offset;
                 var hitCount = Physics.RaycastNonAlloc(start, direction, _hitBuffer, config.Distance);
@@ -58,18 +68,18 @@ namespace Levels.Abilities.HitScanShoot
                 var victims = _hitBuffer
                     .Take(hitCount)
                     .OrderBy(h => h.distance)
-                    .Select(hit => hit.collider.gameObject)
-                    .Distinct();
+                    .Select(hit => (Hit: hit, Victim: hit.collider.gameObject))
+                    .DistinctBy(pair => pair.Victim);
 
-                foreach (var victim in victims)
+                foreach (var pair in victims)
                 {
-                    if (victim.layer == WallLayer)
+                    if (pair.Victim.layer == WallLayer)
                     {
                         break;
                     }
-                    if (victim != caster)
+                    if (pair.Victim != caster)
                     {
-                        yield return victim;
+                        yield return pair;
                     }
                 }
             }

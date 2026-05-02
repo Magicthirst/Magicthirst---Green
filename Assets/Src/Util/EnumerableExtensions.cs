@@ -77,5 +77,18 @@ namespace Util
             list.RemoveAt(i);
             return true;
         }
+
+        public static IEnumerable<T> DistinctBy<T, TKey>(this IEnumerable<T> enumerable, Func<T, TKey> selector)
+        {
+            var seen = new HashSet<TKey>();
+            foreach (var item in enumerable)
+            {
+                var key = selector(item);
+                if (seen.Add(key))
+                {
+                    yield return item;
+                }
+            }
+        }
     }
 }

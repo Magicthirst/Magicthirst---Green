@@ -11,6 +11,6 @@ namespace Levels.Abilities.CommonImpacts
 
         // ReSharper disable once InconsistentNaming
         // ReSharper disable once UnusedMember.Global
-        SomethingToMakeEditorToNotSet_EVERYTHING_Flag = uint.MaxValue
+        SomethingToMakeEditorToNotSet_EVERYTHING_Flag = 1u << 31
     }
 }
