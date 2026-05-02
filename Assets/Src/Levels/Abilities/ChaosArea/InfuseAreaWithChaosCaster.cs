@@ -11,8 +11,8 @@ namespace Levels.Abilities.ChaosArea
         private Transform _camera;
 
         [Inject] private PublishIntent<InfuseAreaWithChaosIntent> _cast;
-        [Inject] private IChaosAreaConfig _config;
-        [Inject] private ISharedSpellConfig _sharedConfig;
+        [Inject] private ChaosAreaConfig _config;
+        [Inject] private SharedSpellConfig _sharedConfig;
 
         [Inject]
         public void Construct(Camera injectedCamera) => _camera = injectedCamera.transform;

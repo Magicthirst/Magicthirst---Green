@@ -19,7 +19,7 @@ namespace Levels.AI.Shared
         private readonly float _betweenShotPeriod;
 
         private readonly Transform _self;
-        private readonly IShootConfig _config;
+        private readonly ShootConfig _config;
         private readonly PublishIntent<HitScanShootIntent> _publishShoot;
 
         public BurstShooter(
@@ -30,7 +30,7 @@ namespace Levels.AI.Shared
             float betweenBurstPeriod,
             float betweenShotPeriod,
             Transform self,
-            IShootConfig config,
+            ShootConfig config,
             PublishIntent<HitScanShootIntent> publishShoot)
         {
             _shotSpreadDegrees = shotSpreadDegrees;

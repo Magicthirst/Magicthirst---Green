@@ -10,7 +10,7 @@ namespace Levels.Abilities.HitScanShoot
         private Transform _camera;
 
         [Inject] private PublishIntent<HitScanShootIntent> _publishShoot;
-        [Inject] private IShootConfig _config;
+        [Inject] private ShootConfig _config;
 
         [Inject]
         public void Construct(Camera injectedCamera) => _camera = injectedCamera.transform;

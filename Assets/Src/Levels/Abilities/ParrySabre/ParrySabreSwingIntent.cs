@@ -3,5 +3,5 @@ using UnityEngine;
 
 namespace Levels.Abilities.ParrySabre
 {
-    public record ParrySabreSwingIntent(GameObject Caster, Vector3 Direction, ISabreConfig Config) : IIntent;
+    public record ParrySabreSwingIntent(GameObject Caster, Vector3 Direction, SabreConfig Config) : IIntent;
 }

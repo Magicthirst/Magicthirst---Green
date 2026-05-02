@@ -12,7 +12,7 @@ namespace Levels.UI.Weaponry
 
         private IAbility _weapon;
 
-        public void Init(IAbility weapon, IWeaponryUIConfig config)
+        public void Init(IAbility weapon, WeaponryUIConfig config)
         {
             _weapon = weapon;
             icon.sprite = config[weapon].Sprite;

@@ -17,7 +17,7 @@ namespace Levels.Abilities.TeleportChip
         [Inject] private Core.TeleportChip _state;
         [Inject] private PublishIntent<TeleportChipThrowIntent> _publishThrow;
         [Inject] private PublishIntent<TeleportChipActivateIntent> _publishActivate;
-        [Inject] private ITeleportChipConfig _config;
+        [Inject] private TeleportChipConfig _config;
         private Transform _camera;
 
         private IDisposable _observer;

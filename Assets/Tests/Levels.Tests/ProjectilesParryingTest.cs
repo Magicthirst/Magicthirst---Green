@@ -1,7 +1,6 @@
 using System.Collections;
 using Levels.Abilities.HitScanShoot;
 using Levels.Abilities.ParrySabre;
-using Levels.Config;
 using Levels.Core.Passives;
 using Levels.IntentsImpacts;
 using Levels.Tests.Util;
@@ -14,10 +13,9 @@ namespace Levels.Tests
 {
     public class ProjectilesParryingTest
     {
-        private ParrySabreConfig _parrySabreConfig;
         private ShootConfig _shootConfig;
-
-        private IParryConfig _ParryConfig => _parrySabreConfig;
+        private ParryConfig _parryConfig;
+        private SabreConfig _sabreConfig;
 
         private ProjectilesParrying _parrying;
         private readonly MockImpactConsumer<ParryImpact> _parries = new();
@@ -35,7 +33,8 @@ namespace Levels.Tests
 
             var builder = new ContainerBuilder();
             builder.RegisterInstance<IImpactConsumer<ParryImpact>>(_parries);
-            builder.RegisterInstance(_ParryConfig);
+            builder.RegisterInstance(_parryConfig);
+            builder.RegisterInstance(_sabreConfig);
             builder.RegisterInstance(_victim);
             builder.RegisterInstance(_victim.AddComponent<StubMonoBehaviour>() as MonoBehaviour);
 
@@ -53,10 +52,7 @@ namespace Levels.Tests
 
             Object.DestroyImmediate(_shooter);
             Object.DestroyImmediate(_victim);
-
             Object.DestroyImmediate(_parrying);
-            Object.DestroyImmediate(_parrySabreConfig);
-            Object.DestroyImmediate(_shootConfig);
         }
 
         [UnityTest]
@@ -70,7 +66,7 @@ namespace Levels.Tests
 
             Assert.IsTrue(_parrying.Handle.TryConsume(intent, impacts), "attack should be consumed");
 
-            yield return RunParryFor(_ParryConfig.Leeway * 2);
+            yield return RunParryFor(_parryConfig.Leeway * 2);
 
             Assert.IsTrue(passed, "attack should pass");
         }
@@ -85,11 +81,11 @@ namespace Levels.Tests
             _parrying.Handle.Passed += _ => passed = true;
 
             _parries.Receive(blockingParry);
-            yield return RunParryFor(_ParryConfig.Duration * 2);
+            yield return RunParryFor(_parryConfig.Duration * 2);
 
             Assert.IsTrue(_parrying.Handle.TryConsume(intent, impacts), "attack should be consumed");
 
-            yield return RunParryFor(_ParryConfig.Leeway * 2);
+            yield return RunParryFor(_parryConfig.Leeway * 2);
 
             Assert.IsTrue(passed, "attack should pass");
         }
@@ -106,7 +102,7 @@ namespace Levels.Tests
             _parries.Receive(missingParry);
             Assert.IsTrue(_parrying.Handle.TryConsume(intent, impacts), "attack should be consumed");
 
-            yield return RunParryFor(_ParryConfig.Leeway * 2);
+            yield return RunParryFor(_parryConfig.Leeway * 2);
 
             Assert.IsTrue(passed, "attack should pass");
         }
@@ -123,7 +119,7 @@ namespace Levels.Tests
             Assert.IsTrue(_parrying.Handle.TryConsume(intent, impacts), "attack should be consumed");
             _parries.Receive(blockingParry);
 
-            yield return RunParryFor(_ParryConfig.Leeway * 2);
+            yield return RunParryFor(_parryConfig.Leeway * 2);
 
             Assert.IsFalse(passed, "attack should not pass");
         }
@@ -138,11 +134,11 @@ namespace Levels.Tests
             _parrying.Handle.Passed += _ => passed = true;
 
             _parries.Receive(blockingParry);
-            yield return RunParryFor(_ParryConfig.Duration / 2);
+            yield return RunParryFor(_parryConfig.Duration / 2);
 
             Assert.IsTrue(_parrying.Handle.TryConsume(intent, impacts), "attack should be consumed");
 
-            yield return RunParryFor(_ParryConfig.Leeway * 2);
+            yield return RunParryFor(_parryConfig.Leeway * 2);
 
             Assert.IsFalse(passed, "attack should not pass");
         }
@@ -158,11 +154,11 @@ namespace Levels.Tests
 
             Assert.IsTrue(_parrying.Handle.TryConsume(intent, impacts), "attack should be consumed");
 
-            yield return RunParryFor(_ParryConfig.Leeway * 0.5f);
+            yield return RunParryFor(_parryConfig.Leeway * 0.5f);
 
             _parries.Receive(blockingParry);
 
-            yield return RunParryFor(_ParryConfig.Leeway * 2);
+            yield return RunParryFor(_parryConfig.Leeway * 2);
 
             Assert.IsFalse(passed, "attack should not pass");
         }
@@ -203,12 +199,12 @@ namespace Levels.Tests
 
         private void InitConfigs()
         {
-            _parrySabreConfig = ScriptableObject.CreateInstance<ParrySabreConfig>();
-            _parrySabreConfig.leeway = 0.1f;
-            _parrySabreConfig.duration = 0.2f;
-            _parrySabreConfig.angleDegrees = 90f;
+            _parryConfig.Leeway = 0.1f;
+            _parryConfig.Duration = 0.2f;
+            _parryConfig.AngleDegrees = 90f;
 
-            _shootConfig = ScriptableObject.CreateInstance<ShootConfig>();
+            _shootConfig = new ShootConfig();
+            _sabreConfig = new SabreConfig();
         }
     }
 }

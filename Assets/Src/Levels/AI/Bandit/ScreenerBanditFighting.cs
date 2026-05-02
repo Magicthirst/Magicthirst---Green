@@ -24,7 +24,7 @@ namespace Levels.AI.Bandit
         [SerializeField] private float shotSpreadDegrees;
         [SerializeField] private float betweenShotDelay;
 
-        [Inject] private IShotgunConfig _config = null!;
+        [Inject] private ShotgunConfig _config = null!;
         [Inject] private MasksRegistry _registry = null!;
         [Inject] private PublishIntent<PushingShotgunShootIntent> _publishShoot;
         [Inject] private IImpactConsumer<DamageImpact> _wasDamaged;

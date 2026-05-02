@@ -11,7 +11,7 @@ namespace Levels.AI.Shared
     public class ShotgunShooter
     {
         private readonly Transform _self;
-        private readonly IShotgunConfig _config;
+        private readonly ShotgunConfig _config;
         private readonly PublishIntent<PushingShotgunShootIntent> _publishShoot;
 
         private readonly float _minDistance;
@@ -21,7 +21,7 @@ namespace Levels.AI.Shared
         public ShotgunShooter
         (
             Transform self,
-            IShotgunConfig config,
+            ShotgunConfig config,
             PublishIntent<PushingShotgunShootIntent> publishShoot,
             float minDistance,
             float shotSpreadDegrees,

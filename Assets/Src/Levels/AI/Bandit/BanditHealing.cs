@@ -22,7 +22,7 @@ namespace Levels.AI.Bandit
         private Coroutine _healingCoroutine;
         private bool _IsActiveHealer => _healingCoroutine is not null;
 
-        [Inject] private IReviveConfig _config;
+        [Inject] private ReviveConfig _config;
         [Inject] private Entity _entity;
         [Inject] private PublishIntent<ReviveIntent> _revive;
         [Inject] private PublishIntent<ImpactIntent> _publishImpact;
@@ -76,7 +76,7 @@ namespace Levels.AI.Bandit
 
             foreach (var downed in _roomHealing.AttendDowned(_entity))
             {
-                downedTransform = downed.Owner.transform;
+                downedTransform = downed.Owner?.transform;
 
                 while (_roomHealing.IsDowned(downed) && downedTransform)
                 {

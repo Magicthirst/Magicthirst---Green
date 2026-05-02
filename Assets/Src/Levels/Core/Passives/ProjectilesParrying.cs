@@ -20,7 +20,7 @@ namespace Levels.Core.Passives
 
         private float _ParryWindowEnd => _lastParryTimePoint + _config.Duration;
 
-        [Inject] private IParryConfig _config;
+        [Inject] private ParryConfig _config;
         private float _parryAngleRads;
 
         private float _lastParryTimePoint = float.MinValue;
@@ -159,10 +159,11 @@ namespace Levels.Core.Passives
         }
     }
 
-    public interface IParryConfig
+    [Serializable]
+    public class ParryConfig : IConfig
     {
-        float Leeway { get; }
-        float Duration { get; }
-        float AngleDegrees { get; }
+        [field: SerializeField] public float Leeway { get; set; }
+        [field: SerializeField] public float Duration { get; set; }
+        [field: SerializeField] public float AngleDegrees { get; set; }
     }
 }

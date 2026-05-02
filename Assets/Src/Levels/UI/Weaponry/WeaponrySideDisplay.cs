@@ -21,7 +21,7 @@ namespace Levels.UI.Weaponry
         private Dictionary<IAbility, RectTransform> _abilitiesObjects;
 
         [Inject] private Core.Weaponry _weaponry;
-        [Inject] private IWeaponryUIConfig _config;
+        [Inject] private WeaponryUIConfig _config;
 
         private void Awake()
         {

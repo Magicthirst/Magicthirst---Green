@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Levels.Abilities.CommonImpacts;
@@ -43,7 +44,7 @@ namespace Levels.Abilities.HitScanShoot
                 }
                 if (_registry.Is(victim, Mask.Pushable))
                 {
-                    yield return new ImpulseImpact(victim, push, config.PushDuration);
+                    yield return new ImpulseImpact(victim, push, TimeSpan.FromSeconds(config.PushDuration));
                 }
             }
 

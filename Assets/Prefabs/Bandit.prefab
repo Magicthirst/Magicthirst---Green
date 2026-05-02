@@ -369,8 +369,21 @@ MonoBehaviour:
   - {fileID: 3862168576103673127}
   - {fileID: 6154571393740444167}
   entity: {fileID: 11400000, guid: 92eacb2bd2a0ebc49981e0b1a4539f72, type: 2}
+  oldConfigs: []
   configs:
-  - {fileID: 11400000, guid: bc0ff786c864bc944bce82759d01bf1f, type: 2}
+  - rid: 2589632493940113511
+  references:
+    version: 2
+    RefIds:
+    - rid: 2589632493940113511
+      type: {class: ShootConfig, ns: Levels.Abilities.HitScanShoot, asm: Levels}
+      data:
+        <Damage>k__BackingField: 20
+        <Offset>k__BackingField: 0.4
+        <Distance>k__BackingField: 200
+        <PushVelocity>k__BackingField: 10
+        <PushDurationSeconds>k__BackingField: 0.05
+        <CanHitAllies>k__BackingField: 0
 --- !u!1 &3628982666248491453
 GameObject:
   m_ObjectHideFlags: 0

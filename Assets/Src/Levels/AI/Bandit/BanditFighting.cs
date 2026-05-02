@@ -31,7 +31,7 @@ namespace Levels.AI.Bandit
         [SerializeField] private float maxDistance;
         [SerializeField] private float tacticUpdatePeriod;
 
-        [Inject] private IShootConfig _config = null!;
+        [Inject] private ShootConfig _config = null!;
         [Inject] private MasksRegistry _registry = null!;
         [Inject] private PublishIntent<HitScanShootIntent> _publishShoot;
         [Inject] private IImpactConsumer<DamageImpact> _wasDamaged;

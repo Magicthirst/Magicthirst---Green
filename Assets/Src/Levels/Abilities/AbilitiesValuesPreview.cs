@@ -6,7 +6,7 @@ using Levels.Core.Passives;
 using UnityEngine;
 using Vertx.Debugging;
 
-namespace Levels.Config
+namespace Levels.Abilities
 {
     public class AbilitiesValuesPreview : MonoBehaviour
     {
@@ -20,7 +20,8 @@ namespace Levels.Config
         [SerializeField] private ShootConfig shootConfig;
         [SerializeField] private ShotgunConfig shotgunConfig;
         [SerializeField] private TeleportChipConfig teleportChipConfig;
-        [SerializeField] private ParrySabreConfig parrySabreConfig;
+        [SerializeField] private ParryConfig parryConfig;
+        [SerializeField] private SabreConfig sabreConfig;
 
         private void OnDrawGizmos()
         {
@@ -32,7 +33,7 @@ namespace Levels.Config
 
         private void DrawShoot()
         {
-            var shoot = (IShootConfig)shootConfig;
+            var shoot = shootConfig;
 
             var start = transform.position + transform.forward * shoot.Offset;
             var end = start + transform.forward * shoot.Distance;
@@ -41,7 +42,7 @@ namespace Levels.Config
 
         private void DrawShotgun()
         {
-            var shotgun = (IShotgunConfig)shotgunConfig;
+            var shotgun = shotgunConfig;
 
             var center = transform.position + transform.forward * shotgun.CircleCenterOffset;
 
@@ -53,15 +54,15 @@ namespace Levels.Config
             );
             Debug.DrawLine(
                 center,
-                center + transform.forward * (shotgun.Velocity * (float) shotgun.Duration.TotalSeconds),
+                center + transform.forward * (shotgun.Velocity * shotgun.Duration),
                 Color.green
             );
         }
 
         private void DrawParrySabre()
         {
-            var sabre = (ISabreConfig)parrySabreConfig;
-            var parry = (IParryConfig)parrySabreConfig;
+            var sabre = sabreConfig;
+            var parry = parryConfig;
 
             var center = transform.position + transform.forward * sabre.CircleCenterOffset;
 
@@ -78,7 +79,7 @@ namespace Levels.Config
         {
             const float timeStep = 0.05f;
 
-            var chip = (ITeleportChipConfig)teleportChipConfig;
+            var chip = teleportChipConfig;
 
             var startPos = transform.position 
                            + transform.up * chip.ThrowOriginVerticalOffset 

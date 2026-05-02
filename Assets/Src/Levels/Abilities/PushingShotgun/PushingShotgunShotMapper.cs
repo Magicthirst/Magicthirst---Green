@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Levels.Abilities.CommonImpacts;
@@ -39,7 +40,7 @@ namespace Levels.Abilities.PushingShotgun
                     {
                         yield return new ImpulseImpact(target,
                             intent.Direction * intent.Config.Velocity,
-                            intent.Config.Duration);
+                            TimeSpan.FromSeconds(intent.Config.Duration));
                     }
                 }
             }

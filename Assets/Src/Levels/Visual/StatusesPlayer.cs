@@ -1,8 +1,10 @@
+using System;
 using System.Collections.Generic;
-using Levels.Config;
+using System.Linq;
 using Levels.Core;
 using Levels.Core.Statuses;
 using UnityEngine;
+using Util;
 using VContainer;
 
 namespace Levels.Visual
@@ -44,5 +46,29 @@ namespace Levels.Visual
             }
             _playingStatuses.Clear();
         }
+    }
+
+    [Serializable]
+    public class StatusesVfxsConfig
+    {
+        public Dictionary<Type, GameObject> StatusVfxs => _statusVfxs ??= mappings.ToDictionary
+        (
+            keySelector: mapping => mapping.StatusType,
+            elementSelector: mapping => mapping.prefab
+        );
+
+        [SerializeField]
+        private List<StatusVfxMapping> mappings;
+
+        private Dictionary<Type,GameObject> _statusVfxs;
+    }
+
+    [Serializable]
+    public class StatusVfxMapping
+    {
+        [SubtypeProperty(typeof(IStatus))] public string status;
+        public GameObject prefab;
+
+        public Type StatusType => Type.GetType(status);
     }
 }

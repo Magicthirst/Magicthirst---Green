@@ -1,5 +1,5 @@
 using System;
-using System.Collections.Generic;
+using System.Linq;
 using Levels;
 using Levels.AI;
 using Levels.Core;
@@ -15,13 +15,14 @@ namespace DI
     public class EntityContextScope : LifetimeScope
     {
         [SerializeField] private Entity entity;
-        [SerializeField] private List<ScriptableObject> configs;
+        [SerializeReference]
+        [SubclassSelector]
+        private IConfig[] configs = {};
 
         protected override void Awake()
         {
             Debug.Assert(entity != null, gameObject.name, gameObject);
             entity = Instantiate(entity);
-            configs ??= new List<ScriptableObject>();
             base.Awake();
         }
 
@@ -53,7 +54,15 @@ namespace DI
 
             foreach (var config in configs)
             {
-                builder.RegisterInstance(config).AsImplementedInterfaces();
+                try
+                {
+                    builder.RegisterInstance(config, config.GetType());
+                }
+                catch (NullReferenceException e)
+                {
+                    Console.WriteLine(e);
+                    throw;
+                }
             }
 
             builder.RegisterInstance(transform);

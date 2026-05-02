@@ -15,7 +15,7 @@ namespace Levels.Visual.SpellCasting
         private Active _active = new() { Ability = null, Preview = null };
         private Dictionary<Type, Transform> _previews;
 
-        [Inject] private ISharedSpellConfig _config;
+        [Inject] private SharedSpellConfig _config;
         [Inject] private Weaponry _weaponry;
         private Transform _camera;
 

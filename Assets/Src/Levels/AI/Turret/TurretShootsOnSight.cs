@@ -20,7 +20,7 @@ namespace Levels.AI.Turret
         [SerializeField] private float betweenBurstDelay;
         [SerializeField] private float betweenShotDelay;
 
-        [Inject] private IShootConfig _config = null!;
+        [Inject] private ShootConfig _config = null!;
         [Inject] private MasksRegistry _registry = null!;
         [Inject] private PublishIntent<HitScanShootIntent> _publishShoot;
         private Transform _enemy = null!;

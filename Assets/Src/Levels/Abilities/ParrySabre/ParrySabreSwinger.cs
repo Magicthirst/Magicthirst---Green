@@ -8,7 +8,7 @@ namespace Levels.Abilities.ParrySabre
     public class ParrySabreSwinger : MonoBehaviour, IInHandAbility
     {
         private Transform _camera;
-        [Inject] private ISabreConfig _config;
+        [Inject] private SabreConfig _config;
         [Inject] private PublishIntent<ParrySabreSwingIntent> _swing;
 
         [Inject]

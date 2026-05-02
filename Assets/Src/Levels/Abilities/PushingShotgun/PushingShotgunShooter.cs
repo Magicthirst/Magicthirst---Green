@@ -10,7 +10,7 @@ namespace Levels.Abilities.PushingShotgun
         private Transform _camera;
 
         [Inject] private PublishIntent<PushingShotgunShootIntent> _publishPush;
-        [Inject] private IShotgunConfig _config;
+        [Inject] private ShotgunConfig _config;
 
         [Inject]
         public void Construct(Camera injectedCamera) => _camera = injectedCamera.transform;

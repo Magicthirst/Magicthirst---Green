@@ -8,6 +8,6 @@ namespace Levels.Abilities.TeleportChip
         Vector3 Origin,
         Vector3 Velocity,
         Vector3 AngularVelocity,
-        ITeleportChipConfig Config
+        TeleportChipConfig Config
     ) : IImpact;
 }

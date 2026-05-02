@@ -142,8 +142,36 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9222006205364241558, guid: 89a9f5337c3edfb4895bbf44bba7fa15, type: 3}
       propertyPath: 'configs.Array.data[1]'
+      value: 2589632493940113526
+      objectReference: {fileID: 0}
+    - target: {fileID: 9222006205364241558, guid: 89a9f5337c3edfb4895bbf44bba7fa15, type: 3}
+      propertyPath: 'managedReferences[-2]'
       value: 
-      objectReference: {fileID: 11400000, guid: 899d2933373bc2246a2e3d6bb38b15ec, type: 2}
+      objectReference: {fileID: 0}
+    - target: {fileID: 9222006205364241558, guid: 89a9f5337c3edfb4895bbf44bba7fa15, type: 3}
+      propertyPath: 'managedReferences[2589632493940113526]'
+      value: Levels Levels.Abilities.Revival.ReviveConfig
+      objectReference: {fileID: 0}
+    - target: {fileID: 9222006205364241558, guid: 89a9f5337c3edfb4895bbf44bba7fa15, type: 3}
+      propertyPath: managedReferences[2589632493940113526].<PeriodicHeal>k__BackingField
+      value: -2
+      objectReference: {fileID: 0}
+    - target: {fileID: 9222006205364241558, guid: 89a9f5337c3edfb4895bbf44bba7fa15, type: 3}
+      propertyPath: managedReferences[2589632493940113526].<InstantHealthAddition>k__BackingField
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 9222006205364241558, guid: 89a9f5337c3edfb4895bbf44bba7fa15, type: 3}
+      propertyPath: managedReferences[2589632493940113526].<PeriodicHeal>k__BackingField.duration
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 9222006205364241558, guid: 89a9f5337c3edfb4895bbf44bba7fa15, type: 3}
+      propertyPath: managedReferences[2589632493940113526].<PeriodicHeal>k__BackingField.interval
+      value: 0.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 9222006205364241558, guid: 89a9f5337c3edfb4895bbf44bba7fa15, type: 3}
+      propertyPath: managedReferences[2589632493940113526].<PeriodicHeal>k__BackingField.healingAmount
+      value: 10
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
