@@ -8,6 +8,7 @@ namespace Levels.Abilities.CommonImpacts
         None = 0u,
         AntiTough = 1u << 0,
         Chaos = 1u << 1 | AntiTough,
+        HealOnKill = 2u << 1,
 
         // ReSharper disable once InconsistentNaming
         // ReSharper disable once UnusedMember.Global

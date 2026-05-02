@@ -33,14 +33,11 @@ namespace Levels.Core.Statuses
         {
             if (impact is DamageImpact damage)
             {
-                if (damage.Context.HasFlag(AntiTough))
-                {
-                    result = damage with { Damage = (int)(damage.Damage * antiToughDamageScale.Multiplier) };
-                }
-                else
-                {
-                    result = damage with { Damage = (int)(damage.Damage * damageScale.Multiplier) };
-                }
+                var scale = damage.Context.HasFlag(AntiTough)
+                    ? antiToughDamageScale.Multiplier
+                    : damageScale.Multiplier;
+
+                result = damage with { Damage = (int)(damage.Damage * scale) };
                 return true;
             }
 

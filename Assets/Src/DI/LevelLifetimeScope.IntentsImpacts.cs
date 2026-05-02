@@ -30,7 +30,6 @@ namespace DI
                         .RegisterTransformation<TeleportChipActivateIntent>(teleportChipMapper)
                         .RegisterTransformation(new ParrySabreSwingMapper(masks))
                         .RegisterTransformation(new InfuseAreaWithChaosMapper(masks))
-                        .RegisterTransformation(new KillMapper())
                         .RegisterTransformation(new DownedMapper())
                         .RegisterTransformation(new RevivalMapper());
                 },

@@ -5345,6 +5345,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ScreeningBandit (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 2417240799410663039, guid: 4ee5398177db59540b6282edab06b851, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4200989473936554806, guid: 4ee5398177db59540b6282edab06b851, type: 3}
       propertyPath: brain
       value: 
@@ -5962,6 +5966,10 @@ PrefabInstance:
     - target: {fileID: 456863747690656420, guid: 164096d06b389444d987c948f8e8c538, type: 3}
       propertyPath: m_Name
       value: HealerBandit (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 456863747690656420, guid: 164096d06b389444d987c948f8e8c538, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2001985641362860203, guid: 164096d06b389444d987c948f8e8c538, type: 3}
       propertyPath: alertSeat
@@ -18141,6 +18149,7 @@ MonoBehaviour:
         <Damage>k__BackingField: 40
         <CircleRadius>k__BackingField: 2.6
         <CircleCenterOffset>k__BackingField: 2.5
+        <Context>k__BackingField: 4
     - rid: 2589632493940113521
       type: {class: ParryConfig, ns: Levels.Core.Passives, asm: Levels}
       data:
@@ -18324,6 +18333,7 @@ MonoBehaviour:
     <Damage>k__BackingField: 0
     <CircleRadius>k__BackingField: 0
     <CircleCenterOffset>k__BackingField: 0
+    <Context>k__BackingField: 0
 --- !u!114 &1711207739
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18943,6 +18953,10 @@ PrefabInstance:
     - target: {fileID: 456863747690656420, guid: 164096d06b389444d987c948f8e8c538, type: 3}
       propertyPath: m_Name
       value: HealerBandit (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 456863747690656420, guid: 164096d06b389444d987c948f8e8c538, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2001985641362860203, guid: 164096d06b389444d987c948f8e8c538, type: 3}
       propertyPath: alertSeat

@@ -66,6 +66,7 @@ namespace Levels.Core
 
         private void HandleHeal(HealImpact heal)
         {
+            Debug.Log($"{Owner} healed");
             var wasDown = Value == 0;
             Value = Math.Min(MaxHealth, Value + heal.Amount);
             var isNotDown = Value > 0;
