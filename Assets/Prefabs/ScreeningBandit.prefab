@@ -362,7 +362,7 @@ MonoBehaviour:
   - {fileID: 8657619493681010999}
   - {fileID: 3862168576103673127}
   - {fileID: 6154571393740444167}
-  entity: {fileID: 11400000, guid: 92eacb2bd2a0ebc49981e0b1a4539f72, type: 2}
+  entity: {fileID: 11400000, guid: 6f5b4706adcfc0244ab83716bc8061b2, type: 2}
   configs:
   - rid: 2589632497481154560
   references:
@@ -371,9 +371,9 @@ MonoBehaviour:
     - rid: 2589632497481154560
       type: {class: ShotgunConfig, ns: Levels.Abilities.PushingShotgun, asm: Levels}
       data:
-        <Damage>k__BackingField: 10
+        <Damage>k__BackingField: 30
         <Velocity>k__BackingField: 30
-        <Duration>k__BackingField: 0
+        <Duration>k__BackingField: 0.1
         <CircleRadius>k__BackingField: 1
         <CircleCenterOffset>k__BackingField: 2.5
 --- !u!1 &3628982666248491453

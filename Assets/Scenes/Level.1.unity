@@ -8935,7 +8935,7 @@ Transform:
   m_GameObject: {fileID: 867259175}
   serializedVersion: 2
   m_LocalRotation: {x: -0.053529516, y: 0.88289046, z: 0.10391599, w: 0.4547972}
-  m_LocalPosition: {x: -44.09942, y: 2.0128233, z: -15.522274}
+  m_LocalPosition: {x: -20.599417, y: 2.0128233, z: -32.082275}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -10242,8 +10242,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 33.63155, y: 5.153799, z: 40.562893}
-  m_Center: {x: 3.7440872, y: 1.9570785, z: -21.75144}
+  m_Size: {x: 32.644608, y: 5.153799, z: 48.15477}
+  m_Center: {x: 3.2506146, y: 1.9570785, z: -17.955502}
 --- !u!4 &1231722644
 Transform:
   m_ObjectHideFlags: 0
@@ -17852,7 +17852,7 @@ Transform:
   m_GameObject: {fileID: 1711207718}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0.79925716, z: -0, w: -0.6009893}
-  m_LocalPosition: {x: -40.9, y: 0.81, z: -17.6}
+  m_LocalPosition: {x: -17.4, y: 0.81, z: -34.16}
   m_LocalScale: {x: 0.8, y: 0.8, z: 0.8}
   m_ConstrainProportionsScale: 1
   m_Children:
@@ -18112,12 +18112,13 @@ MonoBehaviour:
     - rid: 2589632493940113517
       type: {class: ShootConfig, ns: Levels.Abilities.HitScanShoot, asm: Levels}
       data:
-        <Damage>k__BackingField: 70
+        <Damage>k__BackingField: 50
         <Offset>k__BackingField: 0.4
         <Distance>k__BackingField: 200
         <PushVelocity>k__BackingField: 5
         <PushDuration>k__BackingField: 0.1
         <CanHitAllies>k__BackingField: 0
+        context: 1
     - rid: 2589632493940113518
       type: {class: ShotgunConfig, ns: Levels.Abilities.PushingShotgun, asm: Levels}
       data:
@@ -18137,7 +18138,7 @@ MonoBehaviour:
     - rid: 2589632493940113520
       type: {class: SabreConfig, ns: Levels.Abilities.ParrySabre, asm: Levels}
       data:
-        <Damage>k__BackingField: 10
+        <Damage>k__BackingField: 40
         <CircleRadius>k__BackingField: 2.6
         <CircleCenterOffset>k__BackingField: 2.5
     - rid: 2589632493940113521
@@ -18171,6 +18172,7 @@ MonoBehaviour:
         <DamageScale>k__BackingField:
           rid: 2589632493940113525
         <Duration>k__BackingField: 5
+        <Context>k__BackingField: 3
     - rid: 2589632493940113525
       type: {class: ScaleReceivedDamage/Plus, ns: Levels.Abilities.CommonModifiers, asm: Levels}
       data:
@@ -18301,6 +18303,7 @@ MonoBehaviour:
     <PushVelocity>k__BackingField: 0
     <PushDuration>k__BackingField: 0
     <CanHitAllies>k__BackingField: 0
+    context: 0
   shotgunConfig:
     <Damage>k__BackingField: 0
     <Velocity>k__BackingField: 0
@@ -19044,7 +19047,7 @@ Transform:
   m_GameObject: {fileID: 1913018982}
   serializedVersion: 2
   m_LocalRotation: {x: -0.053529527, y: 0.88289046, z: 0.10391599, w: 0.4547973}
-  m_LocalPosition: {x: -44.09942, y: 2.0128233, z: -15.522274}
+  m_LocalPosition: {x: -20.599417, y: 2.0128233, z: -32.082275}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:

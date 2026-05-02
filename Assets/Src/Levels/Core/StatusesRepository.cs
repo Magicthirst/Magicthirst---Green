@@ -16,6 +16,10 @@ namespace Levels.Core
         public event Action<IStatus> StatusApplied;
         public event Action<IStatus> StatusDisappeared;
 
+        [SerializeReference]
+        [SubclassSelector]
+        private IStatus[] initialStatuses = {};
+
         IEnumerable<IModifierStatus> IModifyingImpacts.Modifiers => _modifiers;
 
         [Inject]
@@ -30,12 +34,18 @@ namespace Levels.Core
 
         public override void Init()
         {
-            _newStatuses.Impacted += OnNewStatus;
+            _newStatuses.Impacted += OnNewStatusImpact;
+
+            foreach (var status in initialStatuses)
+            {
+                ApplyStatus(status);
+            }
         }
 
-        private void OnNewStatus(ReceivedStatusImpact impact)
+        private void OnNewStatusImpact(ReceivedStatusImpact impact) => ApplyStatus(impact.Status);
+
+        private void ApplyStatus(IStatus status)
         {
-            var status = impact.Status;
             _resolver.Inject(status);
 
             if (status is IModifierStatus modifier)
@@ -60,7 +70,7 @@ namespace Levels.Core
 
         public override void Dispose()
         {
-            _newStatuses.Impacted -= OnNewStatus;
+            _newStatuses.Impacted -= OnNewStatusImpact;
 
             foreach (var routine in _routines)
             {

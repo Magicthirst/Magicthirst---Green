@@ -8,11 +8,11 @@ using UnityEngine;
 namespace Levels.Abilities.CommonModifiers
 {
     [Serializable]
-    public class ScaleReceivedDamage : IModifierStatus
+    public record ScaleReceivedDamage : IModifierStatus
     {
         [SerializeReference]
         [SubclassSelector]
-        private IScale scale;
+        public IScale scale;
         [SerializeField]
         private float duration;
 
@@ -50,21 +50,21 @@ namespace Levels.Abilities.CommonModifiers
         public class Plus : IScale
         {
             public float Multiplier => 1 + Mathf.Abs(value);
-            [SerializeField] private float value;
+            [SerializeField] public float value;
         }
 
         [Serializable]
         public class Minus : IScale
         {
             public float Multiplier => 1 - Mathf.Abs(value);
-            [SerializeField] private float value;
+            [SerializeField] public float value;
         }
 
         [Serializable]
         public class Absolute : IScale
         {
             public float Multiplier => value;
-            [SerializeField] private float value;            
+            [SerializeField] public float value;
         }
     }
 }

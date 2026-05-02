@@ -1,4 +1,5 @@
 using System;
+using Levels.Abilities.CommonImpacts;
 using Levels.Abilities.CommonModifiers;
 using Levels.Core;
 using UnityEngine;
@@ -14,5 +15,6 @@ namespace Levels.Abilities.ChaosArea
         [field: SerializeReference, SubclassSelector]
         public ScaleReceivedDamage.IScale DamageScale { get; set; }
         [field: SerializeField] public float Duration { get; set; }
+        [field: SerializeField] public ImpactContext Context { get; set; } = ImpactContext.Chaos;
     }
 }

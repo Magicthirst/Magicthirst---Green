@@ -1,0 +1,40 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a0291dda54bf4e85a940afef0d62bf25, type: 3}
+  m_Name: ScreenerBanditStatusesRepository
+  m_EditorClassIdentifier: 
+  initialStatuses:
+  - rid: 2589632511219859540
+  references:
+    version: 2
+    RefIds:
+    - rid: 2589632511219859540
+      type: {class: Tough, ns: Levels.Core.Statuses, asm: Levels}
+      data:
+        damageScale:
+          rid: 2589632511219859547
+        antiToughDamageScale:
+          rid: 2589632517419827294
+        chaosImpactScale:
+          rid: 2589632517419827295
+    - rid: 2589632511219859547
+      type: {class: ScaleReceivedDamage/Absolute, ns: Levels.Abilities.CommonModifiers, asm: Levels}
+      data:
+        value: 0.4
+    - rid: 2589632517419827294
+      type: {class: ScaleReceivedDamage/Plus, ns: Levels.Abilities.CommonModifiers, asm: Levels}
+      data:
+        value: 0.5
+    - rid: 2589632517419827295
+      type: {class: ScaleReceivedDamage/Plus, ns: Levels.Abilities.CommonModifiers, asm: Levels}
+      data:
+        value: 0.5

@@ -158,19 +158,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9222006205364241558, guid: 89a9f5337c3edfb4895bbf44bba7fa15, type: 3}
       propertyPath: managedReferences[2589632493940113526].<InstantHealthAddition>k__BackingField
-      value: 10
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 9222006205364241558, guid: 89a9f5337c3edfb4895bbf44bba7fa15, type: 3}
       propertyPath: managedReferences[2589632493940113526].<PeriodicHeal>k__BackingField.duration
-      value: 2
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 9222006205364241558, guid: 89a9f5337c3edfb4895bbf44bba7fa15, type: 3}
       propertyPath: managedReferences[2589632493940113526].<PeriodicHeal>k__BackingField.interval
-      value: 0.4
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9222006205364241558, guid: 89a9f5337c3edfb4895bbf44bba7fa15, type: 3}
       propertyPath: managedReferences[2589632493940113526].<PeriodicHeal>k__BackingField.healingAmount
-      value: 10
+      value: 30
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

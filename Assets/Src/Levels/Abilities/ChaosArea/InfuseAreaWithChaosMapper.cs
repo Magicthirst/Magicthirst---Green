@@ -30,8 +30,8 @@ namespace Levels.Abilities.ChaosArea
                 {
                     var periodicDamage = new PeriodicDamage(intent.Config.DamagePerTick, intent.Config.DamageInterval, intent.Config.Duration);
                     var scaleReceivedDamage = new ScaleReceivedDamage(intent.Config.DamageScale, intent.Config.Duration);
-                    yield return new ReceivedStatusImpact(victim, periodicDamage);
-                    yield return new ReceivedStatusImpact(victim, scaleReceivedDamage);
+                    yield return new ReceivedStatusImpact(victim, periodicDamage, intent.Config.Context);
+                    yield return new ReceivedStatusImpact(victim, scaleReceivedDamage, intent.Config.Context);
                 }
             }
         }
