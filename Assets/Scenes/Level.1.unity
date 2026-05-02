@@ -352,8 +352,8 @@ MonoBehaviour:
   startFightArea: {fileID: 397182773}
   stopFightArea: {fileID: 1746226366}
   memberRadius: 0.5
-  distanceFromEnemy: 3.5
-  tacticUpdatePeriod: 0.5
+  distanceFromEnemy: 2
+  tacticUpdatePeriod: 0.25
   squadShotCooldown: 0.33
 --- !u!1 &44379502
 GameObject:
@@ -17442,8 +17442,8 @@ MonoBehaviour:
   startFightArea: {fileID: 1231722642}
   stopFightArea: {fileID: 1125071562}
   memberRadius: 0.5
-  distanceFromEnemy: 3.5
-  tacticUpdatePeriod: 0.5
+  distanceFromEnemy: 2
+  tacticUpdatePeriod: 0.25
   squadShotCooldown: 0.33
 --- !u!4 &1607543258
 Transform:

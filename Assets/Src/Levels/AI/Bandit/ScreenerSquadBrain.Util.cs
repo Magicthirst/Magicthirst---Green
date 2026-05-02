@@ -31,7 +31,7 @@ namespace Levels.AI.Bandit
 
             for (var i = 0; i < length; i++)
             {
-                var iRelativeToCenter = i - length / 2f;
+                var iRelativeToCenter = i - length / 2f + 0.5f;
                 var centerOffset = frontAxis * (iRelativeToCenter * frontWidth);
                 var place = frontCenter + centerOffset;
                 frontline[i] = place;
