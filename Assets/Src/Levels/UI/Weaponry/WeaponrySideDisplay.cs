@@ -51,7 +51,7 @@ namespace Levels.UI.Weaponry
             foreach (var weapon in weapons)
             {
                 var display = Instantiate(abilityDisplayPrefab, transform);
-                display.GetComponent<WeaponStateDisplay>().Init(weapon, _config);
+                display.GetComponent<WeaponStateDisplay>().Init(weapon, _config, weapon.KeyName);
                 _abilitiesObjects[weapon] = display.GetComponent<RectTransform>();
                 display.GetComponent<RectTransform>().anchoredPosition -= new Vector2(0, space * (_abilitiesObjects.Count - 1));
             }

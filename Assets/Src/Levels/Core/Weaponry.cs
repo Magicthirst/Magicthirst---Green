@@ -94,6 +94,7 @@ namespace Levels.Core
         public event Action Equipped;
 
         public string InputActionName => action.action.name;
+        public string KeyName => action.action.GetBindingDisplayString();
         public AbilityPosition Position => position;
         public float CooldownProgress => Mathf.InverseLerp(LastUse, LastUse + cooldown, Time.time);
         public bool InvokeOnEquip => invokeOnEquip;
@@ -126,6 +127,7 @@ namespace Levels.Core
     public interface IAbility
     {
         public string InputActionName { get; }
+        public string KeyName { get; }
         public AbilityPosition Position { get; }
         public float CooldownProgress { get; }
         public Type Type { get; }
