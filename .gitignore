@@ -78,3 +78,6 @@ crashlytics-build.properties
 /[Aa]ssets/[Ss]treamingAssets/aa/*
 
 # End of https://www.toptal.com/developers/gitignore/api/unity
+
+# Trash can for all the files that should not be in repository & may be safe to delete (but they are left to exist on the PC for safety of development)
+.git-trash

@@ -1,0 +1,23 @@
+post-commit for moving all the *.*~ files to .git-trash directory
+|
+START OF FILE
+
+    #!/bin/bash
+    
+    # 1. Define the destination for your trash files
+    TRASH_DIR=".git-trash"
+    
+    # 2. Create the folder if it doesn't already exist
+    mkdir -p "$TRASH_DIR"
+    
+    # 3. Find and move the backup files safely
+    # This handles spaces in filenames and ignores the .git and trash directories
+    find . -type f \( -name "*~" -o -name "*.*~" \) ! -path "./.git/*" ! -path "./$TRASH_DIR/*" -print0 | while IFS= read -r -d '' file; do
+        mv "$file" "$TRASH_DIR/" 2>/dev/null
+    done
+
+END OF FILE
+
+NOTE: also there are auto-generated github lfs scripts
+
+something else sometime later ...
