@@ -10,7 +10,8 @@ namespace Levels.Sync
     {
         public Vector2 Movement { get; private set; }
 
-        public event Action<Vector2> PositionUpdated;
+        public event Action<Vector2> MovementUpdated { add {} remove {} } 
+        public event Action<Vector2> ForcePositionUpdated;
 
         private PlayerStateUpdatesReceiver _stateUpdates;
 
@@ -34,7 +35,7 @@ namespace Levels.Sync
                 Movement = vector;
                 Debug.Log($"{_consumer}");
                 var estimatedPosition = position + vector * (float)elapsedSeconds;
-                PositionUpdated?.Invoke(estimatedPosition);
+                ForcePositionUpdated?.Invoke(estimatedPosition);
             }, null);
         }
 

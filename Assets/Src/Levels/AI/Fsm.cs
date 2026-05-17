@@ -12,6 +12,8 @@ namespace Levels.AI
     {
         public Action<FsmState> OnStateChanged;
 
+        public FsmState Current => _Current;
+
         /// <summary>
         /// Starting state
         /// <code>[*] --> Fsm.initialState</code>

@@ -13,7 +13,9 @@ namespace Levels
     [RequireComponent(typeof(IMovementInputSource))]
     public class CharacterMovement : MonoBehaviour, IObservableMovement, IInterruptable<IMovementReason>
     {
-        public event Action<Vector2> Moved;
+        public event Action<Vector2> MovementUpdated;
+
+        public Vector2 Movement => _previousVelocity;
 
         [SerializeField] private bool broadcasting;
 
@@ -38,7 +40,7 @@ namespace Levels
 
         private void OnEnable()
         {
-            _inputSource.PositionUpdated += OnPositionUpdated;
+            _inputSource.ForcePositionUpdated += OnForcePositionUpdated;
             _teleportsConsumer.Impacted += OnTeleport;
         }
 
@@ -66,7 +68,7 @@ namespace Levels
             if (broadcasting && moving)
             {
                 _previousVelocity = _inputSource.Movement;
-                Moved?.Invoke(_inputSource.Movement);
+                MovementUpdated?.Invoke(_inputSource.Movement);
             }
 
             _controller.Move(Vector3.down * (gravityPull * Time.fixedDeltaTime));
@@ -85,7 +87,7 @@ namespace Levels
             }
         }
 
-        private void OnPositionUpdated(Vector2 position)
+        private void OnForcePositionUpdated(Vector2 position)
         {
             _controller.enabled = false;
             _resetPosition = position;
@@ -93,7 +95,7 @@ namespace Levels
 
         private void OnDisable()
         {
-            _inputSource.PositionUpdated -= OnPositionUpdated;
+            _inputSource.ForcePositionUpdated -= OnForcePositionUpdated;
             _teleportsConsumer.Impacted -= OnTeleport;
         }
 

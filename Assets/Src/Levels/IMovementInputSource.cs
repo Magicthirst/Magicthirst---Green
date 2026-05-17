@@ -3,10 +3,8 @@ using UnityEngine;
 
 namespace Levels
 {
-    public interface IMovementInputSource
+    public interface IMovementInputSource : IObservableMovement
     {
-        public Vector2 Movement { get; }
-
-        public event Action<Vector2> PositionUpdated;
+        event Action<Vector2> ForcePositionUpdated;
     }
 }

@@ -47,9 +47,14 @@ namespace DI
                 builder.RegisterInstance(fsm);
             }
 
-            if (gameObject.TryGetComponent(out IMovementInputSource movement))
+            if (gameObject.TryGetComponent(out IMovementInputSource movement1))
             {
-                builder.RegisterInstance(movement);
+                builder.RegisterInstance(movement1)
+                    .As<IObservableMovement>();
+            }
+            else if (gameObject.TryGetComponent(out IObservableMovement movement2))
+            {
+                builder.RegisterInstance(movement2);
             }
 
             foreach (var config in configs)

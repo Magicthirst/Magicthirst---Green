@@ -13,12 +13,28 @@ namespace Util
             return enumerable.Where(element => element != null);
         }
 
-        public static bool TryGetIndexOfFirst<T>(this T[] array, out int index, Predicate<T> action)
+        public static bool TryGetIndexOfFirst<T>(this T[] array, out int index, Predicate<T> test)
         {
             for (index = 0; index < array.Length; index++)
             {
-                if (action(array[index]))
+                if (test(array[index]))
                 {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        public static bool TryGetFirst<T>(this T[] array, out T item, Predicate<T> test) where T : class
+        {
+            item = null;
+
+            foreach (var t in array)
+            {
+                if (test(t))
+                {
+                    item = t;
                     return true;
                 }
             }

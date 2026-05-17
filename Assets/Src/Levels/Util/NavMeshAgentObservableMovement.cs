@@ -3,12 +3,14 @@ using Levels.Extensions;
 using UnityEngine;
 using UnityEngine.AI;
 
-namespace Levels.Visual.SpriteResolution
+namespace Levels.Util
 {
     [RequireComponent(typeof(NavMeshAgent))]
     public class NavMeshAgentObservableMovement : MonoBehaviour, IObservableMovement
     {
-        public event Action<Vector2> Moved;
+        public event Action<Vector2> MovementUpdated;
+
+        public Vector2 Movement => _lastVelocity;
 
         private NavMeshAgent _agent;
         private Vector2 _lastVelocity;
@@ -18,13 +20,13 @@ namespace Levels.Visual.SpriteResolution
             _agent = GetComponent<NavMeshAgent>();
         }
 
-        private void FixedUpdate()
+        private void Update()
         {
             var velocity = _agent.velocity.InFloorCoordinates();
 
             if (velocity != _lastVelocity)
             {
-                Moved?.Invoke(velocity);
+                MovementUpdated?.Invoke(velocity);
                 _lastVelocity = velocity;
             }
         }

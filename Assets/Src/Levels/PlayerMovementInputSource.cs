@@ -11,7 +11,8 @@ namespace Levels
     {
         public Vector2 Movement { get; private set; } = Vector3.zero;
 
-        public event Action<Vector2> PositionUpdated;
+        public event Action<Vector2> MovementUpdated;
+        public event Action<Vector2> ForcePositionUpdated;
 
         private Transform _camera;
         private PlayerInput _input;
@@ -59,6 +60,8 @@ namespace Levels
                 x: _relativeMovement.x * cos - _relativeMovement.y * sin,
                 y: _relativeMovement.x * sin + _relativeMovement.y * cos
             ).normalized;
+
+            MovementUpdated?.Invoke(Movement);
         }
 
         private void OnDisable()

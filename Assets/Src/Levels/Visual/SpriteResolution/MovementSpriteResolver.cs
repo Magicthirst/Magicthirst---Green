@@ -14,9 +14,9 @@ namespace Levels.Visual.SpriteResolution
 
         private SpriteRenderer _spriteRenderer;
         private SpriteResolver<MovementKey, BasePlaySequence> _resolver;
-        [Inject] private IMovementInputSource _movement;
+        [Inject] private IObservableMovement _movement;
 
-        private void Awake()
+        protected virtual void Awake()
         {
             _spriteRenderer = GetComponent<SpriteRenderer>();
             _resolver = new SpriteResolver<MovementKey, BasePlaySequence>(GetResolutionDictionary(), restarts: false);
@@ -24,14 +24,22 @@ namespace Levels.Visual.SpriteResolution
 
         private void Update()
         {
-            Sprite sprite;
+            Sprite newSprite;
             var key = _movement.Movement.IsMoving() ? MovementKey.Moving : MovementKey.Standing;
 
-            if (_resolver.TryPlay(now: Time.time, key, out sprite) ||
-                _resolver.UpdateAndTryGetNextFrame(now: Time.time, out sprite))
+            if (_resolver.TryPlay(now: Time.time, key, out newSprite) ||
+                _resolver.UpdateAndTryGetNextFrame(now: Time.time, out newSprite))
             {
-                _spriteRenderer.sprite = sprite;
+                var oldSprite = _spriteRenderer.sprite;
+
+                _spriteRenderer.sprite = newSprite;
+
+                OnNewSprite(newSprite);
             }
+        }
+
+        protected virtual void OnNewSprite(Sprite newSprite)
+        {
         }
 
         private Dictionary<MovementKey, BasePlaySequence> GetResolutionDictionary()
