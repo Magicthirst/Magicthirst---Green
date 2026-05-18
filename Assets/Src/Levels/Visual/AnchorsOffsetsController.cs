@@ -5,31 +5,36 @@ using Levels.Extensions;
 using UnityEngine;
 using UnityEngine.Assertions;
 
-namespace Levels.Visual.SpriteResolution
+namespace Levels.Visual
 {
-    public class OffsettingMovementSpriteResolver : MovementSpriteResolver
+    [RequireComponent(typeof(ISpriteChangeSource))]
+    public class AnchorsOffsetsController : MonoBehaviour
     {
         [SerializeField] private Transform[] anchorsOfAffectedSprites;
         [SerializeField] private YOffset[] yOffsets;
 
+        private ISpriteChangeSource _spriteChangeSource;
         private Dictionary<Sprite, float> _yOffsets;
 
-        protected override void Awake()
+        private void Awake()
         {
-            base.Awake();
-
             foreach (var anchor in anchorsOfAffectedSprites)
             {
                 CheckIsValidAnchor(anchor);
             }
 
+            _spriteChangeSource = GetComponent<ISpriteChangeSource>();
+
             _yOffsets = yOffsets.ToDictionary(yo => yo.Sprite, yo => yo.UnitsOffset);
         }
 
-        protected override void OnNewSprite(Sprite newSprite)
+        private void OnEnable()
         {
-            base.OnNewSprite(newSprite);
+            _spriteChangeSource.SpriteChanged += OnNewSprite;
+        }
 
+        private void OnNewSprite(Sprite newSprite)
+        {
             if (newSprite is null)
             {
                 return;
@@ -41,6 +46,11 @@ namespace Levels.Visual.SpriteResolution
             {
                 anchor.localPosition = anchor.localPosition.With(y: offset);
             }
+        }
+
+        private void OnDisable()
+        {
+            _spriteChangeSource.SpriteChanged -= OnNewSprite;
         }
 
         private void CheckIsValidAnchor(Transform anchor)

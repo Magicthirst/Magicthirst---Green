@@ -39,7 +39,7 @@ namespace Levels.Abilities.TeleportChip
                 switch (_state.State)
                 {
                     case TeleportChipState.Ready:
-                        var intent = new TeleportChipThrowIntent(gameObject, _state.Instance.gameObject, _camera.forward, _movementInput.Movement, _config);
+                        var intent = new TeleportChipThrowIntent(gameObject, _state.Instance.gameObject, _camera.forward, _movementInput.AbsoluteMovement, _config);
                         _publishThrow(intent);
                         _state.Throw();
                         break;

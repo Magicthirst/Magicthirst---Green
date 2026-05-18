@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using Levels.Abilities.CommonImpacts;
 using Levels.Extensions;
@@ -11,12 +10,8 @@ namespace Levels
 {
     [RequireComponent(typeof(CharacterController))]
     [RequireComponent(typeof(IMovementInputSource))]
-    public class CharacterMovement : MonoBehaviour, IObservableMovement, IInterruptable<IMovementReason>
+    public class CharacterMovement : MonoBehaviour, IInterruptable<IMovementReason>
     {
-        public event Action<Vector2> MovementUpdated;
-
-        public Vector2 Movement => _previousVelocity;
-
         [SerializeField] private bool broadcasting;
 
         [SerializeField] private float gravityPull;
@@ -61,14 +56,13 @@ namespace Levels
                 return;
             }
 
-            var movement3d = new Vector3(_inputSource.Movement.x, 0f, _inputSource.Movement.y);
+            var movement3d = new Vector3(_inputSource.AbsoluteMovement.x, 0f, _inputSource.AbsoluteMovement.y);
             _controller.Move(movement3d * (speed * Time.fixedDeltaTime));
 
-            var moving = (_inputSource.Movement - _previousVelocity).IsMoving();
+            var moving = (_inputSource.AbsoluteMovement - _previousVelocity).IsMoving();
             if (broadcasting && moving)
             {
-                _previousVelocity = _inputSource.Movement;
-                MovementUpdated?.Invoke(_inputSource.Movement);
+                _previousVelocity = _inputSource.AbsoluteMovement;
             }
 
             _controller.Move(Vector3.down * (gravityPull * Time.fixedDeltaTime));

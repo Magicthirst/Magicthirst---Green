@@ -5,8 +5,10 @@ namespace Levels
 {
     public interface IObservableMovement
     {
-        event Action<Vector2> MovementUpdated;
+        event Action MovementUpdated;
 
-        Vector2 Movement { get; }
+        Vector2 AbsoluteMovement { get; }
+
+        Vector2 RelativeMovement { get; }
     }
 }

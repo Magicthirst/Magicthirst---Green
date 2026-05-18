@@ -8,9 +8,10 @@ namespace Levels.Sync
     [RequireComponent(typeof(PlayerStateUpdatesReceiver))]
     public class RemoteMovementInputSource : SyncBehavior, IMovementInputSource
     {
-        public Vector2 Movement { get; private set; }
+        public Vector2 AbsoluteMovement { get; private set; }
+        public Vector2 RelativeMovement { get; private set; } // TODO
 
-        public event Action<Vector2> MovementUpdated { add {} remove {} } 
+        public event Action MovementUpdated { add {} remove {} } 
         public event Action<Vector2> ForcePositionUpdated;
 
         private PlayerStateUpdatesReceiver _stateUpdates;
@@ -32,7 +33,7 @@ namespace Levels.Sync
         {
             MainThreadContext.Post(_ =>
             {
-                Movement = vector;
+                AbsoluteMovement = vector;
                 Debug.Log($"{_consumer}");
                 var estimatedPosition = position + vector * (float)elapsedSeconds;
                 ForcePositionUpdated?.Invoke(estimatedPosition);

@@ -14,7 +14,7 @@ namespace Levels.Visual
 
         private void Update()
         {
-            var direction = _movementInput.Movement;
+            var direction = _movementInput.AbsoluteMovement;
             var angle = Mathf.Atan2(direction.x, direction.y) * Mathf.Rad2Deg;
             transform.eulerAngles = transform.eulerAngles.With(y: angle);
         }

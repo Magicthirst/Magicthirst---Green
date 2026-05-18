@@ -36,6 +36,6 @@ namespace Levels.Sync
             }
         }
 
-        private void SendMovementIfChanged(Vector2 movement) => _sendMovement?.Invoke(transform.position, movement);
+        private void SendMovementIfChanged() => _sendMovement?.Invoke(transform.position, _input.AbsoluteMovement);
     }
 }

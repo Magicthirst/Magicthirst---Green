@@ -22,7 +22,7 @@ namespace Levels.Visual
         private void Update()
         {
             var horizontal = _camera.transform.right.InFloorCoordinates().normalized;
-            var dot = Vector2.Dot(_movementInput.Movement, horizontal);
+            var dot = Vector2.Dot(_movementInput.AbsoluteMovement, horizontal);
 
             if (dot > flipXThreshold)
             {

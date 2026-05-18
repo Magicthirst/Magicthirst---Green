@@ -9,9 +9,10 @@ namespace Levels
     [RequireComponent(typeof(PlayerInput))]
     public class PlayerMovementInputSource : MonoBehaviour, IMovementInputSource
     {
-        public Vector2 Movement { get; private set; } = Vector3.zero;
+        public Vector2 AbsoluteMovement { get; private set; } = Vector3.zero;
+        public Vector2 RelativeMovement => _relativeMovement;
 
-        public event Action<Vector2> MovementUpdated;
+        public event Action MovementUpdated;
         public event Action<Vector2> ForcePositionUpdated;
 
         private Transform _camera;
@@ -52,16 +53,17 @@ namespace Levels
             _camera.hasChanged = false;
             _relativeMovementChanged = false;
 
+            // Rotate the relative movement by the camera's Y rotation, then normalize
             var radians = math.radians(-_camera.eulerAngles.y);
             var cos = math.cos(radians);
             var sin = math.sin(radians);
-            Movement = new Vector2
+            AbsoluteMovement = new Vector2
             (
                 x: _relativeMovement.x * cos - _relativeMovement.y * sin,
                 y: _relativeMovement.x * sin + _relativeMovement.y * cos
             ).normalized;
 
-            MovementUpdated?.Invoke(Movement);
+            MovementUpdated?.Invoke();
         }
 
         private void OnDisable()
