@@ -5297,7 +5297,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2417240799410663039, guid: 4ee5398177db59540b6282edab06b851, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4200989473936554806, guid: 4ee5398177db59540b6282edab06b851, type: 3}
       propertyPath: brain
@@ -5946,7 +5946,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 456863747690656420, guid: 164096d06b389444d987c948f8e8c538, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2001985641362860203, guid: 164096d06b389444d987c948f8e8c538, type: 3}
       propertyPath: alertSeat
@@ -6049,7 +6049,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2417240799410663039, guid: 89a9f5337c3edfb4895bbf44bba7fa15, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4329265247647134832, guid: 89a9f5337c3edfb4895bbf44bba7fa15, type: 3}
       propertyPath: alertSeat
@@ -6687,7 +6687,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2417240799410663039, guid: 89a9f5337c3edfb4895bbf44bba7fa15, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4329265247647134832, guid: 89a9f5337c3edfb4895bbf44bba7fa15, type: 3}
       propertyPath: alertSeat
@@ -6712,11 +6712,11 @@ PrefabInstance:
     - target: {fileID: 6035081067739590327, guid: 89a9f5337c3edfb4895bbf44bba7fa15, type: 3}
       propertyPath: stopFightArea
       value: 
-      objectReference: {fileID: 1746226366}
+      objectReference: {fileID: 1563815773}
     - target: {fileID: 6035081067739590327, guid: 89a9f5337c3edfb4895bbf44bba7fa15, type: 3}
       propertyPath: startFightArea
       value: 
-      objectReference: {fileID: 397182773}
+      objectReference: {fileID: 1433296596}
     - target: {fileID: 6048475864911610465, guid: 89a9f5337c3edfb4895bbf44bba7fa15, type: 3}
       propertyPath: m_LocalPosition.x
       value: -55.87
@@ -8595,7 +8595,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2417240799410663039, guid: 89a9f5337c3edfb4895bbf44bba7fa15, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4329265247647134832, guid: 89a9f5337c3edfb4895bbf44bba7fa15, type: 3}
       propertyPath: alertSeat
@@ -9031,7 +9031,7 @@ Transform:
   m_GameObject: {fileID: 867259175}
   serializedVersion: 2
   m_LocalRotation: {x: -0.053529516, y: 0.88289046, z: 0.10391599, w: 0.4547972}
-  m_LocalPosition: {x: -66.17942, y: 2.0128233, z: -5.532274}
+  m_LocalPosition: {x: -14.249418, y: 2.0128233, z: 3.0777264}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -10331,19 +10331,19 @@ MonoBehaviour:
       m_SubObjectGUID: 
       m_EditorAssetChanged: 0
     onlyGameplayLevel:
-      m_AssetGUID: 
+      m_AssetGUID: 1457b548de9798f47ab09941599c97da
       m_SubObjectName: 
       m_SubObjectType: 
       m_SubObjectGUID: 
       m_EditorAssetChanged: 0
     joinSession:
-      m_AssetGUID: 
+      m_AssetGUID: 4681ab6970ca61048adb730eeb3eedd4
       m_SubObjectName: 
       m_SubObjectType: 
       m_SubObjectGUID: 
       m_EditorAssetChanged: 0
     signIn:
-      m_AssetGUID: 
+      m_AssetGUID: 942fbe52f04b005499916a006ba7b2b6
       m_SubObjectName: 
       m_SubObjectType: 
       m_SubObjectGUID: 
@@ -15978,7 +15978,6 @@ MonoBehaviour:
   autoRun: 1
   autoInjectGameObjects:
   - {fileID: 1499311475}
-  - {fileID: 0}
   - {fileID: 1607543256}
   camera: {fileID: 1065869686}
   debugFallbackGameScope: {fileID: 1324790133}
@@ -17303,7 +17302,7 @@ MonoBehaviour:
   startFightArea: {fileID: 1231722642}
   stopFightArea: {fileID: 1125071562}
   memberRadius: 0.5
-  distanceFromEnemy: 5
+  distanceFromEnemy: 3
   tacticUpdatePeriod: 0.25
   squadShotCooldown: 0.33
 --- !u!4 &1607543258
@@ -17713,7 +17712,7 @@ Transform:
   m_GameObject: {fileID: 1711207718}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0.79925716, z: -0, w: -0.6009893}
-  m_LocalPosition: {x: -62.98, y: 0.81, z: -7.61}
+  m_LocalPosition: {x: -11.05, y: 0.81, z: 1}
   m_LocalScale: {x: 0.8, y: 0.8, z: 0.8}
   m_ConstrainProportionsScale: 1
   m_Children:
@@ -18393,7 +18392,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2417240799410663039, guid: 89a9f5337c3edfb4895bbf44bba7fa15, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4329265247647134832, guid: 89a9f5337c3edfb4895bbf44bba7fa15, type: 3}
       propertyPath: alertSeat
@@ -18592,7 +18591,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 456863747690656420, guid: 164096d06b389444d987c948f8e8c538, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2001985641362860203, guid: 164096d06b389444d987c948f8e8c538, type: 3}
       propertyPath: alertSeat
@@ -18697,7 +18696,7 @@ Transform:
   m_GameObject: {fileID: 1913018982}
   serializedVersion: 2
   m_LocalRotation: {x: -0.053529527, y: 0.88289046, z: 0.10391599, w: 0.4547973}
-  m_LocalPosition: {x: -66.17942, y: 2.0128233, z: -5.532274}
+  m_LocalPosition: {x: -14.249418, y: 2.0128233, z: 3.0777264}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:

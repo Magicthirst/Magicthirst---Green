@@ -32,13 +32,13 @@ namespace Levels.Visual.SpriteResolution
         private void Awake()
         {
             _spriteRenderer = GetComponent<SpriteRenderer>();
-            _spriteRenderer.sprite = defaultSprite;
 
             _resolver = new SpriteResolver<PlayKey, BasePlaySequence>(GetMappingsAsDictionary(), restarts: true);
         }
 
         private void OnEnable()
         {
+            _spriteRenderer.sprite = defaultSprite;
             _fsm.OnStateChanged += OnPlayStateChanged;
             for (var i = 0; i < _observers.Length; i++)
             {

@@ -353,7 +353,15 @@ namespace VContainer.Unity
             {
                 if (target != null) // Check missing reference
                 {
-                    Container.InjectGameObject(target);
+                    try
+                    {
+                        Container.InjectGameObject(target);
+                    }
+                    catch (Exception)
+                    {
+                        Debug.LogError(target);
+                        throw;
+                    }
                 }
             }
         }

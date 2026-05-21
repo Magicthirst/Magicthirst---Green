@@ -722,7 +722,6 @@ GameObject:
   m_Component:
   - component: {fileID: 186032795015019518}
   - component: {fileID: 1362793213429127105}
-  - component: {fileID: 2967326649658126221}
   - component: {fileID: 5410340688628959997}
   - component: {fileID: 3280671401312229566}
   m_Layer: 0
@@ -802,19 +801,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 1
---- !u!114 &2967326649658126221
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6148564826231834263}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b59638e42eca9b347a4693275510f43f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  flipped: 0
 --- !u!114 &5410340688628959997
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -849,11 +835,15 @@ MonoBehaviour:
     sprites:
     - {fileID: 21300000, guid: 924784554f4de7b43a5063f4309cf949, type: 3}
     - {fileID: 21300000, guid: dddc90743ed64d5419cddf26a87aecbe, type: 3}
+    - {fileID: 21300000, guid: d4b5e8520a11512438e39f256812a996, type: 3}
+    - {fileID: 21300000, guid: 0a0b98f51620ff4489f64f382b7a851a, type: 3}
     intervalSeconds: 0.3
   movingLeftToRight:
     sprites:
     - {fileID: 21300000, guid: c2512ea286704454f874b50d3c17128d, type: 3}
     - {fileID: 21300000, guid: 52f0db3d7a2a4aa42bd66c60681e1b5d, type: 3}
+    - {fileID: 21300000, guid: ff1057a142d06314082db4b4bf7a9a21, type: 3}
+    - {fileID: 21300000, guid: 0caf18483a6a00940a0b712d9f7fee13, type: 3}
     intervalSeconds: 0.3
 --- !u!114 &3280671401312229566
 MonoBehaviour:
@@ -871,13 +861,21 @@ MonoBehaviour:
   - {fileID: 8574111202609095009}
   yOffsets:
   - sprite: {fileID: 21300000, guid: cdd9046ee5ea46249a0ea65d6a048437, type: 3}
-    pxOffset: 5
+    pxOffset: 2
+  - sprite: {fileID: 21300000, guid: 376b8d1d94c6aa84cac245f0904623af, type: 3}
+    pxOffset: -1
   - sprite: {fileID: 21300000, guid: a4d9d683faf82ad4f8ba4c11bd267931, type: 3}
-    pxOffset: 5
+    pxOffset: 2
+  - sprite: {fileID: 21300000, guid: 6c6c4a133a775244f800eb57eee760c1, type: 3}
+    pxOffset: -1
+  - sprite: {fileID: 21300000, guid: ff1057a142d06314082db4b4bf7a9a21, type: 3}
+    pxOffset: 2
   - sprite: {fileID: 21300000, guid: c2512ea286704454f874b50d3c17128d, type: 3}
-    pxOffset: 5
+    pxOffset: 2
   - sprite: {fileID: 21300000, guid: 924784554f4de7b43a5063f4309cf949, type: 3}
-    pxOffset: 5
+    pxOffset: 2
+  - sprite: {fileID: 21300000, guid: d4b5e8520a11512438e39f256812a996, type: 3}
+    pxOffset: 2
 --- !u!1 &6154571393740444167
 GameObject:
   m_ObjectHideFlags: 0
@@ -1241,7 +1239,7 @@ MonoBehaviour:
       data:
         stateType: Levels.AI.Bandit.BanditFighting
         sprites:
-        - {fileID: 21300000, guid: d9699be90718ba14cb885a172698d9eb, type: 3}
+        - {fileID: 21300000, guid: 9f438dbd0d69f5545bb9f1fd38a0479c, type: 3}
         intervalSeconds: 0.0625
     - rid: 411244937954984027
       type: {class: ImpactedSpriteResolutionMapping, ns: Levels.Visual.SpriteResolution, asm: Levels}
@@ -1249,7 +1247,7 @@ MonoBehaviour:
         impactType: Levels.Abilities.CommonImpacts.CasterShotHitScanEffect
         stateType: Levels.AI.Bandit.BanditFighting
         sprites:
-        - {fileID: 21300000, guid: 404f365ed29847ca9b8ef5f0bf62ea37, type: 3}
+        - {fileID: 21300000, guid: 7cab94a582ae5a44da4ba949c9966f70, type: 3}
         durationSeconds: 0.05
         intervalSeconds: 0.0625
     - rid: 411245415820951641
