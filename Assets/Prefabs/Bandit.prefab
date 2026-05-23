@@ -49,7 +49,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rules:
   - state:
-      rid: 2589632836886331476
+      rid: 2589632992204292096
     sprite: {fileID: 1362793213429127105}
     visible: 0
   - state:
@@ -59,14 +59,18 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
-    - rid: 2589632836886331476
-      type: {class: Is, ns: Levels.Visual.FsmSpritesVisibility, asm: Levels}
-      data:
-        state: {fileID: 1042389833824372580}
     - rid: 2589632836886331477
       type: {class: IsNot, ns: Levels.Visual.FsmSpritesVisibility, asm: Levels}
       data:
-        state: {fileID: 1042389833824372580}
+        anyOfThese:
+        - {fileID: 7085063179026557343}
+        - {fileID: 1042389833824372580}
+    - rid: 2589632992204292096
+      type: {class: Is, ns: Levels.Visual.FsmSpritesVisibility, asm: Levels}
+      data:
+        anyOfThese:
+        - {fileID: 7085063179026557343}
+        - {fileID: 1042389833824372580}
 --- !u!114 &8000434948075212914
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1210,7 +1214,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d3b7523916cf4068ad824b7e7b4e8625, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  defaultSprite: {fileID: 21300000, guid: 8fc48d2d471c4cfd97f3b8e2d681ed23, type: 3}
+  defaultSprite: {fileID: 21300000, guid: edfb2a036ba0a5d4e9724708fd23834d, type: 3}
   mappings:
   - rid: 411244937954984024
   - rid: 411244937954984025
@@ -1225,14 +1229,14 @@ MonoBehaviour:
       data:
         stateType: Levels.AI.Bandit.BanditIdle
         sprites:
-        - {fileID: 21300000, guid: 8fc48d2d471c4cfd97f3b8e2d681ed23, type: 3}
+        - {fileID: 21300000, guid: edfb2a036ba0a5d4e9724708fd23834d, type: 3}
         intervalSeconds: 0.0625
     - rid: 411244937954984025
       type: {class: BaseStateSpriteResolutionMapping, ns: Levels.Visual.SpriteResolution, asm: Levels}
       data:
         stateType: Levels.AI.Bandit.BanditAlerted
         sprites:
-        - {fileID: 21300000, guid: a609e1edefb14e9a83c49b9633b13e6e, type: 3}
+        - {fileID: 21300000, guid: 9f438dbd0d69f5545bb9f1fd38a0479c, type: 3}
         intervalSeconds: 0.0625
     - rid: 411244937954984026
       type: {class: BaseStateSpriteResolutionMapping, ns: Levels.Visual.SpriteResolution, asm: Levels}

@@ -83,11 +83,11 @@ namespace Levels.Visual.FsmSpritesVisibility
     {
         public int Order => 0;
 
-        public FsmState state;
+        public FsmState[] anyOfThese;
 
-        public bool IsAppliesTo(FsmState key) => key == state;
+        public bool IsAppliesTo(FsmState key) => anyOfThese.Contains(key);
 
-        public override string ToString() => $"Is {state.GetType().Name}";
+        public override string ToString() => $"Is anyOfThese ({string.Join(",", anyOfThese.Select(state => state.ToString()))})";
     }
 
     [Serializable]
@@ -95,10 +95,10 @@ namespace Levels.Visual.FsmSpritesVisibility
     {
         public int Order => 1;
 
-        public FsmState state;
+        public FsmState[] anyOfThese;
 
-        public bool IsAppliesTo(FsmState key) => key != state;
+        public bool IsAppliesTo(FsmState key) => !anyOfThese.Contains(key);
 
-        public override string ToString() => $"Is Not {state.GetType().Name}";
+        public override string ToString() => $"Is Not anyOfThese ({string.Join(",", anyOfThese.Select(state => state.ToString()))})";
     }
 }

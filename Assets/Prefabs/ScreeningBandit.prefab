@@ -985,11 +985,15 @@ MonoBehaviour:
     - rid: 2589632836886331476
       type: {class: Is, ns: Levels.Visual.FsmSpritesVisibility, asm: Levels}
       data:
-        state: {fileID: 3266548798043383474}
+        anyOfThese:
+        - {fileID: 7085063179026557343}
+        - {fileID: 3266548798043383474}
     - rid: 2589632836886331477
       type: {class: IsNot, ns: Levels.Visual.FsmSpritesVisibility, asm: Levels}
       data:
-        state: {fileID: 3266548798043383474}
+        anyOfThese:
+        - {fileID: 7085063179026557343}
+        - {fileID: 3266548798043383474}
 --- !u!114 &1876385192495571066
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1203,7 +1207,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d3b7523916cf4068ad824b7e7b4e8625, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  defaultSprite: {fileID: 21300000, guid: 8fc48d2d471c4cfd97f3b8e2d681ed23, type: 3}
+  defaultSprite: {fileID: 21300000, guid: 42e6ef41744d99e40825558a218f42ef, type: 3}
   mappings:
   - rid: 411244937954984024
   - rid: 411244937954984025
@@ -1217,14 +1221,14 @@ MonoBehaviour:
       data:
         stateType: Levels.AI.Bandit.BanditIdle
         sprites:
-        - {fileID: 21300000, guid: 8fc48d2d471c4cfd97f3b8e2d681ed23, type: 3}
+        - {fileID: 21300000, guid: 42e6ef41744d99e40825558a218f42ef, type: 3}
         intervalSeconds: 0.0625
     - rid: 411244937954984025
       type: {class: BaseStateSpriteResolutionMapping, ns: Levels.Visual.SpriteResolution, asm: Levels}
       data:
         stateType: Levels.AI.Bandit.BanditAlerted
         sprites:
-        - {fileID: 21300000, guid: a609e1edefb14e9a83c49b9633b13e6e, type: 3}
+        - {fileID: 21300000, guid: 4b9868202530e5d4cbd922b455709a29, type: 3}
         intervalSeconds: 0.0625
     - rid: 411244937954984026
       type: {class: BaseStateSpriteResolutionMapping, ns: Levels.Visual.SpriteResolution, asm: Levels}
@@ -1238,7 +1242,7 @@ MonoBehaviour:
       data:
         stateType: Levels.AI.Shared.DownedDyingState
         sprites:
-        - {fileID: 21300000, guid: ff072394e374d924d83f02f56baa2340, type: 3}
+        - {fileID: 21300000, guid: dab96188fcc758b4780d71c5759ba7d6, type: 3}
         intervalSeconds: 0.0625
 --- !u!1 &8800768721026408215
 GameObject:
