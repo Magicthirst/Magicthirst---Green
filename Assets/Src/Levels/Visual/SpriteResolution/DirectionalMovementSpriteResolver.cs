@@ -3,17 +3,19 @@ using System.Collections.Generic;
 using Levels.Extensions;
 using UnityEngine;
 using VContainer;
+using static UnityEngine.Mathf;
 
 namespace Levels.Visual.SpriteResolution
 {
     [RequireComponent(typeof(SpriteRenderer))]
     public class DirectionalMovementSpriteResolver : MonoBehaviour, ISpriteChangeSource
     {
+        private static readonly float BackwardsMovementFavour = -0.1f;
+
         public event Action<Sprite> SpriteChanged;
 
         [SerializeField] private MovementSpriteResolutionMapping standing;
         [SerializeField] private MovementSpriteResolutionMapping movingForward;
-        [SerializeField] private MovementSpriteResolutionMapping movingBackward;
         [SerializeField] private MovementSpriteResolutionMapping movingRightToLeft;
         [SerializeField] private MovementSpriteResolutionMapping movingLeftToRight;
 
@@ -75,13 +77,28 @@ namespace Levels.Visual.SpriteResolution
             {
                 targetKey = MovementKey.Standing;
             }
-            else if (Mathf.Abs(direction.x) > Mathf.Abs(direction.y))
-            {
-                targetKey = direction.x > 0 ? MovementKey.MovingLtr : MovementKey.MovingRtl;
-            }
             else
             {
-                targetKey = direction.y > 0 ? MovementKey.MovingForward : MovementKey.MovingBackward;
+                var isForward = direction.y > 0;
+                var fullAngle = Atan2(direction.y + BackwardsMovementFavour, direction.x);
+                var angle = Abs(fullAngle);
+
+                if (angle is > PI / 3 and < 2 * PI / 3)
+                {
+                    targetKey = isForward ? MovementKey.MovingForward : MovementKey.MovingBackward;
+                }
+                else if (angle < PI / 3)
+                {
+                    targetKey = isForward ? MovementKey.MovingForwardLtr : MovementKey.MovingBackwardLtr;
+                }
+                else if (angle > 2 * PI / 3)
+                {
+                    targetKey = isForward ? MovementKey.MovingForwardRtl : MovementKey.MovingBackwardRtl;
+                }
+                else
+                {
+                    targetKey = MovementKey.Standing; // should not happen
+                }
             }
 
             if (targetKey.Equals(_currentKey))
@@ -101,9 +118,11 @@ namespace Levels.Visual.SpriteResolution
             {
                 [MovementKey.Standing] = CreateSequence(standing),
                 [MovementKey.MovingForward] = CreateSequence(movingForward),
-                [MovementKey.MovingBackward] = CreateSequence(movingBackward),
-                [MovementKey.MovingRtl] = CreateSequence(movingRightToLeft),
-                [MovementKey.MovingLtr] = CreateSequence(movingLeftToRight)
+                [MovementKey.MovingBackward] = CreateSequence(movingForward.Reversed()),
+                [MovementKey.MovingForwardRtl] = CreateSequence(movingRightToLeft),
+                [MovementKey.MovingForwardLtr] = CreateSequence(movingLeftToRight),
+                [MovementKey.MovingBackwardRtl] = CreateSequence(movingLeftToRight.Reversed()),
+                [MovementKey.MovingBackwardLtr] = CreateSequence(movingRightToLeft.Reversed())
             };
         }
 
@@ -120,19 +139,23 @@ namespace Levels.Visual.SpriteResolution
         private enum MovementState
         {
             Standing,
-            MovingUp,
-            MovingDown,
-            MovingLeft,
-            MovingRight
+            MovingForward,
+            MovingBackward,
+            MovingForwardAndLeft,
+            MovingBackwardAndLeft,
+            MovingForwardRight,
+            MovingBackwardAndRight
         }
 
         private readonly struct MovementKey : IPlayKey<MovementKey>
         {
             public static readonly MovementKey Standing = new(MovementState.Standing);
-            public static readonly MovementKey MovingForward = new(MovementState.MovingUp);
-            public static readonly MovementKey MovingBackward = new(MovementState.MovingDown);
-            public static readonly MovementKey MovingRtl = new(MovementState.MovingLeft);
-            public static readonly MovementKey MovingLtr = new(MovementState.MovingRight);
+            public static readonly MovementKey MovingForward = new(MovementState.MovingForward);
+            public static readonly MovementKey MovingBackward = new(MovementState.MovingBackward);
+            public static readonly MovementKey MovingForwardRtl = new(MovementState.MovingForwardAndLeft);
+            public static readonly MovementKey MovingForwardLtr = new(MovementState.MovingForwardRight);
+            public static readonly MovementKey MovingBackwardRtl = new(MovementState.MovingBackwardAndLeft);
+            public static readonly MovementKey MovingBackwardLtr = new(MovementState.MovingBackwardAndRight);
 
             private readonly MovementState _state;
 
