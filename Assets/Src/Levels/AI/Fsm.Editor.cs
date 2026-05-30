@@ -7,7 +7,7 @@ using UnityEngine;
 namespace Levels.AI
 {
     [CustomEditor(typeof(Fsm))]
-    public class FsmEditor : Editor
+    public partial class FsmEditor : Editor
     {
         private const string Header = @"
 !theme plain
@@ -33,6 +33,10 @@ endlegend
         public override void OnInspectorGUI()
         {
             DrawDefaultInspector();
+
+            GUILayout.Space(10);
+
+            Fsm.DebugVisualisationVisibility = GUILayout.Toggle(Fsm.DebugVisualisationVisibility, "fsm debug visualisation");
 
             GUILayout.Space(10);
 

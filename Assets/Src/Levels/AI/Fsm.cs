@@ -41,6 +41,7 @@ namespace Levels.AI
         private void Awake()
         {
             _states = States.ToArray();
+            DebugAwake();
         }
 
         private void OnEnable()
@@ -54,7 +55,11 @@ namespace Levels.AI
                 .Aggregate((acc, state) => acc + state);
         }
 
-        private void Update() => _Current?.OnFrame();
+        private void Update()
+        {
+            _Current?.OnFrame();
+            DebugUpdate();
+        }
 
         private void RunState(FsmState state)
         {

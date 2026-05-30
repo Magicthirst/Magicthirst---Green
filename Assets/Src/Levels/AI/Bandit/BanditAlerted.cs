@@ -1,4 +1,5 @@
 using System.Collections;
+using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -7,8 +8,12 @@ namespace Levels.AI.Bandit
     [RequireComponent(typeof(NavMeshAgent))]
     public class BanditAlerted : FsmState
     {
-        [SerializeField] private Transform alertSeat;
+        [SerializeField]
+        [CanBeNull]
+        private Transform alertSeat = null;
         [SerializeField] private float beforeReturnDelay;
+
+        private Vector3 _alertPosition; 
 
         private NavMeshAgent _agent;
         private WaitForSeconds _beforeReturnWaiter;
@@ -24,6 +29,11 @@ namespace Levels.AI.Bandit
             _beforeReturnWaiter = new WaitForSeconds(beforeReturnDelay);
         }
 
+        private void Start()
+        {
+            _alertPosition = alertSeat != null ? alertSeat.position : transform.position;
+        }
+
         public override void Enter()
         {
             base.Enter();
@@ -35,7 +45,7 @@ namespace Levels.AI.Bandit
             _agent.isStopped = true;
             yield return _beforeReturnWaiter;
             _agent.isStopped = false;
-            _agent.SetDestination(alertSeat.position);
+            _agent.SetDestination(_alertPosition);
         }
 
         public override void Exit()
