@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Levels.Core.Room;
 using VContainer;
@@ -35,6 +36,17 @@ namespace DI
 
                     return room;
                 },
+                Lifetime.Singleton
+            );
+
+            builder.RegisterFactory<int, RoomHealing>
+            (
+                resolver => roomId => resolver.Resolve<Func<int, Room>>().Invoke(roomId).Healing,
+                Lifetime.Singleton
+            );
+            builder.RegisterFactory<int, RoomUnits>
+            (
+                resolver => roomId => resolver.Resolve<Func<int, Room>>().Invoke(roomId).Units,
                 Lifetime.Singleton
             );
         }

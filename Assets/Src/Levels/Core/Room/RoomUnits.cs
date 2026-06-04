@@ -11,12 +11,24 @@ namespace Levels.Core.Room
     {
         public event Action<DownedImpact> Downed;
         public event Action<KilledImpact> Killed;
+        public event Action Cleared; // in gaming meaning: "room is clear" = none left
 
         public IEnumerable<Entity> Entities => _entities.Select(e => e.Entity);
 
         private readonly List<ManagedEntity> _entities = new();
 
         [Inject] private IntentsImpacts.IntentsImpacts _intentsImpacts;
+
+        public RoomUnits()
+        {
+            Killed += _ =>
+            {
+                if (_entities.Count == 0)
+                {
+                    Cleared?.Invoke();
+                }
+            };
+        }
 
         public void Register(Entity entity)
         {

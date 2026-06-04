@@ -13,20 +13,23 @@ namespace Levels.AI
         private void DebugAwake() {}
         private void DebugUpdate() {}
 #else
+        private static readonly Dictionary<FsmState, Color> StatesColors = new();
+
         private const float BackgroundAlpha = 0.6f;
 
         public static bool DebugVisualisationVisibility = true;
 
-        private IReadOnlyDictionary<FsmState, Color> _statesColors;
-
         private void DebugAwake()
         {
-            _statesColors = _states
-                .ToDictionary
-                (
-                    keySelector: state => state,
-                    elementSelector: _ => GetRandomColor()
-                );
+            foreach (var state in _states)
+            {
+                if (StatesColors.ContainsKey(state))
+                {
+                    continue;
+                }
+
+                StatesColors[state] = GetRandomColor();
+            }
             return;
 
             Color GetRandomColor()
@@ -46,7 +49,11 @@ namespace Levels.AI
 
             var state = _Current;
 
-            var backgroundColor = _statesColors[state];
+            if (!StatesColors.TryGetValue(state, out var backgroundColor))
+            {
+                backgroundColor = Color.black;
+            }
+
             var textColor = Color.white;
             var textPosition = transform.position + Vector3.up * 1f;
 

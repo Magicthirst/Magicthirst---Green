@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace DI
+namespace Levels.Util
 {
     public class RoomMemberTag : MonoBehaviour
     {
