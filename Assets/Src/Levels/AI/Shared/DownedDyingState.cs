@@ -20,7 +20,7 @@ namespace Levels.AI.Shared
         [Inject] private IImpactConsumer<DownedImpact> _downedConsumer;
         [Inject] private IImpactConsumer<RecoveredImpact> _recoveredConsumer;
 
-        private void OnEnable()
+        protected override void DidEnabled()
         {
             _downedConsumer.Impacted += OnDowned;
             _recoveredConsumer.Impacted += OnRecovered;
@@ -50,7 +50,7 @@ namespace Levels.AI.Shared
             _invulnerabilityEndTimePoint = 0f;
         }
 
-        private void OnDisable()
+        protected override void DidDisabled()
         {
             _downedConsumer.Impacted -= OnDowned;
             _recoveredConsumer.Impacted -= OnRecovered;

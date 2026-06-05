@@ -1,8 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Levels.Abilities.KillAndDown;
 using Levels.Core.Passives;
+using Levels.IntentsImpacts;
 using UnityEngine;
+using VContainer;
 
 namespace Levels.Core
 {
@@ -11,6 +14,7 @@ namespace Levels.Core
     public class Entity : PassiveCoreObject
     {
         public bool IsInWorld => Owner != null;
+        public bool Dead { get; private set; } = false;
 
         public IEnumerable<CoreObject> LazyComponents => GetLazyObjects();
 
@@ -19,7 +23,9 @@ namespace Levels.Core
         private PassiveCoreObject[] _passiveComponents;
 
         private Dictionary<Type, object> _componentCache = new();
-        
+
+        [Inject] private IImpactConsumer<TargetIsDeadImpact> _dead;
+
         public override void Init()
         {
             foreach (var component in Components)
@@ -31,6 +37,8 @@ namespace Levels.Core
                 .Where(component => component is PassiveCoreObject)
                 .Cast<PassiveCoreObject>()
                 .ToArray();
+
+            _dead.Impacted += _ => Dead = true;
         }
 
         public override void FixedUpdate()

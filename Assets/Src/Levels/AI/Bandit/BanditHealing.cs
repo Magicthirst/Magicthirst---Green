@@ -5,6 +5,7 @@ using Levels.AI.Util;
 using Levels.Core;
 using Levels.Core.Room;
 using Levels.IntentsImpacts;
+using Levels.Util;
 using UnityEngine;
 using UnityEngine.AI;
 using VContainer;
@@ -36,7 +37,7 @@ namespace Levels.AI.Bandit
             _agent = GetComponent<NavMeshAgent>();
         }
 
-        private void OnEnable()
+        protected override void DidEnabled()
         {
             _roomHealing.RegisterHealer(_entity);
             _roomHealing.HelpRequested += OnHelpRequested;
@@ -46,7 +47,7 @@ namespace Levels.AI.Bandit
         {
             base.Enter();
             Debug.Log($"{gameObject.name}_BanditHealing:Enter");
-            _healingCoroutine = StartCoroutine(HealRoutine());
+            _healingCoroutine = StartCoroutine(HealRoutine().WithInterruptions(_LevelLifecycle));
         }
 
         public override void Exit()
@@ -64,7 +65,7 @@ namespace Levels.AI.Bandit
             _agent.ResetPath();
         }
 
-        private void OnDisable()
+        protected override void DidDisabled()
         {
             _roomHealing.UnregisterHealer(_entity);
             _roomHealing.HelpRequested -= OnHelpRequested;

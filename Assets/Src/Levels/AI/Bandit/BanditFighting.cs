@@ -74,7 +74,7 @@ namespace Levels.AI.Bandit
                 obstacleMask: wallLayer);
         }
 
-        private void OnEnable()
+        protected override void DidEnabled()
         {
             startFightArea.ContactEntered += OnPlayerCameClose;
             stopFightArea.ContactExited += OnPlayerGotAway;
@@ -106,9 +106,11 @@ namespace Levels.AI.Bandit
             base.Enter();
             _coroutines = new[]
             {
-                StartCoroutine(_shooter.Shoot(_enemy, retryWhenTargetLost: true)),
+                StartCoroutine(_shooter.Shoot(_enemy, retryWhenTargetLost: true)
+                    .WithInterruptions(_LevelLifecycle)),
                 StartCoroutine(_movement.Kite(_enemy.transform)
-                    .WithInterruptions(_interruptionQueue))
+                    .WithInterruptions(_interruptionQueue)
+                    .WithInterruptions(_LevelLifecycle))
             };
         }
 
@@ -134,7 +136,7 @@ namespace Levels.AI.Bandit
 
         public void Interrupt(IEnumerator block) => _interruptionQueue.Interrupt(block);
 
-        private void OnDisable()
+        protected override void DidDisabled()
         {
             startFightArea.ContactEntered -= OnPlayerCameClose;
             stopFightArea.ContactExited -= OnPlayerGotAway;

@@ -53,7 +53,6 @@ namespace DI
 
         private void ClearRooms()
         {
-            
             foreach (var (healing, units) in _rooms.Values)
             {
                 healing.Clear();

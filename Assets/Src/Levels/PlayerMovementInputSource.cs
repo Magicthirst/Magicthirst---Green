@@ -7,8 +7,10 @@ using VContainer;
 namespace Levels
 {
     [RequireComponent(typeof(PlayerInput))]
-    public class PlayerMovementInputSource : MonoBehaviour, IMovementInputSource
+    public class PlayerMovementInputSource : LevelBehaviour, IMovementInputSource
     {
+        protected override LevelActivityMask _LifecycleMask => LevelActivityMask.Gameplay;
+
         public Vector2 AbsoluteMovement { get; private set; } = Vector3.zero;
         public Vector2 RelativeMovement => _relativeMovement;
 
@@ -31,7 +33,7 @@ namespace Levels
             _input = GetComponent<PlayerInput>();
         }
 
-        private void OnEnable()
+        protected override void DidEnabled()
         {
             var map = _input.currentActionMap;
             _movementObserver = map.ConsumeAction<Vector2>("Move").OnPerformed(v =>
@@ -42,7 +44,7 @@ namespace Levels
             map.Enable();
         }
 
-        private void FixedUpdate()
+        protected override void DidFixedUpdate()
         {
             var somethingChanged = _camera.hasChanged || _relativeMovementChanged;
             if (!somethingChanged)
@@ -66,7 +68,7 @@ namespace Levels
             MovementUpdated?.Invoke();
         }
 
-        private void OnDisable()
+        protected override void DidDisabled()
         {
             _movementObserver.Dispose();
         }

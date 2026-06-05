@@ -23,7 +23,11 @@ namespace Levels.Core.Statuses
 
         public IEnumerator Run(Entity _)
         {
-            yield return new WaitForSeconds(duration);
+            var endTime = LevelDirector.GameplayTime + duration;
+            while (LevelDirector.GameplayTime < endTime)
+            {
+                yield return null;
+            }
         }
     }
 }

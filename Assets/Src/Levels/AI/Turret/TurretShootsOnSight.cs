@@ -45,7 +45,7 @@ namespace Levels.AI.Turret
         }
 
 
-        private void OnEnable()
+        protected override void DidEnabled()
         {
             contacts.ContactEntered += OnPlayerCameClose;
             contacts.ContactExited += OnPlayerGotAway;
@@ -64,7 +64,8 @@ namespace Levels.AI.Turret
         public override void Enter()
         {
             base.Enter();
-            StartCoroutine(_shooter.Shoot(_enemy, retryWhenTargetLost: false, continuation: FinishThenMaybeRerun()));
+            StartCoroutine(_shooter.Shoot(_enemy, retryWhenTargetLost: false, continuation: FinishThenMaybeRerun())
+                .WithInterruptions(_LevelLifecycle));
 
             return;
 
@@ -89,7 +90,7 @@ namespace Levels.AI.Turret
             }
         }
 
-        private void OnDisable()
+        protected override void DidDisabled()
         {
             contacts.ContactEntered -= OnPlayerCameClose;
             contacts.ContactExited -= OnPlayerGotAway;

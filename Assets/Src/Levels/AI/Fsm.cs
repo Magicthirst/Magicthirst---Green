@@ -8,8 +8,10 @@ namespace Levels.AI
 {
     using DisposeAction = Action;
 
-    public partial class Fsm : MonoBehaviour
+    public partial class Fsm : LevelBehaviour
     {
+        protected override LevelActivityMask _LifecycleMask => LevelActivityMask.Gameplay;
+
         public Action<FsmState> OnStateChanged;
 
         public FsmState Current => _Current;
@@ -44,7 +46,7 @@ namespace Levels.AI
             DebugAwake();
         }
 
-        private void OnEnable()
+        protected override void DidEnabled()
         {
             Assert.IsTrue(_states.Length > 0 && initialState is not null);
 
@@ -55,7 +57,7 @@ namespace Levels.AI
                 .Aggregate((acc, state) => acc + state);
         }
 
-        private void Update()
+        protected override void DidUpdate()
         {
             _Current?.OnFrame();
             DebugUpdate();
@@ -90,7 +92,7 @@ namespace Levels.AI
             void OnStateFinished() => RunState(state.Next);
         }
 
-        private void OnDisable()
+        protected override void DidDisabled()
         {
             RunState(null);
             _disposeObservers?.Invoke();

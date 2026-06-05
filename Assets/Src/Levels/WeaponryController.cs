@@ -9,8 +9,10 @@ using VContainer;
 namespace Levels
 {
     [RequireComponent(typeof(PlayerInput))]
-    public class WeaponryController : MonoBehaviour
+    public class WeaponryController : LevelBehaviour
     {
+        protected override LevelActivityMask _LifecycleMask => LevelActivityMask.Gameplay;
+
         [SerializeField] private InputActionReference primaryKey;
         [SerializeField] private InputActionReference secondaryKey;
 
@@ -33,19 +35,22 @@ namespace Levels
 
         private void OnAbilityInvoked(IAbility ability) => _abilities[ability].Invoke();
 
-        private void OnEnable()
+        protected override void DidEnabled()
         {
             _inputObservers = ObserveInputs();
             _weaponry.Invoked += OnAbilityInvoked;
         }
 
-        private void OnDisable()
+        protected override void DidDisabled()
         {
-            foreach (var observer in _inputObservers)
+            if (_inputObservers != null)
             {
-                observer.Dispose();
+                foreach (var observer in _inputObservers)
+                {
+                    observer.Dispose();
+                }
+                _inputObservers = null;
             }
-            _inputObservers = null;
             _weaponry.Invoked -= OnAbilityInvoked;
         }
 

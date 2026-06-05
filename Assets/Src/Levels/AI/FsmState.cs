@@ -5,8 +5,10 @@ using UnityEngine;
 
 namespace Levels.AI
 {
-    public abstract partial class FsmState : MonoBehaviour
+    public abstract partial class FsmState : LevelBehaviour
     {
+        protected override LevelActivityMask _LifecycleMask => LevelActivityMask.Gameplay;
+
         public event Action Readied;
         public event Action Finished;
 
@@ -42,9 +44,6 @@ namespace Levels.AI
         {
             _overridesSet = new HashSet<FsmState>(overridesStates);
         }
-
-        // ReSharper disable once Unity.RedundantEventFunction
-        protected void Update() {}
 
         public virtual void OnFrame() {}
 

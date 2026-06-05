@@ -16,19 +16,11 @@ namespace Levels.Core.Statuses
 
         [Inject] private PublishIntent<ImpactIntent> _publish;
 
-        private WaitForSeconds _waitForSeconds;
-
-        public PeriodicHeal()
-        {
-            _waitForSeconds = new WaitForSeconds(interval);
-        }
-
         public PeriodicHeal(int healingAmount, float interval, float duration)
         {
             this.healingAmount = healingAmount;
             this.interval = interval;
             this.duration = duration;
-            _waitForSeconds = new WaitForSeconds(interval);
         }
 
         public IEnumerator Run(Entity entity)
@@ -38,7 +30,9 @@ namespace Levels.Core.Statuses
             {
                 time -= interval;
                 _publish(ImpactIntent.SelfCast(new HealImpact(entity.Owner, healingAmount)));
-                yield return _waitForSeconds;
+
+                var endOfInterval = LevelDirector.GameplayTime + interval;
+                yield return new WaitUntil(() => LevelDirector.GameplayTime >= endOfInterval);
             }
         }
     }

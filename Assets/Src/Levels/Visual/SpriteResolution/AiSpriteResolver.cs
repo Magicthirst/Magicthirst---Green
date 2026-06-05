@@ -71,6 +71,11 @@ namespace Levels.Visual.SpriteResolution
 
         private void OnPlayStateChanged(FsmState state)
         {
+            if (state is null)
+            {
+                return;
+            }
+
             _resolver.TryPlay(now: Time.time, _resolver.CurrentKey.WithState(state.GetType()), out var firstSprite);
             _spriteRenderer.sprite = firstSprite;
         }

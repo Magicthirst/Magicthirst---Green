@@ -79,7 +79,7 @@ namespace Levels.Core.Passives
             while
             (
                 _suspendedAttacks.TryPeek(out var attack) &&
-                attack.TimePoint + _config.Leeway < Time.time
+                attack.TimePoint + _config.Leeway < LevelDirector.GameplayTime
             )
             {
                 Debug.Log($"Passed {attack.Intent}");

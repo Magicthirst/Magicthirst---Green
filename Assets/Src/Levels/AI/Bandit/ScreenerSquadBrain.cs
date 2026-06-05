@@ -12,8 +12,10 @@ using static Levels.AI.Bandit.ScreeningSquadBrainUtil;
 
 namespace Levels.AI.Bandit
 {
-    public partial class ScreenerSquadBrain : MonoBehaviour
+    public partial class ScreenerSquadBrain : LevelBehaviour
     {
+        protected override LevelActivityMask _LifecycleMask => LevelActivityMask.Gameplay;
+
         [SerializeField] private PublishContacts startFightArea;
         [SerializeField] private PublishContacts stopFightArea;
 
@@ -37,33 +39,34 @@ namespace Levels.AI.Bandit
         [Inject]
         public void Construct(Camera injectedCamera) => _camera = injectedCamera.transform;
 
-        private void Awake()
-        {
-            _tacticUpdateWaiter = new WaitForSeconds(tacticUpdatePeriod);
-        }
-
-        private void OnEnable()
+        protected override void DidEnabled()
         {
             startFightArea.ContactEntered += OnPlayerCameClose;
             stopFightArea.ContactExited += OnPlayerGotAway;
         }
 
-        private IEnumerator Start()
+        private void Start()
         {
-            while (true)
-            {
-                yield return null;
+            StartCoroutine(Run().WithInterruptions(_LevelLifecycle));
+            return;
 
-                while (_enemy is not null)
+            IEnumerator Run()
+            {
+                while (true)
                 {
-                    PlaceMembersAround(_enemy);
-                    yield return _tacticUpdateWaiter;
+                    yield return null;
+
+                    while (_enemy is not null)
+                    {
+                        PlaceMembersAround(_enemy);
+                        yield return InterruptableWait.ForSeconds(tacticUpdatePeriod);
+                    }
                 }
+                // ReSharper disable once IteratorNeverReturns
             }
-            // ReSharper disable once IteratorNeverReturns
         }
 
-        private void OnDisable()
+        protected override void DidDisabled()
         {
             startFightArea.ContactEntered -= OnPlayerCameClose;
             stopFightArea.ContactExited -= OnPlayerGotAway;

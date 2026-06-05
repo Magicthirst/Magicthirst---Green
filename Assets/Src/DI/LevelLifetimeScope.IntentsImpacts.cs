@@ -31,6 +31,7 @@ namespace DI
                         .RegisterTransformation(new ParrySabreSwingMapper(masks))
                         .RegisterTransformation(new InfuseAreaWithChaosMapper(masks))
                         .RegisterTransformation(new DownedMapper())
+                        .RegisterTransformation(new KilledMapper())
                         .RegisterTransformation(new RevivalMapper());
                 },
                 Lifetime.Singleton

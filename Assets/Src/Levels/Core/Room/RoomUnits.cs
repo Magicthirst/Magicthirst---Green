@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Levels.Abilities.KillAndDown;
 using Levels.IntentsImpacts;
+using UnityEngine;
 using VContainer;
 
 namespace Levels.Core.Room
@@ -10,7 +11,7 @@ namespace Levels.Core.Room
     public class RoomUnits
     {
         public event Action<DownedImpact> Downed;
-        public event Action<KilledImpact> Killed;
+        public event Action<TargetIsDeadImpact> Killed;
         public event Action Cleared; // in gaming meaning: "room is clear" = none left
 
         public IEnumerable<Entity> Entities => _entities.Select(e => e.Entity);
@@ -23,7 +24,7 @@ namespace Levels.Core.Room
         {
             Killed += _ =>
             {
-                if (_entities.Count == 0)
+                if (_entities.All(e => e.Entity.Dead))
                 {
                     Cleared?.Invoke();
                 }
@@ -33,7 +34,7 @@ namespace Levels.Core.Room
         public void Register(Entity entity)
         {
             var downed = _intentsImpacts.GetImpactConsumerFor<DownedImpact>(entity.Owner, null);
-            var killed = _intentsImpacts.GetImpactConsumerFor<KilledImpact>(entity.Owner, null);
+            var killed = _intentsImpacts.GetImpactConsumerFor<TargetIsDeadImpact>(entity.Owner, null);
 
             downed.Impacted += OnDowned;
             killed.Impacted += OnKilled;
@@ -61,13 +62,13 @@ namespace Levels.Core.Room
 
         private void OnDowned(DownedImpact impact) => Downed?.Invoke(impact);
         
-        private void OnKilled(KilledImpact impact) => Killed?.Invoke(impact);
+        private void OnKilled(TargetIsDeadImpact impact) => Killed?.Invoke(impact);
 
         private struct ManagedEntity
         {
             public Entity Entity;
             public IImpactConsumer<DownedImpact> Downed;
-            public IImpactConsumer<KilledImpact> Killed;
+            public IImpactConsumer<TargetIsDeadImpact> Killed;
         }
     }
 }

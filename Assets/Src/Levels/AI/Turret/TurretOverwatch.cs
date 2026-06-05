@@ -1,4 +1,5 @@
 using System.Collections;
+using Levels.Util;
 using UnityEngine;
 using VContainer;
 
@@ -26,7 +27,7 @@ namespace Levels.AI.Turret
         public override void Enter()
         {
             _active = true;
-            _lookAroundCoroutine = StartCoroutine(LookAroundOnOverwatch());
+            _lookAroundCoroutine = StartCoroutine(LookAroundOnOverwatch().WithInterruptions(_LevelLifecycle));
         }
 
         private IEnumerator LookAroundOnOverwatch()

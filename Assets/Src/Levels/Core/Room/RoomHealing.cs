@@ -99,7 +99,7 @@ namespace Levels.Core.Room
             }
         }
 
-        private void OnUnitKilled(KilledImpact impact)
+        private void OnUnitKilled(TargetIsDeadImpact impact)
         {
             var entity = _downedUnits.FirstOrDefault(e => e.Owner == impact.Target);
 

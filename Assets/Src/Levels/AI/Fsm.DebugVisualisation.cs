@@ -49,16 +49,27 @@ namespace Levels.AI
 
             var state = _Current;
 
-            if (!StatesColors.TryGetValue(state, out var backgroundColor))
+            string text;
+            Color textColor;
+            Color backgroundColor;
+
+            if (state is null)
             {
-                backgroundColor = Color.black;
+                text = "null";
+                textColor = Color.darkRed;
+                backgroundColor = Color.white;
+            }
+            else
+            {
+                if (!StatesColors.TryGetValue(state, out backgroundColor))
+                {
+                    backgroundColor = Color.black;
+                }
+                textColor = Color.white;
+                text = $"Current state: {state.GetType().Name}";
             }
 
-            var textColor = Color.white;
             var textPosition = transform.position + Vector3.up * 1f;
-
-            var text = $"Current state: {state.GetType().Name}";
-
             D.raw(new Shape.Text(textPosition, text), backgroundColor, textColor);
         }
 #endif

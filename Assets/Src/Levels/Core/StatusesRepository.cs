@@ -4,8 +4,10 @@ using System.Collections.Generic;
 using Levels.Abilities.CommonImpacts;
 using Levels.Core.Statuses;
 using Levels.IntentsImpacts;
+using Levels.Util;
 using UnityEngine;
 using VContainer;
+using static Levels.LevelActivityMask;
 
 namespace Levels.Core
 {
@@ -54,7 +56,7 @@ namespace Levels.Core
             }
 
             StatusApplied?.Invoke(status);
-            _entity.Runner?.StartCoroutine(Run(status));
+            _entity.Runner?.StartCoroutine(Run(status).WithInterruptions(LevelDirector.Interruptions[Gameplay]));
         }
 
         private IEnumerator Run(IStatus status)

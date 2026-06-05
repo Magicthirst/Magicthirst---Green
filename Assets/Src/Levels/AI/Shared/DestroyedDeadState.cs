@@ -14,11 +14,11 @@ namespace Levels.AI.Shared
         [Inject] private Health _health;
         [Inject] private GameObject _self;
         [Inject] private IImpactConsumer<DamageImpact> _consumer;
-        [Inject] private PublishIntent<ImpactIntent> _publish;
+        [Inject] private PublishIntent<KilledIntent> _publish;
 
         private DamageImpact _lastAttack = null;
 
-        private void OnEnable()
+        protected override void DidEnabled()
         {
             _consumer.Impacted += HandleDamage;
         }
@@ -27,13 +27,13 @@ namespace Levels.AI.Shared
         {
             base.OnFrame();
 
-            _publish(new ImpactIntent(_self, new KilledImpact(_lastAttack.Attacker, Victim: _self, _lastAttack.Context)));
+            _publish(new KilledIntent(_lastAttack.Attacker, Victim: _self, _lastAttack.Context));
 
             _self.SetActive(false);
             Destroy(_self);
         }
 
-        private void OnDisable()
+        protected override void DidDisabled()
         {
             _consumer.Impacted -= HandleDamage;
         }

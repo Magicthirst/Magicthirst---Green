@@ -10,8 +10,10 @@ namespace Levels
 {
     [RequireComponent(typeof(CharacterController))]
     [RequireComponent(typeof(IMovementInputSource))]
-    public class CharacterMovement : MonoBehaviour, IInterruptable<IMovementReason>
+    public class CharacterMovement : LevelBehaviour, IInterruptable<IMovementReason>
     {
+        protected override LevelActivityMask _LifecycleMask => LevelActivityMask.Gameplay;
+
         [SerializeField] private bool broadcasting;
 
         [SerializeField] private float gravityPull;
@@ -33,7 +35,7 @@ namespace Levels
             _interruptionQueue = new InterruptionQueue(this, new WaitForFixedUpdate());
         }
 
-        private void OnEnable()
+        protected override void DidEnabled()
         {
             _inputSource.ForcePositionUpdated += OnForcePositionUpdated;
             _teleportsConsumer.Impacted += OnTeleport;
@@ -41,7 +43,7 @@ namespace Levels
 
         public void Interrupt(IEnumerator routine) => _interruptionQueue.Interrupt(routine);
 
-        private void FixedUpdate()
+        protected override void DidFixedUpdate()
         {
             if (_resetPosition.HasValue)
             {
@@ -87,7 +89,7 @@ namespace Levels
             _resetPosition = position;
         }
 
-        private void OnDisable()
+        protected override void DidDisabled()
         {
             _inputSource.ForcePositionUpdated -= OnForcePositionUpdated;
             _teleportsConsumer.Impacted -= OnTeleport;

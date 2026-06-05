@@ -1,5 +1,6 @@
 using System.Collections;
 using JetBrains.Annotations;
+using Levels.Util;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -37,7 +38,7 @@ namespace Levels.AI.Bandit
         public override void Enter()
         {
             base.Enter();
-            _runningCoroutine = StartCoroutine(RunToAlertPosition());
+            _runningCoroutine = StartCoroutine(RunToAlertPosition().WithInterruptions(_LevelLifecycle));
         }
 
         private IEnumerator RunToAlertPosition()

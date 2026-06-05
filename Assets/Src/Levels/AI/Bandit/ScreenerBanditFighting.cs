@@ -61,7 +61,7 @@ namespace Levels.AI.Bandit
             (_movement, _squadShootingCooldown) = brain.RegisterMember(_agent);
         }
 
-        private void OnEnable()
+        protected override void DidEnabled()
         {
             startFightArea.ContactEntered += OnPlayerCameClose;
             stopFightArea.ContactExited += OnPlayerGotAway;
@@ -94,10 +94,12 @@ namespace Levels.AI.Bandit
             _coroutines = new[]
             {
                 StartCoroutine(_shooter.Shoot(_enemy)
-                    .WithInterruptions(_squadShootingCooldown)),
+                    .WithInterruptions(_squadShootingCooldown)
+                    .WithInterruptions(_LevelLifecycle)),
 
                 StartCoroutine(_movement.Screen()
-                    .WithInterruptions(_movementInterruptionQueue))
+                    .WithInterruptions(_movementInterruptionQueue)
+                    .WithInterruptions(_LevelLifecycle))
             };
         }
 
@@ -123,7 +125,7 @@ namespace Levels.AI.Bandit
 
         public void Interrupt(IEnumerator block) => _movementInterruptionQueue.Interrupt(block);
 
-        private void OnDisable()
+        protected override void DidDisabled()
         {
             startFightArea.ContactEntered -= OnPlayerCameClose;
             stopFightArea.ContactExited -= OnPlayerGotAway;

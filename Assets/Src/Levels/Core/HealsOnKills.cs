@@ -12,14 +12,14 @@ namespace Levels.Core
         [SerializeField] private int healAmount;
 
         [Inject] private PublishIntent<ImpactIntent> _publish;
-        [Inject] private IImpactConsumer<KilledImpact> _consumer;
+        [Inject] private IImpactConsumer<TargetKilledVictimImpact> _consumer;
 
         public override void Init()
         {
             _consumer.Impacted += OnKilled;
         }
 
-        private void OnKilled(KilledImpact killed)
+        private void OnKilled(TargetKilledVictimImpact killed)
         {
             Debug.Log($"{Owner} killed {killed}");
             if (killed.Context.HasFlag(ImpactContext.HealOnKill))

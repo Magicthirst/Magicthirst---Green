@@ -9,8 +9,10 @@ namespace Levels.Abilities.TeleportChip
 {
     [RequireComponent(typeof(PlayerInput))]
     [RequireComponent(typeof(IMovementInputSource))]
-    public class TeleportChipController : MonoBehaviour
+    public class TeleportChipController : LevelBehaviour
     {
+        protected override LevelActivityMask _LifecycleMask => LevelActivityMask.Gameplay;
+
         private PlayerInput _playerInput;
         private IMovementInputSource _movementInput;
 
@@ -31,7 +33,7 @@ namespace Levels.Abilities.TeleportChip
             _movementInput = GetComponent<IMovementInputSource>();
         }
 
-        private void OnEnable()
+        protected override void DidEnabled()
         {
             var map = _playerInput.currentActionMap;
             _observer = map.ConsumeAction("UseTeleportChip").OnPerformed(() =>
@@ -54,6 +56,6 @@ namespace Levels.Abilities.TeleportChip
             });
         }
 
-        private void OnDisable() => _observer.Dispose();
+        protected override void DidDisabled() => _observer.Dispose();
     }
 }
