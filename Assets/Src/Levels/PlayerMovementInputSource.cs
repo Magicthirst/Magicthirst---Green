@@ -1,15 +1,16 @@
 using System;
+using Levels.Directorship;
 using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using VContainer;
+using static Levels.Directorship.LevelActivityMask;
 
 namespace Levels
 {
-    [RequireComponent(typeof(PlayerInput))]
     public class PlayerMovementInputSource : LevelBehaviour, IMovementInputSource
     {
-        protected override LevelActivityMask _LifecycleMask => LevelActivityMask.Gameplay;
+        protected override LevelActivityMask _LifecycleMask => Gameplay | TutorialMovement;
 
         public Vector2 AbsoluteMovement { get; private set; } = Vector3.zero;
         public Vector2 RelativeMovement => _relativeMovement;
@@ -18,12 +19,13 @@ namespace Levels
         public event Action<Vector2> ForcePositionUpdated;
 
         private Transform _camera;
-        private PlayerInput _input;
 
         private Vector2 _relativeMovement;
         private bool _relativeMovementChanged;
 
         private IDisposable _movementObserver;
+
+        [Inject] private PlayerInput _input;
 
         [Inject]
         public void Construct(Camera injectedCamera) => _camera = injectedCamera.transform;
@@ -70,7 +72,7 @@ namespace Levels
 
         protected override void DidDisabled()
         {
-            _movementObserver.Dispose();
+            _movementObserver?.Dispose();
         }
     }
 }

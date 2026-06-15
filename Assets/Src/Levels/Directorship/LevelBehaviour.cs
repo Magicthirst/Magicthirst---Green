@@ -1,7 +1,7 @@
 using Levels.Util;
 using UnityEngine;
 
-namespace Levels
+namespace Levels.Directorship
 {
     public abstract class LevelBehaviour : MonoBehaviour
     {

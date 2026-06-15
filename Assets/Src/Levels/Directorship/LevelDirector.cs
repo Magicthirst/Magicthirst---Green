@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Common;
@@ -8,7 +9,7 @@ using Levels.Util;
 using UnityEngine;
 using VContainer;
 
-namespace Levels
+namespace Levels.Directorship
 {
     public class LevelDirector : MonoBehaviour
     {
@@ -34,9 +35,13 @@ namespace Levels
 
         private static LevelDirector _instance;
 
-        [SerializeField] private LevelActivityMask initialMask; // TODO enum for steps: compiling shaders, loading maybe something else, only then gaming
+        [SerializeReference]
+        [SubclassSelector]
+        private ILevelScenarioPlayer[] scenariosQueue;
+        [SerializeField] private LevelActivityMask initialMask;
         [SerializeField] private GameObject player;
 
+        private Coroutine _scenariosRoutine;
         private IImpactConsumer<DownedImpact> _playerDied;
         private bool _playerIsDead = false;
 
@@ -63,6 +68,7 @@ namespace Levels
         {
             GameplayTime = Time.time;
             ActivityMask = initialMask;
+            _scenariosRoutine = StartCoroutine(scenariosQueue.Link());
         }
 
         private void Update()
@@ -73,6 +79,10 @@ namespace Levels
         private void OnDisable()
         {
             _playerDied.Impacted -= OnDead;
+            if (_scenariosRoutine != null)
+            {
+                StopCoroutine(_scenariosRoutine);
+            }
         }
 
         private void OnDead(DownedImpact _)
@@ -88,16 +98,8 @@ namespace Levels
 
         private void OnActivityMaskChanged((LevelActivityMask, LevelActivityMask) _)
         {
-            if ((_activityMask & LevelActivityMask.Gameplay) != 0)
-            {
-                Cursor.lockState = CursorLockMode.Locked;
-                Cursor.visible = false;
-            }
-            else
-            {
-                Cursor.lockState = CursorLockMode.Confined;
-                Cursor.visible = true;
-            }
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
         }
 
         private class LifecycleInterruptions : ILifecycleInterruptions
@@ -143,6 +145,17 @@ namespace Levels
         public interface ILifecycleInterruptions
         {
             public InterruptionQueue this[LevelActivityMask mask] { get; }
+        }
+
+        [Serializable]
+        public class OnLevelScenario : ILevelScenarioPlayer
+        {
+            [Header("ILevelScenarioPlayer")]
+            public MonoBehaviour scenario;
+
+            public ILevelScenarioPlayer Scenario => (ILevelScenarioPlayer) scenario;
+
+            public IEnumerator GetRoutine() => Scenario.GetRoutine();
         }
     }
 }

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Levels.Abilities.HitScanShoot;
 using Levels.Abilities.ParrySabre;
+using Levels.Directorship;
 using Levels.IntentsImpacts;
 using UnityEngine;
 using VContainer;
@@ -82,7 +83,6 @@ namespace Levels.Core.Passives
                 attack.TimePoint + _config.Leeway < LevelDirector.GameplayTime
             )
             {
-                Debug.Log($"Passed {attack.Intent}");
                 AttackPassed?.Invoke(attack.Intent);
                 _suspendedAttacks.Dequeue();
             }
@@ -91,12 +91,10 @@ namespace Levels.Core.Passives
             {
                 if (IsParryingByDirection(attack.IncomingDirection))
                 {
-                    Debug.Log($"Parried {attack.Intent}");
                     AttackParried?.Invoke(attack.Intent);
                 }
                 else
                 {
-                    Debug.Log($"Passed {attack.Intent}");
                     AttackPassed?.Invoke(attack.Intent);
                 }
 

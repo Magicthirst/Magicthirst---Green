@@ -25,6 +25,7 @@ namespace DI
 
         protected override void Configure(IContainerBuilder builder)
         {
+            ConfigureConfigs(builder);
             ConfigureCore(builder);
             ConfigureSync(builder);            
             ConfigureIntentsImpacts(builder);

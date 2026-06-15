@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using JetBrains.Annotations;
 using Levels.AI.Util;
+using Levels.Directorship;
 using Levels.Util;
 using Levels.Util.MasksRegistry;
 using UnityEngine;

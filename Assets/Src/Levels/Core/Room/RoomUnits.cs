@@ -14,6 +14,8 @@ namespace Levels.Core.Room
         public event Action<TargetIsDeadImpact> Killed;
         public event Action Cleared; // in gaming meaning: "room is clear" = none left
 
+        public bool IsCleared;
+
         public IEnumerable<Entity> Entities => _entities.Select(e => e.Entity);
 
         private readonly List<ManagedEntity> _entities = new();
@@ -29,6 +31,7 @@ namespace Levels.Core.Room
                     Cleared?.Invoke();
                 }
             };
+            Cleared += () => IsCleared = true;
         }
 
         public void Register(Entity entity)

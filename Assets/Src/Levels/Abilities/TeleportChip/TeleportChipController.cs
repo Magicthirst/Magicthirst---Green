@@ -1,21 +1,22 @@
 using System;
 using Levels.Core;
+using Levels.Directorship;
 using Levels.IntentsImpacts;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using VContainer;
+using static Levels.Directorship.LevelActivityMask;
 
 namespace Levels.Abilities.TeleportChip
 {
-    [RequireComponent(typeof(PlayerInput))]
     [RequireComponent(typeof(IMovementInputSource))]
     public class TeleportChipController : LevelBehaviour
     {
-        protected override LevelActivityMask _LifecycleMask => LevelActivityMask.Gameplay;
+        protected override LevelActivityMask _LifecycleMask => Gameplay | TutorialChip;
 
-        private PlayerInput _playerInput;
         private IMovementInputSource _movementInput;
 
+        [Inject] private PlayerInput _playerInput;
         [Inject] private Core.TeleportChip _state;
         [Inject] private PublishIntent<TeleportChipThrowIntent> _publishThrow;
         [Inject] private PublishIntent<TeleportChipActivateIntent> _publishActivate;
@@ -56,6 +57,6 @@ namespace Levels.Abilities.TeleportChip
             });
         }
 
-        protected override void DidDisabled() => _observer.Dispose();
+        protected override void DidDisabled() => _observer?.Dispose();
     }
 }

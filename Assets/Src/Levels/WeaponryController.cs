@@ -2,22 +2,23 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Levels.Core;
+using Levels.Directorship;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using VContainer;
+using static Levels.Directorship.WeaponryMasks;
+using static Levels.Directorship.LevelActivityMask;
 
 namespace Levels
 {
-    [RequireComponent(typeof(PlayerInput))]
     public class WeaponryController : LevelBehaviour
     {
-        protected override LevelActivityMask _LifecycleMask => LevelActivityMask.Gameplay;
+        protected override LevelActivityMask _LifecycleMask => Gameplay | TutorialWeapon;
 
         [SerializeField] private InputActionReference primaryKey;
         [SerializeField] private InputActionReference secondaryKey;
 
-        private PlayerInput _playerInput;
-
+        [Inject] private PlayerInput _playerInput;
         [Inject] private Weaponry _weaponry;
 
         private Dictionary<IAbility, IInHandAbility> _abilities;
@@ -61,13 +62,13 @@ namespace Levels
             return _weaponry.Abilities
                 .Select(ability => map
                     .ConsumeAction(ability.InputActionName)
-                    .OnPerformed(ability.Equip))
+                    .OnPerformed(() => { if (ability.Type.IsPlayableNow()) ability.Equip(); }))
                 .Append(map
                     .ConsumeAction(primaryKey.action.name)
-                    .OnPerformed(_weaponry.InvokePrimary))
+                    .OnPerformed(() => { if (IsPrimaryInvokable) _weaponry.InvokePrimary(); }))
                 .Append(map
                     .ConsumeAction(secondaryKey.action.name)
-                    .OnPerformed(_weaponry.InvokeSecondary))
+                    .OnPerformed(() => { if (IsSecondaryInvokable) _weaponry.InvokeSecondary(); }))
                 .ToArray();
         }
     }

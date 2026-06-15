@@ -3,11 +3,12 @@ using System.Collections;
 using System.Collections.Generic;
 using Levels.Abilities.CommonImpacts;
 using Levels.Core.Statuses;
+using Levels.Directorship;
 using Levels.IntentsImpacts;
 using Levels.Util;
 using UnityEngine;
 using VContainer;
-using static Levels.LevelActivityMask;
+using static Levels.Directorship.LevelActivityMask;
 
 namespace Levels.Core
 {

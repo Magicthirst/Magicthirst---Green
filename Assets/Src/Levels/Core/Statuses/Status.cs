@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using Levels.Directorship;
 using UnityEngine;
 
 namespace Levels.Core.Statuses
