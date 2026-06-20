@@ -450,6 +450,7 @@ GameObject:
   - component: {fileID: 8542854305649411473}
   - component: {fileID: 8612627104944548628}
   - component: {fileID: 7980219073205598828}
+  - component: {fileID: 9162571867871889970}
   m_Layer: 0
   m_Name: Legs
   m_TagString: Untagged
@@ -495,7 +496,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: aefb3c13aa6270f43a5340514fce9dbe, type: 2}
+  - {fileID: 2100000, guid: fa483ac37a6f53749b3cb3e7f8e7bd8b, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -550,13 +551,6 @@ MonoBehaviour:
     - {fileID: 21300000, guid: a4d9d683faf82ad4f8ba4c11bd267931, type: 3}
     - {fileID: 21300000, guid: 6c6c4a133a775244f800eb57eee760c1, type: 3}
     intervalSeconds: 0.3
-  movingBackward:
-    sprites:
-    - {fileID: 21300000, guid: 6c6c4a133a775244f800eb57eee760c1, type: 3}
-    - {fileID: 21300000, guid: a4d9d683faf82ad4f8ba4c11bd267931, type: 3}
-    - {fileID: 21300000, guid: 376b8d1d94c6aa84cac245f0904623af, type: 3}
-    - {fileID: 21300000, guid: cdd9046ee5ea46249a0ea65d6a048437, type: 3}
-    intervalSeconds: 0.3
   movingRightToLeft:
     sprites:
     - {fileID: 21300000, guid: 924784554f4de7b43a5063f4309cf949, type: 3}
@@ -602,6 +596,18 @@ MonoBehaviour:
     pxOffset: 2
   - sprite: {fileID: 21300000, guid: d4b5e8520a11512438e39f256812a996, type: 3}
     pxOffset: 2
+--- !u!114 &9162571867871889970
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3292866118709316879}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a0c6779d649d447faf67c4650ab2014e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3628982666248491453
 GameObject:
   m_ObjectHideFlags: 0
@@ -1118,6 +1124,7 @@ GameObject:
   - component: {fileID: 2245377228924355190}
   - component: {fileID: 4359345434037134346}
   - component: {fileID: 2940898210495112335}
+  - component: {fileID: 5269538836764552409}
   m_Layer: 0
   m_Name: Torso
   m_TagString: Untagged
@@ -1163,7 +1170,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: aefb3c13aa6270f43a5340514fce9dbe, type: 2}
+  - {fileID: 2100000, guid: fa483ac37a6f53749b3cb3e7f8e7bd8b, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1244,6 +1251,18 @@ MonoBehaviour:
         sprites:
         - {fileID: 21300000, guid: dab96188fcc758b4780d71c5759ba7d6, type: 3}
         intervalSeconds: 0.0625
+--- !u!114 &5269538836764552409
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8657619493681010999}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a0c6779d649d447faf67c4650ab2014e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8800768721026408215
 GameObject:
   m_ObjectHideFlags: 0

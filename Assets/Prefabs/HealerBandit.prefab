@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8261595948579549807}
   - component: {fileID: 7700075418589229410}
+  - component: {fileID: 7215341474799686816}
   m_Layer: 0
   m_Name: CoatBack
   m_TagString: Untagged
@@ -55,7 +56,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: aefb3c13aa6270f43a5340514fce9dbe, type: 2}
+  - {fileID: 2100000, guid: fa483ac37a6f53749b3cb3e7f8e7bd8b, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -87,6 +88,18 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 1
+--- !u!114 &7215341474799686816
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1127787135215256911}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a0c6779d649d447faf67c4650ab2014e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &2872408824175582427
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -924,6 +924,7 @@ GameObject:
   - component: {fileID: 1422796340}
   - component: {fileID: 1422796339}
   - component: {fileID: 1422796338}
+  - component: {fileID: 1422796343}
   m_Layer: 0
   m_Name: LevelGlobal
   m_TagString: Untagged
@@ -973,7 +974,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cdd43ca2dd66423298e11478c01ed189, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  scenariosQueue: []
+  initialMask: 0
   player: {fileID: 0}
+  references:
+    version: 2
+    RefIds: []
 --- !u!114 &1422796341
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -991,8 +997,12 @@ MonoBehaviour:
   autoRun: 1
   autoInjectGameObjects:
   - {fileID: 1422796337}
+  sharedConfigs: []
   camera: {fileID: 433312448}
   debugFallbackGameScope: {fileID: 908427412}
+  references:
+    version: 2
+    RefIds: []
 --- !u!4 &1422796342
 Transform:
   m_ObjectHideFlags: 0
@@ -1009,6 +1019,36 @@ Transform:
   - {fileID: 908427413}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1422796343
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1422796337}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+  m_NotificationBehavior: 0
+  m_UIInputModule: {fileID: 0}
+  m_DeviceLostEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_DeviceRegainedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ControlsChangedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ActionEvents: []
+  m_NeverAutoSwitchControlSchemes: 0
+  m_DefaultControlScheme: 
+  m_DefaultActionMap: 
+  m_SplitScreenIndex: -1
+  m_Camera: {fileID: 0}
 --- !u!1 &1434043305
 GameObject:
   m_ObjectHideFlags: 0

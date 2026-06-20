@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Levels.IntentsImpacts;
+using UnityEngine;
 
 namespace Levels.Abilities.KillAndDown
 {
@@ -15,7 +16,7 @@ namespace Levels.Abilities.KillAndDown
     {
         public IEnumerable<IImpact> Map(KilledIntent intent)
         {
-            yield return new TargetKilledVictimImpact(intent.Victim, intent.Caster, intent.Context);
+            yield return new TargetKilledVictimImpact(intent.Caster, intent.Victim, intent.Context);
             yield return new TargetIsDeadImpact(intent.Victim);
         }
     }
