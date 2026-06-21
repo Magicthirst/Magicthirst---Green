@@ -5,11 +5,11 @@ namespace Levels.UI.Tutorials
 {
     public class LevelActivitySetter : MonoBehaviour
     {
-        [SerializeField] private LevelActivityMask levelActivityMask;
+        [SerializeField] private EditorLevelActivityMask levelActivityMask;
 
         public void OnEnable()
         {
-            LevelDirector.ActivityMask = levelActivityMask;
+            LevelDirector.ActivityMask = (LevelActivityMask)levelActivityMask;
         }
     }
 }

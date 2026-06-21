@@ -1,4 +1,5 @@
 using System;
+using UnityEngine;
 
 namespace Levels.Directorship
 {
@@ -22,4 +23,23 @@ namespace Levels.Directorship
         TutorialChoosePistol = Tutorial | 1 << 8,
         TutorialChooseChaos = Tutorial | 1 << 9,
     }
+
+    // ReSharper disable InconsistentNaming
+    [Flags]
+    public enum EditorLevelActivityMask
+    {
+        Gameplay = 1 << 0,
+        Tutorial = 1 << 1,
+        Pause = 1 << 2,
+
+        [InspectorName("Tutorial/Movement")] Tutorial_Movement = Tutorial | 1 << 3,
+        [InspectorName("Tutorial/Chip")] Tutorial_Chip = Tutorial | 1 << 4,
+
+        [InspectorName("Tutorial/UsePrimary")] Tutorial_UsePrimary = Tutorial | 1 << 5,
+        [InspectorName("Tutorial/UseSecondary")] Tutorial_UseSecondary = Tutorial | 1 << 6,
+        [InspectorName("Tutorial/ChooseSabre")] Tutorial_ChooseSabre = Tutorial | 1 << 7,
+        [InspectorName("Tutorial/ChoosePistol")] Tutorial_ChoosePistol = Tutorial | 1 << 8,
+        [InspectorName("Tutorial/ChooseChaos")] Tutorial_ChooseChaos = Tutorial | 1 << 9,
+    }
+    // ReSharper restore InconsistentNaming
 }

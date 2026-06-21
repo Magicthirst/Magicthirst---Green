@@ -13,6 +13,8 @@ namespace Levels.Directorship
 {
     public class LevelDirector : MonoBehaviour
     {
+        public static bool IsStarted;
+
         public static float GameplayTime;
 
         public static event Action<(LevelActivityMask previous, LevelActivityMask current)> ActivityMaskChanged;
@@ -38,7 +40,7 @@ namespace Levels.Directorship
         [SerializeReference]
         [SubclassSelector]
         private ILevelScenarioPlayer[] scenariosQueue;
-        [SerializeField] private LevelActivityMask initialMask;
+        [SerializeField] private EditorLevelActivityMask initialMask;
         [SerializeField] private GameObject player;
 
         private Coroutine _scenariosRoutine;
@@ -67,7 +69,8 @@ namespace Levels.Directorship
         private void Start()
         {
             GameplayTime = Time.time;
-            ActivityMask = initialMask;
+            ActivityMask = (LevelActivityMask)initialMask;
+            IsStarted = true;
             _scenariosRoutine = StartCoroutine(scenariosQueue.Link());
         }
 

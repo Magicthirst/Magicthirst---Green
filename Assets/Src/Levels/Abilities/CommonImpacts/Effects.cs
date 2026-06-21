@@ -7,7 +7,11 @@ namespace Levels.Abilities.CommonImpacts
 
     public record TargetWasCutEffect(GameObject Target) : IImpact;
 
-    public record CasterShotHitScanEffect(GameObject Target, Vector3 Origin, Vector3 Direction, float DistanceLimit) : IImpact;
+    public record CasterShotHitScanEffect(GameObject Target) : IImpact;
+
+    public record CastersBulletHitEffect(GameObject Target, Vector3 Origin, Vector3 Destination) : IImpact;
+
+    public record CastersBulletMissedEffect(GameObject Target, Vector3 Origin, Vector3 Direction, float DistanceLimit) : IImpact;
 
     public record CasterShotShotgunEffect(GameObject Target) : IImpact;
 

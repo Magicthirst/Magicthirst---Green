@@ -1,4 +1,5 @@
 using Levels.Abilities.CommonImpacts;
+using Levels.Extensions;
 using Levels.IntentsImpacts;
 using UnityEngine;
 using Util;
@@ -9,9 +10,12 @@ namespace Levels.Visual
     public class Tracers : MonoBehaviour
     {
         [SerializeField] private float speed;
-        [SerializeField] private TrailRenderer template;
+        [SerializeField] private Vector2 missedShotOffsetRange;
+        [SerializeField] private TrailRenderer missedTracerTemplate;
+        [SerializeField] private GameObject hitTracerTemplate;
 
-        [Inject] private IImpactConsumer<CasterShotHitScanEffect> _consumer;
+        [Inject] private IImpactConsumer<CastersBulletMissedEffect> _missedBullets;
+        [Inject] private IImpactConsumer<CastersBulletHitEffect> _hitBullets;
         private Transform _camera;
 
         private readonly Tracer[] _tracers = new Tracer[30];
@@ -23,7 +27,7 @@ namespace Levels.Visual
         {
             for (var i = 0; i < _tracers.Length; i++)
             {
-                var trail = Instantiate(template, Vector3.zero, Quaternion.identity);
+                var trail = Instantiate(missedTracerTemplate, Vector3.zero, Quaternion.identity);
 
                 var tracer = new Tracer(
                     trail: trail,
@@ -37,7 +41,8 @@ namespace Levels.Visual
 
         private void OnEnable()
         {
-            _consumer.Impacted += AddTracer;
+            _missedBullets.Impacted += AddMissedTracer;
+            _hitBullets.Impacted += AddHitTracer;
         }
 
         private void Update()
@@ -62,24 +67,32 @@ namespace Levels.Visual
             }
         }
 
-        private void AddTracer(CasterShotHitScanEffect effect)
+        private void AddMissedTracer(CastersBulletMissedEffect effect)
         {
             if (!_tracers.TryGetIndexOfFirst(out var index, tracer => tracer.IsNotActive))
             {
                 index = _tracers.IndexOfMaxBy(tracer => tracer.DistanceFrom(_camera));
             }
 
+            var offset = missedShotOffsetRange.Lerp(Random.value);
             var chosen = _tracers[index];
-            chosen.Trail.transform.position = effect.Origin;
+            chosen.Trail.transform.position = effect.Origin + effect.Direction * offset;
             chosen.Trail.Clear();
             chosen.Trail.emitting = true;
             chosen.Direction = effect.Direction;
             chosen.RemainingDistance = effect.DistanceLimit;
         }
 
+        private void AddHitTracer(CastersBulletHitEffect effect)
+        {
+            var hitDirection = (effect.Destination - effect.Origin).normalized;
+            Instantiate(hitTracerTemplate, effect.Destination, Quaternion.LookRotation(hitDirection));
+        }
+
         private void OnDisable()
         {
-            _consumer.Impacted -= AddTracer;
+            _missedBullets.Impacted -= AddMissedTracer;
+            _hitBullets.Impacted -= AddHitTracer;
         }
 
         private void OnDestroy()

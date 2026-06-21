@@ -19,5 +19,7 @@ namespace Levels.Extensions
         public static Vector2 InFloorCoordinates(this Vector3 vector) => new(vector.x, vector.z);
 
         public static Vector3 ToX0Y(this Vector2 vector) => new(vector.x, 0, vector.y);
+
+        public static float Lerp(this Vector2 vector, float t) => Mathf.Lerp(vector.x, vector.y, t);
     }
 }

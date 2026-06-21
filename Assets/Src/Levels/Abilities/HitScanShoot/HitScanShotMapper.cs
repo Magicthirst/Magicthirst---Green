@@ -30,6 +30,8 @@ namespace Levels.Abilities.HitScanShoot
 
             var maxShotDistance = intent.Config.Distance;
 
+            var hitSomething = false;
+
             foreach (var (hit, victim) in GetAffected(caster, origin, intent.Direction))
             {
                 if (_registry.AreAlies(caster, victim) && !config.CanHitAllies)
@@ -37,7 +39,9 @@ namespace Levels.Abilities.HitScanShoot
                     continue;
                 }
 
+                hitSomething = true;
                 yield return new TargetWasShotEffect(victim);
+                yield return new CastersBulletHitEffect(caster, origin, hit.point);
 
                 if (_registry.Is(victim, Mask.Damageable))
                 {
@@ -55,7 +59,12 @@ namespace Levels.Abilities.HitScanShoot
                 }
             }
 
-            yield return new CasterShotHitScanEffect(caster, origin, intent.Direction, maxShotDistance);
+            if (!hitSomething)
+            {
+                yield return new CastersBulletMissedEffect(caster, origin, intent.Direction, maxShotDistance);
+            }
+
+            yield return new CasterShotHitScanEffect(caster);
 
             yield break;
 
@@ -72,13 +81,13 @@ namespace Levels.Abilities.HitScanShoot
 
                 foreach (var pair in victims)
                 {
-                    if (pair.Victim.layer == WallLayer)
-                    {
-                        break;
-                    }
                     if (pair.Victim != caster)
                     {
                         yield return pair;
+                    }
+                    if (pair.Victim.layer == WallLayer)
+                    {
+                        break;
                     }
                 }
             }

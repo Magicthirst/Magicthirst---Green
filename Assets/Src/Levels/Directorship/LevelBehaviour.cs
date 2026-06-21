@@ -13,6 +13,10 @@ namespace Levels.Directorship
         protected void OnEnable()
         {
             LevelDirector.ActivityMaskChanged += OnMaskChanged;
+            if (LevelDirector.IsStarted)
+            {
+                OnMaskChanged((0, LevelDirector.ActivityMask));
+            }
         }
 
         protected void Update()

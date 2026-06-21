@@ -826,7 +826,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 200
-  template: {fileID: 5796036017094507783}
+  missedShotOffsetRange: {x: 0, y: 0}
+  missedTracerTemplate: {fileID: 7492964920958775031, guid: 3acb81d2e6ab3924db0b6855120d7006, type: 3}
+  hitTracerTemplate: {fileID: 881930024712420233, guid: 314600de237cff542b407ad88ae5b7e5, type: 3}
 --- !u!1 &6154571393740444167
 GameObject:
   m_ObjectHideFlags: 0

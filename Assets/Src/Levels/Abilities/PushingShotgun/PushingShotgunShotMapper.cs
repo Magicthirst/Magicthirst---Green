@@ -12,8 +12,6 @@ namespace Levels.Abilities.PushingShotgun
     {
         private readonly MasksRegistry _registry;
 
-        private static readonly int WallLayer = LayerMask.NameToLayer("Wall");
-
         public PushingShotgunShotMapper(MasksRegistry registry)
         {
             _registry = registry;
@@ -54,8 +52,7 @@ namespace Levels.Abilities.PushingShotgun
                 .OverlapSphere(circleCenter, intent.Config.CircleRadius)
                 .Select(collider => collider.gameObject)
                 .Distinct()
-                .Where(gameObject => gameObject != intent.Caster)
-                .Where(victim => victim.layer != WallLayer);
+                .Where(gameObject => gameObject != intent.Caster);
         }
     }
 }

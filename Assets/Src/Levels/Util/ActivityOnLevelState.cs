@@ -8,7 +8,7 @@ namespace Levels.Util
     public class ActivityOnLevelState : MonoBehaviour
     {
         [SerializeField] private ActivityOnLevelStateMode mode = TurnOff;
-        [SerializeField] private LevelActivityMask activityMask;
+        [SerializeField] private EditorLevelActivityMask activityMask;
         [SerializeField] private GameObject[] objects;
 
         private void OnEnable()
@@ -23,7 +23,7 @@ namespace Levels.Util
 
         private void OnActivityMaskChanged((LevelActivityMask, LevelActivityMask) _)
         {
-            var isActive = (LevelDirector.ActivityMask & activityMask) != 0;
+            var isActive = (LevelDirector.ActivityMask & (LevelActivityMask)activityMask) != 0;
 
             if (isActive && (mode & TurnOn) == 0 || !isActive && (mode & TurnOff) == 0)
             {
