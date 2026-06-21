@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.Reflection;
+using System.Text;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using VContainer.Diagnostics;
@@ -351,18 +353,40 @@ namespace VContainer.Unity
 
             foreach (var target in autoInjectGameObjects)
             {
-                if (target != null) // Check missing reference
+                if (target == null)
                 {
-                    try
-                    {
-                        Container.InjectGameObject(target);
-                    }
-                    catch (Exception)
-                    {
-                        Debug.LogError(target);
-                        throw;
-                    }
+                    continue;
                 }
+
+                try
+                {
+                    Container.InjectGameObject(target);
+                }
+                catch (Exception e)
+                {
+                    Debug.LogError(GetPath(target) + $" {e.GetType()} {e.Message} VContainerException.InvalidType=({(e as VContainerException)?.InvalidType})");
+                    throw;
+                }
+            }
+
+            string GetPath(GameObject o)
+            {
+                var builder = new StringBuilder();
+                var path = new Stack<string>();
+
+                do
+                {
+                    path.Push(o.name);
+                    o = o.transform?.parent?.gameObject;
+                } while (o != null);
+
+                foreach (var goName in path)
+                {
+                    builder.Append('/');
+                    builder.Append(goName);
+                }
+
+                return builder.ToString();
             }
         }
     }

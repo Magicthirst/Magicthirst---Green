@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Reflection;
 using System.Runtime.CompilerServices;
 
 namespace VContainer.Internal
@@ -99,7 +100,15 @@ namespace VContainer.Internal
                             parameterInfo.Name,
                             parameters);
                     }
-                    method.MethodInfo.Invoke(obj, parameterValues);
+
+                    try
+                    {
+                        method.MethodInfo.Invoke(obj, parameterValues);
+                    }
+                    catch (TargetInvocationException e)
+                    {
+                        throw new VContainerException(obj.GetType(), $"{e.Message} : {e.InnerException} : {e.InnerException?.StackTrace}");
+                    }
                 }
                 catch (VContainerException ex)
                 {
