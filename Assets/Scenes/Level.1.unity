@@ -42159,25 +42159,28 @@ MonoBehaviour:
 '
         keysActions:
         - key: KEYS_MOVEMENT
-          step: 10
+          step: 8
           rAction: {fileID: -1680190386980627800, guid: 052faaac586de48259a63d0c4782560b, type: 3}
         - key: KEY_SECONDARY
-          step: 66
+          step: 128
           rAction: {fileID: 5103981462584330329, guid: 052faaac586de48259a63d0c4782560b, type: 3}
         - key: KEY_PRIMARY
-          step: 34
+          step: 64
           rAction: {fileID: 1120369429361536294, guid: 052faaac586de48259a63d0c4782560b, type: 3}
         - key: KEY_SABRE
-          step: 130
+          step: 256
           rAction: {fileID: 8349888245700260607, guid: 052faaac586de48259a63d0c4782560b, type: 3}
         - key: KEY_PISTOL
-          step: 258
+          step: 512
           rAction: {fileID: -1611897325276469079, guid: 052faaac586de48259a63d0c4782560b, type: 3}
         - key: KEY_CHAOS
-          step: 514
+          step: 1024
           rAction: {fileID: -6754980703880146366, guid: 052faaac586de48259a63d0c4782560b, type: 3}
-        - key: KEY_TELEPORT
-          step: 18
+        - key: KEY_TELEPORT_THROW
+          step: 16
+          rAction: {fileID: -2099379676528639254, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+        - key: KEY_TELEPORT_USE
+          step: 32
           rAction: {fileID: -2099379676528639254, guid: 052faaac586de48259a63d0c4782560b, type: 3}
 --- !u!114 &1499311479
 MonoBehaviour:
@@ -45185,13 +45188,13 @@ MonoBehaviour:
 
     To throw chip
 
-    \KEY_TELEPORT\
+    \KEY_TELEPORT_THROW\
 
 
-    To use the
-    spell click
+    To use
+    the spell click
 
-    \KEY_TELEPORT'
+    \KEY_TELEPORT_USE'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: e4b3e3cdfd178b64181b15b94a553815, type: 2}
   m_sharedMaterial: {fileID: 8068728864684629856, guid: e4b3e3cdfd178b64181b15b94a553815, type: 2}

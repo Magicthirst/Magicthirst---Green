@@ -21,28 +21,27 @@ namespace Levels.UI.Tutorials
 
         private string _rawText;
         private DisposableAction[] _inputObservers = Array.Empty<DisposableAction>();
-        private Dictionary<InputAction, int> _playedActions;
-        private Dictionary<InputAction, int> _notPlayedActions;
-        private LevelActivityMask _completedSteps = 0;
+        private IEnumerable<InputAction> _actionsToPlay;
+        private TutorialStep _completedSteps = 0;
+        private TutorialStep _notCompletedSteps = 0;
 
         [Inject] private PlayerInput _input;
         [Inject] private KeysActions _keysActions;
 
-        public bool IsCompleted(LevelActivityMask step) => (_completedSteps & TutorialSpecificsPart & step) != 0;
+        public bool IsCompleted(LevelActivityMask step) => ((LevelActivityMask)_completedSteps & TutorialSpecificsPart & step) != 0;
 
         private void Awake()
         {
             _text = GetComponent<TextMeshProUGUI>();
             _rawText = _text.text;
-            _text.text = _keysActions.Apply(_rawText, appliedActions: out _notPlayedActions);
-            _playedActions = new Dictionary<InputAction, int>();
+            _text.text = _keysActions.Apply(_rawText, appliedActions: out _actionsToPlay, endMask: out _notCompletedSteps);
         }
 
         private void OnEnable()
         {
             var map = _input.currentActionMap;
 
-            _inputObservers = _notPlayedActions.Keys
+            _inputObservers = _actionsToPlay
                 .Select(action => map
                     .ConsumeAction(action.name)
                     .OnPerformed(() => Remove(action)))
@@ -51,25 +50,19 @@ namespace Levels.UI.Tutorials
 
         private void Remove(InputAction action)
         {
-            var step = _keysActions.StepOf(action);
-            if (!_notPlayedActions.ContainsKey(action) || !step.IsPlayableNow())
+            if (!_keysActions.TryGetNextStep(action, _completedSteps, out var step))
             {
                 return;
             }
 
-            _playedActions.TryAdd(action, 0);
-            _playedActions[action]++;
-
-            if (--_notPlayedActions[action] <= 0)
+            if (((int)LevelDirector.ActivityMask & (int)TutorialSpecificsPart & (int)step) == 0)
             {
-                _notPlayedActions.Remove(action);
-                _completedSteps |= (LevelActivityMask)step;
+                return;
             }
 
-            if (_notPlayedActions.Count != 0)
-            {
-                _text.text = _keysActions.Apply(_rawText, played: _playedActions);
-            }
+            _notCompletedSteps &= ~step;
+            _completedSteps |= step;
+            _text.text = _keysActions.Apply(_rawText, _completedSteps);
         }
 
         private void OnDisable()

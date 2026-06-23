@@ -58,7 +58,7 @@ namespace Levels.Directorship
             yield return WaitRoomCleared(_roomBeforeChaosTutorial);
             yield return PlayTutorial(chaos, TutorialChooseChaos, TutorialUseSecondary);
             yield return WaitRoomCleared(_roomBeforeTeleportTutorial);
-            yield return PlayTutorial(teleport, TutorialChip);
+            yield return PlayTutorial(teleport, TutorialThrowChip, TutorialTeleportToChip);
 
             LevelDirector.ActivityMask = Gameplay;
         }

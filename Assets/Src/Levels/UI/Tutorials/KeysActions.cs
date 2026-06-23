@@ -40,10 +40,8 @@ namespace Levels.UI.Tutorials
         private string groupsSeparator;
         [SerializeField] private KeySymbolInputAction[] keysActions;
 
-        public string Apply(string rawText, Dictionary<InputAction, int> played)
+        public string Apply(string rawText, TutorialStep playedMask)
         {
-            var playedActions = new Dictionary<InputAction, int>(played);
-
             var parts = rawText.Split('\\').Select(part =>
             {
                 if (!keysActions.TryGetFirst(out var item, item => part == item.key))
@@ -53,14 +51,9 @@ namespace Levels.UI.Tutorials
 
                 var formatted = FormatGroups(GetDisplayKeys(item.Action));
 
-                if (playedActions.ContainsKey(item.Action))
+                if ((playedMask & item.step) != 0)
                 {
                     formatted = appliedActionDecoration.Replace("ACTION", formatted);
-
-                    if (--playedActions[item.Action] < 0)
-                    {
-                        playedActions.Remove(item.Action);
-                    }
                 }
 
                 return formatted;
@@ -69,9 +62,10 @@ namespace Levels.UI.Tutorials
             return string.Join("", parts);
         }
 
-        public string Apply(string rawText, out Dictionary<InputAction, int> appliedActions)
+        public string Apply(string rawText, out IEnumerable<InputAction> appliedActions, out TutorialStep endMask)
         {
-            var usedActions = new Dictionary<InputAction, int>();
+            var usedActions = new HashSet<InputAction>();
+            TutorialStep endMaskResult = 0;
             
             var parts = rawText.Split('\\').Select(part =>
             {
@@ -80,20 +74,35 @@ namespace Levels.UI.Tutorials
                     return part;
                 }
 
-                usedActions.TryAdd(item.Action, 0);
-                usedActions[item.Action]++;
+                usedActions.Add(item.Action);
+                endMaskResult |= item.step;
 
                 var formatted = FormatGroups(GetDisplayKeys(item.Action));
 
                 return formatted;
             });
 
+            var populatedText = string.Join("", parts); 
             appliedActions = usedActions;
+            endMask = endMaskResult;
 
-            return string.Join("", parts);
+            return populatedText;
         }
 
-        public TutorialStep StepOf(InputAction inputAction) => keysActions.First(i => i.Action == inputAction).step;
+        public bool TryGetNextStep(InputAction inputAction, TutorialStep completedSteps, out TutorialStep step)
+        {
+            step = keysActions
+                .Where(pair =>
+                {
+                    var isTheRequestedAction = pair.Action == inputAction;
+                    var isCompletedBefore = (completedSteps & pair.step) == 0;
+                    return isTheRequestedAction && isCompletedBefore;
+                })
+                .Select(pair => pair.step)
+                .FirstOrDefault((TutorialStep)0);
+
+            return step != 0;
+        }
 
         private string FormatGroups(IEnumerable<string> keys)
         {

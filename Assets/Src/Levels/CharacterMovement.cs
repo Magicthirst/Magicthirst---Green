@@ -6,6 +6,7 @@ using Levels.IntentsImpacts;
 using Levels.Util;
 using UnityEngine;
 using VContainer;
+using static Levels.Directorship.LevelActivityMask;
 
 namespace Levels
 {
@@ -13,7 +14,7 @@ namespace Levels
     [RequireComponent(typeof(IMovementInputSource))]
     public class CharacterMovement : LevelBehaviour, IInterruptable<IMovementReason>
     {
-        protected override LevelActivityMask _LifecycleMask => LevelActivityMask.Gameplay;
+        protected override LevelActivityMask _LifecycleMask => Gameplay | (TutorialTeleportToChip & TutorialSpecificsPart);
 
         [SerializeField] private bool broadcasting;
 

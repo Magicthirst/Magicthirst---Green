@@ -1,18 +1,18 @@
 using System;
-using Levels.Directorship;
+using LAM = Levels.Directorship.LevelActivityMask;
 
 namespace Levels.UI.Tutorials
 {
     [Flags]
     public enum TutorialStep
     {
-        TutorialMovement = LevelActivityMask.TutorialMovement,
-        TutorialChip = LevelActivityMask.TutorialChip,
-        TutorialUsePrimary = LevelActivityMask.TutorialUsePrimary,
-        TutorialUseSecondary = LevelActivityMask.TutorialUseSecondary,
-        TutorialWeapon = LevelActivityMask.TutorialWeapon,
-        TutorialChooseSabre = LevelActivityMask.TutorialChooseSabre,
-        TutorialChoosePistol = LevelActivityMask.TutorialChoosePistol,
-        TutorialChooseChaos = LevelActivityMask.TutorialChooseChaos,
+        TutorialMovement = LAM.TutorialMovement & LAM.TutorialSpecificsPart,
+        TutorialThrowChip = LAM.TutorialThrowChip & LAM.TutorialSpecificsPart,
+        TutorialTeleportToChip = LAM.TutorialTeleportToChip & LAM.TutorialSpecificsPart,
+        TutorialUsePrimary = LAM.TutorialUsePrimary & LAM.TutorialSpecificsPart,
+        TutorialUseSecondary = LAM.TutorialUseSecondary & LAM.TutorialSpecificsPart,
+        TutorialChooseSabre = LAM.TutorialChooseSabre & LAM.TutorialSpecificsPart,
+        TutorialChoosePistol = LAM.TutorialChoosePistol & LAM.TutorialSpecificsPart,
+        TutorialChooseChaos = LAM.TutorialChooseChaos & LAM.TutorialSpecificsPart,
     }
 }

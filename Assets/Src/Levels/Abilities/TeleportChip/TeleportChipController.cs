@@ -12,7 +12,7 @@ namespace Levels.Abilities.TeleportChip
     [RequireComponent(typeof(IMovementInputSource))]
     public class TeleportChipController : LevelBehaviour
     {
-        protected override LevelActivityMask _LifecycleMask => Gameplay | TutorialChip;
+        protected override LevelActivityMask _LifecycleMask => Gameplay | TutorialTeleportToChip;
 
         private IMovementInputSource _movementInput;
 

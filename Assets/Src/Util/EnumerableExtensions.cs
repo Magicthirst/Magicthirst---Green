@@ -68,6 +68,7 @@ namespace Util
                 {
                     yield return enumerator.Current;
                 }
+
                 enumerator.Reset();
             }
             // ReSharper disable once IteratorNeverReturns
@@ -105,6 +106,16 @@ namespace Util
                     yield return item;
                 }
             }
+        }
+
+        public static T FirstOrDefault<T>(this IEnumerable<T> enumerable, T value) where T : struct
+        {
+            foreach (var t in enumerable)
+            {
+                return t;
+            }
+
+            return value;
         }
     }
 }
