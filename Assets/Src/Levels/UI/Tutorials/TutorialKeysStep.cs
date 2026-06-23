@@ -23,7 +23,6 @@ namespace Levels.UI.Tutorials
         private DisposableAction[] _inputObservers = Array.Empty<DisposableAction>();
         private IEnumerable<InputAction> _actionsToPlay;
         private TutorialStep _completedSteps = 0;
-        private TutorialStep _notCompletedSteps = 0;
 
         [Inject] private PlayerInput _input;
         [Inject] private KeysActions _keysActions;
@@ -34,7 +33,7 @@ namespace Levels.UI.Tutorials
         {
             _text = GetComponent<TextMeshProUGUI>();
             _rawText = _text.text;
-            _text.text = _keysActions.Apply(_rawText, appliedActions: out _actionsToPlay, endMask: out _notCompletedSteps);
+            _text.text = _keysActions.Apply(_rawText, out _actionsToPlay);
         }
 
         private void OnEnable()
@@ -60,7 +59,6 @@ namespace Levels.UI.Tutorials
                 return;
             }
 
-            _notCompletedSteps &= ~step;
             _completedSteps |= step;
             _text.text = _keysActions.Apply(_rawText, _completedSteps);
         }

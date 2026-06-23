@@ -62,11 +62,10 @@ namespace Levels.UI.Tutorials
             return string.Join("", parts);
         }
 
-        public string Apply(string rawText, out IEnumerable<InputAction> appliedActions, out TutorialStep endMask)
+        public string Apply(string rawText, out IEnumerable<InputAction> appliedActions)
         {
             var usedActions = new HashSet<InputAction>();
-            TutorialStep endMaskResult = 0;
-            
+
             var parts = rawText.Split('\\').Select(part =>
             {
                 if (!keysActions.TryGetFirst(out var item, item => part == item.key))
@@ -75,7 +74,6 @@ namespace Levels.UI.Tutorials
                 }
 
                 usedActions.Add(item.Action);
-                endMaskResult |= item.step;
 
                 var formatted = FormatGroups(GetDisplayKeys(item.Action));
 
@@ -84,7 +82,6 @@ namespace Levels.UI.Tutorials
 
             var populatedText = string.Join("", parts); 
             appliedActions = usedActions;
-            endMask = endMaskResult;
 
             return populatedText;
         }
