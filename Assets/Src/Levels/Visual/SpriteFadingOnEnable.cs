@@ -25,14 +25,12 @@ namespace Levels.Visual
         protected override void DidEnabled()
         {
             StartCoroutine(Fade().WithInterruptions(_LevelLifecycle));
-            Debug.Log("Launched fading coroutine");
         }
 
         private IEnumerator Fade()
         {
             var startAlpha = _renderer.color.a;
             var timeLeft = fadingTime;
-            Debug.Log("Started fading");
 
             while (timeLeft > 0)
             {

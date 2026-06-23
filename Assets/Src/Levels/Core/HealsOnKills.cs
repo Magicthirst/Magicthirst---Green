@@ -21,10 +21,8 @@ namespace Levels.Core
 
         private void OnKilled(TargetKilledVictimImpact killed)
         {
-            Debug.Log($"{Owner} killed {killed}");
             if (killed.Context.HasFlag(ImpactContext.HealOnKill))
             {
-                Debug.Log($"{Owner} heals");
                 _publish(ImpactIntent.SelfCast(new HealImpact(Owner, healAmount)));
             }
         }

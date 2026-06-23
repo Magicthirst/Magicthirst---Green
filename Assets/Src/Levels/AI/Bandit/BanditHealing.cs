@@ -46,14 +46,12 @@ namespace Levels.AI.Bandit
         public override void Enter()
         {
             base.Enter();
-            Debug.Log($"{gameObject.name}_BanditHealing:Enter");
             _healingCoroutine = StartCoroutine(HealRoutine().WithInterruptions(_LevelLifecycle));
         }
 
         public override void Exit()
         {
             base.Exit();
-            Debug.Log($"{gameObject.name}_BanditHealing:Exit");
             if (_healingCoroutine != null)
             {
                 StopCoroutine(_healingCoroutine);
