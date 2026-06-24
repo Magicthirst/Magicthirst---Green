@@ -15,8 +15,11 @@ namespace Levels.Core
     {
         public event Action<IAbility> Invoked;
         public event Action<IAbility> Equipped;
+        public event Action AvailableAbilitiesChanged;
 
-        public IReadOnlyList<IAbility> Abilities => abilities;
+        public IReadOnlyCollection<IAbility> Abilities => abilities.Where(a => _enabledAbilities.Contains(a.Type)).ToList();
+
+        public IReadOnlyCollection<IAbility> AllAbilities => abilities;
 
         public IPropertyHandle<IAbility> Primary => _primary;
         public IPropertyHandle<IAbility> Secondary => _secondary;
@@ -24,46 +27,107 @@ namespace Levels.Core
         private PropertyHandle<Ability> _primary;
         private PropertyHandle<Ability> _secondary;
 
-        [FormerlySerializedAs("_actionMappings")] // To hide this field being a workaround for dictionary
+        private readonly HashSet<Type> _enabledAbilities = new();
+
+        [FormerlySerializedAs("_actionMappings")]
         [SerializeField]
         private List<Ability> abilities;
 
         public override void Init()
         {
-            _primary ??= new PropertyHandle<Ability>
-            {
-                Value = abilities.First(ability => ability.Position == AbilityPosition.Primary)
-            };
-            _secondary ??= new PropertyHandle<Ability>
-            {
-                Value = abilities.First(ability => ability.Position == AbilityPosition.Secondary)
-            };
-
             foreach (var ability in abilities)
             {
+                _enabledAbilities.Add(ability.Type);
                 ability.Equipped += () => Equip(ability);
+            }
+
+            _primary ??= new PropertyHandle<Ability>
+            {
+                Value = abilities.First(a => a.Position == AbilityPosition.Primary)
+            };
+
+            _secondary ??= new PropertyHandle<Ability>
+            {
+                Value = abilities.First(a => a.Position == AbilityPosition.Secondary)
+            };
+        }
+
+        public void SetAvailableAbilities(IEnumerable<Type> types)
+        {
+            _enabledAbilities.Clear();
+
+            foreach (var type in types)
+            {
+                _enabledAbilities.Add(type);
+            }
+
+            ValidateSelectedAbilities();
+
+            AvailableAbilitiesChanged?.Invoke();
+        }
+
+        private void ValidateSelectedAbilities()
+        {
+            if (!_enabledAbilities.Contains(_primary.Value.Type))
+            {
+                var replacement = abilities.FirstOrDefault(a =>
+                    a.Position == AbilityPosition.Primary &&
+                    _enabledAbilities.Contains(a.Type));
+
+                if (replacement != null)
+                {
+                    _primary.Value = replacement;
+                    Equipped?.Invoke(replacement);
+                }
+            }
+
+            if (!_enabledAbilities.Contains(_secondary.Value.Type))
+            {
+                var replacement = abilities.FirstOrDefault(a =>
+                    a.Position == AbilityPosition.Secondary &&
+                    _enabledAbilities.Contains(a.Type));
+
+                if (replacement != null)
+                {
+                    _secondary.Value = replacement;
+                    Equipped?.Invoke(replacement);
+                }
             }
         }
 
-        public void InvokePrimary() => Use(_primary.Value);
+        public void InvokePrimary()
+        {
+            Use(_primary.Value);
+        }
 
-        public void InvokeSecondary() => Use(_secondary.Value);
+        public void InvokeSecondary()
+        {
+            Use(_secondary.Value);
+        }
 
         private void Equip(Ability ability)
         {
+            if (!_enabledAbilities.Contains(ability.Type))
+            {
+                return;
+            }
+
             switch (ability.Position)
             {
                 case AbilityPosition.Primary:
                     _primary.Value = ability;
                     break;
+
                 case AbilityPosition.Secondary:
                     _secondary.Value = ability;
                     break;
+
                 default:
                     throw new ArgumentOutOfRangeException();
             }
 
             Equipped?.Invoke(ability);
+
             if (ability.InvokeOnEquip)
             {
                 Use(ability);
@@ -72,6 +136,16 @@ namespace Levels.Core
 
         private void Use(Ability ability)
         {
+            if (ability == null)
+            {
+                return;
+            }
+
+            if (!_enabledAbilities.Contains(ability.Type))
+            {
+                return;
+            }
+
             if (ability.LastUse <= Time.time - ability.Cooldown)
             {
                 ability.LastUse = Time.time;
@@ -85,6 +159,9 @@ namespace Levels.Core
             {
                 ability.Dispose();
             }
+
+            _enabledAbilities.Clear();
+            AvailableAbilitiesChanged = null;
         }
     }
 

@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Levels.Core;
+using Levels.Directorship;
 using Levels.Util;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -9,7 +11,7 @@ using Util;
 namespace Levels.UI.Tutorials
 {
     [Serializable]
-    public class KeysActions : ISharedConfig
+    public class TutorialAbilities : ISharedConfig
     {
         private static readonly string[] Wasd = { "w", "a", "s", "d" };
         private static readonly string[] Arrows = { "↑", "←", "→", "↓" };
@@ -101,6 +103,12 @@ namespace Levels.UI.Tutorials
             return step != 0;
         }
 
+        public Type GetTypeForStep(LevelActivityMask step)
+        {
+            step &= LevelActivityMask.TutorialSpecificsPart;
+            return keysActions.First(mapping => mapping.step == (TutorialStep)step).AbilityType;
+        }
+
         private string FormatGroups(IEnumerable<string> keys)
         {
             var groups = keys
@@ -164,5 +172,11 @@ namespace Levels.UI.Tutorials
         [SerializeField] private InputActionReference rAction;
         public InputAction Action => _action ??= rAction.action;
         private InputAction _action;
+
+        [SerializeField]
+        [SubtypeProperty(typeof(IInHandAbility), required: false)]
+        private string abilityType;
+        public Type AbilityType => _abilityType ??= Type.GetType(abilityType);
+        private Type _abilityType;
     }
 }

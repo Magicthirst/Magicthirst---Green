@@ -25,7 +25,7 @@ namespace Levels.UI.Tutorials
         private TutorialStep _completedSteps = 0;
 
         [Inject] private PlayerInput _input;
-        [Inject] private KeysActions _keysActions;
+        [Inject] private TutorialAbilities _tutorialAbilities;
 
         public bool IsCompleted(LevelActivityMask step) => ((LevelActivityMask)_completedSteps & TutorialSpecificsPart & step) != 0;
 
@@ -33,7 +33,7 @@ namespace Levels.UI.Tutorials
         {
             _text = GetComponent<TextMeshProUGUI>();
             _rawText = _text.text;
-            _text.text = _keysActions.Apply(_rawText, out _actionsToPlay);
+            _text.text = _tutorialAbilities.Apply(_rawText, out _actionsToPlay);
         }
 
         private void OnEnable()
@@ -49,7 +49,7 @@ namespace Levels.UI.Tutorials
 
         private void Remove(InputAction action)
         {
-            if (!_keysActions.TryGetNextStep(action, _completedSteps, out var step))
+            if (!_tutorialAbilities.TryGetNextStep(action, _completedSteps, out var step))
             {
                 return;
             }
@@ -60,7 +60,7 @@ namespace Levels.UI.Tutorials
             }
 
             _completedSteps |= step;
-            _text.text = _keysActions.Apply(_rawText, _completedSteps);
+            _text.text = _tutorialAbilities.Apply(_rawText, _completedSteps);
         }
 
         private void OnDisable()

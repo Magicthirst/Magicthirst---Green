@@ -1,5 +1,7 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
+using Levels.Core;
 using Levels.Core.Room;
 using Levels.UI.Tutorials;
 using UnityEngine;
@@ -36,6 +38,9 @@ namespace Levels.Directorship
 
         private IEnumerator _tutorialRoutine;
 
+        [Inject] private TutorialAbilities _tutorialAbilities;
+        [Inject] private Weaponry _weaponry;
+
         [Inject]
         private void Construct(Func<int, RoomUnits> resolveUnits)
         {
@@ -51,13 +56,28 @@ namespace Levels.Directorship
 
         public IEnumerator GetRoutine()
         {
+            var enabledAbilities = new List<Type>();
+
+            enabledAbilities.Add(_tutorialAbilities.GetTypeForStep(TutorialChooseSabre));
+            _weaponry.SetAvailableAbilities(enabledAbilities);
             yield return PlayTutorial(saber, TutorialChooseSabre, TutorialUseSecondary);
+
             yield return PlayTutorial(movement, TutorialMovement);
+
             yield return WaitRoomCleared(_roomBeforeGunTutorial);
+
+            enabledAbilities.Add(_tutorialAbilities.GetTypeForStep(TutorialChoosePistol));
+            _weaponry.SetAvailableAbilities(enabledAbilities);
             yield return PlayTutorial(shoot, TutorialChoosePistol, TutorialUsePrimary);
+
             yield return WaitRoomCleared(_roomBeforeChaosTutorial);
+
+            enabledAbilities.Add(_tutorialAbilities.GetTypeForStep(TutorialChooseChaos));
+            _weaponry.SetAvailableAbilities(enabledAbilities);
             yield return PlayTutorial(chaos, TutorialChooseChaos, TutorialUseSecondary);
+
             yield return WaitRoomCleared(_roomBeforeTeleportTutorial);
+
             yield return PlayTutorial(teleport, TutorialThrowChip, TutorialTeleportToChip);
 
             LevelDirector.ActivityMask = Gameplay;

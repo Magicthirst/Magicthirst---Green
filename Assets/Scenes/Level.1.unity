@@ -5395,7 +5395,6 @@ GameObject:
   - component: {fileID: 120023156}
   - component: {fileID: 120023155}
   - component: {fileID: 120023159}
-  - component: {fileID: 120023154}
   m_Layer: 0
   m_Name: TutorialsCanvas
   m_TagString: Untagged
@@ -5403,25 +5402,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &120023154
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 120023153}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1b2c62ac3bcd44fb9e09835581422057, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  parentReference:
-    TypeName: DI.LevelLifetimeScope
-  autoRun: 1
-  autoInjectGameObjects:
-  - {fileID: 120023153}
-  - {fileID: 1158247062}
-  - {fileID: 962690951}
 --- !u!114 &120023155
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5502,7 +5482,7 @@ RectTransform:
   - {fileID: 1981324524}
   - {fileID: 327538854}
   - {fileID: 1384280093}
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 1711207719}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -42150,7 +42130,7 @@ MonoBehaviour:
     version: 2
     RefIds:
     - rid: 4307642805538783309
-      type: {class: KeysActions, ns: Levels.UI.Tutorials, asm: Levels}
+      type: {class: TutorialAbilities, ns: Levels.UI.Tutorials, asm: Levels}
       data:
         groupTemplate: '[GROUP]'
         appliedActionDecoration: <color=#00ff00>ACTION</color>
@@ -42161,27 +42141,35 @@ MonoBehaviour:
         - key: KEYS_MOVEMENT
           step: 8
           rAction: {fileID: -1680190386980627800, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+          abilityType: 
         - key: KEY_SECONDARY
           step: 128
           rAction: {fileID: 5103981462584330329, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+          abilityType: 
         - key: KEY_PRIMARY
           step: 64
           rAction: {fileID: 1120369429361536294, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+          abilityType: 
         - key: KEY_SABRE
           step: 256
           rAction: {fileID: 8349888245700260607, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+          abilityType: Levels.Abilities.ParrySabre.ParrySabreSwinger
         - key: KEY_PISTOL
           step: 512
           rAction: {fileID: -1611897325276469079, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+          abilityType: Levels.Abilities.HitScanShoot.HitScanShooter
         - key: KEY_CHAOS
           step: 1024
           rAction: {fileID: -6754980703880146366, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+          abilityType: Levels.Abilities.ChaosArea.InfuseAreaWithChaosCaster
         - key: KEY_TELEPORT_THROW
           step: 16
           rAction: {fileID: -2099379676528639254, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+          abilityType: 
         - key: KEY_TELEPORT_USE
           step: 32
           rAction: {fileID: -2099379676528639254, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+          abilityType: 
 --- !u!114 &1499311479
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -43666,6 +43654,7 @@ Transform:
   - {fileID: 1823467182}
   - {fileID: 1745542786}
   - {fileID: 433529429}
+  - {fileID: 120023158}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: -326.174, z: 0}
 --- !u!143 &1711207720
@@ -43901,6 +43890,12 @@ MonoBehaviour:
   - {fileID: 1641293688}
   - {fileID: 252588730}
   - {fileID: 1620196972}
+  - {fileID: 120023153}
+  - {fileID: 1158247062}
+  - {fileID: 962690951}
+  - {fileID: 1622738496}
+  - {fileID: 1850979222}
+  - {fileID: 1783289086}
   entity: {fileID: 11400000, guid: 8471dc5efe1a0f34781100153776d825, type: 2}
   configs:
   - rid: 2589632493940113517
@@ -62697,5 +62692,4 @@ SceneRoots:
   - {fileID: 1940194689}
   - {fileID: 868401833}
   - {fileID: 1290093819}
-  - {fileID: 120023158}
   - {fileID: 339993339}
