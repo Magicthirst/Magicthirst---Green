@@ -1,9 +1,12 @@
+using Levels.Directorship;
 using UnityEngine;
 
 namespace Levels.Visual
 {
-    public class Pulsating : MonoBehaviour
+    public class Pulsating : LevelBehaviour
     {
+        protected override LevelActivityMask _LifecycleMask => LevelActivityMask.Gameplay | LevelActivityMask.Tutorial;
+
         [SerializeField] private AnimationCurve size;
 
         private Vector3 _baseScale;
@@ -13,9 +16,9 @@ namespace Levels.Visual
             _baseScale = transform.localScale;
         }
 
-        private void Update()
+        protected override void DidUpdate()
         {
-            transform.localScale = _baseScale * size.Evaluate(Time.time);
+            transform.localScale = _baseScale * size.Evaluate(LevelDirector.GameplayTime);
         }
     }
 }

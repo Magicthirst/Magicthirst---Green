@@ -1,6 +1,8 @@
 using System.Collections;
 using JetBrains.Annotations;
+using Levels.Directorship;
 using Levels.Extensions;
+using Levels.Util;
 using Levels.Util.MasksRegistry;
 using UnityEngine;
 using VContainer;
@@ -8,8 +10,10 @@ using static UnityEngine.ParticleSystem;
 
 namespace Levels.Visual
 {
-    public class FadeoutOnSteppingIn : MonoBehaviour
+    public class FadeoutOnSteppingIn : LevelBehaviour
     {
+        protected override LevelActivityMask _LifecycleMask => LevelActivityMask.Gameplay | LevelActivityMask.Tutorial;
+
         [SerializeField] private AnimationCurve lifetimeFadeout;
 
         private ParticleSystem _particleSystem;
@@ -27,7 +31,7 @@ namespace Levels.Visual
             var isPlayer = _registry.Is(other.gameObject, Mask.PlayerCharacter);
             if (isPlayer && _fadeoutRoutine is null)
             {
-                _fadeoutRoutine = StartCoroutine(Fadeout());
+                _fadeoutRoutine = StartCoroutine(Fadeout().WithInterruptions(_LevelLifecycle));
             }
         }
 
@@ -45,7 +49,7 @@ namespace Levels.Visual
 
             var baseAlpha = particles[0].startColor.a / 256f;
 
-            for (float t = 0; alpha >= 0f; t += Time.deltaTime)
+            for (float t = 0; alpha >= 0f; t += LevelDirector.GameplayDeltaTime)
             {
                 
                 alpha = lifetimeFadeout.Evaluate(t) - 0.1f;

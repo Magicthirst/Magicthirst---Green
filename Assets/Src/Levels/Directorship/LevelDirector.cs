@@ -11,11 +11,18 @@ using VContainer;
 
 namespace Levels.Directorship
 {
-    public class LevelDirector : MonoBehaviour
+    public sealed class LevelDirector : MonoBehaviour
     {
         public static bool IsStarted;
 
         public static float GameplayTime;
+        public static float GameplayFixedTime;
+        public static float GameplayDeltaTime => Time.deltaTime * GameplayTimeSpeed;
+        public static float GameplayFixedDeltaTime => Time.fixedDeltaTime * GameplayTimeSpeed;
+        public static float GameplayTimeSpeed = 1f;
+
+        public static event Action FixedUpdated;
+        public static event Action Updated;
 
         public static event Action<(LevelActivityMask previous, LevelActivityMask current)> ActivityMaskChanged;
 
@@ -76,7 +83,14 @@ namespace Levels.Directorship
 
         private void Update()
         {
-            GameplayTime += Time.deltaTime;
+            GameplayTime += Time.deltaTime * GameplayTimeSpeed;
+            Updated?.Invoke();
+        }
+
+        private void FixedUpdate()
+        {
+            GameplayFixedTime += Time.fixedDeltaTime * GameplayTimeSpeed;
+            FixedUpdated?.Invoke();
         }
 
         private void OnDisable()

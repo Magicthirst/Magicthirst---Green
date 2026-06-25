@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Levels.Directorship;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -90,7 +91,7 @@ namespace Levels.Visual.SpriteResolution
             private float _stopTimePoint;
             private float _updateTimePoint;
 
-            private Sprite _Current => _sprites[Mathf.FloorToInt(Time.time / _intervalSeconds) % _sprites.Length];
+            private Sprite _Current => _sprites[Mathf.FloorToInt(LevelDirector.GameplayTime / _intervalSeconds) % _sprites.Length];
 
             public static ActivePlaySequence Start(float now, TPlaySequence sequence, out Sprite firstFrame)
             {

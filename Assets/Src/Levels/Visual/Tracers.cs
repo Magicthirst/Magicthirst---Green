@@ -1,4 +1,5 @@
 using Levels.Abilities.CommonImpacts;
+using Levels.Directorship;
 using Levels.Extensions;
 using Levels.IntentsImpacts;
 using UnityEngine;
@@ -7,8 +8,10 @@ using VContainer;
 
 namespace Levels.Visual
 {
-    public class Tracers : MonoBehaviour
+    public class Tracers : LevelBehaviour
     {
+        protected override LevelActivityMask _LifecycleMask => LevelActivityMask.Gameplay | LevelActivityMask.Tutorial;
+
         [SerializeField] private float speed;
         [SerializeField] private Vector2 missedShotOffsetRange;
         [SerializeField] private TrailRenderer missedTracerTemplate;
@@ -39,13 +42,13 @@ namespace Levels.Visual
             }
         }
 
-        private void OnEnable()
+        protected override void DidEnabled()
         {
             _missedBullets.Impacted += AddMissedTracer;
             _hitBullets.Impacted += AddHitTracer;
         }
 
-        private void Update()
+        protected override void DidUpdate()
         {
             foreach (var tracer in _tracers)
             {
@@ -54,7 +57,7 @@ namespace Levels.Visual
                     continue;
                 }
 
-                var delta = Time.deltaTime * speed;
+                var delta = LevelDirector.GameplayDeltaTime * speed;
                 if (tracer.RemainingDistance <= delta)
                 {
                     tracer.Trail.emitting = false;
@@ -89,7 +92,7 @@ namespace Levels.Visual
             Instantiate(hitTracerTemplate, effect.Destination, Quaternion.LookRotation(hitDirection));
         }
 
-        private void OnDisable()
+        protected override void DidDisabled()
         {
             _missedBullets.Impacted -= AddMissedTracer;
             _hitBullets.Impacted -= AddHitTracer;

@@ -1,4 +1,5 @@
 using System.Collections;
+using Levels.Directorship;
 using UnityEngine;
 
 namespace Levels.AI.Util
@@ -7,8 +8,8 @@ namespace Levels.AI.Util
     {
         public static IEnumerator ForSeconds(float seconds)
         {
-            var start = Time.time;
-            while (Time.time < start + seconds)
+            var start = LevelDirector.GameplayTime;
+            while (LevelDirector.GameplayTime < start + seconds)
             {
                 yield return null;
             }

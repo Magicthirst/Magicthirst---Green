@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using JetBrains.Annotations;
 using Levels.AI;
+using Levels.Directorship;
 using Levels.IntentsImpacts;
 using Levels.Util;
 using UnityEngine;
@@ -48,7 +49,7 @@ namespace Levels.Visual.SpriteResolution
 
         private void Update()
         {
-            if (_resolver.UpdateAndTryGetNextFrame(now: Time.time, out var sprite))
+            if (_resolver.UpdateAndTryGetNextFrame(now: LevelDirector.GameplayTime, out var sprite))
             {
                 _spriteRenderer.sprite = sprite;
             }
@@ -65,7 +66,7 @@ namespace Levels.Visual.SpriteResolution
 
         private void OnPlayImpactOccured([CanBeNull] Type impactType)
         {
-            _resolver.TryPlay(now: Time.time, _resolver.CurrentKey.WithImpact(impactType), out var firstSprite);
+            _resolver.TryPlay(now: LevelDirector.GameplayTime, _resolver.CurrentKey.WithImpact(impactType), out var firstSprite);
             _spriteRenderer.sprite = firstSprite;
         }
 
@@ -76,7 +77,7 @@ namespace Levels.Visual.SpriteResolution
                 return;
             }
 
-            _resolver.TryPlay(now: Time.time, _resolver.CurrentKey.WithState(state.GetType()), out var firstSprite);
+            _resolver.TryPlay(now: LevelDirector.GameplayTime, _resolver.CurrentKey.WithState(state.GetType()), out var firstSprite);
             _spriteRenderer.sprite = firstSprite;
         }
 

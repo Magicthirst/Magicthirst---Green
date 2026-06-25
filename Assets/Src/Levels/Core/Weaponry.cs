@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Levels.Directorship;
 using Levels.Util;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -146,9 +147,9 @@ namespace Levels.Core
                 return;
             }
 
-            if (ability.LastUse <= Time.time - ability.Cooldown)
+            if (ability.LastUse <= LevelDirector.GameplayTime - ability.Cooldown)
             {
-                ability.LastUse = Time.time;
+                ability.LastUse = LevelDirector.GameplayTime;
                 Invoked?.Invoke(ability);
             }
         }

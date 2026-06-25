@@ -3,6 +3,7 @@ using Levels;
 using Levels.AI;
 using Levels.Core;
 using Levels.Core.Room;
+using Levels.Directorship;
 using Levels.IntentsImpacts;
 using Levels.Util;
 using UnityEngine;
@@ -86,6 +87,8 @@ namespace DI
                 entity.Init();
 
                 resolver.ResolveOrDefault<RoomUnits>()?.Register(entity);
+
+                LevelDirector.FixedUpdated += entity.FixedUpdate;
             });
             builder.RegisterDisposeCallback(_ => entity.Dispose());
 
@@ -115,7 +118,5 @@ namespace DI
                 }
             }
         }
-
-        private void FixedUpdate() => entity.FixedUpdate();
     }
 }

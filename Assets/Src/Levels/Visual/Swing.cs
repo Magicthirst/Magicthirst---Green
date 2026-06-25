@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Levels.Abilities.CommonImpacts;
+using Levels.Directorship;
 using Levels.IntentsImpacts;
 using UnityEngine;
 using Util;
@@ -8,8 +9,10 @@ using VContainer;
 
 namespace Levels.Visual
 {
-    public class Swing : MonoBehaviour
+    public class Swing : LevelBehaviour
     {
+        protected override LevelActivityMask _LifecycleMask => LevelActivityMask.Gameplay | LevelActivityMask.Tutorial;
+
         [SerializeField] private Transform pivot;
         [SerializeField] private TrailRenderer trail;
         [SerializeField] private float durationSeconds;
@@ -35,12 +38,12 @@ namespace Levels.Visual
             _directionsQueue = directionsLoop.InfinitelyLooping();
         }
 
-        private void OnEnable()
+        protected override void DidEnabled()
         {
             _consumer.Impacted += HandleSwing;
         }
 
-        private void Update()
+        protected override void DidUpdate()
         {
             if (_progress > durationSeconds && trail.emitting)
             {
@@ -52,7 +55,7 @@ namespace Levels.Visual
             }
 
             UpdateRotation();
-            _progress += Time.deltaTime;
+            _progress += LevelDirector.GameplayDeltaTime;
         }
 
         private void UpdateRotation()
@@ -71,7 +74,7 @@ namespace Levels.Visual
             trail.emitting = true;
         }
 
-        private void OnDisable()
+        protected override void DidDisabled()
         {
             _consumer.Impacted -= HandleSwing;
         }

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Levels.Directorship;
 using Levels.Extensions;
 using UnityEngine;
 using VContainer;
@@ -48,7 +49,7 @@ namespace Levels.Visual.SpriteResolution
 
         private void Update()
         {
-            if (_resolver.UpdateAndTryGetNextFrame(now: Time.time, out var newSprite))
+            if (_resolver.UpdateAndTryGetNextFrame(now: LevelDirector.GameplayTime, out var newSprite))
             {
                 _Sprite = newSprite;
             }
@@ -56,7 +57,7 @@ namespace Levels.Visual.SpriteResolution
 
         private void UpdateKey()
         {
-            if (TryGetMovingKey(out var key) && _resolver.TryPlay(now: Time.time, key, out var newSprite))
+            if (TryGetMovingKey(out var key) && _resolver.TryPlay(now: LevelDirector.GameplayTime, key, out var newSprite))
             {
                 _Sprite = newSprite;
             }

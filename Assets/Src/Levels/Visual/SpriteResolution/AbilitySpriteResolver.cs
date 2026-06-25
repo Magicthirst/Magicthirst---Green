@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using JetBrains.Annotations;
 using Levels.Core;
+using Levels.Directorship;
 using Levels.IntentsImpacts;
 using Levels.Util;
 using UnityEngine;
@@ -41,7 +42,7 @@ namespace Levels.Visual.SpriteResolution
         private void OnEnable()
         {
             _hand.Changed += OnWeaponChange;
-            _resolver.TryPlay(now: Time.time, key: PlayKey.Idle(_hand.Value.Type), out _);
+            _resolver.TryPlay(now: LevelDirector.GameplayTime, key: PlayKey.Idle(_hand.Value.Type), out _);
             foreach (var observer in _observers)
             {
                 observer.Subscribe();
@@ -50,7 +51,7 @@ namespace Levels.Visual.SpriteResolution
 
         private void Update()
         {
-            if (_resolver.UpdateAndTryGetNextFrame(now: Time.time, out var sprite))
+            if (_resolver.UpdateAndTryGetNextFrame(now: LevelDirector.GameplayTime, out var sprite))
             {
                 _spriteRenderer.sprite = sprite;
             }
@@ -69,7 +70,7 @@ namespace Levels.Visual.SpriteResolution
         {
             var key = PlayKey.Idle(ability.Type);
 
-            if (_resolver.CurrentKey.AbilityIs(ability.Type) && _resolver.Replay(now: Time.time, out var firstSprite))
+            if (_resolver.CurrentKey.AbilityIs(ability.Type) && _resolver.Replay(now: LevelDirector.GameplayTime, out var firstSprite))
             {
                 _spriteRenderer.sprite = firstSprite;
                 return;
@@ -77,8 +78,8 @@ namespace Levels.Visual.SpriteResolution
 
             if
             (
-                _resolver.TryPlay(now: Time.time, key, out firstSprite) ||
-                _resolver.TryPlay(now: Time.time, PlayKey.Default(), out firstSprite)
+                _resolver.TryPlay(now: LevelDirector.GameplayTime, key, out firstSprite) ||
+                _resolver.TryPlay(now: LevelDirector.GameplayTime, PlayKey.Default(), out firstSprite)
             )
             {
                 _spriteRenderer.sprite = firstSprite;
@@ -88,7 +89,7 @@ namespace Levels.Visual.SpriteResolution
         private void OnPlayImpactOccured(Type impactType)
         {
             var key = PlayKey.Casted(_hand.Value.Type, impactType);
-            if (_resolver.TryPlay(now: Time.time, key, out var firstSprite))
+            if (_resolver.TryPlay(now: LevelDirector.GameplayTime, key, out var firstSprite))
             {
                 _spriteRenderer.sprite = firstSprite;
             }
