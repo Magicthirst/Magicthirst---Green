@@ -27,7 +27,6 @@ namespace Levels.AI.Bandit
         [SerializeField] private float betweenShotDelay;
 
         [Header("Movement Settings")]
-        [SerializeField] private float movementSpeed;
         [SerializeField] private float maxDistance;
         [SerializeField] private float tacticUpdatePeriod;
 
@@ -54,7 +53,8 @@ namespace Levels.AI.Bandit
 
             _interruptionQueue = new InterruptionQueue(this, new WaitForFixedUpdate());
 
-            _shooter = new BurstShooter(
+            _shooter = new BurstShooter
+            (
                 shotSpreadDegrees: shotSpreadDegrees,
                 burstCount: burstCount,
                 shotCount: shotCount,
@@ -63,15 +63,17 @@ namespace Levels.AI.Bandit
                 betweenShotPeriod: betweenShotDelay,
                 self: transform,
                 config: _config,
-                publishShoot: _publishShoot);
+                publishShoot: _publishShoot
+            );
 
-            _movement = new KitingMovement(
-                speed: movementSpeed,
+            _movement = new KitingMovement
+            (
                 maxDistance: maxDistance,
                 tacticUpdatePeriod: tacticUpdatePeriod,
                 self: transform,
                 agent: _agent,
-                obstacleMask: wallLayer);
+                obstacleMask: wallLayer
+            );
         }
 
         protected override void DidEnabled()

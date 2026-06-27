@@ -83,7 +83,6 @@ namespace Levels.AI.Bandit
                 Movement: new ScreenerSquadMemberMovement
                 (
                     id: id,
-                    speed: agent.speed,
                     agent: agent,
                     membersPositions: _membersPositions,
                     tacticUpdatePeriod: tacticUpdatePeriod

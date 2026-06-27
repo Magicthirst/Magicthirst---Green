@@ -11,7 +11,6 @@ namespace Levels.AI.Shared
         private const float SampleDistance = 4f;
         private readonly float[] _escapeAngles = { 0f, -30f, 30f, -60f, 60f, -90f, 90f };
 
-        private readonly float _speed;
         private readonly float _maxDistance;
         private readonly float _tacticUpdatePeriod;
         private readonly float _updateShift;
@@ -20,15 +19,15 @@ namespace Levels.AI.Shared
         private readonly NavMeshAgent _agent;
         private readonly LayerMask _obstacleMask;
 
-        public KitingMovement(
-            float speed,
+        public KitingMovement
+        (
             float maxDistance,
             float tacticUpdatePeriod,
             Transform self,
             NavMeshAgent agent,
-            LayerMask obstacleMask)
+            LayerMask obstacleMask
+        )
         {
-            _speed = speed;
             _maxDistance = maxDistance;
             _tacticUpdatePeriod = tacticUpdatePeriod;
             _updateShift = Random.Range(0f, tacticUpdatePeriod);
@@ -39,7 +38,6 @@ namespace Levels.AI.Shared
 
         public IEnumerator Kite(Transform enemy)
         {
-            _agent.speed = _speed;
             _agent.updateRotation = true; 
 
             yield return InterruptableWait.ForSeconds(_updateShift);
