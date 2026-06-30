@@ -29,22 +29,18 @@ namespace Levels.Visual
 
         private void AddHitTracer(CastersBulletHitEffect effect)
         {
-            TracersManager.SpawnLine(effect.Origin, effect.Destination);
             if (effect.Context.HasFlag(ImpactContext.ResultOfBadParry))
             {
-                Debug.Log("PlayerTracers : AddHitTracer : TracersManager.SpawnLine : ResultOfBadParry");
                 TracersManager.SpawnLine(effect.Origin, effect.Destination, parriedTracerTint);
             }
             else
             {
-                Debug.Log("PlayerTracers : AddHitTracer : TracersManager.SpawnLine");
                 TracersManager.SpawnLine(effect.Origin, effect.Destination);
             }
         }
 
         private void AddMissedTracer(CastersBulletMissedEffect effect)
         {
-            TracersManager.SpawnRay(effect.Origin, effect.Direction);
             if (effect.Context.HasFlag(ImpactContext.ResultOfBadParry))
             {
                 TracersManager.SpawnRay(effect.Origin, effect.Direction, parriedTracerTint);

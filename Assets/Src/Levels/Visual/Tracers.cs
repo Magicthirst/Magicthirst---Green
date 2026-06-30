@@ -1,7 +1,6 @@
 using Levels.Abilities.CommonImpacts;
 using Levels.Directorship;
 using Levels.IntentsImpacts;
-using UnityEngine;
 using VContainer;
 
 namespace Levels.Visual
@@ -27,7 +26,6 @@ namespace Levels.Visual
 
         private void AddHitTracer(CastersBulletHitEffect effect)
         {
-            Debug.Log("Tracers : AddHitTracer : TracersManager.SpawnLine");
             TracersManager.SpawnLine(effect.Origin, effect.Destination);
         }
 
