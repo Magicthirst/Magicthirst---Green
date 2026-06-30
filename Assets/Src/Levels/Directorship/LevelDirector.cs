@@ -8,6 +8,7 @@ using Levels.IntentsImpacts;
 using Levels.Util;
 using UnityEngine;
 using VContainer;
+using static Levels.Directorship.LevelActivityMask;
 
 namespace Levels.Directorship
 {
@@ -83,13 +84,19 @@ namespace Levels.Directorship
 
         private void Update()
         {
-            GameplayTime += Time.deltaTime * GameplayTimeSpeed;
+            if ((ActivityMask & (Gameplay | Tutorial)) != 0)
+            {
+                GameplayTime += Time.deltaTime * GameplayTimeSpeed;
+            }
             Updated?.Invoke();
         }
 
         private void FixedUpdate()
         {
-            GameplayFixedTime += Time.fixedDeltaTime * GameplayTimeSpeed;
+            if ((ActivityMask & (Gameplay | Tutorial)) != 0)
+            {
+                GameplayFixedTime += Time.fixedDeltaTime * GameplayTimeSpeed;
+            }
             FixedUpdated?.Invoke();
         }
 

@@ -16911,6 +16911,10 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 22426080, guid: 67117722a812a2e46ab8cb8eafbf5f5e, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 22428984, guid: 67117722a812a2e46ab8cb8eafbf5f5e, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -42471,8 +42475,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tracerPrefab: {fileID: 7779144050368814171, guid: 071e0c828e0ce204191ef7572d065783, type: 3}
+  smokeTint: {r: 0.6320754, g: 0.6320754, b: 0.6320754, a: 0.4117647}
   poolSize: 50
-  tracerLifetime: 0.4
+  tracerLifetime: 1
   missedDistance: 50
 --- !u!1 &1524396901
 GameObject:
@@ -43799,8 +43804,9 @@ GameObject:
   - component: {fileID: 1711207737}
   - component: {fileID: 1711207736}
   - component: {fileID: 1711207739}
-  - component: {fileID: 1711207744}
   - component: {fileID: 1711207745}
+  - component: {fileID: 1711207744}
+  - component: {fileID: 1711207746}
   - component: {fileID: 1711207730}
   - component: {fileID: 1711207733}
   - component: {fileID: 1711207735}
@@ -44364,6 +44370,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a172ee8b7d6d46229272179289aac6ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1711207746
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1711207718}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 18cff4c3a3634fa1a597f979128d4332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  horizontalAngle: 40
+  verticalAngle: 20
 --- !u!1001 &1726509530
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -44647,7 +44667,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1745542786}
-  - component: {fileID: 1745542787}
+  - component: {fileID: 1745542789}
   - component: {fileID: 1745542788}
   m_Layer: 0
   m_Name: Effects
@@ -44673,18 +44693,6 @@ Transform:
   - {fileID: 971534113}
   m_Father: {fileID: 1711207719}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1745542787
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1745542785}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8cd964b3974d4523ba8b716b1a403907, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1745542788
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -44700,6 +44708,19 @@ MonoBehaviour:
   previews:
   - previewObject: {fileID: 489957499}
     spellType: Levels.Abilities.ChaosArea.InfuseAreaWithChaosCaster
+--- !u!114 &1745542789
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1745542785}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00581fb4e53546dba2d714ab94340522, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  parriedTracerTint: {r: 1, g: 0.7676166, b: 0, a: 0.4627451}
 --- !u!1 &1746226364
 GameObject:
   m_ObjectHideFlags: 0

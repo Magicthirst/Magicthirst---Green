@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Levels.Abilities.BadProjectilesParry;
 using Levels.Abilities.HitScanShoot;
 using Levels.Abilities.ParrySabre;
 using Levels.Directorship;
@@ -30,6 +31,7 @@ namespace Levels.Core.Passives
         private Queue<AttackInstance> _suspendedAttacks;
 
         private readonly DeferredBrokerHandle _handle;
+        [Inject] private PublishIntent<ImpactIntent> _onParry;
         [Inject] private IImpactConsumer<ParryImpact> _consumer;
 
         public ProjectilesParrying()
@@ -68,7 +70,7 @@ namespace Levels.Core.Passives
         /// </summary>
         /// <param name="intent"></param>
         /// <param name="incomingDirection">Direction relative to the victim</param>
-        private void Attack(IIntent intent, Vector3 incomingDirection)
+        private void Attack(HitScanShootIntent intent, Vector3 incomingDirection)
         {
             var now = Time.fixedTime;
             _suspendedAttacks.Enqueue(new AttackInstance(intent, incomingDirection, now));
@@ -92,6 +94,7 @@ namespace Levels.Core.Passives
                 if (IsParryingByDirection(attack.IncomingDirection))
                 {
                     AttackParried?.Invoke(attack.Intent);
+                    _onParry(ImpactIntent.SelfCast(new BadlyParriedProjectileImpact(Owner, attack.Intent)));
                 }
                 else
                 {
@@ -144,11 +147,11 @@ namespace Levels.Core.Passives
 
         private readonly struct AttackInstance
         {
-            public readonly IIntent Intent;
+            public readonly HitScanShootIntent Intent;
             public readonly Vector3 IncomingDirection;
             public readonly float TimePoint;
 
-            public AttackInstance(IIntent intent, Vector3 incomingDirection, float timePoint)
+            public AttackInstance(HitScanShootIntent intent, Vector3 incomingDirection, float timePoint)
             {
                 Intent = intent;
                 IncomingDirection = incomingDirection;

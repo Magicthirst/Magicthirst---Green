@@ -25,14 +25,15 @@ namespace Levels.Abilities.HitScanShoot
         {
             var caster = intent.Caster;
             var config = intent.Config;
-            var push = intent.Direction * config.PushVelocity;
-            var origin = intent.Origin + intent.Direction * config.Offset;
+            var direction = intent.Direction;
 
+            var push = direction * config.PushVelocity;
+            var origin = intent.Origin + direction * config.Offset;
             var maxShotDistance = intent.Config.Distance;
 
             var hitSomething = false;
 
-            foreach (var (hit, victim) in GetAffected(caster, origin, intent.Direction))
+            foreach (var (hit, victim) in GetAffected())
             {
                 if (_registry.AreAlies(caster, victim) && !config.CanHitAllies)
                 {
@@ -41,7 +42,7 @@ namespace Levels.Abilities.HitScanShoot
 
                 hitSomething = true;
                 yield return new TargetWasShotEffect(victim);
-                yield return new CastersBulletHitEffect(caster, origin, hit.point);
+                yield return new CastersBulletHitEffect(caster, origin, hit.point, config.Context);
 
                 if (_registry.Is(victim, Mask.Damageable))
                 {
@@ -61,14 +62,14 @@ namespace Levels.Abilities.HitScanShoot
 
             if (!hitSomething)
             {
-                yield return new CastersBulletMissedEffect(caster, origin, intent.Direction, maxShotDistance);
+                yield return new CastersBulletMissedEffect(caster, origin, direction, maxShotDistance, config.Context);
             }
 
             yield return new CasterShotHitScanEffect(caster);
 
             yield break;
 
-            IEnumerable<(RaycastHit Hit, GameObject Victim)> GetAffected(GameObject caster, Vector3 origin, Vector3 direction)
+            IEnumerable<(RaycastHit Hit, GameObject Victim)> GetAffected()
             {
                 var start = origin + direction * config.Offset;
                 var hitCount = Physics.RaycastNonAlloc(start, direction, _hitBuffer, config.Distance);

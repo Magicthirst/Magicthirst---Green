@@ -16,5 +16,16 @@ namespace Levels.Abilities.HitScanShoot
         [field: SerializeField] public bool CanHitAllies { get; set; }
         [SerializeField] public ImpactContext context = ImpactContext.None;
         public ImpactContext Context => context;
+
+        public ShootConfig WithContext(ImpactContext newContext) => new()
+        {
+            Damage = Damage,
+            Offset = Offset,
+            Distance = Distance,
+            PushVelocity = PushVelocity,
+            PushDuration = PushDuration,
+            CanHitAllies = CanHitAllies,
+            context = newContext
+        };
     }
 }
