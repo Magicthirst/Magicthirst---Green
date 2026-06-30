@@ -117,5 +117,10 @@ namespace Util
 
             return value;
         }
+
+        public static bool EndsWith<T>(this IEnumerable<T> sequence, ICollection<T> subSequence)
+        {
+            return sequence.TakeLast(subSequence.Count).SequenceEqual(subSequence);
+        }
     }
 }

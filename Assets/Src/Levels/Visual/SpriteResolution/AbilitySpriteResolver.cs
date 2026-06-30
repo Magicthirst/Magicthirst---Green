@@ -15,6 +15,8 @@ namespace Levels.Visual.SpriteResolution
     [RequireComponent(typeof(SpriteRenderer))]
     public class AbilitySpriteResolver : MonoBehaviour
     {
+        public event Action<Sprite> SpriteChanged;
+
         [SerializeField] private AbilityPosition position;
         [SerializeField] private Sprite defaultSprite;
         [SerializeField] private AbilitySpriteResolutionMapping[] abilities;
@@ -54,6 +56,7 @@ namespace Levels.Visual.SpriteResolution
             if (_resolver.UpdateAndTryGetNextFrame(now: LevelDirector.GameplayTime, out var sprite))
             {
                 _spriteRenderer.sprite = sprite;
+                SpriteChanged?.Invoke(sprite);
             }
         }
 
@@ -83,6 +86,7 @@ namespace Levels.Visual.SpriteResolution
             )
             {
                 _spriteRenderer.sprite = firstSprite;
+                SpriteChanged?.Invoke(firstSprite);
             }
         }
 
@@ -92,6 +96,7 @@ namespace Levels.Visual.SpriteResolution
             if (_resolver.TryPlay(now: LevelDirector.GameplayTime, key, out var firstSprite))
             {
                 _spriteRenderer.sprite = firstSprite;
+                SpriteChanged?.Invoke(firstSprite);
             }
         }
 
