@@ -33,7 +33,16 @@ namespace Levels.Abilities.CommonModifiers
         {
             if (impact is DamageImpact damage)
             {
-                result = damage with { Damage = (int)(damage.Damage * scale.Multiplier) };
+                result = damage with
+                {
+                    Damage = (int)(damage.Damage * scale.Multiplier),
+                    Context = scale.Multiplier switch
+                    {
+                        > 1 => damage.Context.UpgradeBonusDamageRank(),
+                        < 1 => damage.Context.DowngradeBonusDamageRank(),
+                        _ => damage.Context
+                    }
+                };
                 return true;
             }
 

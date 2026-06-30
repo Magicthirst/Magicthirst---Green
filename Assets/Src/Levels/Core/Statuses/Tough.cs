@@ -37,7 +37,16 @@ namespace Levels.Core.Statuses
                     ? antiToughDamageScale.Multiplier
                     : damageScale.Multiplier;
 
-                result = damage with { Damage = (int)(damage.Damage * scale) };
+                result = damage with
+                {
+                    Damage = (int)(damage.Damage * scale),
+                    Context = scale switch
+                    {
+                        > 1 => damage.Context.UpgradeBonusDamageRank(),
+                        < 1 => damage.Context.DowngradeBonusDamageRank(),
+                        _ => damage.Context
+                    }
+                };
                 return true;
             }
 

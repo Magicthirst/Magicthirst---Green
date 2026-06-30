@@ -16541,7 +16541,6 @@ MonoBehaviour:
   - {fileID: 242671492}
   - {fileID: 1755906546}
   - {fileID: 302683685}
-  - {fileID: 0}
   yOffsets:
   - sprite: {fileID: 21300000, guid: 25176f19250aea942a33c56bafc6e692, type: 3}
     pxOffset: 4

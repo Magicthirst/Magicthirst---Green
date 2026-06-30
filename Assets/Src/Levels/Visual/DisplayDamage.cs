@@ -4,6 +4,7 @@ using Levels.Abilities.CommonImpacts;
 using Levels.IntentsImpacts;
 using UnityEngine;
 using VContainer;
+using static Levels.Abilities.CommonImpacts.ImpactContext;
 
 namespace Levels.Visual
 {
@@ -16,6 +17,12 @@ namespace Levels.Visual
 
         [Header("Fade-out")]
         [SerializeField] private float fadeOutDuration;
+
+        [Header("Damage colors")]
+        [SerializeField] private Color defaultDamage;
+        [SerializeField] private Color bonusDamage;
+        [SerializeField] private Color veryBonusDamage;
+        [SerializeField] private Color reducedDamage;
 
         private float _jumpDistance;
 
@@ -30,8 +37,15 @@ namespace Levels.Visual
 
         private void PopupDamage(DamageImpact impact)
         {
+            var context = impact.Context;
+            var color =
+                context.HasFlag(DidVeryBonusDamage) ? veryBonusDamage :
+                context.HasFlag(DidBonusDamage) ? bonusDamage :
+                context.HasFlag(DidReducedDamage) ? reducedDamage :
+                defaultDamage;
+
             FloatingTextEngine
-                .CreateFloatingTextAt(startAnchor.position, impact.Damage, Color.red)
+                .CreateFloatingTextAt(startAnchor.position, impact.Damage, color)
                 .With(new MoveUpBehavior(_jumpDistance, jumpInDuration))
                 .With(new PopBehavior(2f, jumpInDuration, fadeOutDuration))
                 .With(new FadeOutBehavior(fadeOutDuration).DelayFor(jumpInDuration));

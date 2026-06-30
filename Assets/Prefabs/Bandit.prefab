@@ -134,6 +134,10 @@ MonoBehaviour:
   endAnchor: {fileID: 618315991312560054}
   jumpInDuration: 0.2
   fadeOutDuration: 0.8
+  defaultDamage: {r: 1, g: 1, b: 1, a: 1}
+  bonusDamage: {r: 0.8773585, g: 0.18623178, b: 0.18623178, a: 1}
+  veryBonusDamage: {r: 1, g: 0.8448516, b: 0, a: 1}
+  reducedDamage: {r: 0.6189036, g: 0.6765551, b: 0.7169812, a: 1}
 --- !u!1 &2417240799410663039
 GameObject:
   m_ObjectHideFlags: 0
@@ -380,7 +384,6 @@ MonoBehaviour:
   initialDelay: 1
   betweenBurstDelay: 1
   betweenShotDelay: 0.1
-  movementSpeed: 7
   maxDistance: 10
   tacticUpdatePeriod: 0.5
 --- !u!114 &1042389833824372580
@@ -585,10 +588,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8cd964b3974d4523ba8b716b1a403907, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 200
-  missedShotOffsetRange: {x: 0, y: 2}
-  missedTracerTemplate: {fileID: 7492964920958775031, guid: 3acb81d2e6ab3924db0b6855120d7006, type: 3}
-  hitTracerTemplate: {fileID: 881930024712420233, guid: 314600de237cff542b407ad88ae5b7e5, type: 3}
 --- !u!1 &6148564826231834263
 GameObject:
   m_ObjectHideFlags: 0

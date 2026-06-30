@@ -50,6 +50,10 @@ MonoBehaviour:
   endAnchor: {fileID: 618315991312560054}
   jumpInDuration: 0.2
   fadeOutDuration: 0.8
+  defaultDamage: {r: 1, g: 1, b: 1, a: 1}
+  bonusDamage: {r: 0.87843144, g: 0.18431373, b: 0.18431373, a: 1}
+  veryBonusDamage: {r: 1, g: 0.8431373, b: 0, a: 1}
+  reducedDamage: {r: 0.61960787, g: 0.6784314, b: 0.7176471, a: 1}
 --- !u!1 &2417240799410663039
 GameObject:
   m_ObjectHideFlags: 0
