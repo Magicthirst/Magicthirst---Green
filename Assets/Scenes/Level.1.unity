@@ -44706,6 +44706,7 @@ GameObject:
   - component: {fileID: 1745542786}
   - component: {fileID: 1745542789}
   - component: {fileID: 1745542788}
+  - component: {fileID: 1745542790}
   m_Layer: 0
   m_Name: Effects
   m_TagString: Untagged
@@ -44759,6 +44760,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   parriedTracerTint: {r: 1, g: 0.7676166, b: 0, a: 0.4627451}
+--- !u!114 &1745542790
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1745542785}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9336b2698c9e409bb9f6b3b7df66dd05, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bloodDecalPrefab: {fileID: 1745601074800814711, guid: c3d9679bfc8ba044a8d056fe739d7d4f, type: 3}
+  raycastDistance: 2
+  environmentalMask:
+    serializedVersion: 2
+    m_Bits: 64
+  maxSpattersPerFullHealth: 10
+  decalLifetime: 120
 --- !u!1 &1746226364
 GameObject:
   m_ObjectHideFlags: 0

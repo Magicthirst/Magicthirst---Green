@@ -16,5 +16,17 @@ namespace Levels.Extensions
             update(properties);
             renderer.SetPropertyBlock(properties);
         }
+
+        public static void UpdatePropertyBlock
+        (
+            this Renderer renderer,
+            Action<MaterialPropertyBlock> update
+        )
+        {
+            var properties = new MaterialPropertyBlock();
+            renderer.GetPropertyBlock(properties);
+            update(properties);
+            renderer.SetPropertyBlock(properties);
+        }
     }
 }
