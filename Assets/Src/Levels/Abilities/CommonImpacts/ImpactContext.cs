@@ -25,19 +25,19 @@ namespace Levels.Abilities.CommonImpacts
         public static ImpactContext UpgradeBonusDamageRank(this ImpactContext context)
         {
             return
-                context.HasFlag(DidReducedDamage) ? context & ~DidReducedDamage :
+                context.HasFlag(DidReducedDamage)   ? context & ~DidReducedDamage :
                 context.HasFlag(DidVeryBonusDamage) ? context :
-                context.HasFlag(DidBonusDamage) ? context | DidVeryBonusDamage :
-                context | DidBonusDamage;
+                context.HasFlag(DidBonusDamage)     ? context | DidVeryBonusDamage :
+                                                      context | DidBonusDamage;
         }
 
         public static ImpactContext DowngradeBonusDamageRank(this ImpactContext context)
         {
             return
                 context.HasFlag(DidVeryBonusDamage) ? context & ~DidVeryBonusDamage :
-                context.HasFlag(DidBonusDamage) ? context & ~DidBonusDamage :
-                context.HasFlag(DidReducedDamage) ? context :
-                context | DidReducedDamage;
+                context.HasFlag(DidBonusDamage)     ? context & ~DidBonusDamage :
+                context.HasFlag(DidReducedDamage)   ? context :
+                                                      context | DidReducedDamage;
         }
     }
 }
