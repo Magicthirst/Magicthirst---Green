@@ -5,6 +5,7 @@ using Levels.IntentsImpacts;
 using UnityEngine;
 using VContainer;
 using static Levels.Directorship.LevelDirector;
+using Random = UnityEngine.Random;
 
 namespace Levels.Visual
 {
@@ -14,6 +15,8 @@ namespace Levels.Visual
         private static readonly int Seed = Shader.PropertyToID("_Seed");
         private static readonly int Health = Shader.PropertyToID("_Health");
         private static readonly int LastHealTime = Shader.PropertyToID("_SpellLastHealTime");
+
+        [SerializeField] private FleshUnitSpriteMaterialSeeds seeds;
 
         private SpriteRenderer _renderer;
         private MaterialPropertyBlock _properties;
@@ -29,7 +32,6 @@ namespace Levels.Visual
             _renderer = GetComponent<SpriteRenderer>();
             _properties = new MaterialPropertyBlock();
             _renderer.GetPropertyBlock(_properties);
-            _renderer.UpdatePropertyBlock(_properties, b => b.SetFloat(Seed, CalculateSeed()));
         }
 
         private void OnEnable()
@@ -38,6 +40,11 @@ namespace Levels.Visual
             _heals.Impacted += OnHealed;
 
             OnHealthChanged(_health.Value);
+        }
+
+        private void Start()
+        {
+            _renderer.UpdatePropertyBlock(_properties, b => b.SetFloat(Seed, seeds.Get()));
         }
 
         private void OnHealthChanged(float health)
@@ -55,7 +62,5 @@ namespace Levels.Visual
             _health.HealthChangedRelative -= OnHealthChanged;
             _heals.Impacted -= OnHealed;
         }
-
-        private float CalculateSeed() => transform.position.magnitude + gameObject.GetInstanceID();
     }
 }

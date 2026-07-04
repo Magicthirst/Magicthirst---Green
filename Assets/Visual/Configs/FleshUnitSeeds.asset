@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 23eb51d607754a678a63e87e626d4c15, type: 3}
+  m_Name: FleshUnitSeeds
+  m_EditorClassIdentifier: 
+  goodSeeds:
+  - -46.3
+  - -31.8
+  - -15.84
+  - 4.74
+  - 12.73
+  - 24.4
+  - 30.8
+  - 41.1
+  - 47.6
+  - 55.8
+  - 123.8
