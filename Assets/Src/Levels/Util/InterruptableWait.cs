@@ -1,8 +1,7 @@
 using System.Collections;
 using Levels.Directorship;
-using UnityEngine;
 
-namespace Levels.AI.Util
+namespace Levels.Util
 {
     public static class InterruptableWait
     {

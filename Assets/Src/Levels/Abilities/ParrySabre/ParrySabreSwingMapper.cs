@@ -19,6 +19,7 @@ namespace Levels.Abilities.ParrySabre
         public IEnumerable<IImpact> Map(ParrySabreSwingIntent intent)
         {
             var affected = GetAffected(intent);
+            var hasHitFlesh = false;
 
             yield return new ParryImpact(intent.Caster, intent.Direction);
             yield return new CasterSwingedEffect(intent.Caster);
@@ -31,6 +32,18 @@ namespace Levels.Abilities.ParrySabre
                 {
                     yield return new DamageImpact(target, intent.Caster, intent.Config.Damage, intent.Config.Context);
                 }
+
+                if (!hasHitFlesh && _registry.Is(target, Mask.Flesh))
+                {
+                    hasHitFlesh = true;
+                    yield return new CasterSwingedCutFleshEffect(intent.Caster);
+                }
+            }
+
+            var didntHitAnything = !hasHitFlesh;
+            if (didntHitAnything)
+            {
+                yield return new CasterSwingedCutAirEffect(intent.Caster);
             }
         }
 

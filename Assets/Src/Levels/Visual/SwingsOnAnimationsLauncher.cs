@@ -32,7 +32,7 @@ namespace Levels.Visual
 
         [Header("References")]
         [Tooltip("The component that broadcasts when the current sprite changes.")]
-        [SerializeField] private AbilitySpriteResolver spriteResolver;
+        [SerializeField] private SpriteChangeSource spriteSource;
         
         [Tooltip("Mappings defining which sequence of sprites triggers which swing visual.")]
         [SerializeField] private SwingMapping[] mappings;
@@ -57,13 +57,13 @@ namespace Levels.Visual
 
         protected override void DidEnabled()
         {
-            spriteResolver.SpriteChanged += OnSpriteChanged;
+            spriteSource.SpriteChanged += OnSpriteChanged;
             _spriteHistory.Clear();
         }
 
         protected override void DidDisabled()
         {
-            spriteResolver.SpriteChanged -= OnSpriteChanged;
+            spriteSource.SpriteChanged -= OnSpriteChanged;
             StopAllCoroutines(); 
         }
 

@@ -16410,6 +16410,7 @@ GameObject:
   - component: {fileID: 252588735}
   - component: {fileID: 252588736}
   - component: {fileID: 252588737}
+  - component: {fileID: 252588738}
   m_Layer: 0
   m_Name: SpriteLegs
   m_TagString: Untagged
@@ -16566,6 +16567,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a0c6779d649d447faf67c4650ab2014e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &252588738
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 252588730}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a8b54d88fc0a4cbea23b8beea70d664d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &275069042
@@ -42031,20 +42044,20 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 0
     m_RotationOrder: 4
-  spriteResolver: {fileID: 1620196974}
+  spriteSource: {fileID: 1620196978}
   mappings:
   - <TriggerSequence>k__BackingField:
     - {fileID: 21300000, guid: 8dcc0f3b25e37d248a2b7ba68b41f411, type: 3}
     - {fileID: 21300000, guid: b673898936f7bb84daa1ba7ce09da01c, type: 3}
     <SwingPrefab>k__BackingField: {fileID: 128576222}
   - <TriggerSequence>k__BackingField:
-    - {fileID: 21300000, guid: b673898936f7bb84daa1ba7ce09da01c, type: 3}
-    - {fileID: 21300000, guid: 892b3f758281b1c42b2c87d0ca8d05f3, type: 3}
-    <SwingPrefab>k__BackingField: {fileID: 1451347811}
-  - <TriggerSequence>k__BackingField:
     - {fileID: 21300000, guid: 892b3f758281b1c42b2c87d0ca8d05f3, type: 3}
     - {fileID: 21300000, guid: b673898936f7bb84daa1ba7ce09da01c, type: 3}
     <SwingPrefab>k__BackingField: {fileID: 128576222}
+  - <TriggerSequence>k__BackingField:
+    - {fileID: 21300000, guid: b673898936f7bb84daa1ba7ce09da01c, type: 3}
+    - {fileID: 21300000, guid: 892b3f758281b1c42b2c87d0ca8d05f3, type: 3}
+    <SwingPrefab>k__BackingField: {fileID: 1451347811}
 --- !u!1 &1451347811
 GameObject:
   m_ObjectHideFlags: 0
@@ -43081,6 +43094,7 @@ GameObject:
   - component: {fileID: 1620196976}
   - component: {fileID: 1620196974}
   - component: {fileID: 1620196977}
+  - component: {fileID: 1620196978}
   m_Layer: 0
   m_Name: SpriteSecondaryHand
   m_TagString: Untagged
@@ -43211,6 +43225,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a0c6779d649d447faf67c4650ab2014e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1620196978
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1620196972}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a8b54d88fc0a4cbea23b8beea70d664d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1622738496
@@ -44707,6 +44733,10 @@ GameObject:
   - component: {fileID: 1745542789}
   - component: {fileID: 1745542788}
   - component: {fileID: 1745542790}
+  - component: {fileID: 1745542792}
+  - component: {fileID: 1745542791}
+  - component: {fileID: 1745542793}
+  - component: {fileID: 1745542794}
   m_Layer: 0
   m_Name: Effects
   m_TagString: Untagged
@@ -44779,6 +44809,264 @@ MonoBehaviour:
     m_Bits: 64
   maxSpattersPerFullHealth: 10
   decalLifetime: 120
+--- !u!114 &1745542791
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1745542785}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 730bb04465d24b5a9c5f80b632c1e40d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mappings:
+  - <ImpactType>k__BackingField: Levels.Abilities.CommonImpacts.CasterSwingedCutFleshEffect
+    <Sound>k__BackingField:
+      pitchVariance: 0.1
+      clips:
+      - {fileID: 8300000, guid: 42d33e0771458ee47884745f583dd64f, type: 3}
+      - {fileID: 8300000, guid: 5a70cd11422dfa24aa20f3a51a5a7acc, type: 3}
+      - {fileID: 8300000, guid: 49ae3db936173204aab7f6149d46e2a7, type: 3}
+  - <ImpactType>k__BackingField: Levels.Abilities.CommonImpacts.CasterSwingedCutAirEffect
+    <Sound>k__BackingField:
+      pitchVariance: 0.1
+      clips:
+      - {fileID: 8300000, guid: 8228cdc7fe9080d4184c07210f2b1764, type: 3}
+  - <ImpactType>k__BackingField: Levels.Abilities.BadProjectilesParry.BadlyParriedProjectileImpact
+    <Sound>k__BackingField:
+      pitchVariance: 0.1
+      clips:
+      - {fileID: 8300000, guid: 5f782ad266e0a98449fdc2bf37d5e85e, type: 3}
+      - {fileID: 8300000, guid: 30a100c07c86aae4194c33b4b71deaab, type: 3}
+  - <ImpactType>k__BackingField: Levels.Abilities.CommonImpacts.CasterShotHitScanEffect
+    <Sound>k__BackingField:
+      pitchVariance: 0.1
+      clips:
+      - {fileID: 8300000, guid: ec73076f61189fc40abd4b3bc872bebf, type: 3}
+  - <ImpactType>k__BackingField: Levels.Abilities.CommonImpacts.CasterCastedSpellEffect
+    <Sound>k__BackingField:
+      pitchVariance: 0.1
+      clips:
+      - {fileID: 8300000, guid: 89240f4399b368e4f8f89778657cba5f, type: 3}
+  - <ImpactType>k__BackingField: Levels.Abilities.TeleportChip.TeleportChipSpawnedEffect
+    <Sound>k__BackingField:
+      pitchVariance: 0.1
+      clips:
+      - {fileID: 8300000, guid: 05b8b9b8b5e722a4f861261c7c1bc78b, type: 3}
+      - {fileID: 8300000, guid: 1432d24ffbd4f6a46842686042564504, type: 3}
+      - {fileID: 8300000, guid: 651c3c72bcd63714fafa068286a7fe04, type: 3}
+  - <ImpactType>k__BackingField: Levels.Abilities.CommonImpacts.TeleportImpact
+    <Sound>k__BackingField:
+      pitchVariance: 0.1
+      clips:
+      - {fileID: 8300000, guid: 88c3da1f2bc22af4fb50959d0dfb33f5, type: 3}
+      - {fileID: 8300000, guid: f92fb4882f5361f468590f4b40d346d0, type: 3}
+      - {fileID: 8300000, guid: fd33932ceac6879409f16df4ff9db4f4, type: 3}
+--- !u!82 &1745542792
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1745542785}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_Resource: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+--- !u!114 &1745542793
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1745542785}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c2c530b9e804cdeb25643247fefd45c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spriteSource: {fileID: 252588738}
+  mappings:
+  - <TriggerSequence>k__BackingField:
+    - {fileID: 21300000, guid: 1354ea8d2578cb544b048b574528e0b7, type: 3}
+    <Sound>k__BackingField:
+      pitchVariance: 0.1
+      clips:
+      - {fileID: 8300000, guid: 854c131d38819894b90a99f6698b9476, type: 3}
+      - {fileID: 8300000, guid: 0f5fb7aa85014674fa890e6fd522292b, type: 3}
+      - {fileID: 8300000, guid: c26a28b578127c04b9845a3017b46f91, type: 3}
+      - {fileID: 8300000, guid: aed54f08cf0b3dc4393eecc29350dca2, type: 3}
+  - <TriggerSequence>k__BackingField:
+    - {fileID: 21300000, guid: d6aee83e742bfc4449b064b7fdd242c4, type: 3}
+    <Sound>k__BackingField:
+      pitchVariance: 0.1
+      clips:
+      - {fileID: 8300000, guid: 854c131d38819894b90a99f6698b9476, type: 3}
+      - {fileID: 8300000, guid: 0f5fb7aa85014674fa890e6fd522292b, type: 3}
+      - {fileID: 8300000, guid: c26a28b578127c04b9845a3017b46f91, type: 3}
+      - {fileID: 8300000, guid: aed54f08cf0b3dc4393eecc29350dca2, type: 3}
+  - <TriggerSequence>k__BackingField:
+    - {fileID: 21300000, guid: 96d97e51e4a2cfb46895a538a18b4b95, type: 3}
+    <Sound>k__BackingField:
+      pitchVariance: 0.1
+      clips:
+      - {fileID: 8300000, guid: 854c131d38819894b90a99f6698b9476, type: 3}
+      - {fileID: 8300000, guid: 0f5fb7aa85014674fa890e6fd522292b, type: 3}
+      - {fileID: 8300000, guid: c26a28b578127c04b9845a3017b46f91, type: 3}
+      - {fileID: 8300000, guid: aed54f08cf0b3dc4393eecc29350dca2, type: 3}
+  - <TriggerSequence>k__BackingField:
+    - {fileID: 21300000, guid: 17123b7e7c64ca440943aa965b6c6800, type: 3}
+    <Sound>k__BackingField:
+      pitchVariance: 0.1
+      clips:
+      - {fileID: 8300000, guid: 854c131d38819894b90a99f6698b9476, type: 3}
+      - {fileID: 8300000, guid: 0f5fb7aa85014674fa890e6fd522292b, type: 3}
+      - {fileID: 8300000, guid: c26a28b578127c04b9845a3017b46f91, type: 3}
+      - {fileID: 8300000, guid: aed54f08cf0b3dc4393eecc29350dca2, type: 3}
+  - <TriggerSequence>k__BackingField:
+    - {fileID: 21300000, guid: ba896628e1fd0ce4f90780fb8c93836e, type: 3}
+    <Sound>k__BackingField:
+      pitchVariance: 0.1
+      clips:
+      - {fileID: 8300000, guid: 854c131d38819894b90a99f6698b9476, type: 3}
+      - {fileID: 8300000, guid: 0f5fb7aa85014674fa890e6fd522292b, type: 3}
+      - {fileID: 8300000, guid: c26a28b578127c04b9845a3017b46f91, type: 3}
+      - {fileID: 8300000, guid: aed54f08cf0b3dc4393eecc29350dca2, type: 3}
+  - <TriggerSequence>k__BackingField:
+    - {fileID: 21300000, guid: bc63a259ab94211419c22bb53fc5dc65, type: 3}
+    <Sound>k__BackingField:
+      pitchVariance: 0.1
+      clips:
+      - {fileID: 8300000, guid: 854c131d38819894b90a99f6698b9476, type: 3}
+      - {fileID: 8300000, guid: 0f5fb7aa85014674fa890e6fd522292b, type: 3}
+      - {fileID: 8300000, guid: c26a28b578127c04b9845a3017b46f91, type: 3}
+      - {fileID: 8300000, guid: aed54f08cf0b3dc4393eecc29350dca2, type: 3}
+  - <TriggerSequence>k__BackingField:
+    - {fileID: 21300000, guid: 25176f19250aea942a33c56bafc6e692, type: 3}
+    <Sound>k__BackingField:
+      pitchVariance: 0.1
+      clips:
+      - {fileID: 8300000, guid: 854c131d38819894b90a99f6698b9476, type: 3}
+      - {fileID: 8300000, guid: 0f5fb7aa85014674fa890e6fd522292b, type: 3}
+      - {fileID: 8300000, guid: c26a28b578127c04b9845a3017b46f91, type: 3}
+      - {fileID: 8300000, guid: aed54f08cf0b3dc4393eecc29350dca2, type: 3}
+--- !u!114 &1745542794
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1745542785}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d8f8ed17ad647168338da988e81fb8a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mappings:
+  - <Sounds>k__BackingField:
+    - <Sound>k__BackingField:
+        pitchVariance: 0.15
+        clips:
+        - {fileID: 8300000, guid: d4d2adabf306d25428f4fb707f481d27, type: 3}
+      <Offset>k__BackingField: 0.25
+    abilityType: Levels.Abilities.HitScanShoot.HitScanShooter
+  - <Sounds>k__BackingField:
+    - <Sound>k__BackingField:
+        pitchVariance: 0.1
+        clips:
+        - {fileID: 8300000, guid: 7f9b3228fc46bb14c90d7154f984763e, type: 3}
+        - {fileID: 8300000, guid: c3546ec1294420244bcbde2055beca5f, type: 3}
+        - {fileID: 8300000, guid: eb7166d999f59bb40a744e50e1d554fd, type: 3}
+      <Offset>k__BackingField: 0.5
+    abilityType: Levels.Abilities.ChaosArea.InfuseAreaWithChaosCaster
 --- !u!1 &1746226364
 GameObject:
   m_ObjectHideFlags: 0

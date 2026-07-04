@@ -1,7 +1,6 @@
 using System.Collections;
 using Levels.Abilities.CommonImpacts;
 using Levels.Abilities.Revival;
-using Levels.AI.Util;
 using Levels.Core;
 using Levels.Core.Room;
 using Levels.IntentsImpacts;
@@ -91,6 +90,7 @@ namespace Levels.AI.Bandit
                         
                         _publishImpact(ImpactIntent.SelfCast(new CasterStartedSpellCastingEffect(_entity.Owner)));
                         yield return InterruptableWait.ForSeconds(healDelay);
+                        _publishImpact(ImpactIntent.SelfCast(new CasterEndedSpellCastingEffect(_entity.Owner)));
 
                         _revive(new ReviveIntent(gameObject, downed.Owner, _config));
                         _roomHealing.ResolveHeal(downed);

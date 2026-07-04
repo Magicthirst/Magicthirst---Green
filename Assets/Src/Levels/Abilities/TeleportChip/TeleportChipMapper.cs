@@ -20,6 +20,7 @@ namespace Levels.Abilities.TeleportChip
             var origin = intent.Caster.transform.position + offset;
 
             yield return new TeleportChipSpawnImpact(intent.Chip, origin, velocity, angularVelocity, intent.Config);
+            yield return new TeleportChipSpawnedEffect(intent.Caster);
         }
 
         public IEnumerable<IImpact> Map(TeleportChipActivateIntent intent) => new[]

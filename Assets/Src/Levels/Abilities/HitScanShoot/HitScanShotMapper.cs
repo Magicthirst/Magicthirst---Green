@@ -25,6 +25,7 @@ namespace Levels.Abilities.HitScanShoot
         {
             var caster = intent.Caster;
             var config = intent.Config;
+            var context = config.Context;
             var direction = intent.Direction;
 
             var push = direction * config.PushVelocity;
@@ -42,11 +43,12 @@ namespace Levels.Abilities.HitScanShoot
 
                 hitSomething = true;
                 yield return new TargetWasShotEffect(victim);
-                yield return new CastersBulletHitEffect(caster, origin, hit.point, config.Context);
+
+                yield return new CastersBulletHitEffect(caster, origin, hit.point, context);
 
                 if (_registry.Is(victim, Mask.Damageable))
                 {
-                    yield return new DamageImpact(victim, caster, config.Damage, config.Context);
+                    yield return new DamageImpact(victim, caster, config.Damage, context);
                 }
                 if (_registry.Is(victim, Mask.Pushable))
                 {
@@ -62,10 +64,13 @@ namespace Levels.Abilities.HitScanShoot
 
             if (!hitSomething)
             {
-                yield return new CastersBulletMissedEffect(caster, origin, direction, maxShotDistance, config.Context);
+                yield return new CastersBulletMissedEffect(caster, origin, direction, maxShotDistance, context);
             }
 
-            yield return new CasterShotHitScanEffect(caster);
+            if (!context.HasFlag(ImpactContext.ResultOfBadParry))
+            {
+                yield return new CasterShotHitScanEffect(caster);
+            }
 
             yield break;
 

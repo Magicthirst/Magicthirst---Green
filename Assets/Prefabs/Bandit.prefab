@@ -284,7 +284,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 17710a64e00a4a86aaa79447cedf3efb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mask: 3
+  mask: 11
 --- !u!114 &3875385349882181220
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -457,6 +457,7 @@ MonoBehaviour:
   - {fileID: 8657619493681010999}
   - {fileID: 3862168576103673127}
   - {fileID: 6148564826231834263}
+  - {fileID: 6027836242425460083}
   entity: {fileID: 11400000, guid: 92eacb2bd2a0ebc49981e0b1a4539f72, type: 2}
   configs:
   - rid: 2589632493940113511
@@ -575,6 +576,7 @@ Transform:
   m_Children:
   - {fileID: 8269670635244754216}
   - {fileID: 2203217279553380779}
+  - {fileID: 2376499321655792381}
   m_Father: {fileID: 6048475864911610465}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &4958703672410526041
@@ -621,6 +623,7 @@ GameObject:
   - component: {fileID: 5410340688628959997}
   - component: {fileID: 3280671401312229566}
   - component: {fileID: 8310280535759016874}
+  - component: {fileID: 8775148763950675432}
   m_Layer: 0
   m_Name: Legs
   m_TagString: Untagged
@@ -776,6 +779,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a0c6779d649d447faf67c4650ab2014e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &8775148763950675432
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6148564826231834263}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a8b54d88fc0a4cbea23b8beea70d664d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &8184336144262134334
@@ -1101,3 +1116,150 @@ Transform:
   m_Children: []
   m_Father: {fileID: 8269670635244754216}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &5107394623595007538
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 4885398072720837975}
+    m_Modifications:
+    - target: {fileID: 1532967121928092481, guid: 389761aef3e7ff44595b78f4ae3cfb0b, type: 3}
+      propertyPath: m_Name
+      value: BanditAudioSource
+      objectReference: {fileID: 0}
+    - target: {fileID: 7357221336086666447, guid: 389761aef3e7ff44595b78f4ae3cfb0b, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.07117844
+      objectReference: {fileID: 0}
+    - target: {fileID: 7357221336086666447, guid: 389761aef3e7ff44595b78f4ae3cfb0b, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.01419
+      objectReference: {fileID: 0}
+    - target: {fileID: 7357221336086666447, guid: 389761aef3e7ff44595b78f4ae3cfb0b, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.39362
+      objectReference: {fileID: 0}
+    - target: {fileID: 7357221336086666447, guid: 389761aef3e7ff44595b78f4ae3cfb0b, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7357221336086666447, guid: 389761aef3e7ff44595b78f4ae3cfb0b, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7357221336086666447, guid: 389761aef3e7ff44595b78f4ae3cfb0b, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7357221336086666447, guid: 389761aef3e7ff44595b78f4ae3cfb0b, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7357221336086666447, guid: 389761aef3e7ff44595b78f4ae3cfb0b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7357221336086666447, guid: 389761aef3e7ff44595b78f4ae3cfb0b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7357221336086666447, guid: 389761aef3e7ff44595b78f4ae3cfb0b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1532967121928092481, guid: 389761aef3e7ff44595b78f4ae3cfb0b, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1368600410323838869}
+  m_SourcePrefab: {fileID: 100100000, guid: 389761aef3e7ff44595b78f4ae3cfb0b, type: 3}
+--- !u!4 &2376499321655792381 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7357221336086666447, guid: 389761aef3e7ff44595b78f4ae3cfb0b, type: 3}
+  m_PrefabInstance: {fileID: 5107394623595007538}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &6027836242425460083 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1532967121928092481, guid: 389761aef3e7ff44595b78f4ae3cfb0b, type: 3}
+  m_PrefabInstance: {fileID: 5107394623595007538}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1368600410323838869
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6027836242425460083}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c2c530b9e804cdeb25643247fefd45c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spriteSource: {fileID: 8775148763950675432}
+  mappings:
+  - <TriggerSequence>k__BackingField:
+    - {fileID: 21300000, guid: cdd9046ee5ea46249a0ea65d6a048437, type: 3}
+    <Sound>k__BackingField:
+      pitchVariance: 0.1
+      clips:
+      - {fileID: 8300000, guid: 854c131d38819894b90a99f6698b9476, type: 3}
+      - {fileID: 8300000, guid: 0f5fb7aa85014674fa890e6fd522292b, type: 3}
+      - {fileID: 8300000, guid: c26a28b578127c04b9845a3017b46f91, type: 3}
+      - {fileID: 8300000, guid: aed54f08cf0b3dc4393eecc29350dca2, type: 3}
+  - <TriggerSequence>k__BackingField:
+    - {fileID: 21300000, guid: a4d9d683faf82ad4f8ba4c11bd267931, type: 3}
+    <Sound>k__BackingField:
+      pitchVariance: 0.1
+      clips:
+      - {fileID: 8300000, guid: 854c131d38819894b90a99f6698b9476, type: 3}
+      - {fileID: 8300000, guid: 0f5fb7aa85014674fa890e6fd522292b, type: 3}
+      - {fileID: 8300000, guid: c26a28b578127c04b9845a3017b46f91, type: 3}
+      - {fileID: 8300000, guid: aed54f08cf0b3dc4393eecc29350dca2, type: 3}
+  - <TriggerSequence>k__BackingField:
+    - {fileID: 21300000, guid: c2512ea286704454f874b50d3c17128d, type: 3}
+    <Sound>k__BackingField:
+      pitchVariance: 0.1
+      clips:
+      - {fileID: 8300000, guid: 854c131d38819894b90a99f6698b9476, type: 3}
+      - {fileID: 8300000, guid: 0f5fb7aa85014674fa890e6fd522292b, type: 3}
+      - {fileID: 8300000, guid: c26a28b578127c04b9845a3017b46f91, type: 3}
+      - {fileID: 8300000, guid: aed54f08cf0b3dc4393eecc29350dca2, type: 3}
+  - <TriggerSequence>k__BackingField:
+    - {fileID: 21300000, guid: ff1057a142d06314082db4b4bf7a9a21, type: 3}
+    <Sound>k__BackingField:
+      pitchVariance: 0.1
+      clips:
+      - {fileID: 8300000, guid: 854c131d38819894b90a99f6698b9476, type: 3}
+      - {fileID: 8300000, guid: 0f5fb7aa85014674fa890e6fd522292b, type: 3}
+      - {fileID: 8300000, guid: c26a28b578127c04b9845a3017b46f91, type: 3}
+      - {fileID: 8300000, guid: aed54f08cf0b3dc4393eecc29350dca2, type: 3}
+  - <TriggerSequence>k__BackingField:
+    - {fileID: 21300000, guid: 924784554f4de7b43a5063f4309cf949, type: 3}
+    <Sound>k__BackingField:
+      pitchVariance: 0.1
+      clips:
+      - {fileID: 8300000, guid: 854c131d38819894b90a99f6698b9476, type: 3}
+      - {fileID: 8300000, guid: 0f5fb7aa85014674fa890e6fd522292b, type: 3}
+      - {fileID: 8300000, guid: c26a28b578127c04b9845a3017b46f91, type: 3}
+      - {fileID: 8300000, guid: aed54f08cf0b3dc4393eecc29350dca2, type: 3}
+  - <TriggerSequence>k__BackingField:
+    - {fileID: 21300000, guid: d4b5e8520a11512438e39f256812a996, type: 3}
+    <Sound>k__BackingField:
+      pitchVariance: 0.1
+      clips:
+      - {fileID: 8300000, guid: 854c131d38819894b90a99f6698b9476, type: 3}
+      - {fileID: 8300000, guid: 0f5fb7aa85014674fa890e6fd522292b, type: 3}
+      - {fileID: 8300000, guid: c26a28b578127c04b9845a3017b46f91, type: 3}
+      - {fileID: 8300000, guid: aed54f08cf0b3dc4393eecc29350dca2, type: 3}
+  - <TriggerSequence>k__BackingField:
+    - {fileID: 21300000, guid: a9a249d99cb57a043935e495f20b5e7a, type: 3}
+    <Sound>k__BackingField:
+      pitchVariance: 0.1
+      clips:
+      - {fileID: 8300000, guid: 854c131d38819894b90a99f6698b9476, type: 3}
+      - {fileID: 8300000, guid: 0f5fb7aa85014674fa890e6fd522292b, type: 3}
+      - {fileID: 8300000, guid: c26a28b578127c04b9845a3017b46f91, type: 3}
+      - {fileID: 8300000, guid: aed54f08cf0b3dc4393eecc29350dca2, type: 3}

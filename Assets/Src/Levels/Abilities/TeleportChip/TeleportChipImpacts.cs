@@ -10,4 +10,6 @@ namespace Levels.Abilities.TeleportChip
         Vector3 AngularVelocity,
         TeleportChipConfig Config
     ) : IImpact;
+
+    public record TeleportChipSpawnedEffect(GameObject Target) : IImpact;
 }

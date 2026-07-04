@@ -17,9 +17,15 @@ namespace Levels.Abilities.CommonImpacts
 
     public record CasterSwingedEffect(GameObject Target) : IImpact;
 
+    public record CasterSwingedCutFleshEffect(GameObject Target) : IImpact;
+
+    public record CasterSwingedCutAirEffect(GameObject Target) : IImpact;
+
     public record CasterParriedEffect(GameObject Target) : IImpact;
 
     public record CasterCastedSpellEffect(GameObject Target) : IImpact;
 
     public record CasterStartedSpellCastingEffect(GameObject Target) : IImpact;
+
+    public record CasterEndedSpellCastingEffect(GameObject Target) : IImpact;
 }

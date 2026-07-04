@@ -13,7 +13,7 @@ using VContainer;
 namespace Levels.Visual.SpriteResolution
 {
     [RequireComponent(typeof(SpriteRenderer))]
-    public class AbilitySpriteResolver : MonoBehaviour
+    public class AbilitySpriteResolver : MonoBehaviour, ISpriteChangeSource
     {
         public event Action<Sprite> SpriteChanged;
 

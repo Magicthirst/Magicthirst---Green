@@ -30,7 +30,6 @@ namespace Levels.Core
 
         private readonly HashSet<Type> _enabledAbilities = new();
 
-        [FormerlySerializedAs("_actionMappings")]
         [SerializeField]
         private List<Ability> abilities;
 
@@ -174,7 +173,8 @@ namespace Levels.Core
         public string InputActionName => action.action.name;
         public string KeyName => action.action.GetBindingDisplayString();
         public AbilityPosition Position => position;
-        public float CooldownProgress => Mathf.InverseLerp(LastUse, LastUse + cooldown, Time.time);
+        public float CooldownProgress => Mathf.InverseLerp(LastUse, LastUse + cooldown, LevelDirector.GameplayTime);
+        public float RemainingCooldown => LastUse + cooldown - LevelDirector.GameplayTime;
         public bool InvokeOnEquip => invokeOnEquip;
         public Type Type => _type ??= Type.GetType(abilityType);
 
@@ -208,6 +208,8 @@ namespace Levels.Core
         public string KeyName { get; }
         public AbilityPosition Position { get; }
         public float CooldownProgress { get; }
+        public float RemainingCooldown { get; }
+        public float Cooldown { get; }
         public Type Type { get; }
 
         IInHandAbility FindIn(GameObject gameObject);

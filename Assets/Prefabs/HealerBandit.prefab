@@ -120,6 +120,10 @@ PrefabInstance:
       propertyPath: 'overridesStates.Array.data[3]'
       value: 
       objectReference: {fileID: 769284747583027048}
+    - target: {fileID: 2348266385892433960, guid: 89a9f5337c3edfb4895bbf44bba7fa15, type: 3}
+      propertyPath: panLevelCustomCurve.m_Curve.Array.data[0].value
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2417240799410663039, guid: 89a9f5337c3edfb4895bbf44bba7fa15, type: 3}
       propertyPath: m_Name
       value: HealerBandit
@@ -385,7 +389,8 @@ PrefabInstance:
       value: 30
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 6004491074956225438, guid: 89a9f5337c3edfb4895bbf44bba7fa15, type: 3}
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 2938973052494811955, guid: 89a9f5337c3edfb4895bbf44bba7fa15, type: 3}
       insertIndex: 1

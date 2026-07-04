@@ -1,0 +1,138 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &2173212453071805725
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 823873200439731804, guid: 5c4caccf0ca82dc46b3f367f70a08539, type: 3}
+      propertyPath: m_Name
+      value: BanditAudioSource
+      objectReference: {fileID: 0}
+    - target: {fileID: 8661219113694265810, guid: 5c4caccf0ca82dc46b3f367f70a08539, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8661219113694265810, guid: 5c4caccf0ca82dc46b3f367f70a08539, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8661219113694265810, guid: 5c4caccf0ca82dc46b3f367f70a08539, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8661219113694265810, guid: 5c4caccf0ca82dc46b3f367f70a08539, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8661219113694265810, guid: 5c4caccf0ca82dc46b3f367f70a08539, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8661219113694265810, guid: 5c4caccf0ca82dc46b3f367f70a08539, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8661219113694265810, guid: 5c4caccf0ca82dc46b3f367f70a08539, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8661219113694265810, guid: 5c4caccf0ca82dc46b3f367f70a08539, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8661219113694265810, guid: 5c4caccf0ca82dc46b3f367f70a08539, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8661219113694265810, guid: 5c4caccf0ca82dc46b3f367f70a08539, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 823873200439731804, guid: 5c4caccf0ca82dc46b3f367f70a08539, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1507877693044577248}
+    - targetCorrespondingSourceObject: {fileID: 823873200439731804, guid: 5c4caccf0ca82dc46b3f367f70a08539, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8240503102959524568}
+    - targetCorrespondingSourceObject: {fileID: 823873200439731804, guid: 5c4caccf0ca82dc46b3f367f70a08539, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 39880100187012010}
+  m_SourcePrefab: {fileID: 100100000, guid: 5c4caccf0ca82dc46b3f367f70a08539, type: 3}
+--- !u!1 &1532967121928092481 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 823873200439731804, guid: 5c4caccf0ca82dc46b3f367f70a08539, type: 3}
+  m_PrefabInstance: {fileID: 2173212453071805725}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1507877693044577248
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1532967121928092481}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 730bb04465d24b5a9c5f80b632c1e40d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mappings:
+  - <ImpactType>k__BackingField: Levels.Abilities.CommonImpacts.CasterShotHitScanEffect
+    <Sound>k__BackingField:
+      pitchVariance: 0.1
+      clips:
+      - {fileID: 8300000, guid: 1891f402b406d324092ce824f167b241, type: 3}
+  - <ImpactType>k__BackingField: Levels.Abilities.CommonImpacts.CasterShotShotgunEffect
+    <Sound>k__BackingField:
+      pitchVariance: 0.1
+      clips:
+      - {fileID: 8300000, guid: c0173dae1cd44da42b6a07491e44c7a4, type: 3}
+--- !u!114 &8240503102959524568
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1532967121928092481}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 572d46e8cf5d4603a75ac93fe261f545, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startImpactType: Levels.Abilities.CommonImpacts.CasterStartedSpellCastingEffect
+  endImpactType: Levels.Abilities.CommonImpacts.CasterEndedSpellCastingEffect
+  sound:
+    pitchVariance: 0.1
+    clips:
+    - {fileID: 8300000, guid: 15677e34e79245e4eab6389092d612b4, type: 3}
+    - {fileID: 8300000, guid: e31f9126556866e4280a1e5cf1fb1c2c, type: 3}
+    - {fileID: 8300000, guid: 293353420789f174f83f27437adcdd71, type: 3}
+--- !u!114 &39880100187012010
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1532967121928092481}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a4c39cf3e26f4cc7a2e1f7dc69dcfa06, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  statusType: Levels.Abilities.ChaosArea.InfusedWithChaosDecorativeStatus
+  sound:
+    pitchVariance: 0.1
+    clips:
+    - {fileID: 8300000, guid: 76ccdf3bc946e9d4da8d2c64b61d02d5, type: 3}
+    - {fileID: 8300000, guid: a97200b6e1299b549aef2e158e84d062, type: 3}
+    - {fileID: 8300000, guid: 71e76b7626cc2a541a26ab2bd13717d2, type: 3}
+    - {fileID: 8300000, guid: c2f6e31e7d1e8df4aab58e5058c71ff7, type: 3}
+    - {fileID: 8300000, guid: 76e349cb9137ca54ab8312e94c3126c9, type: 3}
+    - {fileID: 8300000, guid: b4d19a9fafee7654f8baba1508ae1ff9, type: 3}
