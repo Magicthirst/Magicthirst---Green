@@ -49,6 +49,8 @@ namespace Levels.Directorship
 
         protected virtual void DidDisabled() {}
 
+        protected virtual void OnMaskChanged(LevelActivityMask previous, LevelActivityMask current) {}
+
         private void OnMaskChanged((LevelActivityMask previous, LevelActivityMask current) p)
         {
             var wasRunning = (_LifecycleMask & p.previous) != 0;
@@ -58,6 +60,8 @@ namespace Levels.Directorship
             {
                 return;
             }
+
+            OnMaskChanged(p.previous, p.current);
 
             if (mustRun)
             {

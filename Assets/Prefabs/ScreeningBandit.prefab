@@ -1401,6 +1401,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: BanditAudioSource
       objectReference: {fileID: 0}
+    - target: {fileID: 3730850533453719477, guid: 389761aef3e7ff44595b78f4ae3cfb0b, type: 3}
+      propertyPath: OutputAudioMixerGroup
+      value: 
+      objectReference: {fileID: 24300002, guid: 88d1c663d58ba914c8a5e98415a3f960, type: 2}
     - target: {fileID: 7357221336086666447, guid: 389761aef3e7ff44595b78f4ae3cfb0b, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.19889069

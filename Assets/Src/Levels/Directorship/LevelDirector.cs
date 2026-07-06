@@ -120,10 +120,18 @@ namespace Levels.Directorship
             _navigation.FailLevel();
         }
 
-        private void OnActivityMaskChanged((LevelActivityMask, LevelActivityMask) _)
+        private void OnActivityMaskChanged((LevelActivityMask, LevelActivityMask mask) p)
         {
-            Cursor.lockState = CursorLockMode.Locked;
-            Cursor.visible = false;
+            if (p.mask == Pause)
+            {
+                Cursor.lockState = CursorLockMode.Confined;
+                Cursor.visible = true;
+            }
+            else
+            {
+                Cursor.lockState = CursorLockMode.Locked;
+                Cursor.visible = false;
+            }
         }
 
         private class LifecycleInterruptions : ILifecycleInterruptions
