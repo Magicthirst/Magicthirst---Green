@@ -10,11 +10,6 @@ namespace Levels.Visual
 {
     public class BloodSpatterEffect : MonoBehaviour
     {
-        private static readonly int Seed = Shader.PropertyToID("_Seed");
-        private static Material[] _splatters = null;
-
-        [SerializeField] private DecalProjector bloodDecalPrefab;
-
         [SerializeField] private float raycastDistance = 5f;
         [SerializeField] private LayerMask environmentalMask;
 
@@ -26,21 +21,6 @@ namespace Levels.Visual
         [Inject] private Transform _origin;
         [Inject] private IImpactConsumer<DamageImpact> _damages;
         [Inject] private Health _health;
-
-        private void Awake()
-        {
-            if (_splatters != null)
-            {
-                return;
-            }
-
-            _splatters = new Material[10];
-            for (var i = 0; i < _splatters.Length; i++)
-            {
-                _splatters[i] = new Material(bloodDecalPrefab.material);
-                _splatters[i].SetFloat(Seed, i * i);
-            }
-        }
 
         private void OnEnable() => _damages.Impacted += OnDamaged;
 
@@ -74,15 +54,13 @@ namespace Levels.Visual
                 return;
             }
 
-            var decalRotation = Quaternion.LookRotation(-hit.normal);
-            decalRotation *= Quaternion.Euler(0, 0, Random.Range(0f, 360f));
+            var rotation = Quaternion.LookRotation(-hit.normal);
+            rotation *= Quaternion.Euler(0, 0, Random.Range(0f, 360f));
 
             var leeway = (_origin.position - hit.point).normalized * 0.1f;
             var point = hit.point + leeway;
-            var bloodInstance = Instantiate(bloodDecalPrefab, point, decalRotation);
-            bloodInstance.material = _splatters[Random.Range(0, _splatters.Length)];
 
-            Destroy(bloodInstance, decalLifetime);
+            BloodSpatterPool.Spawn(point, rotation);
         }
     }
 }

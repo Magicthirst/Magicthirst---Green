@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 using Levels.Directorship;
 using Levels.Extensions;
 using UnityEngine;
@@ -31,14 +33,6 @@ namespace Levels.Visual
 
             _baseTint = smokeTint;
             _baseAlpha = tracerPrefab.endColor.a;
-
-            _pool = new Tracer[poolSize];
-            for (var i = 0; i < poolSize; i++)
-            {
-                var line = Instantiate(tracerPrefab, transform);
-                _pool[i] = new Tracer(line);
-                ResetTracer(ref _pool[i]);
-            }
         }
 
         protected override void DidFixedUpdate()
@@ -52,6 +46,22 @@ namespace Levels.Visual
                 }
 
                 UpdateTracer(ref tracer);
+            }
+        }
+
+        public IEnumerable<Action> WarmUp()
+        {
+            _pool = new Tracer[poolSize];
+
+            for (var i = 0; i < poolSize; i++)
+            {
+                var index = i;
+                yield return () =>
+                {
+                    var line = Instantiate(tracerPrefab, transform);
+                    _pool[index] = new Tracer(line);
+                    ResetTracer(ref _pool[index]);
+                };
             }
         }
 

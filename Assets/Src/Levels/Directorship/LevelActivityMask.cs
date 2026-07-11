@@ -12,6 +12,7 @@ namespace Levels.Directorship
         Gameplay = 1 << 0,
         Tutorial = 1 << 1,
         Pause = 1 << 2,
+        Prewarm = 1 << 3,
 
         TutorialSpecificsPart = 0b1111_1111_1111_1000, // 3-15
         TutorialMovement = Tutorial | 1 << 3,
@@ -32,6 +33,7 @@ namespace Levels.Directorship
         Gameplay = LAM.Gameplay,
         Tutorial = LAM.Tutorial,
         Pause = LAM.Pause,
+        Prewarm = LAM.Prewarm,
 
         [InspectorName("Tutorial/Movement")] TutorialMovement = LAM.TutorialMovement,
         [InspectorName("Tutorial/Chip")] TutorialThrowChip = LAM.TutorialThrowChip,
