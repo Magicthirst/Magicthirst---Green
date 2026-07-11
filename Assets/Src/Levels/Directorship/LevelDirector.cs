@@ -12,7 +12,9 @@ using static Levels.Directorship.LevelActivityMask;
 
 namespace Levels.Directorship
 {
-    public sealed class LevelDirector : MonoBehaviour
+    public delegate void LAMChangedCallback((LevelActivityMask previous, LevelActivityMask current) change);
+
+    public sealed partial class LevelDirector : MonoBehaviour
     {
         public static bool IsStarted;
 
@@ -25,7 +27,7 @@ namespace Levels.Directorship
         public static event Action FixedUpdated;
         public static event Action Updated;
 
-        public static event Action<(LevelActivityMask previous, LevelActivityMask current)> ActivityMaskChanged;
+        public static event LAMChangedCallback ActivityMaskChanged;
 
         public static ILifecycleInterruptions Interruptions => _interruptions ??= new LifecycleInterruptions(_instance);
         private static LifecycleInterruptions _interruptions;

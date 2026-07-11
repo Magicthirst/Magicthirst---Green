@@ -7,7 +7,7 @@ namespace Levels.Directorship
     [Flags]
     public enum LevelActivityMask
     {
-        PartPhase = 0b0000_0000_0000_0111,
+        GlobalModsMask = 0b0000_0000_0000_1111,
 
         Gameplay = 1 << 0,
         Tutorial = 1 << 1,
@@ -42,5 +42,34 @@ namespace Levels.Directorship
         [InspectorName("Tutorial/ChooseSabre")] TutorialChooseSabre = LAM.TutorialChooseSabre,
         [InspectorName("Tutorial/ChoosePistol")] TutorialChoosePistol = LAM.TutorialChoosePistol,
         [InspectorName("Tutorial/ChooseChaos")] TutorialChooseChaos = LAM.TutorialChooseChaos,
+    }
+
+    public static class LevelActivityMaskMembers
+    {
+        public static bool IsRunningDuring(this LAM self, LAM context)
+        {
+            if ((self & context & LAM.GlobalModsMask) == 0)
+            {
+                return false;
+            }
+
+            if (context.HasFlag(LAM.Tutorial))
+            {
+                if (!self.HasFlag(LAM.Tutorial))
+                {
+                    return false;
+                }
+
+                var hasSpecifics = (self & LAM.TutorialSpecificsPart) != 0;
+                if (!hasSpecifics)
+                {
+                    return true;
+                }
+
+                return (self & context & LAM.TutorialSpecificsPart) != 0;
+            }
+
+            return (self & context) != 0;
+        }
     }
 }

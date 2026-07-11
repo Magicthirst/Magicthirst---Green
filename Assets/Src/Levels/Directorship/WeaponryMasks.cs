@@ -18,21 +18,18 @@ namespace Levels.Directorship
 
         public static bool IsPlayableNow(this Type abilityType)
         {
+            var mask = LevelDirector.ActivityMask;
+           
             return
-                (LevelDirector.ActivityMask & Gameplay) != 0 ||
-
-                #region tutorials
-
-                abilityType == typeof(ParrySabreSwinger) &&
-                (LevelDirector.ActivityMask & TutorialChooseSabre) == TutorialChooseSabre ||
-                abilityType == typeof(HitScanShooter) &&
-                (LevelDirector.ActivityMask & TutorialChoosePistol) == TutorialChoosePistol ||
-                abilityType == typeof(InfuseAreaWithChaosCaster) &&
-                (LevelDirector.ActivityMask & TutorialChooseChaos) == TutorialChooseChaos
-
-                #endregion
-
-                ;
+                mask.HasFlag(Gameplay) || 
+                mask.HasFlag(Tutorial) &&
+                (
+                    abilityType == typeof(ParrySabreSwinger) ? mask.HasFlag(TutorialChooseSabre) :
+                    abilityType == typeof(HitScanShooter) ? mask.HasFlag(TutorialChoosePistol) :
+                    abilityType == typeof(InfuseAreaWithChaosCaster) ? mask.HasFlag(TutorialChooseChaos) :
+                    false
+                )
+            ;
         }
 
         public static bool IsPlayableNow(this TutorialStep step)

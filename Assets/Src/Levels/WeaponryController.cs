@@ -28,7 +28,7 @@ namespace Levels
         {
             _playerInput = GetComponent<PlayerInput>();
 
-            _abilities = _weaponry.Abilities.ToDictionary(
+            _abilities = _weaponry.AllAbilities.ToDictionary(
                 keySelector: ability => ability,
                 elementSelector: ability => ability.FindIn(gameObject)
             );
@@ -59,7 +59,7 @@ namespace Levels
         {
             var map = _playerInput.currentActionMap;
 
-            return _weaponry.Abilities
+            return _weaponry.AllAbilities
                 .Select(ability => map
                     .ConsumeAction(ability.InputActionName)
                     .OnPerformed(() => { if (ability.Type.IsPlayableNow()) ability.Equip(); }))

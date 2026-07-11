@@ -7,7 +7,7 @@ namespace Levels.Directorship
     {
         protected abstract LevelActivityMask _LifecycleMask { get; }
 
-        private bool _MustRun => (LevelDirector.ActivityMask & _LifecycleMask) != 0;
+        private bool _MustRun => _LifecycleMask.IsRunningDuring(LevelDirector.ActivityMask);
         protected InterruptionQueue _LevelLifecycle => LevelDirector.Interruptions[_LifecycleMask];
 
         protected void OnEnable()
@@ -53,8 +53,8 @@ namespace Levels.Directorship
 
         private void OnMaskChanged((LevelActivityMask previous, LevelActivityMask current) p)
         {
-            var wasRunning = (_LifecycleMask & p.previous) != 0;
-            var mustRun = (_LifecycleMask & p.current) != 0;
+            var wasRunning = _LifecycleMask.IsRunningDuring(p.previous);
+            var mustRun = _LifecycleMask.IsRunningDuring(p.current);
 
             if (wasRunning == mustRun)
             {

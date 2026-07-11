@@ -14,7 +14,7 @@ namespace Levels
     [RequireComponent(typeof(IMovementInputSource))]
     public class CharacterMovement : LevelBehaviour, IInterruptable<IMovementReason>
     {
-        protected override LevelActivityMask _LifecycleMask => Gameplay | (TutorialTeleportToChip & TutorialSpecificsPart);
+        protected override LevelActivityMask _LifecycleMask => Gameplay | TutorialTeleportToChip;
 
         [SerializeField] private bool broadcasting;
 
