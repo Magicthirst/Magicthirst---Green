@@ -41222,6 +41222,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb34bfad2780465eab1f5286d1041942, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  airHit: {r: 1, g: 1, b: 1, a: 1}
+  fleshHit: {r: 1, g: 0, b: 0.16923761, a: 1}
+  bonusDamage: {r: 0.6273585, g: 1, b: 0.6517927, a: 1}
+  veryBonusDamage: {r: 0.9512494, g: 1, b: 0.2028302, a: 1}
+  reducedDamage: {r: 0.2256141, g: 0.735849, b: 0.6967579, a: 1}
   lifeTime: 0.5
   speed: 4
   scaleCurve:
@@ -41579,7 +41584,6 @@ GameObject:
   - component: {fileID: 1499311476}
   - component: {fileID: 1499311477}
   - component: {fileID: 1499311481}
-  - component: {fileID: 1499311479}
   - component: {fileID: 1499311482}
   - component: {fileID: 1499311483}
   - component: {fileID: 1499311484}
@@ -41681,24 +41685,6 @@ MonoBehaviour:
           step: 32
           rAction: {fileID: -2099379676528639254, guid: 052faaac586de48259a63d0c4782560b, type: 3}
           abilityType: 
---- !u!114 &1499311479
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1499311475}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a8fbdd633af0dd944bc50c3693b7bfbc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  FloatingTextObjectPrefab: {fileID: 8115535723529381340, guid: f2dfc058ab4eeb34fa4944c2c319c6bc, type: 3}
-  defaultTextColor: {r: 1, g: 1, b: 1, a: 1}
-  critTextColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
-  floatingTextFontSize: 6
-  xSpatialVariance: 1
-  xSpatialVarianceValue: 0.3
 --- !u!114 &1499311481
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -44106,6 +44092,7 @@ MonoBehaviour:
         <Duration>k__BackingField: 0
         <CircleRadius>k__BackingField: 3
         <CircleCenterOffset>k__BackingField: 2.5
+        <Context>k__BackingField: 0
     - rid: 2589632493940113519
       type: {class: TeleportChipConfig, ns: Levels.Abilities.TeleportChip, asm: Levels}
       data:
@@ -44290,6 +44277,7 @@ MonoBehaviour:
     <Duration>k__BackingField: 0
     <CircleRadius>k__BackingField: 0
     <CircleCenterOffset>k__BackingField: 0
+    <Context>k__BackingField: 0
   teleportChipConfig:
     <ThrowVelocity>k__BackingField: 0
     <FlippingAngularVelocity>k__BackingField: 0
