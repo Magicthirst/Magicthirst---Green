@@ -2387,7 +2387,7 @@ GameObject:
   - component: {fileID: 836484440}
   - component: {fileID: 836484439}
   m_Layer: 0
-  m_Name: Camera
+  m_Name: Default Camera
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2586,7 +2586,7 @@ GameObject:
   - component: {fileID: 872250412}
   - component: {fileID: 872250410}
   m_Layer: 0
-  m_Name: TransparentVfxCamera
+  m_Name: No Postprocess 1 Camera
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3182,7 +3182,7 @@ GameObject:
   - component: {fileID: 1113537058}
   - component: {fileID: 1113537056}
   m_Layer: 0
-  m_Name: NoPostProcessingCamera
+  m_Name: No Postprocess 2 Camera (with Fog)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5572,7 +5572,7 @@ GameObject:
   - component: {fileID: 1758018008}
   - component: {fileID: 1758018006}
   m_Layer: 0
-  m_Name: WallCamera
+  m_Name: Landscape Camera
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6144,7 +6144,7 @@ GameObject:
   - component: {fileID: 2006795952}
   - component: {fileID: 2006795953}
   m_Layer: 0
-  m_Name: IgnoreRaycastCamera
+  m_Name: Pseudo Illiminated Fog Camera
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

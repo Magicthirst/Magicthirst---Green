@@ -27,6 +27,7 @@ GameObject:
   - component: {fileID: 5115280872264105868}
   - component: {fileID: 2285677334315722812}
   - component: {fileID: 1067730745386927356}
+  - component: {fileID: 3297314099725885488}
   m_Layer: 0
   m_Name: ScreeningBandit
   m_TagString: Untagged
@@ -367,6 +368,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 95b8e1631ce44614a0096a3ffab71fb6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &3297314099725885488
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2417240799410663039}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f1e41f5b1444b748d2a4531370a6733, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mask: 1
 --- !u!1 &3112159886731227228
 GameObject:
   m_ObjectHideFlags: 0

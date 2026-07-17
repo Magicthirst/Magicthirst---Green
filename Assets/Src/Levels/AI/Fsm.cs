@@ -26,7 +26,7 @@ namespace Levels.AI
         private FsmState initialState;
         public IReadOnlyList<FsmState> States => GetComponents<FsmState>().ToArray();
 
-        private FsmState _currentBacking;
+        private FsmState _currentBacking = null;
         private FsmState _Current
         {
             get => _currentBacking;
@@ -51,7 +51,10 @@ namespace Levels.AI
         {
             Assert.IsTrue(_states.Length > 0 && initialState is not null);
 
-            RunState(initialState);
+            if (_Current is null)
+            {
+                RunState(initialState);
+            }
             
             _disposeObservers = _states
                 .Select(state => RunOnReady(state) + RunNextOnFinish(state))
@@ -95,7 +98,6 @@ namespace Levels.AI
 
         protected override void DidDisabled()
         {
-            RunState(null);
             _disposeObservers?.Invoke();
         }
     }

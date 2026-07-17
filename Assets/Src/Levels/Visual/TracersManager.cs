@@ -65,6 +65,11 @@ namespace Levels.Visual
             }
         }
 
+        private void OnDestroy()
+        {
+            _instance = null;
+        }
+
         private void UpdateTracer(ref Tracer tracer)
         {
             tracer.RemainingTime -= LevelDirector.GameplayFixedDeltaTime;

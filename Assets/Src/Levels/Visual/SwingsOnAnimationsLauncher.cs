@@ -63,7 +63,6 @@ namespace Levels.Visual
         protected override void DidDisabled()
         {
             spriteSource.SpriteChanged -= OnSpriteChanged;
-            StopAllCoroutines(); 
         }
 
         private void OnSpriteChanged(Sprite newSprite)
