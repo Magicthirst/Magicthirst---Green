@@ -1,11 +1,14 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
-using UnityEngine;
-using UnityEngine.UI;
-using UnityEngine.EventSystems;
 using TMPro;
+using UnityEditor;
+using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.Serialization;
+using UnityEngine.UI;
 #if ENABLE_INPUT_SYSTEM && !ENABLE_LEGACY_INPUT_MANAGER
 using UnityEngine.InputSystem;
 #endif
@@ -207,7 +210,7 @@ namespace IngameDebugConsole
         [Tooltip("If a log that isn't expanded is longer than this limit, it will be truncated. This greatly optimizes scrolling speed of collapsed logs if their log messages are long.")]
         internal int maxCollapsedLogLength = 200;
 
-        [SerializeField, UnityEngine.Serialization.FormerlySerializedAs("maxLogLength")]
+        [SerializeField, FormerlySerializedAs("maxLogLength")]
         [Tooltip("If an expanded log is longer than this limit, it will be truncated. This optimizes scrolling speed while an expanded log is visible.")]
         internal int maxExpandedLogLength = 10000;
 
@@ -356,7 +359,7 @@ namespace IngameDebugConsole
 
 		// If the last log item is completely visible (scrollbar is at the bottom),
 		// scrollbar will remain at the bottom when new debug entries are received
-		[System.NonSerialized]
+		[NonSerialized]
 		public bool SnapToBottom = true;
 
 		// List of unique debug entries (duplicates of entries are not kept)
@@ -421,11 +424,11 @@ namespace IngameDebugConsole
         /// <summary>
         /// Used for <see cref="TMP_Text.SetText(char[])"/>.
         /// </summary>
-        [System.NonSerialized]
+        [NonSerialized]
         internal char[] textBuffer = new char[4096];
 
 		// Offset of DateTime.Now from DateTime.UtcNow
-		private System.TimeSpan localTimeUtcOffset;
+		private TimeSpan localTimeUtcOffset;
 
 		// Last recorded values of Time.realtimeSinceStartup and Time.frameCount on the main thread (because these Time properties can't be accessed from other threads)
 #if !IDG_OMIT_ELAPSED_TIME
@@ -440,14 +443,14 @@ namespace IngameDebugConsole
 		// Required in ValidateScrollPosition() function
 		private PointerEventData nullPointerEventData;
 
-		private System.Action<DebugLogEntry> poolLogEntryAction;
-		private System.Action<DebugLogEntry> removeUncollapsedLogEntryAction;
-		private System.Predicate<DebugLogEntry> shouldRemoveCollapsedLogEntryPredicate;
-		private System.Predicate<DebugLogEntry> shouldRemoveLogEntryToShowPredicate;
-		private System.Action<DebugLogEntry, int> updateLogEntryCollapsedIndexAction;
+		private Action<DebugLogEntry> poolLogEntryAction;
+		private Action<DebugLogEntry> removeUncollapsedLogEntryAction;
+		private Predicate<DebugLogEntry> shouldRemoveCollapsedLogEntryPredicate;
+		private Predicate<DebugLogEntry> shouldRemoveLogEntryToShowPredicate;
+		private Action<DebugLogEntry, int> updateLogEntryCollapsedIndexAction;
 
 		// Callbacks for log window show/hide events
-		public System.Action OnLogWindowShown, OnLogWindowHidden;
+		public Action OnLogWindowShown, OnLogWindowHidden;
 
 		private bool isQuittingApplication;
 
@@ -560,7 +563,7 @@ namespace IngameDebugConsole
 			filterErrorButton.GetComponent<Button>().onClick.AddListener( FilterErrorButtonPressed );
 			snapToBottomButton.GetComponent<Button>().onClick.AddListener( () => SnapToBottom = true );
 
-			localTimeUtcOffset = System.DateTime.Now - System.DateTime.UtcNow;
+			localTimeUtcOffset = DateTime.Now - DateTime.UtcNow;
 			dummyLogEntryTimestamp = new DebugLogEntryTimestamp();
 			nullPointerEventData = new PointerEventData( null );
 
@@ -695,7 +698,7 @@ namespace IngameDebugConsole
 			logsToRemoveAfterMaxLogCount = Mathf.Max( 1, logsToRemoveAfterMaxLogCount );
 			queuedLogLimit = Mathf.Max( 0, queuedLogLimit );
 
-			if( UnityEditor.EditorApplication.isPlaying )
+			if( EditorApplication.isPlaying )
 			{
 				resizeButton.sprite = enableHorizontalResizing ? resizeIconAllDirections : resizeIconVerticalOnly;
 
@@ -1078,7 +1081,7 @@ namespace IngameDebugConsole
 			if( queuedLogEntriesTimestamps != null )
 			{
 				// It is 10 times faster to cache local time's offset from UtcNow and add it to UtcNow to get local time at any time
-				System.DateTime dateTime = System.DateTime.UtcNow + localTimeUtcOffset;
+				DateTime dateTime = DateTime.UtcNow + localTimeUtcOffset;
 #if !IDG_OMIT_ELAPSED_TIME && !IDG_OMIT_FRAMECOUNT
 				queuedLogEntryTimestamp = new DebugLogEntryTimestamp( dateTime, lastElapsedSeconds, lastFrameCount );
 #elif !IDG_OMIT_ELAPSED_TIME
@@ -1750,7 +1753,7 @@ namespace IngameDebugConsole
             }
 
 			int length = 0;
-			int newLineLength = System.Environment.NewLine.Length;
+			int newLineLength = Environment.NewLine.Length;
             for (int i = startIndex; i < uncollapsedLogEntries.Count; i++)
 			{
 				DebugLogEntry entry = uncollapsedLogEntries[i];
@@ -1776,7 +1779,7 @@ namespace IngameDebugConsole
 				sb.AppendLine( entry.logString ).AppendLine( entry.stackTrace ).AppendLine();
 			}
 
-			sb.Append( "Current time: " ).AppendLine( ( System.DateTime.UtcNow + localTimeUtcOffset ).ToString( "F" ) );
+			sb.Append( "Current time: " ).AppendLine( ( DateTime.UtcNow + localTimeUtcOffset ).ToString( "F" ) );
 			sb.Append( "Version: " ).AppendLine( Application.version );
 
 			return sb.ToString();
@@ -1795,7 +1798,7 @@ namespace IngameDebugConsole
 
 		public void SaveLogsToFile()
 		{
-			SaveLogsToFile( Path.Combine( Application.persistentDataPath, System.DateTime.Now.ToString( "dd-MM-yyyy--HH-mm-ss" ) + ".txt" ) );
+			SaveLogsToFile( Path.Combine( Application.persistentDataPath, DateTime.Now.ToString( "dd-MM-yyyy--HH-mm-ss" ) + ".txt" ) );
 		}
 
 		public void SaveLogsToFile( string filePath )

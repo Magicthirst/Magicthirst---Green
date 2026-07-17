@@ -1,7 +1,6 @@
 using System.Collections.Generic;
-using UnityEngine;
 using BlackMassSoftware.FloatingTextEngine.Lite.Behaviors;
-using BlackMassSoftware.FloatingTextEngine.Lite.Utilities;
+using UnityEngine;
 
 namespace BlackMassSoftware.FloatingTextEngine.Lite.Presets
 {

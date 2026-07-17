@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using UnityEngine;
 
 namespace VContainer.Unity
 {
@@ -28,9 +29,9 @@ namespace VContainer.Unity
             injector.Inject(instance, resolver, customParameters);
             if (dontDestroyOnLoad)
             {
-                if (instance is UnityEngine.Object component)
+                if (instance is Object component)
                 {
-                    UnityEngine.Object.DontDestroyOnLoad(component);
+                    Object.DontDestroyOnLoad(component);
                 }
                 else
                 {

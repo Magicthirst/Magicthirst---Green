@@ -1,8 +1,8 @@
+using BlackMassSoftware.FloatingTextEngine.Lite.Behaviors;
+using BlackMassSoftware.FloatingTextEngine.Lite.Utilities;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Pool;
-using BlackMassSoftware.FloatingTextEngine.Lite.Behaviors;
-using BlackMassSoftware.FloatingTextEngine.Lite.Utilities;
 
 namespace BlackMassSoftware.FloatingTextEngine.Lite
 {

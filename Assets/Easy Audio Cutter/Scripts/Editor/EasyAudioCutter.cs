@@ -1,9 +1,9 @@
-using UnityEngine;
-using UnityEditor;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
-using System.Reflection;
+using UnityEditor;
+using UnityEngine;
 
 namespace EasyAudioCutter
 {
@@ -546,11 +546,11 @@ namespace EasyAudioCutter
             sourceClip.GetData(allData, 0);
 
             float[] trimmedData = new float[sampleLength];
-            System.Array.Copy(allData, startSample, trimmedData, 0, sampleLength);
+            Array.Copy(allData, startSample, trimmedData, 0, sampleLength);
 
             if (reverseAudio)
             {
-                System.Array.Reverse(trimmedData);
+                Array.Reverse(trimmedData);
             }
 
             ApplyFades(trimmedData, freq, channels);
@@ -577,11 +577,11 @@ namespace EasyAudioCutter
             sourceClip.GetData(srcData, 0);
 
             float[] trimmedData = new float[sampleLength];
-            System.Array.Copy(srcData, startSample, trimmedData, 0, sampleLength);
+            Array.Copy(srcData, startSample, trimmedData, 0, sampleLength);
 
             if (reverseAudio)
             {
-                System.Array.Reverse(trimmedData);
+                Array.Reverse(trimmedData);
             }
 
             ApplyFades(trimmedData, freq, channels);
@@ -750,11 +750,11 @@ namespace EasyAudioCutter
             sourceClip.GetData(allData, 0);
 
             float[] trimmedData = new float[lengthSamples];
-            System.Array.Copy(allData, startSample, trimmedData, 0, lengthSamples);
+            Array.Copy(allData, startSample, trimmedData, 0, lengthSamples);
 
             if (reverseAudio)
             {
-                System.Array.Reverse(trimmedData);
+                Array.Reverse(trimmedData);
             }
 
             ApplyFades(trimmedData, freq, channels);

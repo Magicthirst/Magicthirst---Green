@@ -7,6 +7,7 @@ using UnityEditor.Build;
 using UnityEditor.Build.Reporting;
 using UnityEditor.SceneManagement;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using static System.Reflection.BindingFlags;
 
 namespace Util
@@ -27,7 +28,7 @@ namespace Util
             }
         }
 
-        private void ValidateScene(UnityEngine.SceneManagement.Scene scene)
+        private void ValidateScene(Scene scene)
         {
             var anyProblems = false;
             var problems = scene

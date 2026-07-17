@@ -27,14 +27,12 @@ namespace DI
         {
             ConfigureConfigs(builder);
             ConfigureCore(builder);
-            ConfigureSync(builder);            
             ConfigureIntentsImpacts(builder);
             ConfigureRooms(builder);
         }
 
         private void OnDisable()
         {
-            OnDisableSync();
             ClearRooms();
         }
     }

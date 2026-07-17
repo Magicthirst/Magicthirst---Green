@@ -5,6 +5,7 @@ using System.Runtime.CompilerServices;
 using UnityEditor.IMGUI.Controls;
 using UnityEngine;
 using VContainer.Diagnostics;
+using Object = UnityEngine.Object;
 
 namespace VContainer.Editor.Diagnostics
 {
@@ -17,7 +18,7 @@ namespace VContainer.Editor.Diagnostics
         {
             if (ReferenceEquals(instance, null))
                 return "null";
-            if (instance is UnityEngine.Object obj && obj == null)
+            if (instance is Object obj && obj == null)
                 return "null or destroyed";
             return instance.ToString();
         }
@@ -60,7 +61,7 @@ namespace VContainer.Editor.Diagnostics
 
             foreach (var prop in props)
             {
-                if (prop.PropertyType.IsSubclassOf(typeof(UnityEngine.Object)) &&
+                if (prop.PropertyType.IsSubclassOf(typeof(Object)) &&
                     prop.IsDefined(typeof(ObsoleteAttribute), true))
                 {
                     continue;
@@ -82,7 +83,7 @@ namespace VContainer.Editor.Diagnostics
 
             foreach (var field in fields)
             {
-                if ((field.FieldType.IsSubclassOf(typeof(UnityEngine.Object)) &&
+                if ((field.FieldType.IsSubclassOf(typeof(Object)) &&
                     field.IsDefined(typeof(ObsoleteAttribute), true)) ||
                     field.IsDefined(typeof(CompilerGeneratedAttribute), true))
                 {

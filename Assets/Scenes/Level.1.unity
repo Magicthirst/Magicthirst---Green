@@ -20300,6 +20300,69 @@ Transform:
   - {fileID: 1490179769}
   m_Father: {fileID: 1745542786}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &508517355
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 508517356}
+  - component: {fileID: 508517357}
+  m_Layer: 0
+  m_Name: FallbackGameLifetimeScope
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &508517356
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 508517355}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1499311476}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &508517357
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 508517355}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ebc6769cf1bf43739a4ddce95a8e5dc6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  parentReference:
+    TypeName: 
+  autoRun: 1
+  autoInjectGameObjects: []
+  gameNavigation:
+    mainMenu:
+      m_AssetGUID: 4299ddaf7cf576b42bc20836c1927e81
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_SubObjectGUID: 
+      m_EditorAssetChanged: 0
+    onlyGameplayLevel:
+      m_AssetGUID: 1457b548de9798f47ab09941599c97da
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_SubObjectGUID: 
+      m_EditorAssetChanged: 0
+  audioSettings:
+    masterVolume: {fileID: 24100000, guid: 88d1c663d58ba914c8a5e98415a3f960, type: 2}
 --- !u!1 &512031874
 GameObject:
   m_ObjectHideFlags: 0
@@ -29853,10 +29916,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   block: {fileID: 1639212123}
-  soundSlider: {fileID: 1871606815}
   continueButton: {fileID: 298709708}
   exitButton: {fileID: 426225763}
-  audioMixer: {fileID: 24100000, guid: 88d1c663d58ba914c8a5e98415a3f960, type: 2}
 --- !u!1 &1310558492
 GameObject:
   m_ObjectHideFlags: 0
@@ -34899,80 +34960,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   roomId: 7
---- !u!1 &1324790132
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1324790134}
-  - component: {fileID: 1324790133}
-  m_Layer: 0
-  m_Name: FallbackGameGlobalScope
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1324790133
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1324790132}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ebc6769cf1bf43739a4ddce95a8e5dc6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  parentReference:
-    TypeName: 
-  autoRun: 1
-  autoInjectGameObjects: []
-  clientConfigAsset: {fileID: 11400000, guid: c5d989f1e98c6124f9eb1ced26623b05, type: 2}
-  gameNavigation:
-    mainMenu:
-      m_AssetGUID: cfb06061954f33e49a62de79c3b8fdc5
-      m_SubObjectName: 
-      m_SubObjectType: 
-      m_SubObjectGUID: 
-      m_EditorAssetChanged: 0
-    onlyGameplayLevel:
-      m_AssetGUID: 1457b548de9798f47ab09941599c97da
-      m_SubObjectName: 
-      m_SubObjectType: 
-      m_SubObjectGUID: 
-      m_EditorAssetChanged: 0
-    joinSession:
-      m_AssetGUID: 4681ab6970ca61048adb730eeb3eedd4
-      m_SubObjectName: 
-      m_SubObjectType: 
-      m_SubObjectGUID: 
-      m_EditorAssetChanged: 0
-    signIn:
-      m_AssetGUID: 942fbe52f04b005499916a006ba7b2b6
-      m_SubObjectName: 
-      m_SubObjectType: 
-      m_SubObjectGUID: 
-      m_EditorAssetChanged: 0
---- !u!4 &1324790134
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1324790132}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1499311476}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1325950729
 GameObject:
   m_ObjectHideFlags: 0
@@ -41222,11 +41209,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb34bfad2780465eab1f5286d1041942, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  airHit: {r: 1, g: 1, b: 1, a: 1}
-  fleshHit: {r: 1, g: 0, b: 0.16923761, a: 1}
-  bonusDamage: {r: 0.6273585, g: 1, b: 0.6517927, a: 1}
-  veryBonusDamage: {r: 0.9512494, g: 1, b: 0.2028302, a: 1}
-  reducedDamage: {r: 0.2256141, g: 0.735849, b: 0.6967579, a: 1}
   lifeTime: 0.5
   speed: 4
   scaleCurve:
@@ -41608,7 +41590,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1324790134}
+  - {fileID: 508517356}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1499311477
@@ -41624,7 +41606,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   parentReference:
-    TypeName: 
+    TypeName: DI.GameLifetimeScope
   autoRun: 1
   autoInjectGameObjects:
   - {fileID: 1499311475}
@@ -41637,10 +41619,11 @@ MonoBehaviour:
   - {fileID: 529759991}
   - {fileID: 1299106495}
   - {fileID: 1883852354}
+  - {fileID: 1871606813}
   sharedConfigs:
   - rid: 4307642805538783309
   camera: {fileID: 1065869686}
-  debugFallbackGameScope: {fileID: 1324790133}
+  debugFallbackGameScope: {fileID: 508517357}
   references:
     version: 2
     RefIds:
@@ -43796,7 +43779,6 @@ GameObject:
   - component: {fileID: 1711207733}
   - component: {fileID: 1711207735}
   - component: {fileID: 1711207727}
-  - component: {fileID: 1711207726}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -44018,18 +44000,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   flipped: 0
---- !u!114 &1711207726
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1711207718}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cbae81dc2d3e4132bb31956c3028f5e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1711207727
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -44092,7 +44062,6 @@ MonoBehaviour:
         <Duration>k__BackingField: 0
         <CircleRadius>k__BackingField: 3
         <CircleCenterOffset>k__BackingField: 2.5
-        <Context>k__BackingField: 0
     - rid: 2589632493940113519
       type: {class: TeleportChipConfig, ns: Levels.Abilities.TeleportChip, asm: Levels}
       data:
@@ -44277,7 +44246,6 @@ MonoBehaviour:
     <Duration>k__BackingField: 0
     <CircleRadius>k__BackingField: 0
     <CircleCenterOffset>k__BackingField: 0
-    <Context>k__BackingField: 0
   teleportChipConfig:
     <ThrowVelocity>k__BackingField: 0
     <FlippingAngularVelocity>k__BackingField: 0
@@ -46883,6 +46851,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1871606814}
   - component: {fileID: 1871606815}
+  - component: {fileID: 1871606816}
   m_Layer: 5
   m_Name: Slider
   m_TagString: Untagged
@@ -46963,6 +46932,19 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &1871606816
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1871606813}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3e8c20894e314af18f68c46718d68e8b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  slider: {fileID: 1871606815}
 --- !u!1 &1872110758
 GameObject:
   m_ObjectHideFlags: 0
@@ -47146,6 +47128,7 @@ GameObject:
   - component: {fileID: 1883852358}
   - component: {fileID: 1883852357}
   - component: {fileID: 1883852356}
+  - component: {fileID: 1883852360}
   m_Layer: 5
   m_Name: Loading
   m_TagString: Untagged
@@ -47339,6 +47322,19 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &1883852360
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1883852354}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dbbf7169a11b487f88e255e3d52c87ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mask: 8
 --- !u!1 &1913018982
 GameObject:
   m_ObjectHideFlags: 0

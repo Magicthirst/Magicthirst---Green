@@ -1,4 +1,5 @@
 using System;
+using JetBrains.Annotations;
 
 namespace VContainer
 {
@@ -7,10 +8,10 @@ namespace VContainer
     }
 
 #if UNITY_2018_4_OR_NEWER
-    [JetBrains.Annotations.MeansImplicitUse(
-        JetBrains.Annotations.ImplicitUseKindFlags.Access |
-        JetBrains.Annotations.ImplicitUseKindFlags.Assign |
-        JetBrains.Annotations.ImplicitUseKindFlags.InstantiatedNoFixedConstructorSignature)]
+    [MeansImplicitUse(
+        ImplicitUseKindFlags.Access |
+        ImplicitUseKindFlags.Assign |
+        ImplicitUseKindFlags.InstantiatedNoFixedConstructorSignature)]
 #endif
     [AttributeUsage(AttributeTargets.Constructor | AttributeTargets.Method | AttributeTargets.Property | AttributeTargets.Field, AllowMultiple = false, Inherited = true)]
     public class InjectAttribute : PreserveAttribute

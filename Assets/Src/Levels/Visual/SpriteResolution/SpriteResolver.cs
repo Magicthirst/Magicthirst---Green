@@ -35,7 +35,7 @@ namespace Levels.Visual.SpriteResolution
         public bool TryPlay(float now, TPlayKey key, out Sprite firstSprite)
         {
             firstSprite = null;
-            if (_currentlyPlaying.Key.Equals(key))
+            if (((ValueType)_currentlyPlaying.Key).Equals(key))
             {
                 if (!_restarts)
                 {

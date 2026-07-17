@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+﻿using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -48,8 +48,8 @@ namespace IngameDebugConsole
 		// Current indices of debug entries shown on screen
 		private int currentTopIndex = -1, currentBottomIndex = -1;
 
-		private System.Predicate<DebugLogItem> shouldRemoveLogItemPredicate;
-		private System.Action<DebugLogItem> poolLogItemAction;
+		private Predicate<DebugLogItem> shouldRemoveLogItemPredicate;
+		private Action<DebugLogItem> poolLogItemAction;
 
 		public float ItemHeight { get { return logItemHeight; } }
 		public float SelectedItemHeight { get { return heightOfSelectedLogEntry; } }

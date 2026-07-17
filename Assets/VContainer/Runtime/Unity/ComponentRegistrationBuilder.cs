@@ -2,6 +2,7 @@ using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using VContainer.Internal;
+using Object = UnityEngine.Object;
 
 namespace VContainer.Unity
 {
@@ -24,7 +25,7 @@ namespace VContainer.Unity
         {
             if (DontDestroyOnLoad)
             {
-                UnityEngine.Object.DontDestroyOnLoad(component);
+                Object.DontDestroyOnLoad(component);
             }
         }
     }

@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using Levels.IntentsImpacts;
-using UnityEngine;
 
 namespace Levels.Abilities.KillAndDown
 {

@@ -1,34 +1,6 @@
-using Common;
-using Levels.Sync;
-using VContainer;
-
 namespace DI
 {
     public class ProducerLifetimeScope : EntityContextScope
     {
-        [Inject] private IConnectionEstablishedEventHolder _connectionHolder;
-
-        private IProducer _producer;
-
-        private void Construct(ISyncConnection connection) => _producer = connection.Self;
-
-        private void OnEnable()
-        {
-            _connectionHolder.ConnectionEstablished += Construct;
-        }
-
-        protected override void Configure(IContainerBuilder builder)
-        {
-            builder
-                .Register<InputSender.SendMovement>(_ => (position, vector) => _producer?.SendMovement(position, vector), Lifetime.Singleton)
-                .AsSelf();
-
-            base.Configure(builder);
-        }
-
-        private void OnDisable()
-        {
-            _connectionHolder.ConnectionEstablished -= Construct;
-        }
     }
 }

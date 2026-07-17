@@ -1,4 +1,5 @@
 using System.Linq;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -28,10 +29,10 @@ namespace VContainer.Unity
         public bool RemoveClonePostfix;
 
 #if UNITY_EDITOR
-        [UnityEditor.MenuItem("Assets/Create/VContainer/VContainer Settings")]
+        [MenuItem("Assets/Create/VContainer/VContainer Settings")]
         public static void CreateAsset()
         {
-            var path = UnityEditor.EditorUtility.SaveFilePanelInProject(
+            var path = EditorUtility.SaveFilePanelInProject(
                 "Save VContainerSettings",
                 "VContainerSettings",
                 "asset",
@@ -41,17 +42,17 @@ namespace VContainer.Unity
                 return;
 
             var newSettings = CreateInstance<VContainerSettings>();
-            UnityEditor.AssetDatabase.CreateAsset(newSettings, path);
+            AssetDatabase.CreateAsset(newSettings, path);
 
-            var preloadedAssets = UnityEditor.PlayerSettings.GetPreloadedAssets().ToList();
+            var preloadedAssets = PlayerSettings.GetPreloadedAssets().ToList();
             preloadedAssets.RemoveAll(x => x is VContainerSettings);
             preloadedAssets.Add(newSettings);
-            UnityEditor.PlayerSettings.SetPreloadedAssets(preloadedAssets.ToArray());
+            PlayerSettings.SetPreloadedAssets(preloadedAssets.ToArray());
         }
 
         public static void LoadInstanceFromPreloadAssets()
         {
-            var preloadAsset = UnityEditor.PlayerSettings.GetPreloadedAssets().FirstOrDefault(x => x is VContainerSettings);
+            var preloadAsset = PlayerSettings.GetPreloadedAssets().FirstOrDefault(x => x is VContainerSettings);
             if (preloadAsset is VContainerSettings instance)
             {
                 instance.OnDisable();

@@ -3,6 +3,7 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using UnityEngine;
 
 namespace VContainer.Internal
 {
@@ -198,7 +199,7 @@ namespace VContainer.Internal
 #if UNITY_2018_4_OR_NEWER
                 // It seems that Unity sometimes strips the constructor of Component at build time.
                 // In that case, allow null.
-                allowNoConstructor |= type.IsSubclassOf(typeof(UnityEngine.Component));
+                allowNoConstructor |= type.IsSubclassOf(typeof(Component));
 #endif
                 if (!allowNoConstructor)
                     throw new VContainerException(type, $"Type does not found injectable constructor, type: {type.Name}");

@@ -1,8 +1,9 @@
-﻿using UnityEngine;
-using UnityEngine.UI;
-using UnityEngine.EventSystems;
+﻿using System;
 using System.Text;
 using TMPro;
+using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
 #if UNITY_EDITOR
 using UnityEditor;
 using System.Text.RegularExpressions;
@@ -50,7 +51,7 @@ namespace IngameDebugConsole
 		public DebugLogEntryTimestamp? Timestamp { get { return logEntryTimestamp; } }
 
 		// Index of the entry in the list of entries
-		[System.NonSerialized] public int Index;
+		[NonSerialized] public int Index;
 
 		private bool isExpanded;
 		public bool Expanded { get { return isExpanded; } }

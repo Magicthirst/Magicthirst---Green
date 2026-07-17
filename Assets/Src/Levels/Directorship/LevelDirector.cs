@@ -2,10 +2,10 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Common;
 using Levels.Abilities.KillAndDown;
 using Levels.IntentsImpacts;
 using Levels.Util;
+using Shared;
 using UnityEngine;
 using VContainer;
 using static Levels.Directorship.LevelActivityMask;
@@ -57,7 +57,7 @@ namespace Levels.Directorship
         private IImpactConsumer<DownedImpact> _playerDied;
         private bool _playerIsDead = false;
 
-        [Inject] private IGameNavigation _navigation;
+        [Inject] private GameNavigation _navigation;
 
         [Inject]
         public void Construct(IntentsImpacts.IntentsImpacts intentsImpacts)

@@ -1,8 +1,7 @@
 using System;
-using Common;
 using Levels.Directorship;
+using Shared;
 using UnityEngine;
-using UnityEngine.Audio;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 using VContainer;
@@ -15,19 +14,15 @@ namespace Levels.UI.PauseMenu
         protected override LevelActivityMask _LifecycleMask => Pause;
 
         [SerializeField] private GameObject block;
-        [SerializeField] private Slider soundSlider;
         [SerializeField] private Button continueButton;
         [SerializeField] private Button exitButton;
-
-        [SerializeField] private AudioMixer audioMixer;
 
         private LevelActivityMask _previousMask;
 
         private IDisposable _observer;
 
         [Inject] private PlayerInput _playerInput;
-        
-        [Inject] private IGameNavigation _navigation;
+        [Inject] private GameNavigation _navigation;
 
         private void Start()
         {
@@ -41,7 +36,6 @@ namespace Levels.UI.PauseMenu
         {
             block.SetActive(true);
 
-            soundSlider.onValueChanged.AddListener(OnSoundValueChanged);
             continueButton.onClick.AddListener(OnContinueClicked);
             exitButton.onClick.AddListener(OnExitClicked);
         }
@@ -50,18 +44,8 @@ namespace Levels.UI.PauseMenu
         {
             block.SetActive(false);
 
-            soundSlider.onValueChanged.RemoveListener(OnSoundValueChanged);
             continueButton.onClick.RemoveListener(OnContinueClicked);
             exitButton.onClick.RemoveListener(OnExitClicked);
-        }
-
-        private void OnSoundValueChanged(float value)
-        {
-            value = Mathf.Max(value, 0.0001f);
-            if (!audioMixer.SetFloat("Volume", Mathf.Log10(value) * 20f))
-            {
-                Debug.LogWarning("audioMixer's MasterVolume float not assigns");
-            }
         }
 
         private void OnDestroy() => _observer?.Dispose();

@@ -47,7 +47,7 @@ namespace VContainer.Unity
             var wasActive = prefab.gameObject.activeSelf;
             prefab.gameObject.SetActive(false);
 
-            var instance = UnityEngine.Object.Instantiate(prefab, parent, worldPositionStays);
+            var instance = Object.Instantiate(prefab, parent, worldPositionStays);
 
             SetName(instance, prefab);
 
@@ -90,7 +90,7 @@ namespace VContainer.Unity
             var wasActive = prefab.gameObject.activeSelf;
             prefab.gameObject.SetActive(false);
 
-            var instance = UnityEngine.Object.Instantiate(prefab, position, rotation, parent);
+            var instance = Object.Instantiate(prefab, position, rotation, parent);
 
             SetName(instance, prefab);
 
@@ -116,13 +116,13 @@ namespace VContainer.Unity
             T instance;
             if (scope.IsRoot)
             {
-                instance = UnityEngine.Object.Instantiate(prefab, position, rotation);
-                UnityEngine.Object.DontDestroyOnLoad(instance);
+                instance = Object.Instantiate(prefab, position, rotation);
+                Object.DontDestroyOnLoad(instance);
             }
             else
             {
                 // Into the same scene as LifetimeScope
-                instance = UnityEngine.Object.Instantiate(prefab, position, rotation, scope.transform);
+                instance = Object.Instantiate(prefab, position, rotation, scope.transform);
                 instance.transform.SetParent(null);
             }
 
@@ -149,13 +149,13 @@ namespace VContainer.Unity
             GameObject instance;
             if (scope.IsRoot)
             {
-                instance = UnityEngine.Object.Instantiate(prefab, position, rotation);
-                UnityEngine.Object.DontDestroyOnLoad(instance);
+                instance = Object.Instantiate(prefab, position, rotation);
+                Object.DontDestroyOnLoad(instance);
             }
             else
             {
                 // Into the same scene as LifetimeScope
-                instance = UnityEngine.Object.Instantiate(prefab, position, rotation, scope.transform);
+                instance = Object.Instantiate(prefab, position, rotation, scope.transform);
                 instance.transform.SetParent(null);
             }
 
@@ -187,7 +187,7 @@ namespace VContainer.Unity
             GameObject instance = null;
             try
             {
-                instance = UnityEngine.Object.Instantiate(prefab, parent, worldPositionStays);
+                instance = Object.Instantiate(prefab, parent, worldPositionStays);
                 SetName(instance, prefab);
                 resolver.InjectGameObject(instance);
             }
@@ -223,7 +223,7 @@ namespace VContainer.Unity
             var wasActive = prefab.activeSelf;
             prefab.SetActive(false);
 
-            var instance = UnityEngine.Object.Instantiate(prefab, position, rotation, parent);
+            var instance = Object.Instantiate(prefab, position, rotation, parent);
 
             SetName(instance, prefab);
 
@@ -240,7 +240,7 @@ namespace VContainer.Unity
             return instance;
         }
 
-        static void SetName(UnityEngine.Object instance, UnityEngine.Object prefab)
+        static void SetName(Object instance, Object prefab)
         {
             if (VContainerSettings.Instance != null && VContainerSettings.Instance.RemoveClonePostfix)
                 instance.name = prefab.name;

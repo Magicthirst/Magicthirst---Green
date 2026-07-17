@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using UnityEngine;
 using VContainer.Internal;
 #if VCONTAINER_ECS_INTEGRATION
 using Unity.Entities;
@@ -36,7 +37,7 @@ namespace VContainer.Unity
                     if (exceptionHandler != null)
                         exceptionHandler.Publish(ex);
                     else
-                        UnityEngine.Debug.LogException(ex);
+                        Debug.LogException(ex);
                 }
             }
 
@@ -52,7 +53,7 @@ namespace VContainer.Unity
                     if (exceptionHandler != null)
                         exceptionHandler.Publish(ex);
                     else
-                        UnityEngine.Debug.LogException(ex);
+                        Debug.LogException(ex);
                 }
             }
 

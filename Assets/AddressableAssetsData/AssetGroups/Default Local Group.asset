@@ -20,23 +20,13 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 4681ab6970ca61048adb730eeb3eedd4
-    m_Address: Assets/Scenes/JoinSession.unity
+  - m_GUID: 4299ddaf7cf576b42bc20836c1927e81
+    m_Address: Assets/Scenes/New MainMenu.unity
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 75120a2686253fa4b9dce7ea9f6b74c0
     m_Address: Assets/Scenes/Bootstrap.unity
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 942fbe52f04b005499916a006ba7b2b6
-    m_Address: Assets/Scenes/Enter.unity
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: cfb06061954f33e49a62de79c3b8fdc5
-    m_Address: Assets/Scenes/MainMenu.unity
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Text;
 using UnityEngine;
@@ -98,7 +99,7 @@ namespace IngameDebugConsole
 
 	public struct DebugLogEntryTimestamp
 	{
-		public readonly System.DateTime dateTime;
+		public readonly DateTime dateTime;
 #if !IDG_OMIT_ELAPSED_TIME
 		public readonly float elapsedSeconds;
 #endif
@@ -107,7 +108,7 @@ namespace IngameDebugConsole
 #endif
 
 #if !IDG_OMIT_ELAPSED_TIME && !IDG_OMIT_FRAMECOUNT
-		public DebugLogEntryTimestamp( System.DateTime dateTime, float elapsedSeconds, int frameCount )
+		public DebugLogEntryTimestamp( DateTime dateTime, float elapsedSeconds, int frameCount )
 #elif !IDG_OMIT_ELAPSED_TIME
 		public DebugLogEntryTimestamp( System.DateTime dateTime, float elapsedSeconds )
 #elif !IDG_OMIT_FRAMECOUNT
