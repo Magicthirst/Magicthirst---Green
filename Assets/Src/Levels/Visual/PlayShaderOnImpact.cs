@@ -45,10 +45,9 @@ namespace Levels.Visual
 
         private void Run()
         {
-            Debug.Log("_StartTime = LevelDirector.GameplayTime");
             _renderer.UpdatePropertyBlock(_properties, b =>
             {
-                b.SetFloat(StartTime, LevelDirector.GameplayTime);
+                b.SetFloat(StartTime, Time.time);
             });
         }
 

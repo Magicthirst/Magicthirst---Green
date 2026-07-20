@@ -53,7 +53,7 @@ namespace Levels.Visual
 
         private void OnHealed()
         {
-            _renderer.UpdatePropertyBlock(_properties, b => b.SetFloat(LastHealTime, GameplayTime));
+            _renderer.UpdatePropertyBlock(_properties, b => b.SetFloat(LastHealTime, Time.time));
         }
 
         private void OnDisable()
