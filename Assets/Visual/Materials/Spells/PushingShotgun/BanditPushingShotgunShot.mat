@@ -32,16 +32,17 @@ Material:
     m_Floats:
     - _BigCircleNoiseScale: 10
     - _BigCircleStartRadius: 0.05
-    - _BigCircleStrokeWidth: 0.1
+    - _BigCircleStrokeWidth: 0.2
     - _DstBlend: 10
     - _MiddleCircleEndRadius: 0.2
     - _MiddleCircleNoiseScale: 1
     - _MiddleCircleStartRadius: 0
+    - _MiddleCircleStrokeWidth: 0.015
     - _QueueControl: 0
     - _SrcBlend: 5
     m_Colors:
     - _BigCircleColor: {r: 1, g: 1, b: 1, a: 0.43137255}
-    - _MiddleCircleColor: {r: 1, g: 0.31739217, b: 0, a: 1}
+    - _MiddleCircleColor: {r: 1, g: 0.2088131, b: 0, a: 1}
     - _PowerColor: {r: 1, g: 0.21842146, b: 0, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1

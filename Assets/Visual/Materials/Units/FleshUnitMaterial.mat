@@ -68,7 +68,7 @@ Material:
     - _ZWrite: 1
     - _ZWriteControl: 0
     m_Colors:
-    - _HealingSpellColor: {r: 0.9339623, g: 0.3480331, b: 0.83665955, a: 1}
+    - _HealingSpellColor: {r: 7.906699, g: 2.9463642, b: 7.0829577, a: 1}
     - _NewBloodColor: {r: 0.98039216, g: 0.0235294, b: 0.18786785, a: 1}
     - _OldBloodColor: {r: 0.19811317, g: 0.03270736, b: 0.07159651, a: 1}
   m_BuildTextureStacks: []

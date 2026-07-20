@@ -3366,7 +3366,7 @@
     "m_Group": {
         "m_Id": ""
     },
-    "m_Name": "AnimatedPowerCircle",
+    "m_Name": "AnimatedNoisyCircle",
     "m_DrawState": {
         "m_Expanded": true,
         "m_Position": {
@@ -4975,8 +4975,8 @@
     "m_ObjectId": "b1a86fb2be764cea947de3728a8c500b",
     "m_Title": "Debug StartTime",
     "m_Position": {
-        "x": -2673.0,
-        "y": 297.9998779296875
+        "x": -2672.999755859375,
+        "y": 297.99993896484377
     }
 }
 
@@ -5115,7 +5115,7 @@
     "m_ObjectId": "b6ae87fd3f3f4dbf8aa15621b2b0bc84",
     "m_Title": "Game",
     "m_Position": {
-        "x": -2016.9998779296875,
+        "x": -2016.999755859375,
         "y": 267.99993896484377
     }
 }
@@ -5943,8 +5943,8 @@
     "m_ObjectId": "e10b7e7e1a3c47cab1c2bd7d996f56df",
     "m_Title": "Scaled Time",
     "m_Position": {
-        "x": -2273.0,
-        "y": -162.99996948242188
+        "x": -2272.999755859375,
+        "y": -163.0
     }
 }
 
@@ -6035,7 +6035,7 @@
     "m_Group": {
         "m_Id": ""
     },
-    "m_Name": "AnimatedPowerCircle",
+    "m_Name": "AnimatedNoisyCircle",
     "m_DrawState": {
         "m_Expanded": true,
         "m_Position": {
