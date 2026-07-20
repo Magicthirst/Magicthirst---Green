@@ -194,7 +194,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 3.5
+  m_Speed: 6
   m_Acceleration: 20
   avoidancePriority: 50
   m_AngularSpeed: 360
@@ -325,13 +325,13 @@ MonoBehaviour:
   wallLayer:
     serializedVersion: 2
     m_Bits: 64
-  shotSpreadDegrees: 30
+  shotSpreadDegrees: 15
   burstCount: 3
   shotCount: 4
   initialDelay: 1
   betweenBurstDelay: 1
   betweenShotDelay: 0.1
-  maxDistance: 10
+  maxDistance: 4
   tacticUpdatePeriod: 0.5
 --- !u!114 &1042389833824372580
 MonoBehaviour:

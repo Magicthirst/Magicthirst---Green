@@ -1,7 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using JetBrains.Annotations;
+using Levels.AI.Util;
 using Levels.Directorship;
 using Levels.Util;
 using Levels.Util.MasksRegistry;
@@ -23,11 +23,12 @@ namespace Levels.AI.Bandit
         [SerializeField] private float distanceFromEnemy;
         [SerializeField] private float tacticUpdatePeriod;
         [SerializeField] private float squadShotCooldown;
+        [SerializeField] private float lookAheadTime;
 
         private InterruptionQueue _squadCooldown;
         private InterruptionQueue _SquadCooldown => _squadCooldown ??= new InterruptionQueue(this, null);
 
-        [CanBeNull] private Transform _enemy = null;
+        private Enemy _enemy;
         private int _nextMemberI = 0;
         private readonly Dictionary<int, Vector3> _membersPositions = new();
 
@@ -38,6 +39,11 @@ namespace Levels.AI.Bandit
 
         [Inject]
         public void Construct(Camera injectedCamera) => _camera = injectedCamera.transform;
+
+        private void Awake()
+        {
+            _enemy = new Enemy { LookAheadTime = lookAheadTime };
+        }
 
         protected override void DidEnabled()
         {
@@ -56,9 +62,9 @@ namespace Levels.AI.Bandit
                 {
                     yield return null;
 
-                    while (_enemy is not null)
+                    while (_enemy.IsSet)
                     {
-                        PlaceMembersAround(_enemy);
+                        PlaceMembersAroundEnemy();
                         yield return InterruptableWait.ForSeconds(tacticUpdatePeriod);
                     }
                 }
@@ -99,23 +105,23 @@ namespace Levels.AI.Bandit
         {
             if (_registry.Is(other.gameObject, Mask.PlayerCharacter))
             {
-                _enemy = other.transform;
+                _enemy.SetTo(other.transform);
             }
         }
 
         private void OnPlayerGotAway(Collider other)
         {
-            if (other.transform == _enemy)
+            if (_enemy.Is(other))
             {
-                _enemy = null;
+                _enemy.Unset();
             }
         }
 
-        private void PlaceMembersAround(Transform enemy)
+        private void PlaceMembersAroundEnemy()
         {
             Span<Vector3> frontPositions = stackalloc Vector3[_membersPositions.Count];
 
-            CalculateFrontline(in frontPositions, _camera, enemy, memberRadius, distanceFromEnemy);
+            CalculateFrontline(in frontPositions, _camera, _enemy.EstimatedPosition, memberRadius, distanceFromEnemy);
             AssignFrontPlaces(in frontPositions, _membersPositions);
         }
     }

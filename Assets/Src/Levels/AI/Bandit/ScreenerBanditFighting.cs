@@ -2,6 +2,7 @@ using System.Collections;
 using Levels.Abilities.CommonImpacts;
 using Levels.Abilities.PushingShotgun;
 using Levels.AI.Shared;
+using Levels.AI.Util;
 using Levels.Extensions;
 using Levels.IntentsImpacts;
 using Levels.Util;
@@ -24,11 +25,14 @@ namespace Levels.AI.Bandit
         [SerializeField] private float shotSpreadDegrees;
         [SerializeField] private float betweenShotDelay;
 
+        [Header("Util")]
+        [SerializeField] private float lookAheadTime;
+
         [Inject] private ShotgunConfig _config = null!;
         [Inject] private MasksRegistry _registry = null!;
         [Inject] private PublishIntent<PushingShotgunShootIntent> _publishShoot;
         [Inject] private IImpactConsumer<DamageImpact> _wasDamaged;
-        private Transform _enemy = null!;
+        private Enemy _enemy;
 
         private ShotgunShooter _shooter;
         private ScreenerSquadMemberMovement _movement;
@@ -39,11 +43,14 @@ namespace Levels.AI.Bandit
 
         private NavMeshAgent _agent;
 
-        protected override bool _IsReady => _enemy != null;
+        protected override bool _IsReady => _enemy.IsSet;
 
         protected override void Awake()
         {
             base.Awake();
+
+            _enemy = new Enemy { LookAheadTime = lookAheadTime };
+
             _agent = GetComponent<NavMeshAgent>();
 
             _movementInterruptionQueue = new InterruptionQueue(this, new WaitForFixedUpdate());
@@ -70,12 +77,12 @@ namespace Levels.AI.Bandit
 
         private void OnWasDamaged(DamageImpact impact)
         {
-            if (_enemy is not null)
+            if (_enemy.IsSet)
             {
                 return;
             }
 
-            _enemy = impact.Attacker.transform;
+            _enemy.SetTo(impact.Attacker.transform);
             Ready();
         }
 
@@ -83,7 +90,7 @@ namespace Levels.AI.Bandit
         {
             if (_registry.Is(other.gameObject, Mask.PlayerCharacter))
             {
-                _enemy = other.transform;
+                _enemy.SetTo(other.transform);
                 Ready();
             }
         }
@@ -97,7 +104,7 @@ namespace Levels.AI.Bandit
                     .WithInterruptions(_squadShootingCooldown)
                     .WithInterruptions(_LevelLifecycle)),
 
-                StartCoroutine(_movement.Screen()
+                StartCoroutine(_movement.Screen(_enemy)
                     .WithInterruptions(_movementInterruptionQueue)
                     .WithInterruptions(_LevelLifecycle))
             };
@@ -116,9 +123,9 @@ namespace Levels.AI.Bandit
 
         private void OnPlayerGotAway(Collider other)
         {
-            if (other.transform == _enemy)
+            if (_enemy.Is(other))
             {
-                _enemy = null;
+                _enemy.Unset();
                 Finish();
             }
         }

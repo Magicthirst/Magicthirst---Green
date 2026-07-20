@@ -13381,6 +13381,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 664979141}
     - target: {fileID: 4200989473936554806, guid: 4ee5398177db59540b6282edab06b851, type: 3}
+      propertyPath: minDistance
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4200989473936554806, guid: 4ee5398177db59540b6282edab06b851, type: 3}
       propertyPath: stopFightArea
       value: 
       objectReference: {fileID: 1079443950}
@@ -20583,9 +20587,10 @@ MonoBehaviour:
   startFightArea: {fileID: 1132207693}
   stopFightArea: {fileID: 1079443950}
   memberRadius: 0.5
-  distanceFromEnemy: 3
+  distanceFromEnemy: 3.2
   tacticUpdatePeriod: 0.25
   squadShotCooldown: 0.33
+  lookAheadTime: 0.3
 --- !u!4 &519774836
 Transform:
   m_ObjectHideFlags: 0
@@ -20873,9 +20878,10 @@ MonoBehaviour:
   startFightArea: {fileID: 424369657}
   stopFightArea: {fileID: 299378526}
   memberRadius: 0.5
-  distanceFromEnemy: 3
+  distanceFromEnemy: 3.2
   tacticUpdatePeriod: 0.25
   squadShotCooldown: 0.33
+  lookAheadTime: 0.3
 --- !u!4 &529759993
 Transform:
   m_ObjectHideFlags: 0
@@ -21586,7 +21592,7 @@ PrefabInstance:
       objectReference: {fileID: 1231722642}
     - target: {fileID: 6048475864911610465, guid: 89a9f5337c3edfb4895bbf44bba7fa15, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -6.2699995
+      value: 10.500158
       objectReference: {fileID: 0}
     - target: {fileID: 6048475864911610465, guid: 89a9f5337c3edfb4895bbf44bba7fa15, type: 3}
       propertyPath: m_LocalPosition.y
@@ -21594,11 +21600,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6048475864911610465, guid: 89a9f5337c3edfb4895bbf44bba7fa15, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.2500038
+      value: -3.509472
       objectReference: {fileID: 0}
     - target: {fileID: 6048475864911610465, guid: 89a9f5337c3edfb4895bbf44bba7fa15, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 1
+      value: 0.9634116
       objectReference: {fileID: 0}
     - target: {fileID: 6048475864911610465, guid: 89a9f5337c3edfb4895bbf44bba7fa15, type: 3}
       propertyPath: m_LocalRotation.x
@@ -21606,7 +21612,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6048475864911610465, guid: 89a9f5337c3edfb4895bbf44bba7fa15, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0
+      value: -0.26802614
       objectReference: {fileID: 0}
     - target: {fileID: 6048475864911610465, guid: 89a9f5337c3edfb4895bbf44bba7fa15, type: 3}
       propertyPath: m_LocalRotation.z
@@ -21618,7 +21624,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6048475864911610465, guid: 89a9f5337c3edfb4895bbf44bba7fa15, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
+      value: -31.094
       objectReference: {fileID: 0}
     - target: {fileID: 6048475864911610465, guid: 89a9f5337c3edfb4895bbf44bba7fa15, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
@@ -23140,9 +23146,10 @@ MonoBehaviour:
   startFightArea: {fileID: 566256854}
   stopFightArea: {fileID: 1079443950}
   memberRadius: 0.5
-  distanceFromEnemy: 3
+  distanceFromEnemy: 2
   tacticUpdatePeriod: 0.25
   squadShotCooldown: 0.33
+  lookAheadTime: 0.3
 --- !u!1 &666024391
 GameObject:
   m_ObjectHideFlags: 0
@@ -24822,9 +24829,10 @@ MonoBehaviour:
   startFightArea: {fileID: 1295147666}
   stopFightArea: {fileID: 1079443950}
   memberRadius: 0.5
-  distanceFromEnemy: 3
+  distanceFromEnemy: 3.2
   tacticUpdatePeriod: 0.25
   squadShotCooldown: 0.33
+  lookAheadTime: 0.3
 --- !u!4 &846414576
 Transform:
   m_ObjectHideFlags: 0
@@ -27344,6 +27352,7 @@ MonoBehaviour:
   distanceFromEnemy: 2
   tacticUpdatePeriod: 0.25
   squadShotCooldown: 0.33
+  lookAheadTime: 0.3
 --- !u!4 &1015586068
 Transform:
   m_ObjectHideFlags: 0
@@ -40594,7 +40603,7 @@ PrefabInstance:
       objectReference: {fileID: 1231722642}
     - target: {fileID: 6048475864911610465, guid: 89a9f5337c3edfb4895bbf44bba7fa15, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -6.2799993
+      value: -3.21
       objectReference: {fileID: 0}
     - target: {fileID: 6048475864911610465, guid: 89a9f5337c3edfb4895bbf44bba7fa15, type: 3}
       propertyPath: m_LocalPosition.y
@@ -40602,11 +40611,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6048475864911610465, guid: 89a9f5337c3edfb4895bbf44bba7fa15, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 2.2400055
+      value: -8.99
       objectReference: {fileID: 0}
     - target: {fileID: 6048475864911610465, guid: 89a9f5337c3edfb4895bbf44bba7fa15, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 1
+      value: 0.9634116
       objectReference: {fileID: 0}
     - target: {fileID: 6048475864911610465, guid: 89a9f5337c3edfb4895bbf44bba7fa15, type: 3}
       propertyPath: m_LocalRotation.x
@@ -40614,7 +40623,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6048475864911610465, guid: 89a9f5337c3edfb4895bbf44bba7fa15, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0
+      value: -0.26802614
       objectReference: {fileID: 0}
     - target: {fileID: 6048475864911610465, guid: 89a9f5337c3edfb4895bbf44bba7fa15, type: 3}
       propertyPath: m_LocalRotation.z
@@ -40626,7 +40635,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6048475864911610465, guid: 89a9f5337c3edfb4895bbf44bba7fa15, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
+      value: -31.094
       objectReference: {fileID: 0}
     - target: {fileID: 6048475864911610465, guid: 89a9f5337c3edfb4895bbf44bba7fa15, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
@@ -42043,6 +42052,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 519774835}
     - target: {fileID: 4200989473936554806, guid: 4ee5398177db59540b6282edab06b851, type: 3}
+      propertyPath: minDistance
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4200989473936554806, guid: 4ee5398177db59540b6282edab06b851, type: 3}
       propertyPath: stopFightArea
       value: 
       objectReference: {fileID: 1079443950}
@@ -42153,9 +42166,10 @@ MonoBehaviour:
   startFightArea: {fileID: 633028794}
   stopFightArea: {fileID: 1079443950}
   memberRadius: 0.5
-  distanceFromEnemy: 3
+  distanceFromEnemy: 3.2
   tacticUpdatePeriod: 0.25
   squadShotCooldown: 0.33
+  lookAheadTime: 0.3
 --- !u!4 &1527961857
 Transform:
   m_ObjectHideFlags: 0
@@ -42620,6 +42634,7 @@ MonoBehaviour:
   distanceFromEnemy: 3
   tacticUpdatePeriod: 0.25
   squadShotCooldown: 0.33
+  lookAheadTime: 0
 --- !u!4 &1607543258
 Transform:
   m_ObjectHideFlags: 0
@@ -43845,7 +43860,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   broadcasting: 1
   gravityPull: 9.8
-  speed: 12
+  speed: 10
 --- !u!114 &1711207722
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -46396,7 +46411,7 @@ PrefabInstance:
       objectReference: {fileID: 1231722642}
     - target: {fileID: 6048475864911610465, guid: 89a9f5337c3edfb4895bbf44bba7fa15, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -8.04
+      value: -4.44
       objectReference: {fileID: 0}
     - target: {fileID: 6048475864911610465, guid: 89a9f5337c3edfb4895bbf44bba7fa15, type: 3}
       propertyPath: m_LocalPosition.y
@@ -46404,11 +46419,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6048475864911610465, guid: 89a9f5337c3edfb4895bbf44bba7fa15, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 1.13
+      value: 2.66
       objectReference: {fileID: 0}
     - target: {fileID: 6048475864911610465, guid: 89a9f5337c3edfb4895bbf44bba7fa15, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 1
+      value: 0.9634116
       objectReference: {fileID: 0}
     - target: {fileID: 6048475864911610465, guid: 89a9f5337c3edfb4895bbf44bba7fa15, type: 3}
       propertyPath: m_LocalRotation.x
@@ -46416,7 +46431,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6048475864911610465, guid: 89a9f5337c3edfb4895bbf44bba7fa15, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0
+      value: -0.26802614
       objectReference: {fileID: 0}
     - target: {fileID: 6048475864911610465, guid: 89a9f5337c3edfb4895bbf44bba7fa15, type: 3}
       propertyPath: m_LocalRotation.z
@@ -46428,7 +46443,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6048475864911610465, guid: 89a9f5337c3edfb4895bbf44bba7fa15, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
+      value: -31.094
       objectReference: {fileID: 0}
     - target: {fileID: 6048475864911610465, guid: 89a9f5337c3edfb4895bbf44bba7fa15, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z

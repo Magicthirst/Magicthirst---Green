@@ -12,9 +12,11 @@ namespace Levels
 {
     [RequireComponent(typeof(CharacterController))]
     [RequireComponent(typeof(IMovementInputSource))]
-    public class CharacterMovement : LevelBehaviour, IInterruptable<IMovementReason>
+    public class CharacterMovement : LevelBehaviour, ISpeedProvider, IInterruptable<IMovementReason>
     {
         protected override LevelActivityMask _LifecycleMask => Gameplay | TutorialTeleportToChip;
+
+        public float Speed => speed;
 
         [SerializeField] private bool broadcasting;
 

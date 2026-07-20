@@ -12,18 +12,17 @@ namespace Levels.AI.Bandit
         (
             in Span<Vector3> frontline,
             Transform camera,
-            Transform enemy,
+            Vector3 enemyPosition,
             float memberRadius,
             float distance
         )
         {
             var length = frontline.Length;
 
-            var distanceToEnemy = Vector3.Distance(camera.position, enemy.position);
+            var distanceToEnemy = Vector3.Distance(camera.position, enemyPosition);
             distance = Mathf.Min(distance, distanceToEnemy); // don't run away from enemy
 
             var enemyDirection = camera.forward.With(y: 0f);
-            var enemyPosition = enemy.position;
 
             var frontCenter = enemyPosition + enemyDirection * distance;
             var frontAxis = Quaternion.Euler(0f, 90f, 0f) * enemyDirection;

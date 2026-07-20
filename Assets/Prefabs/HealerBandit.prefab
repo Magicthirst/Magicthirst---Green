@@ -353,6 +353,10 @@ PrefabInstance:
       propertyPath: 'managedReferences[2589632992204292179].anyOfThese.Array.data[1]'
       value: 
       objectReference: {fileID: 3002643783058348991}
+    - target: {fileID: 8704299609388282002, guid: 89a9f5337c3edfb4895bbf44bba7fa15, type: 3}
+      propertyPath: m_Speed
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 9222006205364241558, guid: 89a9f5337c3edfb4895bbf44bba7fa15, type: 3}
       propertyPath: configs.Array.size
       value: 2
