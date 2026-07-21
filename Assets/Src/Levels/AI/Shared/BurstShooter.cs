@@ -1,14 +1,21 @@
+using System;
 using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using Levels.Abilities.HitScanShoot;
 using Levels.IntentsImpacts;
 using Levels.Util;
 using UnityEngine;
+using Util;
 
 namespace Levels.AI.Shared
 {
     public class BurstShooter
     {
         private static readonly Vector3 InvalidPosition = Vector3.negativeInfinity;
+
+        private readonly LayerMask _wallsLayer;
+        private readonly LayerMask _unitsLayer;
 
         private readonly float _shotSpreadDegrees;
         private readonly int _burstCount;
@@ -21,7 +28,10 @@ namespace Levels.AI.Shared
         private readonly ShootConfig _config;
         private readonly PublishIntent<HitScanShootIntent> _publishShoot;
 
-        public BurstShooter(
+        private readonly RaycastHit[] _hits = new RaycastHit[16];
+
+        public BurstShooter
+        (
             float shotSpreadDegrees,
             int burstCount,
             int shotCount,
@@ -30,7 +40,10 @@ namespace Levels.AI.Shared
             float betweenShotPeriod,
             Transform self,
             ShootConfig config,
-            PublishIntent<HitScanShootIntent> publishShoot)
+            LayerMask wallsLayer,
+            LayerMask unitsLayer,
+            PublishIntent<HitScanShootIntent> publishShoot
+        )
         {
             _shotSpreadDegrees = shotSpreadDegrees;
             _burstCount = burstCount;
@@ -41,6 +54,8 @@ namespace Levels.AI.Shared
             _self = self;
             _config = config;
             _publishShoot = publishShoot;
+            _wallsLayer = wallsLayer;
+            _unitsLayer = unitsLayer;
         } 
 
         public IEnumerator Shoot(Transform enemy, bool retryWhenTargetLost = false, IEnumerator continuation = null)
@@ -59,9 +74,14 @@ namespace Levels.AI.Shared
                 while ((targetPosition = enemy?.position ?? InvalidPosition) != InvalidPosition && // TODO investigate
                        iBurst++ < _burstCount)
                 {
-                    yield return InterruptableWait.ForSeconds(betweenBurstDelay);
-
                     var direction = (targetPosition - _self.position).normalized;
+
+                    if (!IsSeesEnemy(enemy, direction))
+                    {
+                        yield return null;
+                    }
+
+                    yield return InterruptableWait.ForSeconds(betweenBurstDelay);
 
                     for (var iShot = 0; iShot < _shotCount; iShot++)
                     {
@@ -78,5 +98,37 @@ namespace Levels.AI.Shared
 
             yield return continuation;
         }
+
+        private bool IsSeesEnemy(Transform enemy, Vector3 direction)
+        {
+            var hitsCount = Physics.RaycastNonAlloc
+        (
+                new Ray(_self.position, direction),
+                _hits,
+                _config.Distance,
+                _wallsLayer | _unitsLayer
+            );
+
+            _hits.Sort(hitsCount);
+
+            foreach (var hit in _hits.AsSpan(0, hitsCount))
+            {
+                var hitTransform = hit.transform;
+                var hitLayerMask = 1 << hitTransform.gameObject.layer;
+
+                var hitWall = (hitLayerMask & _wallsLayer) != 0;
+                if (hitWall)
+                {
+                    return false;
+                }
+
+                if (hitTransform == enemy)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        } 
     }
 }

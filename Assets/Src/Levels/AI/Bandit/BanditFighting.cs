@@ -17,6 +17,7 @@ namespace Levels.AI.Bandit
         [SerializeField] private PublishContacts startFightArea;
         [SerializeField] private PublishContacts stopFightArea;
         [SerializeField] private LayerMask wallLayer;
+        [SerializeField] private LayerMask unitsLayer;
 
         [Header("Shooting Settings")]
         [SerializeField] private float shotSpreadDegrees;
@@ -55,15 +56,12 @@ namespace Levels.AI.Bandit
 
             _shooter = new BurstShooter
             (
-                shotSpreadDegrees: shotSpreadDegrees,
-                burstCount: burstCount,
-                shotCount: shotCount,
-                initialDelay: initialDelay,
-                betweenBurstPeriod: betweenBurstDelay,
-                betweenShotPeriod: betweenShotDelay,
-                self: transform,
-                config: _config,
-                publishShoot: _publishShoot
+                shotSpreadDegrees, burstCount, shotCount,
+                initialDelay, betweenBurstDelay, betweenShotDelay,
+                transform,
+                _config,
+                wallLayer, unitsLayer,
+                _publishShoot
             );
 
             _movement = new KitingMovement
