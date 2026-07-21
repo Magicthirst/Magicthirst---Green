@@ -42178,6 +42178,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tracerPrefab: {fileID: 7779144050368814171, guid: 071e0c828e0ce204191ef7572d065783, type: 3}
   smokeTint: {r: 0.6320754, g: 0.6320754, b: 0.6320754, a: 0.4117647}
+  wallLayer:
+    serializedVersion: 2
+    m_Bits: 64
   poolSize: 50
   tracerLifetime: 1
   missedDistance: 50

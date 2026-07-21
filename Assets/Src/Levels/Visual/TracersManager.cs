@@ -14,6 +14,7 @@ namespace Levels.Visual
 
         [SerializeField] private LineRenderer tracerPrefab;
         [SerializeField] private Color smokeTint;
+        [SerializeField] private LayerMask wallLayer;
         [SerializeField] private int poolSize;
         [SerializeField] private float tracerLifetime;
         [SerializeField] private float missedDistance;
@@ -85,6 +86,8 @@ namespace Levels.Visual
 
         public static void SpawnLine(Vector3 from, Vector3 to, Color tint)
         {
+            ClipLineToWall(from, ref to);
+
             ref var tracer = ref _instance.GetTracer();
             tracer.Line.startColor = tint.With(a: 0);
             tracer.Line.endColor = tint;
@@ -136,6 +139,16 @@ namespace Levels.Visual
             tracer.Line.enabled = false;
             tracer.Line.startColor = _baseTint.With(a: 0);
             tracer.Line.endColor = _baseTint.With(a: _baseAlpha);
+        }
+
+        private static void ClipLineToWall(Vector3 from, ref Vector3 to)
+        {
+            var delta = to - from;
+            var distance = delta.magnitude;
+            if (Physics.Raycast(from, delta / distance, out var hit, distance, _instance.wallLayer))
+            {
+                to = hit.point;
+            }
         }
 
         private struct Tracer
