@@ -984,6 +984,7 @@ MonoBehaviour:
         anyOfThese:
         - {fileID: 7085063179026557343}
         - {fileID: 3266548798043383474}
+        - {fileID: 8646692905782134384}
     - rid: 2589632836886331477
       type: {class: IsNot, ns: Levels.Visual.FsmSpritesVisibility, asm: Levels}
       data:
