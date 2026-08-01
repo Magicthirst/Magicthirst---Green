@@ -1025,6 +1025,34 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 4885398072720837975}
     m_Modifications:
+    - target: {fileID: 1507877693044577248, guid: 389761aef3e7ff44595b78f4ae3cfb0b, type: 3}
+      propertyPath: mappings.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1507877693044577248, guid: 389761aef3e7ff44595b78f4ae3cfb0b, type: 3}
+      propertyPath: mappings.Array.data[2].<ImpactType>k__BackingField
+      value: Levels.Abilities.CommonImpacts.TargetWasCutEffect
+      objectReference: {fileID: 0}
+    - target: {fileID: 1507877693044577248, guid: 389761aef3e7ff44595b78f4ae3cfb0b, type: 3}
+      propertyPath: mappings.Array.data[2].<Sound>k__BackingField.pitchVariance
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1507877693044577248, guid: 389761aef3e7ff44595b78f4ae3cfb0b, type: 3}
+      propertyPath: mappings.Array.data[2].<Sound>k__BackingField.clips.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1507877693044577248, guid: 389761aef3e7ff44595b78f4ae3cfb0b, type: 3}
+      propertyPath: 'mappings.Array.data[2].<Sound>k__BackingField.clips.Array.data[0]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 42d33e0771458ee47884745f583dd64f, type: 3}
+    - target: {fileID: 1507877693044577248, guid: 389761aef3e7ff44595b78f4ae3cfb0b, type: 3}
+      propertyPath: 'mappings.Array.data[2].<Sound>k__BackingField.clips.Array.data[1]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 5a70cd11422dfa24aa20f3a51a5a7acc, type: 3}
+    - target: {fileID: 1507877693044577248, guid: 389761aef3e7ff44595b78f4ae3cfb0b, type: 3}
+      propertyPath: 'mappings.Array.data[2].<Sound>k__BackingField.clips.Array.data[2]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 49ae3db936173204aab7f6149d46e2a7, type: 3}
     - target: {fileID: 1532967121928092481, guid: 389761aef3e7ff44595b78f4ae3cfb0b, type: 3}
       propertyPath: m_Name
       value: BanditAudioSource

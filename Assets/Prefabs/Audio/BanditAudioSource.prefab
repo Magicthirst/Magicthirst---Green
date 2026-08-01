@@ -12,6 +12,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: BanditAudioSource
       objectReference: {fileID: 0}
+    - target: {fileID: 5413527542240706876, guid: 5c4caccf0ca82dc46b3f367f70a08539, type: 3}
+      propertyPath: lifespan
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 8661219113694265810, guid: 5c4caccf0ca82dc46b3f367f70a08539, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

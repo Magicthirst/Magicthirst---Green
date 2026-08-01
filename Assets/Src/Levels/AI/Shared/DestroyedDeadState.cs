@@ -1,3 +1,4 @@
+using System.Collections;
 using Levels.Abilities.CommonImpacts;
 using Levels.Abilities.KillAndDown;
 using Levels.Core;
@@ -23,12 +24,16 @@ namespace Levels.AI.Shared
             _consumer.Impacted += HandleDamage;
         }
 
-        public override void OnFrame()
+        public override void Enter()
         {
-            base.OnFrame();
+            base.Enter();
+            StartCoroutine(DestroySafely());
+        }
 
+        private IEnumerator DestroySafely()
+        {
             _publish(new KilledIntent(_lastAttack.Attacker, Victim: _self, _lastAttack.Context));
-
+            yield return null;
             _self.SetActive(false);
             Destroy(_self);
         }
