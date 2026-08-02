@@ -77,3 +77,6 @@ Wires everything above.
 ### Multiplayer to be done somewhere in the far-far future
 
 ## Glossary to be done
+
+LFS substitution:
+https://drive.google.com/drive/u/0/folders/10YQL4qEjqwBThaYsDV3xbmcr76G51aly
