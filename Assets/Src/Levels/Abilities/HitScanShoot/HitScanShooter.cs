@@ -1,5 +1,7 @@
+using Levels.Abilities.PlayerShared;
 using Levels.Core;
 using Levels.IntentsImpacts;
+using Levels.Util.MasksRegistry;
 using UnityEngine;
 using VContainer;
 
@@ -11,23 +13,14 @@ namespace Levels.Abilities.HitScanShoot
 
         [Inject] private PublishIntent<HitScanShootIntent> _publishShoot;
         [Inject] private ShootConfig _config;
+        [Inject] private MasksRegistry _registry;
 
         [Inject]
         public void Construct(Camera injectedCamera) => _camera = injectedCamera.transform;
 
         public void Invoke()
         {
-            Vector3 direction;
-
-            if (Physics.Raycast(_camera.transform.position, _camera.forward, out var hit))
-            {
-                direction = (hit.point - transform.position).normalized;
-            }
-            else
-            {
-                direction = _camera.forward;
-            }
-
+            var direction = PlayerAim.GetDirection(_camera, transform, _registry);
             var origin = transform.position + direction * _config.Offset;
 
             _publishShoot(new HitScanShootIntent(gameObject, origin, direction, _config));
