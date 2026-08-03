@@ -46,7 +46,7 @@ namespace Levels.Visual
 
             foreach (var sprite in _sprites)
             {
-                if (rulesForState.TryGetFirst(out var rule, rule => rule.sprite == sprite))
+                if (rulesForState.TryGetFirstOrNull(out var rule, rule => rule.sprite == sprite))
                 {
                     sprite.enabled = rule.visible;
                 }

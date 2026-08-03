@@ -81,7 +81,7 @@ namespace Levels.Visual
 
         private void CheckForSwingTriggers()
         {
-            if (mappings.TryGetFirst(out var mapping, m => _spriteHistory.EndsWith(m.TriggerSequence)))
+            if (mappings.TryGetFirstOrNull(out var mapping, m => _spriteHistory.EndsWith(m.TriggerSequence)))
             {
                 LaunchSwing(mapping);
             }

@@ -46,7 +46,7 @@ namespace Levels.UI.Tutorials
         {
             var parts = rawText.Split('\\').Select(part =>
             {
-                if (!keysActions.TryGetFirst(out var item, item => part == item.key))
+                if (!keysActions.TryGetFirstOrNull(out var item, item => part == item.key))
                 {
                     return part;
                 }
@@ -70,7 +70,7 @@ namespace Levels.UI.Tutorials
 
             var parts = rawText.Split('\\').Select(part =>
             {
-                if (!keysActions.TryGetFirst(out var item, item => part == item.key))
+                if (!keysActions.TryGetFirstOrNull(out var item, item => part == item.key))
                 {
                     return part;
                 }

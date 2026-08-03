@@ -25,9 +25,25 @@ namespace Util
             return false;
         }
 
-        public static bool TryGetFirst<T>(this T[] array, out T item, Predicate<T> test) where T : class
+        public static bool TryGetFirstOrNull<T>(this T[] array, out T item, Predicate<T> test) where T : class
         {
             item = null;
+
+            foreach (var t in array)
+            {
+                if (test(t))
+                {
+                    item = t;
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        public static bool TryGetFirst<T>(this T[] array, out T item, Predicate<T> test) where T : struct
+        {
+            item = default;
 
             foreach (var t in array)
             {

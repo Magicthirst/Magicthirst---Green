@@ -68,7 +68,7 @@ namespace Levels.Audio
 
         private void CheckForSoundTriggers()
         {
-            if (mappings.TryGetFirst(out var mapping, m => _spriteHistory.EndsWith(m.TriggerSequence)))
+            if (mappings.TryGetFirstOrNull(out var mapping, m => _spriteHistory.EndsWith(m.TriggerSequence)))
             {
                 StartCoroutine(PlaySound(mapping.Sound));
             }
